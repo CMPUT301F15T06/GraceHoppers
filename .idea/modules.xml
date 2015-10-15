@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BookWrm.iml" filepath="$PROJECT_DIR$/BookWrm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GraceHoppers.iml" filepath="$PROJECT_DIR$/GraceHoppers.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
