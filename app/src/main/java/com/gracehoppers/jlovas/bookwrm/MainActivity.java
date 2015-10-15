@@ -1,5 +1,6 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,20 +23,16 @@ public class MainActivity extends ActionBarActivity {
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //doesn't consider much for now, just navigates straight there
-                //add details later
-                //Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
-                //startActivity(lIntent);
+               // Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
+               // startActivity(lIntent);
             }
         });
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //doesn't consider much for now, just navigates straight there
-                //add details later
-                //Intent sIntent = new Intent(MainActivity.this, HomeScreen.class); //change me to where sign up should go!
-                //startActivity(sIntent);
+                Intent sIntent = new Intent(MainActivity.this, SignUpActivity.class); //change me to where sign up should go!
+                startActivity(sIntent);
             }
         });
 

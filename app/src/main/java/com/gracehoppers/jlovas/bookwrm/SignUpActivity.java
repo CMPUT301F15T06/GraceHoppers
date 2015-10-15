@@ -7,6 +7,10 @@ import android.view.MenuItem;
 
 public class SignUpActivity extends ActionBarActivity {
 
+    /*
+    Activity where the user signs up
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

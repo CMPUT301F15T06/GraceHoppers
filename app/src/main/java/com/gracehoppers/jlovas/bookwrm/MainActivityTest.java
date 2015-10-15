@@ -29,8 +29,8 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2 {
 
         // reset the app to a known state:
         //delete any current accounts/items it has
-        activity.getBookList().clear();
-        activity.getAccount.clear(); //may replace this method with a better one
+       // activity.getBookList().clear();
+       // activity.getAccount.clear(); //may replace this method with a better one
 
     }
 }
