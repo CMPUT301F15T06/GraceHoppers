@@ -9,31 +9,41 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/UsernameeditText"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="93dp"
-        android:text="Username"
-        android:width="200dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/CityeditText"
-        android:layout_below="@+id/UsernameeditText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
         android:text="City"
-        android:width="200dp" />
+        android:width="200dp"
+        android:layout_above="@+id/SignUpbutton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="70dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign Up"
         android:id="@+id/SignUpbutton"
-        android:layout_below="@+id/CityeditText"
+        android:width="150dp"
+        android:layout_marginBottom="114dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/emaileditText"
+        android:text="Email"
+        android:width="200dp"
+        android:layout_above="@+id/CityeditText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="117dp"
-        android:width="150dp" />
+        android:layout_marginBottom="40dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/usernameeditText"
+        android:text="Username"
+        android:width="200dp"
+        android:layout_above="@+id/emaileditText"
+        android:layout_alignStart="@+id/emaileditText"
+        android:layout_marginBottom="40dp" />
 
 </RelativeLayout>
