@@ -35,11 +35,11 @@ public class Book {
 
     public Book() {
         //no args? just creates a book
-        //default values here
+        //default values here - may remove these and put into setters
         this.title = "Untitled";
         this.author= "No author specified";
         this.quantity=1;
-        this.category=category.NONE;
+        this.category=category.NONE; //will see if this works the way I want it to
         this.isPrivate=false; //false= public, true=private
         this.description = "None";
         //this.photo=0; //insert a default image like some grey image
@@ -50,7 +50,13 @@ public class Book {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        if(title.isEmpty()){
+            //throw an exception
+            throw new IllegalArgumentException();
+        }
+        else {
+            this.title = title;
+        }
     }
 
     public String getAuthor() {
@@ -58,7 +64,12 @@ public class Book {
     }
 
     public void setAuthor(String author) {
-        this.author = author;
+        if(author.isEmpty()){
+            //throw exception
+            throw new IllegalArgumentException();
+        }else {
+            this.author = author;
+        }
     }
 
     public int getQuantity() {
@@ -66,7 +77,12 @@ public class Book {
     }
 
     public void setQuantity(int quantity) {
-        this.quantity = quantity;
+        if(quantity<1){
+            //throw exception
+            throw new IllegalArgumentException();
+        }else {
+            this.quantity = quantity;
+        }
     }
 
     public Category getCategory() {
@@ -90,15 +106,18 @@ public class Book {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+
+            this.description = description;
+
     }
 /*
-will return to this when i understand it better
+will return to this when understood better
     public Bitmap getPhoto() {
         return photo;
     }
 
     public void setPhoto(Bitmap photo) {
+    //some sort of protection
         this.photo = photo;
     }
     */

@@ -11,7 +11,7 @@ public class HomeScreenTest extends ActivityInstrumentationTestCase2 {
         super(com.gracehoppers.jlovas.bookwrm.HomeScreen.class);
     }
 
-    //this is extremely overwhelming wow
+    //tests for the homescreen can go here
 
 
 
