@@ -10,11 +10,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/CityeditText"
-        android:text="City"
         android:width="200dp"
         android:layout_above="@+id/SignUpbutton"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="70dp" />
+        android:layout_marginBottom="70dp"
+        android:hint="City" />
 
     <Button
         android:layout_width="wrap_content"
@@ -30,20 +30,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/emaileditText"
-        android:text="Email"
         android:width="200dp"
         android:layout_above="@+id/CityeditText"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp" />
+        android:layout_marginBottom="40dp"
+        android:hint="Email" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/usernameeditText"
-        android:text="Username"
         android:width="200dp"
         android:layout_above="@+id/emaileditText"
         android:layout_alignStart="@+id/emaileditText"
-        android:layout_marginBottom="40dp" />
+        android:layout_marginBottom="40dp"
+        android:hint="Username" />
 
 </RelativeLayout>

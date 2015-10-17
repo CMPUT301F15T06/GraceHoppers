@@ -4,14 +4,14 @@ import android.test.ActivityInstrumentationTestCase2;
 
 /**
  * Created by nlovas on 10/15/15.
- */ /*
+ */
 public class testAccount extends ActivityInstrumentationTestCase2{
 
 
         //@Override
         public testAccount(){
             super(Account.class);
-        }
+        }/*
 
         public void testSaveAccount(){ //tests whether a file saved or not under certain circumstances
             //first circumstance: duplicate username and/or email
@@ -51,7 +51,7 @@ public class testAccount extends ActivityInstrumentationTestCase2{
             assertFalse(saveload.loadFromFile() == testr);
 
         }
-
-    }
 */
+    }
+
 

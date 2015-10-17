@@ -2,6 +2,8 @@ package com.gracehoppers.jlovas.bookwrm;
 
 import android.content.Context;
 
+import java.io.IOException;
+
 /**
  * Created by nlovas on 10/15/15.
  */
@@ -27,19 +29,25 @@ public class Account {
 
 
         //all fields must be filled in:
+
         if(Username==""||Email==""||City==""){
             throw new IllegalArgumentException();
-        }
+        } else
 
         //must have a valid email
         if(!Email.contains("@")){
             throw new IllegalArgumentException();
+        } else
+        if(Username.contains(" ")||Email.contains(" ")||City.contains(" ")){
+            throw new IllegalArgumentException();
+        }else
+        {
+
+
+            this.username = Username;
+            this.email = Email;
+            this.city = City;
         }
-
-
-        this.username=Username;
-        this.email = Email;
-        this.city=City;
     }
 
    // public void SaveAccount(final Context context){

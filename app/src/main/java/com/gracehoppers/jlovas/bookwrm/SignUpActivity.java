@@ -1,5 +1,6 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.io.IOException;
 
 public class SignUpActivity extends ActionBarActivity {
 
@@ -36,28 +39,39 @@ public class SignUpActivity extends ActionBarActivity {
             public void onClick(View view) {
                 //upon button press, try to create a new account based on whats in the textviews
 
+                Account account;
 
-                Account account = new Account(username.getText().toString(),email.getText().toString(),city.getText().toString());
+                try {
+                    account = new Account(username.getText().toString(), email.getText().toString(), city.getText().toString());
+                } catch (IllegalArgumentException e) {
+                    Toast.makeText(getApplicationContext(), "All Fields must be filled",
+                            Toast.LENGTH_SHORT).show();
+                }
+                /*
+                //if any fields are empty
+                if(username.getText().toString().isEmpty()||email.getText().toString().isEmpty()||city.getText().toString().isEmpty()){
+                    Toast.makeText(getApplicationContext(), "All Fields must be filled",
+                            Toast.LENGTH_SHORT).show();
+                } else//if theres a space in any field
+                if(username.getText().toString().contains(" ")||email.getText().toString().contains(" ")||city.getText().toString().contains(" ")){
+                    Toast.makeText(getApplicationContext(), "Fields cannot contain spaces",
+                            Toast.LENGTH_SHORT).show();
+                } else
+                 if(!email.getText().toString().contains("@")){ //if email is invalid
+                    Toast.makeText(getApplicationContext(), "Must have valid email",
+                            Toast.LENGTH_SHORT).show();
+                }
+                 else {
+                    Account account = new Account(username.getText().toString(), email.getText().toString(), city.getText().toString());
+                    saveload.saveInFile(SignUpActivity.this, account);
 
-                saveload.saveInFile(SignUpActivity.this, account);
-/*
-                Account account2 = new Account("butter","123@gmail.com","olds");
-                account2=saveload.loadFromFile(SignUpActivity.this,account2); //should replace account2's info with account's
-
-
-                Toast.makeText(getApplicationContext(), account2.getUsername(),
-                        Toast.LENGTH_SHORT).show();
-
-                Toast.makeText(getApplicationContext(), account2.getEmail(),
-                        Toast.LENGTH_SHORT).show();
-
-                Toast.makeText(getApplicationContext(), account2.getCity(),
-                        Toast.LENGTH_SHORT).show();*/
-
-
-            }
-
-
+                     Toast.makeText(getApplicationContext(), "Account created",
+                             Toast.LENGTH_SHORT).show();
+                     Intent sIntent = new Intent(SignUpActivity.this, HomeScreen.class); //sends user to profile
+                     startActivity(sIntent);
+                }
+*/
+                }
         });
     }
 
