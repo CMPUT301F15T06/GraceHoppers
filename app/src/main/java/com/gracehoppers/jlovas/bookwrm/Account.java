@@ -1,5 +1,7 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.content.Context;
+
 /**
  * Created by nlovas on 10/15/15.
  */
@@ -14,19 +16,38 @@ public class Account {
     private String email;
     //private BookList booklist = new Booklist(); //uncomment this once it has been written
     //private Friendlist friendlist = new Friendlist(); //uncomment this once it has been written
+    private SaveLoad saveload; //for saving your account
 
 
     public Account(String Username, String Email, String City) {
+        //checks to see if the account already exists, cant do this without the database
+
+        //If(searchDatabase(Username)==true){throw new AlreadyExistsException;}
+
+
+
+        //all fields must be filled in:
+        if(Username==""||Email==""||City==""){
+            throw new IllegalArgumentException();
+        }
+
+        //must have a valid email
+        if(!Email.contains("@")){
+            throw new IllegalArgumentException();
+        }
+
+
         this.username=Username;
         this.email = Email;
         this.city=City;
     }
 
-    public void SaveAccount(){
+   // public void SaveAccount(final Context context){
+
+//this doesnt need to be done within the class(?)
 
 
-
-    }
+   // }
 
 
     public String getUsername() {

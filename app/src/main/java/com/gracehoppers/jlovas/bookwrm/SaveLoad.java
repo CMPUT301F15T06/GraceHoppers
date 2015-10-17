@@ -54,7 +54,7 @@ public class SaveLoad {
                 FileInputStream fis = context.openFileInput(FILENAME);
                 BufferedReader in = new BufferedReader(new InputStreamReader(fis));
                 Gson gson=new Gson();
-                //https://sites.google.com/site/gson/gson-user-guide sept27,2015
+                //https://sites.google.com/site/gson/gson-user-guide 2015-16-10
                 Type type=new TypeToken<Account>() {}.getType();
                 account=gson.fromJson(in,type);
 

@@ -4,7 +4,7 @@ import android.test.ActivityInstrumentationTestCase2;
 
 /**
  * Created by nlovas on 10/15/15.
- *//*
+ */ /*
 public class testAccount extends ActivityInstrumentationTestCase2{
 
 
