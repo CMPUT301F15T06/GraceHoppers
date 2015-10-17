@@ -17,3 +17,6 @@ https://sites.google.com/site/gson/gson-user-guide, Oct 16, 2015
 
 Android Toasts:
 http://javatechig.com/android/android-toast-example, Oct 17, 2015
+
+Catching Multiple Exceptions:
+http://docs.oracle.com/javase/7/docs/technotes/guides/language/catch-multiple.html, Oct 17, 2015

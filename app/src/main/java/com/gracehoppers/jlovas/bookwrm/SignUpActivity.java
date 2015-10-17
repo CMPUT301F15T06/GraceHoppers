@@ -43,35 +43,25 @@ public class SignUpActivity extends ActionBarActivity {
 
                 try {
                     account = new Account(username.getText().toString(), email.getText().toString(), city.getText().toString());
+                    saveload.saveInFile(SignUpActivity.this, account);
+                    Toast.makeText(getApplicationContext(), "Account created",
+                            Toast.LENGTH_SHORT).show();
+                    Intent sIntent = new Intent(SignUpActivity.this, HomeScreen.class); //sends user to profile
+                    startActivity(sIntent);
                 } catch (IllegalArgumentException e) {
                     Toast.makeText(getApplicationContext(), "All Fields must be filled",
                             Toast.LENGTH_SHORT).show();
-                }
-                /*
-                //if any fields are empty
-                if(username.getText().toString().isEmpty()||email.getText().toString().isEmpty()||city.getText().toString().isEmpty()){
-                    Toast.makeText(getApplicationContext(), "All Fields must be filled",
-                            Toast.LENGTH_SHORT).show();
-                } else//if theres a space in any field
-                if(username.getText().toString().contains(" ")||email.getText().toString().contains(" ")||city.getText().toString().contains(" ")){
-                    Toast.makeText(getApplicationContext(), "Fields cannot contain spaces",
-                            Toast.LENGTH_SHORT).show();
-                } else
-                 if(!email.getText().toString().contains("@")){ //if email is invalid
+                } catch (IllegalEmailException f) {
                     Toast.makeText(getApplicationContext(), "Must have valid email",
                             Toast.LENGTH_SHORT).show();
+                } catch (NoSpacesException s) {
+                    Toast.makeText(getApplicationContext(), "Fields cannot contain spaces",
+                            Toast.LENGTH_SHORT).show();
                 }
-                 else {
-                    Account account = new Account(username.getText().toString(), email.getText().toString(), city.getText().toString());
-                    saveload.saveInFile(SignUpActivity.this, account);
 
-                     Toast.makeText(getApplicationContext(), "Account created",
-                             Toast.LENGTH_SHORT).show();
-                     Intent sIntent = new Intent(SignUpActivity.this, HomeScreen.class); //sends user to profile
-                     startActivity(sIntent);
                 }
-*/
-                }
+
+
         });
     }
 

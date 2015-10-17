@@ -21,7 +21,7 @@ public class Account {
     private SaveLoad saveload; //for saving your account
 
 
-    public Account(String Username, String Email, String City) {
+    public Account(String Username, String Email, String City) throws IllegalEmailException, NoSpacesException {
         //checks to see if the account already exists, cant do this without the database
 
         //If(searchDatabase(Username)==true){throw new AlreadyExistsException;}
@@ -30,17 +30,17 @@ public class Account {
 
         //all fields must be filled in:
 
-        if(Username==""||Email==""||City==""){
+        if(Username.isEmpty()||Email.isEmpty()||City.isEmpty()){
             throw new IllegalArgumentException();
         } else
 
         //must have a valid email
         if(!Email.contains("@")){
-            throw new IllegalArgumentException();
-        } else
+            throw new IllegalEmailException();
+        } else //fields cant have spaces
         if(Username.contains(" ")||Email.contains(" ")||City.contains(" ")){
-            throw new IllegalArgumentException();
-        }else
+            throw new NoSpacesException();
+        } else
         {
 
 
