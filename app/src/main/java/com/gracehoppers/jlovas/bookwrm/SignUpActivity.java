@@ -40,9 +40,9 @@ public class SignUpActivity extends ActionBarActivity {
                 Account account = new Account(username.getText().toString(),email.getText().toString(),city.getText().toString());
 
                 saveload.saveInFile(SignUpActivity.this, account);
-            /*
+/*
                 Account account2 = new Account("butter","123@gmail.com","olds");
-                saveload.loadFromFile(SignUpActivity.this,account2); //should replace account2's info with account's
+                account2=saveload.loadFromFile(SignUpActivity.this,account2); //should replace account2's info with account's
 
 
                 Toast.makeText(getApplicationContext(), account2.getUsername(),
@@ -52,10 +52,9 @@ public class SignUpActivity extends ActionBarActivity {
                         Toast.LENGTH_SHORT).show();
 
                 Toast.makeText(getApplicationContext(), account2.getCity(),
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();*/
 
-commented code is for testing saveload's load method
-*/
+
             }
 
 
