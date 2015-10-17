@@ -9,33 +9,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MainActivity extends ActionBarActivity {
-    Button logInButton;
-    Button signUpButton;
+public class HomeScreen extends ActionBarActivity {
+    Button addBookButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home_screen);
 
-        logInButton = (Button)findViewById(R.id.logInButton);
-        signUpButton = (Button)findViewById(R.id.signUpButton);
+        addBookButton= (Button)findViewById(R.id.addBookButton);
 
-        logInButton.setOnClickListener(new View.OnClickListener() {
+
+        addBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //add conditions for this to work here!!
-                Toast.makeText(getApplicationContext(), "Login not set up quite yet, I go through regardless for testing book purposes! c:", Toast.LENGTH_SHORT).show();
-                Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
-                startActivity(lIntent);
-            }
-        });
-
-        signUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent sIntent = new Intent(MainActivity.this, SignUpActivity.class); //change me to where sign up should go!
-                startActivity(sIntent);
+                Intent addBIntent = new Intent(HomeScreen.this, AddBookScreen.class);
+                startActivity(addBIntent);
             }
         });
 
@@ -44,7 +34,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_home_screen, menu);
         return true;
     }
 

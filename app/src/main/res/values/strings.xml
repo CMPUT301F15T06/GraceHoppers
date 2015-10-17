@@ -4,4 +4,21 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="title_activity_home_screen">HomeScreen</string>
+    <string name="title_activity_add_book_screen">AddBookScreen</string>
+
+    <string-array name="category_types">
+        <item>None</item>
+        <item>Hardback</item>
+        <item>Paperback</item>
+        <item>Audiobook</item>
+        <item>Comic Book</item>
+        <item>Textbook</item>
+        <item>Picture Book</item>
+        <item>Braille</item>
+        <item>Reference</item>
+        <item>Recipe Book</item>
+        <item>Do It Yourself (DIY)</item>
+    </string-array>
+
 </resources>

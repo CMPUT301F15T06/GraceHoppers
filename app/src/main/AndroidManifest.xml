@@ -20,6 +20,14 @@
             android:name=".SignUpActivity"
             android:label="@string/title_activity_sign_up" >
         </activity>
+        <activity
+            android:name=".HomeScreen"
+            android:label="@string/title_activity_home_screen" >
+        </activity>
+        <activity
+            android:name=".AddBookScreen"
+            android:label="@string/title_activity_add_book_screen" >
+        </activity>
     </application>
 
 </manifest>
