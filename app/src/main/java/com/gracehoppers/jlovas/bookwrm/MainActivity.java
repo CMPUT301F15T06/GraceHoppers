@@ -26,8 +26,14 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View view) {
                 //add conditions for this to work here!!
                 Toast.makeText(getApplicationContext(), "Login not set up quite yet, I go through regardless for testing book purposes! c:", Toast.LENGTH_SHORT).show();
+
+                //search through database
+                //if username exists:
                 Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
                 startActivity(lIntent);
+
+                //else;
+                //Toast.makeText(getApplicationContext(), "username does not exist, please sign up or enter the correct username.", Toast.LENGTH_LONG).show();
             }
         });
 
