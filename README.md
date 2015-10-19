@@ -20,3 +20,7 @@ http://javatechig.com/android/android-toast-example, Oct 17, 2015
 
 Catching Multiple Exceptions:
 http://docs.oracle.com/javase/7/docs/technotes/guides/language/catch-multiple.html, Oct 17, 2015
+
+Adding an image to the Drawable folder:
+Arshid KV, http://stackoverflow.com/questions/29047902/how-to-add-an-image-to-the-drawable-folder-in-android-studio Oct 19 2015
+http://stackoverflow.com/users/2513873/arshid-kv
