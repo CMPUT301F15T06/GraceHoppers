@@ -1,6 +1,8 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.widget.ImageView;
 
 /**
  * Created by jlovas on 10/17/15.
@@ -30,10 +32,10 @@ public class Book {
     private Category category;
     private boolean isPrivate;
     private String description;
-    //private Bitmap photo; //will figure this one out later
+    ImageView photo; //will figure out if they change the image stuff later
 
 
-    public Book() {
+    public Book(ImageView photo) {
         //no args? just creates a book
         //default values here - may remove these and put into setters
         this.title = "Untitled";
@@ -42,7 +44,7 @@ public class Book {
         this.category=category.NONE; //will see if this works the way I want it to
         this.isPrivate=false; //false= public, true=private
         this.description = "None";
-        //this.photo=0; //insert a default image like some grey image
+        this.photo= photo; //insert a default image like some grey image
     }
 
     public String getTitle() {
@@ -109,6 +111,16 @@ public class Book {
 
             this.description = description;
 
+    }
+
+    public void setQuantity(String quantity){
+        int converted =Integer.parseInt(quantity);
+        if(converted <=0){
+            throw new IllegalArgumentException();
+        }
+        else {
+            this.quantity = Integer.parseInt(quantity); //NEED TO CATCH EXCEPTION IF THIS DOESN'T WORK
+        }
     }
 /*
 will return to this when understood better

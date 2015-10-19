@@ -74,18 +74,15 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_alignTop="@+id/titleText"
-        android:layout_alignParentEnd="true" />
+        android:adjustViewBounds="true"
+        android:id="@+id/bookImage"
+        android:src="@drawable/defaultbook"
+        android:maxHeight="150sp"
+        android:maxWidth="150sp"
+        android:layout_below="@+id/titleAddBookText"
+        android:layout_toEndOf="@+id/quantityText" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="image option will go here (maybe)"
-        android:id="@+id/textView"
-        android:layout_below="@+id/titleText"
-        android:layout_alignParentEnd="true" />
+
 
     <Button
         android:layout_width="wrap_content"
