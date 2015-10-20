@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gracehoppers.jlovas.bookwrm" >
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -29,6 +29,10 @@
         <activity
             android:name=".AddBookScreen"
             android:label="@string/title_activity_add_book_screen" >
+        </activity>
+        <activity
+            android:name=".FriendsScreen"
+            android:label="@string/title_activity_friends_screen" >
         </activity>
     </application>
 

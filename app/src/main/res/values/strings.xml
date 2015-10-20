@@ -20,5 +20,6 @@
         <item>Recipe Book</item>
         <item>Do It Yourself (DIY)</item>
     </string-array>
+    <string name="title_activity_friends_screen">FriendsScreen</string>
 
 </resources>
