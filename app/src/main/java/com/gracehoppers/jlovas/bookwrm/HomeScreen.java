@@ -6,12 +6,20 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeScreen extends ActionBarActivity {
     Button addBookButton;
 
+    private ListView inventoryList;   //HC modified
+    private ArrayAdapter<Book> adapter; //HC
+    private ArrayList<Book> inventory = new ArrayList<Book>();    //HC
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +28,7 @@ public class HomeScreen extends ActionBarActivity {
 
         addBookButton= (Button)findViewById(R.id.addBookButton);
 
+        inventoryList = (ListView)findViewById(R.id.inventory);         //HC
 
         addBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,6 +38,14 @@ public class HomeScreen extends ActionBarActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onStart(){                           // HC
+        super.onStart();
+        adapter = new ArrayAdapter<Book>(this,R.layout.book_inventory_list, inventory);
+        inventoryList.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
