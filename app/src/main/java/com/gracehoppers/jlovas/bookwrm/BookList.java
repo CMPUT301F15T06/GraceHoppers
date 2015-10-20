@@ -26,5 +26,7 @@ public class BookList {
 
     public void getBook(Book book){
         //how are we going to implement this? find by name?
+        //shouldnt the parameter be a string? (not the book) and
+        //the return value the book object?
     }
 }
