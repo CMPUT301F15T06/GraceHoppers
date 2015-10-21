@@ -24,3 +24,6 @@ http://docs.oracle.com/javase/7/docs/technotes/guides/language/catch-multiple.ht
 Adding an image to the Drawable folder:
 Arshid KV, http://stackoverflow.com/questions/29047902/how-to-add-an-image-to-the-drawable-folder-in-android-studio Oct 19 2015
 http://stackoverflow.com/users/2513873/arshid-kv
+
+Java String Methods:
+http://docs.oracle.com/javase/7/docs/api/java/lang/String.html Oct 21, 2015

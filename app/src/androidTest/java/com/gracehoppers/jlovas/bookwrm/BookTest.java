@@ -15,7 +15,7 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
     public void testAddBook(){
 
         //Need to create an account first to have an inventory to add to
-        Account testAccount = new Account("patricia", "patricia@gmail.com", "St.Albert");
+      //  Account testAccount = new Account("patricia", "patricia@gmail.com", "St.Albert");
         //assertTrue(accounts.contains(testAccount)); //***need account list for this
 
         //Book book = new Book("Eragon", "Christopher Paolini", 1, "Fantasy", 4, 0, 1, testphoto);
