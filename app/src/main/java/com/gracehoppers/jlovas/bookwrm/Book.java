@@ -20,6 +20,10 @@ import android.widget.ImageView;
  */
 public class Book {
 
+    public Book() {
+
+    }
+
     private enum Category{
             //Enum will give each a number by default. NONE=0, HARDBACK=1, etc
         NONE, HARDBACK, PAPERBACK, AUDIOBOOK, COMIC, TEXTBOOK, PICTURE, BRAILLE, REFERENCE, RECIPE, DIY;

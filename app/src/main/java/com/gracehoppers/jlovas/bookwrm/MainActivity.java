@@ -7,11 +7,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
     Button logInButton;
     Button signUpButton;
+    /*
+    String user;
+    private EditText userNameText;
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +34,12 @@ public class MainActivity extends ActionBarActivity {
 
                 //search through database
                 //if username exists:
+
+                /*
+                userNameText = (EditText) findViewById(R.id.usernameText);
+                user = userNameText.getText().toString();
+                */
+
                 Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
                 startActivity(lIntent);
 

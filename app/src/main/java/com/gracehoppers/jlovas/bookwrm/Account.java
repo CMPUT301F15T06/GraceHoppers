@@ -18,6 +18,7 @@ public class Account {
     private String email;
     //private BookList booklist = new Booklist(); //uncomment this once it has been written
     //private Friendlist friendlist = new Friendlist(); //uncomment this once it has been written
+    private Inventory inventory;
     private SaveLoad saveload; //for saving your account
 
 
