@@ -12,13 +12,27 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
     //im testing for blanks
     //catch '-' quantities
 
-    public void testAddBook(){
+    public void testAddBook() throws NoSpacesException, NegativeNumberException, IllegalEmailException {
 
         //Need to create an account first to have an inventory to add to
-        Account testAccount = new Account("patricia", "patricia@gmail.com", "St.Albert");
-        //assertTrue(accounts.contains(testAccount)); //***need account list for this
 
-        //Book book = new Book("Eragon", "Christopher Paolini", 1, "Fantasy", 4, 0, 1, testphoto);
+        Account testAccount = new Account("Jill", "jlovas@ualberta.ca", "GP");
+        Category testCategory = null;
+
+        Book book = new Book();
+        book.setTitle("Eragon");
+        book.setAuthor("Christopher Paolini");
+
+        book.setQuantity("1");
+
+        book.setCategory(testCategory.HARDBACK);
+        book.setDescription("None");
+        book.setQuality(4);
+        book.setIsPrivate(false);
+        //will have to test picture later, relying on default for now
+
+        //I need some way to access the inventory and add the book
+
         //books.add(book);
         //assertTrue(testAccount.books.hasItem(book));
 

@@ -98,7 +98,8 @@
         android:text="-"
         android:id="@+id/minusButton"
         android:layout_alignBottom="@+id/quantityText"
-        android:layout_toEndOf="@+id/titleText" />
+        android:layout_toEndOf="@+id/titleText"
+        android:clickable="false"/>
 
     <Button
         android:layout_width="wrap_content"

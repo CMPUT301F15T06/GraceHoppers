@@ -21,6 +21,8 @@ public class AddBookScreen extends ActionBarActivity {
     Spinner mySpinner;
     Button okButton;
     ImageView thePhoto;
+    Button minusButton;
+    Button plusButton;
 
 
     @Override
@@ -33,11 +35,81 @@ public class AddBookScreen extends ActionBarActivity {
         quantityText = (EditText)findViewById(R.id.quantityText);
         okButton = (Button)findViewById(R.id.okButton);
         thePhoto = (ImageView)findViewById(R.id.bookImage);
+        minusButton = (Button)findViewById(R.id.minusButton);
+        plusButton = (Button)findViewById(R.id.plusButton);
 
         //I would like the photo to be clickable and offer the user the ability to choose an image from their photo gallery
         //or take a picture. on the same screen it should show the image at a big size
         //to the user so they can see what it will look like.
         // Will get this in in time, functionality first. -Jill
+
+        minusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //cannot be clickable right away, becomes clickable through the use of plusButton
+
+                String tempQuantityString = quantityText.getText().toString();
+
+                int tempQuantity;
+                try {
+                    tempQuantity = Integer.parseInt(tempQuantityString); //catch exception!!
+
+                    if(tempQuantity < 1){
+                        //the user enters a negative number into the textfield, correct them
+                        quantityText.setText("1");
+                    }
+
+                    if (tempQuantity > 1) {
+
+                        tempQuantity--;
+                        quantityText.setText(String.valueOf(tempQuantity));
+
+                        if (tempQuantity == 1) {
+                            //make the button unclickable
+                            minusButton.setClickable(false);
+                        }
+                    } //get here if tempQuantity <1, in which we do nothing
+                }catch(IllegalArgumentException e){
+                    //if string is an invalid string here, clear it and start at 1 again
+                    quantityText.setText("1");
+                }
+
+            }
+        });
+
+        plusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //on clicking this, makes the '-' button available
+                String tempQuantityString = quantityText.getText().toString();
+                int tempQuantity;
+
+                try {
+                    tempQuantity = Integer.parseInt(tempQuantityString); //catch exception!!
+
+                    if(tempQuantity < 1){
+                        //the user enters a negative number into the textfield, correct them
+                        quantityText.setText("1");
+                    }else {
+
+
+                        tempQuantity++;
+                        quantityText.setText(String.valueOf(tempQuantity));
+
+                        if (tempQuantity > 1) {
+                            //make possible to click the minus button
+                            minusButton.setClickable(true);
+                        }
+                    }//end of else
+                }catch(IllegalArgumentException e){
+                    //if string is an invalid string here, clear it and start at 1 again
+                    quantityText.setText("1");
+                }
+
+            }
+        });
+
+
 
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +143,10 @@ public class AddBookScreen extends ActionBarActivity {
                     //also catch negative or 0 quantity
                     Toast.makeText(getApplicationContext(), "Illegal quantity type, please choose a number", Toast.LENGTH_SHORT).show();
 
+                } catch(NegativeNumberException d){
+                    Toast.makeText(getApplicationContext(), "Invalid quantity type. Quantity must be positive", Toast.LENGTH_SHORT).show();
+
+
                 }
 
 
@@ -81,7 +157,12 @@ public class AddBookScreen extends ActionBarActivity {
         });
 
 
-    }
+
+
+
+
+
+    } //end of onCreate function
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

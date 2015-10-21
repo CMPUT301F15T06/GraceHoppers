@@ -23,19 +23,21 @@ public class Book {
     public Book() {
 
     }
+/* will be removing if not needed, I put it into its own file
 
     private enum Category{
             //Enum will give each a number by default. NONE=0, HARDBACK=1, etc
         NONE, HARDBACK, PAPERBACK, AUDIOBOOK, COMIC, TEXTBOOK, PICTURE, BRAILLE, REFERENCE, RECIPE, DIY;
 
     }
-
+*/
     private String title;
     private String author;
     private int quantity;
     private Category category;
     private boolean isPrivate;
     private String description;
+    private int quality;
     ImageView photo; //will figure out if they change the image stuff later
 
 
@@ -48,6 +50,7 @@ public class Book {
         this.category=category.NONE; //will see if this works the way I want it to
         this.isPrivate=false; //false= public, true=private
         this.description = "None";
+        this.quality = 0; //default 0 for now?
         this.photo= photo; //insert a default image like some grey image
     }
 
@@ -82,15 +85,6 @@ public class Book {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
-        if(quantity<1){
-            //throw exception
-            throw new IllegalArgumentException();
-        }else {
-            this.quantity = quantity;
-        }
-    }
-
     public Category getCategory() {
         return category;
     }
@@ -117,13 +111,21 @@ public class Book {
 
     }
 
-    public void setQuantity(String quantity){
+    public int getQuality(){
+        return quality;
+    }
+
+    public void setQuality(int quality){
+        this.quality= quality;
+    }
+
+    public void setQuantity(String quantity) throws NegativeNumberException {
         int converted =Integer.parseInt(quantity);
         if(converted <=0){
-            throw new IllegalArgumentException();
+            throw new NegativeNumberException();
         }
         else {
-            this.quantity = Integer.parseInt(quantity); //NEED TO CATCH EXCEPTION IF THIS DOESN'T WORK
+            this.quantity = converted;
         }
     }
 /*
