@@ -21,5 +21,6 @@
         <item>Do It Yourself (DIY)</item>
     </string-array>
     <string name="title_activity_friends_screen">FriendsScreen</string>
+    <string name="title_activity_profile_screen">ProfileScreen</string>
 
 </resources>
