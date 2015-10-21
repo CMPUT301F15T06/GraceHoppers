@@ -39,10 +39,13 @@ public class SignUpActivity extends ActionBarActivity {
             public void onClick(View view) {
                 //upon button press, try to create a new account based on whats in the textviews
 
-                Account account;
+
 
                 try {
-                    account = new Account(username.getText().toString(), email.getText().toString(), city.getText().toString());
+                    Account account = new Account();
+                    account.setUsername(username.getText().toString());
+                    account.setEmail(email.getText().toString());
+                    account.setCity(city.getText().toString());
                     saveload.saveInFile(SignUpActivity.this, account);
                     Toast.makeText(getApplicationContext(), "Account created",
                             Toast.LENGTH_SHORT).show();
@@ -56,6 +59,9 @@ public class SignUpActivity extends ActionBarActivity {
                             Toast.LENGTH_SHORT).show();
                 } catch (NoSpacesException s) {
                     Toast.makeText(getApplicationContext(), "Fields cannot contain spaces",
+                            Toast.LENGTH_SHORT).show();
+                } catch (TooLongException w) {
+                    Toast.makeText(getApplicationContext(), "A field is too long",
                             Toast.LENGTH_SHORT).show();
                 }
 

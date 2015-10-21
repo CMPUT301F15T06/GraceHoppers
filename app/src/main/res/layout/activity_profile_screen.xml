@@ -1,0 +1,112 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.gracehoppers.jlovas.bookwrm.ProfileScreen">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MyProfile"
+        android:textSize="40dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="30dp"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="UserName:"
+        android:layout_marginTop="120dp"
+        android:textSize="20dp"
+        android:id="@+id/textname"/>
+
+    <EditText
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:hint= "   MyUserName "
+        android:layout_toRightOf="@id/textname"
+        android:layout_marginTop="110dp"
+        android:id="@+id/editname"/>
+
+    <TextView
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/textname"
+        android:layout_marginTop="120dp"
+        android:textSize="20dp"
+        android:text="name"
+        android:id="@+id/originalname"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="Email:"
+        android:layout_marginTop="170dp"
+        android:textSize="20dp"
+        android:id="@+id/textemail"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="City:"
+        android:layout_marginTop="225dp"
+        android:textSize="20dp"
+        android:id="@+id/textcity"/>
+
+    <EditText
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:hint= "    MyCity"
+        android:layout_toRightOf="@id/textcity"
+        android:layout_marginTop="215dp"
+        android:id="@+id/editcity"/>
+
+    <TextView
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:text = "city"
+        android:textSize="20dp"
+        android:layout_toRightOf="@id/textcity"
+        android:layout_marginTop="225dp"
+        android:id="@+id/originalcity"/>
+
+    <EditText
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:hint= "    MyEmail"
+        android:layout_toRightOf="@id/textemail"
+        android:layout_marginTop="160dp"
+        android:id="@+id/editemail"/>
+
+    <TextView
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:text="email"
+        android:textSize="20dp"
+        android:layout_toRightOf="@id/textemail"
+        android:layout_marginTop="170dp"
+        android:id="@+id/originalemail"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text = "Click to edit"
+        android:layout_marginTop="340dp"
+        android:textSize="18dp"
+        android:layout_marginLeft="90dp"
+        android:id="@+id/editprofile"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text = "confirm edit"
+        android:layout_marginTop="340dp"
+        android:textSize="18dp"
+        android:layout_marginLeft="90dp"
+        android:id="@+id/confirm_edit"
+        />
+</RelativeLayout>

@@ -34,6 +34,10 @@
             android:name=".FriendsScreen"
             android:label="@string/title_activity_friends_screen" >
         </activity>
+        <activity
+            android:name=".ProfileScreen"
+            android:label="@string/title_activity_profile_screen" >
+        </activity>
     </application>
 
 </manifest>

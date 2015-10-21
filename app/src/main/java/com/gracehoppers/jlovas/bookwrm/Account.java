@@ -22,33 +22,11 @@ public class Account {
     private SaveLoad saveload; //for saving your account
 
 
-    public Account(String Username, String Email, String City) throws IllegalEmailException, NoSpacesException {
+    public Account() {
         //checks to see if the account already exists, cant do this without the database
 
         //If(searchDatabase(Username)==true){throw new AlreadyExistsException;}
 
-
-
-        //all fields must be filled in:
-
-        if(Username.isEmpty()||Email.isEmpty()||City.isEmpty()){
-            throw new IllegalArgumentException();
-        } else
-
-        //must have a valid email
-        if(!Email.contains("@")){
-            throw new IllegalEmailException();
-        } else //fields cant have spaces
-        if(Username.contains(" ")||Email.contains(" ")||City.contains(" ")){
-            throw new NoSpacesException();
-        } else
-        {
-
-
-            this.username = Username;
-            this.email = Email;
-            this.city = City;
-        }
     }
 
    // public void SaveAccount(final Context context){
@@ -63,23 +41,63 @@ public class Account {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String username) throws NoSpacesException, TooLongException {
+//length constraint: 20 characters
+        if(username.isEmpty()){
+            throw new IllegalArgumentException();
+        } else
+            //fields cant have spaces
+                if(username.contains(" ")){
+                    throw new NoSpacesException();
+                    } else{
+                    if(username.length()>20){
+                        throw new TooLongException();
+                    }else
+                    this.username = username;
+                    }
     }
 
     public String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setCity(String city) throws NoSpacesException, TooLongException {
+//length constraint: 20 characters
+        if(city.isEmpty()){
+            throw new IllegalArgumentException();
+        } else
+        if(city.length()>20){
+            throw new TooLongException();
+        } else
+             //cities ARE allowed to have spaces
+                {
+                    this.city = city;
+                }
+
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String email) throws IllegalEmailException, NoSpacesException, TooLongException {
+//length constraint: 20 characters
+        if(email.isEmpty()){
+            throw new IllegalArgumentException();
+        } else
+            //must have a valid email
+            if(!email.contains("@")){
+                throw new IllegalEmailException();
+            } else //fields cant have spaces
+                if(email.contains(" ")){
+                    throw new NoSpacesException();
+                } else
+                if(email.length()>20){
+                    throw new TooLongException();
+                } else
+                {
+                    this.email = email;
+                   }
+
     }
 }

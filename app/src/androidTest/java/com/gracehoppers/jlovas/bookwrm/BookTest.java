@@ -16,6 +16,7 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
 
         //Need to create an account first to have an inventory to add to
 
+
         Account testAccount = new Account("Jill", "jlovas@ualberta.ca", "GP");
         Category testCategory = null;
 
