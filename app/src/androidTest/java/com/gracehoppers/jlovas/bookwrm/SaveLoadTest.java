@@ -1,5 +1,6 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.app.Activity;
 import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.AndroidTestCase;
@@ -16,21 +17,31 @@ public class SaveLoadTest extends ActivityInstrumentationTestCase2 {
         super(Account.class);
     }
 
-    public void testSaveInFile() throws IllegalEmailException, NoSpacesException { //tests whether a file saved or not under certain circumstances
-        //first circumstance: duplicate username and/or email
-       /* SaveLoad saveload = new SaveLoad();
+    public void testSaveInFile() throws IllegalEmailException, NoSpacesException, TooLongException { //tests whether a file saved or not under certain circumstances
+        //test to see if it saves
+        SaveLoad saveload = new SaveLoad();
         AndroidTestCase androidtestcase = new AndroidTestCase(); //so that we can get a context for saving/loading
-        Account testa = new Account("cmput301", "cmput301@ualberta.ca", "Edmonton");
-
-        saveload.saveInFile(androidtestcase.getContext(), testa);
-        Account testa2 = new Account("coolio","w@one.ca","grande prairie");
-        testa2=saveload.loadFromFile(androidtestcase.getContext(),testa2);
-        assertTrue( testa2==testa); //test2a should have tasta's info inside           */
+        Account testa = new Account();
+        testa.setUsername("JohnEgbert");
+        testa.setEmail("GT@pesterchum.ca");
+        testa.setCity("Sburb");
 
 
+        Context context = new Activity();
+
+        saveload.saveInFile(context, testa);
+        Account testa2 = new Account();
+        assertTrue(saveload.loadFromFile(context,testa2)==testa);
 
 
-/*
+
+        /*testa2=saveload.loadFromFile(androidtestcase.getContext(),testa2);
+        assertTrue( testa2==testa); //test2a should have tasta's info inside
+
+
+
+
+
         Account testb = new Account("cmput301", "cmput301@ualberta.ca", "Edmonton");
 
 
