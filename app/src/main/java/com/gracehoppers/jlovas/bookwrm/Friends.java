@@ -10,17 +10,14 @@ public class Friends {
     //Each account should have exactly one Friends instance associated with it
     //Should we call the constructor in the SignUp/CreateAccount???
 
-    private Account user;
     private ArrayList<Account> friends = new ArrayList<Account>();
 
-    //NEED a user argument for the constructor. If no argument,
-    // who do we assign the list to?
-    public ArrayList<Account> Friends(Account user){
+    public ArrayList<Account> Friends(){
        return friends;
     }
 
-    public ArrayList<Account> getFriends(Account user){
-        return this.friends;
+    public Friends getFriends(){
+        return this;
     }
 
     public void addFriend(Account friend){
