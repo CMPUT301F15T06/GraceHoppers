@@ -16,14 +16,26 @@ public class FriendsScreenTest extends ActivityInstrumentationTestCase2  {
 
     //Test that we can add a friend
 
-    public void testAddFriend() {
+    public void testAddFriend() throws IllegalEmailException, NoSpacesException, TooLongException{
         //Create 2 accounts first
-        //Something wrong with the Account constuctor
-        //Account A = new Account("userA", "anEmail", "YEG");
-        //Account B = new Account("userB", "anotherEmail", "YEG");
+        Account accountA = new Account();
+        Account accountB = new Account();
 
+        accountA.setUsername("userA");
+        accountB.setUsername("userB");
+        accountA.setCity("YEG");
+        accountB.setCity("YEG");
+        accountA.setEmail("a@gmail.com");
+        accountB.setEmail("b@gmail.com");
 
         //accountA befriends accountB
+        accountA.getFriends().addFriend(accountB);
+        accountB.getFriends().addFriend(accountA);
+
+        //assert that A has B as friend and vice versa
+        assertTrue(accountA.getFriends().hasFriend(accountB));
+        assertTrue(accountB.getFriends().hasFriend(accountA));
+
 
 
 
