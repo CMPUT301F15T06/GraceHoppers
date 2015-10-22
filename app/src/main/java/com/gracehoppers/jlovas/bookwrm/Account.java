@@ -20,6 +20,7 @@ public class Account {
     //private Friendlist friendlist = new Friendlist(); //uncomment this once it has been written
     private Inventory inventory;
     private SaveLoad saveload; //for saving your account
+    private Friends friends = new Friends(); //create friend list
 
 
     public Account() {
@@ -100,4 +101,9 @@ public class Account {
                    }
 
     }
+
+    public Friends getFriends(){
+        return friends.getFriends();
+    }
+
 }

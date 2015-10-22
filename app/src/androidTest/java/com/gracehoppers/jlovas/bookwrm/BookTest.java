@@ -21,6 +21,7 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
         testAccount.setUsername("Jill");
         testAccount.setEmail("jlovas@ualberta.ca");
         testAccount.setCity("GP");
+
         Category testCategory = null;
 
         Book book = new Book();

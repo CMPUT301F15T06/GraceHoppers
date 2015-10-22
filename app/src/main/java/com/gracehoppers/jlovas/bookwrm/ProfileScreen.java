@@ -14,7 +14,6 @@ import java.util.Arrays;
 
 public class ProfileScreen extends ActionBarActivity {
 
-    EditText editname;
     EditText editemail;
     EditText editcity;
     TextView name;
@@ -22,18 +21,20 @@ public class ProfileScreen extends ActionBarActivity {
     TextView city;
     Button edit;
     Button confirm;
+    String newname;
+    String newemail;
+    String newcity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_screen);
 
-        editname =(EditText) findViewById(R.id.editname);
         editemail = (EditText) findViewById(R.id.editemail);
         editcity = (EditText) findViewById(R.id.editcity);
         confirm = (Button) findViewById(R.id.confirm_edit);
-        final ArrayList<View> editList = new ArrayList<View>((Arrays.asList(editname,editemail,editcity,confirm)));
-        set_invisble(editList);
+        final ArrayList<View> editList = new ArrayList<View>((Arrays.asList(editemail,editcity,confirm)));
+        set_invisible(editList);
 
         name =(TextView) findViewById(R.id.originalname);
         email =(TextView) findViewById(R.id.originalemail);
@@ -41,17 +42,33 @@ public class ProfileScreen extends ActionBarActivity {
         edit = (Button) findViewById(R.id.editprofile);
         final ArrayList<View> originalList = new ArrayList<View>((Arrays.asList(name,city,email,edit)));
 
+        String oldname="";
+        String oldemail="";
+        String oldcity="";
+
+        name.setText(oldname);
+        email.setText(oldemail);
+        city.setText(oldcity);
 
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                set_invisble(editList);
-                set_visible(originalList);
+                set_visible(editList);
+                set_invisible(originalList);
+            }
+        });
+
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                newemail = editemail.getText().toString();
+                newcity = editcity.getText().toString();
+
             }
         });
     }
 
-    public void set_invisble(ArrayList<View> views){
+    public void set_invisible(ArrayList<View> views){
         for(View v:views){
             v.setVisibility(View.INVISIBLE);
         }
