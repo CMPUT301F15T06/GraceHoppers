@@ -8,7 +8,7 @@
     <string name="title_activity_add_book_screen">AddBookScreen</string>
 
     <string-array name="category_types">
-        <item>None</item>
+        <item>Add Category</item>
         <item>Hardback</item>
         <item>Paperback</item>
         <item>Audiobook</item>

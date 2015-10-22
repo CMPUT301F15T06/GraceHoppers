@@ -27,3 +27,18 @@ http://stackoverflow.com/users/2513873/arshid-kv
 
 Java String Methods:
 http://docs.oracle.com/javase/7/docs/api/java/lang/String.html Oct 21, 2015
+
+Working with TableLayout:
+Steven Cronin, http://mrbool.com/how-to-deal-with-table-layout-in-android/28008, Oct 22, 2015
+
+Setting The Rating Bar to 5 Stars:
+Alex Volovoy, http://stackoverflow.com/questions/3858600/how-to-make-ratingbar-to-show-five-stars, Oct 22, 2015
+http://stackoverflow.com/users/176761/alex-volovoy
+
+Alignment in Table Cells:
+Sephy, http://stackoverflow.com/questions/2710793/what-is-the-equivalent-of-colspan-in-an-android-tablelayout, Oct 22, 2015
+http://stackoverflow.com/users/263521/sephy
+
+Limit text input in Edittext fields:
+Austin Hanson, http://stackoverflow.com/questions/3285412/limit-text-length-of-edittext-in-android, Oct 22, 2015
+http://stackoverflow.com/users/110762/austin-hanson

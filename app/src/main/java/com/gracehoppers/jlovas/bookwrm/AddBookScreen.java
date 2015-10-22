@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -23,7 +24,7 @@ public class AddBookScreen extends ActionBarActivity {
     ImageView thePhoto;
     Button minusButton;
     Button plusButton;
-
+    RatingBar stars;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,8 @@ public class AddBookScreen extends ActionBarActivity {
         thePhoto = (ImageView)findViewById(R.id.bookImage);
         minusButton = (Button)findViewById(R.id.minusButton);
         plusButton = (Button)findViewById(R.id.plusButton);
+        stars = (RatingBar)findViewById(R.id.ratingBar);
+        stars.setNumStars(5);
 
         //I would like the photo to be clickable and offer the user the ability to choose an image from their photo gallery
         //or take a picture. on the same screen it should show the image at a big size

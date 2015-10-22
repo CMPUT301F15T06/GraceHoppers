@@ -12,12 +12,15 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
     //im testing for blanks
     //catch '-' quantities
 
-    public void testAddBook() throws NoSpacesException, NegativeNumberException, IllegalEmailException {
+    public void testAddBook() throws NoSpacesException, NegativeNumberException, IllegalEmailException, TooLongException {
 
         //Need to create an account first to have an inventory to add to
 
 
-        Account testAccount = new Account("Jill", "jlovas@ualberta.ca", "GP");
+        Account testAccount = new Account();
+        testAccount.setUsername("Jill");
+        testAccount.setEmail("jlovas@ualberta.ca");
+        testAccount.setCity("GP");
         Category testCategory = null;
 
         Book book = new Book();
