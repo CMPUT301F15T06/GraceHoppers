@@ -13,6 +13,20 @@ import android.widget.Toast;
 public class MainActivity extends ActionBarActivity {
     Button logInButton;
     Button signUpButton;
+    EditText usernameText;
+
+    //for UI testing:-------------------------------------------
+    public Button getSignUpButton(){
+        return signUpButton;
+    }
+    public Button getLogInButton(){
+        return logInButton;
+    }
+    public EditText getEditText(){
+        return usernameText;
+    }
+//--------------------------------------------------------------
+
     /*
     String user;
     private EditText userNameText;
@@ -25,6 +39,7 @@ public class MainActivity extends ActionBarActivity {
 
         logInButton = (Button)findViewById(R.id.logInButton);
         signUpButton = (Button)findViewById(R.id.signUpButton);
+        usernameText = (EditText)findViewById(R.id.usernameText);
 
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
