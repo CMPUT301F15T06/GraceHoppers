@@ -26,6 +26,10 @@ public class Inventory {
         return inventory.contains(book);
     }
 
+    public int getSize(){
+        return inventory.size();
+    }
+
     public Book getBookByTitle(String name) {
         Book returnedBook = new Book();
         for (int i = 0; i <= inventory.size(); i++) {

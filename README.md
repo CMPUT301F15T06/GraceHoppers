@@ -52,3 +52,7 @@ http://stackoverflow.com/users/2003986/toyonos
 Checking an Enum Value:
 Xavi Lopez, http://stackoverflow.com/questions/19586234/how-to-check-equals-on-enum-value, Oct 22, 2015
 http://stackoverflow.com/users/851811/xavi-l%c3%b3pez
+
+Getting a context for testing purposes:
+Salsero69, http://stackoverflow.com/questions/5544205/accessing-application-context-from-testsuite-in-setup-before-calling-getactivi, Oct 23, 2015
+http://stackoverflow.com/users/602030/salsero69

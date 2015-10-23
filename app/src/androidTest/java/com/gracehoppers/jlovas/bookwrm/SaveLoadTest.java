@@ -1,10 +1,12 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.AndroidTestCase;
 import android.test.IsolatedContext;
+import android.test.mock.MockContentResolver;
 import android.test.mock.MockContext;
 
 /**
@@ -20,18 +22,20 @@ public class SaveLoadTest extends ActivityInstrumentationTestCase2 {
     public void testSaveInFile() throws IllegalEmailException, NoSpacesException, TooLongException { //tests whether a file saved or not under certain circumstances
         //test to see if it saves
         SaveLoad saveload = new SaveLoad();
-        AndroidTestCase androidtestcase = new AndroidTestCase(); //so that we can get a context for saving/loading
+        //AndroidTestCase androidtestcase = new AndroidTestCase(); //so that we can get a context for saving/loading
         Account testa = new Account();
         testa.setUsername("JohnEgbert");
         testa.setEmail("GT@pesterchum.ca");
         testa.setCity("Sburb");
 
-
-        Context context = new Activity();
-
-        saveload.saveInFile(context, testa);
+        Context context = this.getInstrumentation().getTargetContext().getApplicationContext();
+        //http://stackoverflow.com/questions/5544205/accessing-application-context-from-testsuite-in-setup-before-calling-getactivi, user Salsero69, 2015-23-10
+        saveload.saveInFile(context, testa); //save testa into the file
         Account testa2 = new Account();
-        assertTrue(saveload.loadFromFile(context,testa2)==testa);
+        testa2.setUsername("JadeHarley");
+        testa2=saveload.loadFromFile(context,testa2);
+     assertTrue(testa2.getUsername().equals(testa.getUsername()) && testa2.getEmail().equals(testa.getEmail()) && testa2.getCity().equals(testa.getCity())
+                && testa2.getInventory().getSize()==testa.getInventory().getSize());
 
 
 

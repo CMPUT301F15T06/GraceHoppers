@@ -82,6 +82,8 @@ public void testAccountcreation() throws IllegalEmailException, NoSpacesExceptio
         assertTrue(account.getCity()=="Grande Prairie");
     }
 
+    //test to see that the account creates an inventory:
+
 }
 
     }
