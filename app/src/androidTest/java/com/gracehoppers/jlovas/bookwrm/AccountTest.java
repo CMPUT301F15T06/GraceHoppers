@@ -84,6 +84,8 @@ public void testAccountcreation() throws IllegalEmailException, NoSpacesExceptio
 
     //test to see that the account creates an inventory:
 
+    //test to see that the account creates a friendlist:
+
 }
 
     }

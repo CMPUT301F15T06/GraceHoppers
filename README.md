@@ -56,3 +56,6 @@ http://stackoverflow.com/users/851811/xavi-l%c3%b3pez
 Getting a context for testing purposes:
 Salsero69, http://stackoverflow.com/questions/5544205/accessing-application-context-from-testsuite-in-setup-before-calling-getactivi, Oct 23, 2015
 http://stackoverflow.com/users/602030/salsero69
+
+Activity Moniter for UI testing:
+https://developer.android.com/training/activity-testing/activity-functional-testing.html, 2015-23-10
