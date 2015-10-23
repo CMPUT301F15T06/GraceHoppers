@@ -42,3 +42,13 @@ http://stackoverflow.com/users/263521/sephy
 Limit text input in Edittext fields:
 Austin Hanson, http://stackoverflow.com/questions/3285412/limit-text-length-of-edittext-in-android, Oct 22, 2015
 http://stackoverflow.com/users/110762/austin-hanson
+
+Working with Bitmaps:
+GitHub, https://github.com/codepath/android_guides/wiki/Working-with-the-ImageView, Oct 22, 2015
+
+ToYonos, http://stackoverflow.com/questions/26865787/get-bitmap-from-imageview-in-android-l, Oct 22, 2015
+http://stackoverflow.com/users/2003986/toyonos
+
+Checking an Enum Value:
+Xavi Lopez, http://stackoverflow.com/questions/19586234/how-to-check-equals-on-enum-value, Oct 22, 2015
+http://stackoverflow.com/users/851811/xavi-l%c3%b3pez
