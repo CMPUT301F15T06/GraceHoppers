@@ -38,11 +38,11 @@ public class Book {
     private Category category;
     private boolean isPrivate;
     private String description;
-    private int quality;
-    ImageView photo; //will figure out if they change the image stuff later
+    private double quality;
+    Bitmap photo; //will figure out if they change the image stuff later
 
 
-    public Book(ImageView photo) {
+    public Book(Bitmap photo) {
         //no args? just creates a book
         //default values here - may remove these and put into setters
         this.title = "Untitled";
@@ -106,27 +106,30 @@ public class Book {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(String description) throws BlankFieldException {
+        if(description.isEmpty()){
+            throw new BlankFieldException();
+        }else
 
             this.description = description;
 
     }
 
-    public int getQuality(){
+    public double getQuality(){
         return quality;
     }
 
-    public void setQuality(int quality){
+    public void setQuality(double quality){
         this.quality= quality;
     }
 
     public void setQuantity(String quantity) throws NegativeNumberException {
         int converted =Integer.parseInt(quantity);
-        if(converted <=0){
+        if(converted <1){
             throw new NegativeNumberException();
         }
         else {
-            this.quantity = converted;
+            //this.quantity = converted;
         }
     }
 /*

@@ -1,6 +1,9 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.ImageView;
 
 /**
  * Created by jlovas on 10/17/15.
@@ -9,13 +12,12 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
 
     public BookTest(){super(AddBookScreen.class);}
 
-    //im testing for blanks
-    //catch '-' quantities
+  //***PLEASE NOTE*** none of the tests below are testing for an added picture, only the DEFAULT!
+    //Test for this once you figure that part out!
 
-    public void testAddBook() throws NoSpacesException, NegativeNumberException, IllegalEmailException, TooLongException {
+    public void testAddBook() throws NoSpacesException, NegativeNumberException, IllegalEmailException, TooLongException, BlankFieldException {
 
         //Need to create an account first to have an inventory to add to
-
 
         Account testAccount = new Account();
         testAccount.setUsername("Jill");
@@ -23,8 +25,9 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
         testAccount.setCity("GP");
 
         Category testCategory = null;
+        Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
-        Book book = new Book();
+        Book book = new Book(testImage);
         book.setTitle("Eragon");
         book.setAuthor("Christopher Paolini");
 
@@ -38,9 +41,238 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
 
         //I need some way to access the inventory and add the book
 
-        //books.add(book);
-        //assertTrue(testAccount.books.hasItem(book));
+        testAccount.getInventory().addBook(book);
+        assertTrue(testAccount.getInventory().hasBook(book));
+    }
 
+
+
+
+        //test creation of book with comment vs no comment
+
+
+    //test creation of a book with no title
+    public void testsetTitle() throws NoSpacesException, NegativeNumberException, IllegalEmailException, TooLongException, BlankFieldException{
+        Account testAccount = new Account();
+        testAccount.setUsername("Jill");
+        testAccount.setEmail("jlovas@ualberta.ca");
+        testAccount.setCity("GP");
+
+        Category testCategory = null;
+        Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
+
+        Book book = new Book(testImage);
+
+        book.setAuthor("Christopher Paolini");
+        book.setQuantity("1");
+        book.setCategory(testCategory.HARDBACK);
+        book.setDescription("None");
+        book.setQuality(4);
+        book.setIsPrivate(false);
+
+        try{book.setTitle("");
+        } catch (IllegalArgumentException e){
+            assertFalse(book.getTitle()=="");
+        }
+    }
+
+    //test creation of a book with no author
+    public void testsetAuthor() throws NoSpacesException, NegativeNumberException, IllegalEmailException, TooLongException, BlankFieldException{
+        Account testAccount = new Account();
+        testAccount.setUsername("Jill");
+        testAccount.setEmail("jlovas@ualberta.ca");
+        testAccount.setCity("GP");
+
+        Category testCategory = null;
+        Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
+
+        Book book = new Book(testImage);
+        book.setTitle("Eragon");
+
+
+        book.setQuantity("1");
+
+        book.setCategory(testCategory.HARDBACK);
+        book.setDescription("None");
+        book.setQuality(4);
+        book.setIsPrivate(false);
+
+
+        try{book.setAuthor("");
+        } catch (IllegalArgumentException e){
+            assertFalse(book.getAuthor()=="");
+        }
+    }
+
+
+    //test creation of book with blank quantity
+    public void testsetBlankQuantity() throws NoSpacesException, NegativeNumberException, IllegalEmailException, TooLongException, BlankFieldException{
+        Account testAccount = new Account();
+        testAccount.setUsername("Jill");
+        testAccount.setEmail("jlovas@ualberta.ca");
+        testAccount.setCity("GP");
+
+        Category testCategory = null;
+        Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
+
+        Book book = new Book(testImage);
+        book.setTitle("Eragon");
+        book.setAuthor("Christopher Paolini");
+
+        book.setCategory(testCategory.HARDBACK);
+        book.setDescription("None");
+        book.setQuality(4);
+        book.setIsPrivate(false);
+
+
+        try{book.setQuantity(""); //should not accept blanks
+        } catch (IllegalArgumentException e){
+            assertFalse(book.getQuantity() == 0); //want this to be assertFalse
+        }
+
+
+    }
+
+    //test creation of a book with negative quantity
+    public void testsetQuantity() throws NoSpacesException, NegativeNumberException, IllegalEmailException, TooLongException, BlankFieldException{
+        Account testAccount = new Account();
+        testAccount.setUsername("Jill");
+        testAccount.setEmail("jlovas@ualberta.ca");
+        testAccount.setCity("GP");
+
+        Category testCategory = null;
+        Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
+
+        Book book = new Book(testImage);
+        book.setTitle("Eragon");
+        book.setAuthor("Christopher Paolini");
+
+        book.setCategory(testCategory.HARDBACK);
+        book.setDescription("None");
+        book.setQuality(4);
+        book.setIsPrivate(false);
+
+
+        try{book.setQuantity("0"); //should not accept quantities <1
+        } catch (NegativeNumberException e){
+            assertFalse(book.getQuantity() == 0); //want this to be assertFalse
+        }
+
+
+    }
+
+    //test uhhh no chosen category for a book is correct? category is pretty secure user-wise
+    public void testsetCategory() throws NoSpacesException, NegativeNumberException, IllegalEmailException, TooLongException, BlankFieldException{
+        Account testAccount = new Account();
+        testAccount.setUsername("Jill");
+        testAccount.setEmail("jlovas@ualberta.ca");
+        testAccount.setCity("GP");
+
+        Category testCategory = null;
+        Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
+
+        Book book = new Book(testImage);
+        book.setTitle("Eragon");
+        book.setAuthor("Christopher Paolini");
+
+        book.setQuantity("1");
+
+
+        book.setDescription("None");
+        book.setQuality(4);
+        book.setIsPrivate(false);
+
+
+        book.setCategory(testCategory.NONE);
+
+        assertTrue(book.getCategory().equals(testCategory.NONE));
+
+    }
+
+
+    //test creation of book with half quality value - these are pretty weak but im not sure how
+    // to test something this secure. It made me change it from int to double though
+    public void testsetQuality() throws NoSpacesException, NegativeNumberException, IllegalEmailException, TooLongException, BlankFieldException{
+        Account testAccount = new Account();
+        testAccount.setUsername("Jill");
+        testAccount.setEmail("jlovas@ualberta.ca");
+        testAccount.setCity("GP");
+
+        Category testCategory = null;
+        Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
+
+        Book book = new Book(testImage);
+        book.setTitle("Eragon");
+        book.setAuthor("Christopher Paolini");
+
+        book.setQuantity("1");
+
+        book.setCategory(testCategory.HARDBACK);
+        book.setDescription("None");
+        book.setIsPrivate(false);
+
+
+        book.setQuality(0.5);
+
+        assertTrue(book.getQuality() == 0.5);
+
+    }
+
+
+    //again, a secure widget, not sure how it could go wrong exactly
+    //so just testing if it is what i set it to be
+    //*will check if it is visible in public list once that is set up
+    public void testsetPrivate() throws NoSpacesException, NegativeNumberException, IllegalEmailException, TooLongException, BlankFieldException{
+        Account testAccount = new Account();
+        testAccount.setUsername("Jill");
+        testAccount.setEmail("jlovas@ualberta.ca");
+        testAccount.setCity("GP");
+
+        Category testCategory = null;
+        Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
+
+        Book book = new Book(testImage);
+        book.setTitle("Eragon");
+        book.setAuthor("Christopher Paolini");
+
+        book.setQuantity("1");
+
+        book.setCategory(testCategory.HARDBACK);
+        book.setDescription("None");
+        book.setQuality(4);
+
+
+
+        book.setIsPrivate(true); //user must pick one
+
+        assertTrue(book.isPrivate());
+
+    }
+
+    //comments are optional, but will test if the user opens the comments and types nothing,
+    //will correct this to blank
+    public void testsetComments() throws NoSpacesException, NegativeNumberException, IllegalEmailException, TooLongException{
+        Account testAccount = new Account();
+        testAccount.setUsername("Jill");
+        testAccount.setEmail("jlovas@ualberta.ca");
+        testAccount.setCity("GP");
+
+        Category testCategory = null;
+        Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
+
+        Book book = new Book(testImage);
+        book.setTitle("Eragon");
+        book.setAuthor("Christopher Paolini");
+
+        book.setQuantity("1");
+
+        book.setCategory(testCategory.HARDBACK);
+        book.setQuality(4);
+        book.setIsPrivate(false);
+        try{book.setDescription(""); //cant be blank
+        } catch (BlankFieldException e){
+            assertFalse(book.getDescription()=="");
+        }
     }
 
 

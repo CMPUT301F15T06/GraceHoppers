@@ -1,6 +1,8 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -48,6 +50,8 @@ public class AddBookScreen extends ActionBarActivity {
         privateCheckBox = (CheckBox)findViewById(R.id.privateListingCheckbox);
         stars.setNumStars(5);
 
+
+
         //I would like the photo to be clickable and offer the user the ability to choose an image from their photo gallery
         //or take a picture. on the same screen it should show the image at a big size
         //to the user so they can see what it will look like.
@@ -64,7 +68,7 @@ public class AddBookScreen extends ActionBarActivity {
                 try {
                     tempQuantity = Integer.parseInt(tempQuantityString); //catch exception!!
 
-                    if(tempQuantity < 1){
+                    if (tempQuantity < 1) {
                         //the user enters a negative number into the textfield, correct them
                         quantityText.setText("1");
                     }
@@ -79,7 +83,7 @@ public class AddBookScreen extends ActionBarActivity {
                             minusButton.setClickable(false);
                         }
                     } //get here if tempQuantity <1, in which we do nothing
-                }catch(IllegalArgumentException e){
+                } catch (IllegalArgumentException e) {
                     //if string is an invalid string here, clear it and start at 1 again
                     quantityText.setText("1");
                 }
@@ -125,8 +129,10 @@ public class AddBookScreen extends ActionBarActivity {
             @Override
             public void onClick(View view) {
 
-
-                myBook = new Book(thePhoto);
+                //messing around, will tidy up after
+                thePhoto.buildDrawingCache();
+                Bitmap bMap = thePhoto.getDrawingCache();
+                myBook = new Book(bMap);
 
                 //a ton of exception catching goes here
 

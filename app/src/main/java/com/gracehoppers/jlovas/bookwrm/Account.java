@@ -24,6 +24,7 @@ public class Account {
 
 
     public Account() {
+        inventory = new Inventory();
         //checks to see if the account already exists, cant do this without the database
 
         //If(searchDatabase(Username)==true){throw new AlreadyExistsException;}
@@ -106,4 +107,11 @@ public class Account {
         return friends.getFriends();
     }
 
+    //not sure how i can access the inventory otherwise - need this for tests
+    //change if you have to
+
+
+    public Inventory getInventory() {
+        return inventory;
+    }
 }
