@@ -22,5 +22,7 @@
     </string-array>
     <string name="title_activity_friends_screen">FriendsScreen</string>
     <string name="title_activity_profile_screen">ProfileScreen</string>
+    <string name="title_activity_history_of_trades_screen">HistoryOfTradesScreen</string>
+    <string name="title_activity_friend_profile_screen">FriendProfileScreen</string>
 
 </resources>

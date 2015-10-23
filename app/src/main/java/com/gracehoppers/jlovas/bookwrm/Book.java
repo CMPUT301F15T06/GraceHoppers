@@ -11,6 +11,7 @@ import android.widget.ImageView;
  *  -the name of the book
  *  -author
  *  -quantity
+ *  -quality
  *  -category (easier as an enum I would think)
  *  -private/public view ability
  *  -comments/description

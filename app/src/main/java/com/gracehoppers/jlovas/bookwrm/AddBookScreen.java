@@ -7,10 +7,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class AddBookScreen extends ActionBarActivity {
@@ -25,6 +27,8 @@ public class AddBookScreen extends ActionBarActivity {
     Button minusButton;
     Button plusButton;
     RatingBar stars;
+    TextView comments;
+    CheckBox privateCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,9 @@ public class AddBookScreen extends ActionBarActivity {
         minusButton = (Button)findViewById(R.id.minusButton);
         plusButton = (Button)findViewById(R.id.plusButton);
         stars = (RatingBar)findViewById(R.id.ratingBar);
+        mySpinner = (Spinner)findViewById(R.id.categoryDropdown);
+        comments = (TextView)findViewById(R.id.descriptionText);
+        privateCheckBox = (CheckBox)findViewById(R.id.privateListingCheckbox);
         stars.setNumStars(5);
 
         //I would like the photo to be clickable and offer the user the ability to choose an image from their photo gallery
@@ -160,7 +167,12 @@ public class AddBookScreen extends ActionBarActivity {
         });
 
 
-
+                comments.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Toast.makeText(getApplicationContext(), "You wanted to add a comment!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
 

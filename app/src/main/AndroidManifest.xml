@@ -38,6 +38,14 @@
             android:name=".ProfileScreen"
             android:label="@string/title_activity_profile_screen" >
         </activity>
+        <activity
+            android:name=".HistoryOfTradesScreen"
+            android:label="@string/title_activity_history_of_trades_screen" >
+        </activity>
+        <activity
+            android:name=".FriendProfileScreen"
+            android:label="@string/title_activity_friend_profile_screen" >
+        </activity>
     </application>
 
 </manifest>
