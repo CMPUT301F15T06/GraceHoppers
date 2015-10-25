@@ -1,6 +1,9 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -13,46 +16,229 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Add A Book"
         android:id="@+id/titleAddBookText"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="26dp"
         android:textStyle="bold"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/titleText"
-        android:layout_below="@+id/titleAddBookText"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="33dp"
-        android:hint="Title" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/authorText"
-        android:layout_below="@+id/titleText"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="28dp"
-        android:hint="Author" />
 
-    <EditText
-        android:layout_width="wrap_content"
+    <TableLayout
+        android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:id="@+id/quantityText"
-        android:text="1"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginTop="35dp"
+        android:stretchColumns="0">
 
-    <Spinner
-        android:layout_width="wrap_content"
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFA0D0D8">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/titleText"
+                android:layout_marginTop="5dp"
+                android:maxLength="30"
+                android:textSize="14sp"
+                android:hint="Title" />
+
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFA0D0D8">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/authorText"
+                android:maxLength="30"
+                android:textSize="14sp"
+                android:layout_marginTop="5dp"
+                android:hint="Author" />
+
+        </TableRow>
+
+    </TableLayout>
+
+
+
+
+    <TableLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/categoryDropdown"
-        android:entries="@array/category_types"
-        android:layout_below="@+id/quantityText"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="31dp" />
+        android:layout_marginTop="150dp"
+        android:background="#FFD8D8D8"
+        android:stretchColumns="0,1,2"
+        android:id="@+id/quantityTable">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dip"
+            android:background="#FFA0D0D8">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Quantity"
+                android:id="@+id/quantityTitleText"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_span="100"
+                android:gravity="center"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dip"
+            android:background="#FFA0D0D8">
+
+            <Button
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="-"
+                android:id="@+id/minusButton"
+                android:clickable="false" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/quantityText"
+                android:text="1"
+                android:maxLength="4"
+                android:gravity="center" />
+
+
+            <Button
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="+"
+                android:id="@+id/plusButton"
+                android:layout_alignBottom="@+id/quantityText"
+                android:layout_alignStart="@+id/privateListingCheckbox" />
+        </TableRow>
+
+    </TableLayout>
+
+
+
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="270dp"
+        android:background="#FFA0D0D8"
+
+        >
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dip"
+
+            android:background="#FFA0D0D8">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_weight="100"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Quality of the Book:"
+                android:id="@+id/qualityTitleTxt"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_span="100"
+                android:gravity="center"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dip"
+            android:layout_marginLeft="120dp"
+            android:background="#FFA0D0D8">
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ratingBar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:isIndicator="false"
+
+                android:numStars="5"/>
+
+        </TableRow>
+
+    </TableLayout>
+
+
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="350dp"
+        android:id="@+id/tableLayout">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dip"
+            android:background="#FFA0D0D8">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Optional"
+                android:id="@+id/optionaTitleText"
+                android:textStyle="bold"
+                android:layout_span="100"
+                android:gravity="center"
+                android:textSize="18sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dip"
+            android:background="#FFA0D0D8"
+            android:stretchColumns="0,1">
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/categoryDropdown"
+                android:entries="@array/category_types"
+                android:background = "#FFFFFFFF"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/descriptionText"
+                android:text="Add Comments..."
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:layout_marginStart="20dp"
+                android:clickable="true"/>
+
+        </TableRow>
+
+
+
+    </TableLayout>
+
+
+
+
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -60,16 +246,8 @@
         android:text="Private Listing"
         android:id="@+id/privateListingCheckbox"
         android:checked="false"
-        android:layout_below="@+id/descriptionText"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/descriptionText"
-        android:layout_below="@+id/categoryDropdown"
-        android:layout_centerHorizontal="true"
-        android:hint="Description of the book (optional)" />
+        android:layout_alignBaseline="@+id/okButton"
+        android:layout_alignParentStart="true" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -77,35 +255,19 @@
         android:adjustViewBounds="true"
         android:id="@+id/bookImage"
         android:src="@drawable/defaultbook"
-        android:maxHeight="150sp"
-        android:maxWidth="150sp"
-        android:layout_below="@+id/titleAddBookText"
-        android:layout_toEndOf="@+id/quantityText" />
-
-
+        android:maxHeight="95sp"
+        android:maxWidth="95sp"
+        android:layout_marginTop="35dp"
+        android:layout_alignEnd="@+id/quantityTable"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:text="Ok"
         android:id="@+id/okButton"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="-"
-        android:id="@+id/minusButton"
-        android:layout_alignBottom="@+id/quantityText"
-        android:layout_toEndOf="@+id/titleText" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+"
-        android:id="@+id/plusButton"
-        android:layout_alignBottom="@+id/quantityText"
-        android:layout_alignEnd="@+id/descriptionText" />
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

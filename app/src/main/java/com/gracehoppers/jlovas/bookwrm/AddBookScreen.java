@@ -1,15 +1,20 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class AddBookScreen extends ActionBarActivity {
@@ -21,7 +26,11 @@ public class AddBookScreen extends ActionBarActivity {
     Spinner mySpinner;
     Button okButton;
     ImageView thePhoto;
-
+    Button minusButton;
+    Button plusButton;
+    RatingBar stars;
+    TextView comments;
+    CheckBox privateCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,18 +42,97 @@ public class AddBookScreen extends ActionBarActivity {
         quantityText = (EditText)findViewById(R.id.quantityText);
         okButton = (Button)findViewById(R.id.okButton);
         thePhoto = (ImageView)findViewById(R.id.bookImage);
+        minusButton = (Button)findViewById(R.id.minusButton);
+        plusButton = (Button)findViewById(R.id.plusButton);
+        stars = (RatingBar)findViewById(R.id.ratingBar);
+        mySpinner = (Spinner)findViewById(R.id.categoryDropdown);
+        comments = (TextView)findViewById(R.id.descriptionText);
+        privateCheckBox = (CheckBox)findViewById(R.id.privateListingCheckbox);
+        stars.setNumStars(5);
+
+
 
         //I would like the photo to be clickable and offer the user the ability to choose an image from their photo gallery
         //or take a picture. on the same screen it should show the image at a big size
         //to the user so they can see what it will look like.
         // Will get this in in time, functionality first. -Jill
 
+        minusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //cannot be clickable right away, becomes clickable through the use of plusButton
+
+                String tempQuantityString = quantityText.getText().toString();
+
+                int tempQuantity;
+                try {
+                    tempQuantity = Integer.parseInt(tempQuantityString); //catch exception!!
+
+                    if (tempQuantity < 1) {
+                        //the user enters a negative number into the textfield, correct them
+                        quantityText.setText("1");
+                    }
+
+                    if (tempQuantity > 1) {
+
+                        tempQuantity--;
+                        quantityText.setText(String.valueOf(tempQuantity));
+
+                        if (tempQuantity == 1) {
+                            //make the button unclickable
+                            minusButton.setClickable(false);
+                        }
+                    } //get here if tempQuantity <1, in which we do nothing
+                } catch (IllegalArgumentException e) {
+                    //if string is an invalid string here, clear it and start at 1 again
+                    quantityText.setText("1");
+                }
+
+            }
+        });
+
+        plusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //on clicking this, makes the '-' button available
+                String tempQuantityString = quantityText.getText().toString();
+                int tempQuantity;
+
+                try {
+                    tempQuantity = Integer.parseInt(tempQuantityString); //catch exception!!
+
+                    if(tempQuantity < 1){
+                        //the user enters a negative number into the textfield, correct them
+                        quantityText.setText("1");
+                    }else {
+
+
+                        tempQuantity++;
+                        quantityText.setText(String.valueOf(tempQuantity));
+
+                        if (tempQuantity > 1) {
+                            //make possible to click the minus button
+                            minusButton.setClickable(true);
+                        }
+                    }//end of else
+                }catch(IllegalArgumentException e){
+                    //if string is an invalid string here, clear it and start at 1 again
+                    quantityText.setText("1");
+                }
+
+            }
+        });
+
+
+
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
-                myBook = new Book(thePhoto);
+                //messing around, will tidy up after
+                thePhoto.buildDrawingCache();
+                Bitmap bMap = thePhoto.getDrawingCache();
+                myBook = new Book(bMap);
 
                 //a ton of exception catching goes here
 
@@ -71,6 +159,10 @@ public class AddBookScreen extends ActionBarActivity {
                     //also catch negative or 0 quantity
                     Toast.makeText(getApplicationContext(), "Illegal quantity type, please choose a number", Toast.LENGTH_SHORT).show();
 
+                } catch(NegativeNumberException d){
+                    Toast.makeText(getApplicationContext(), "Invalid quantity type. Quantity must be positive", Toast.LENGTH_SHORT).show();
+
+
                 }
 
 
@@ -81,7 +173,17 @@ public class AddBookScreen extends ActionBarActivity {
         });
 
 
-    }
+                comments.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Toast.makeText(getApplicationContext(), "You wanted to add a comment!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+
+    } //end of onCreate function
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

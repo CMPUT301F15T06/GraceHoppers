@@ -24,3 +24,38 @@ http://docs.oracle.com/javase/7/docs/technotes/guides/language/catch-multiple.ht
 Adding an image to the Drawable folder:
 Arshid KV, http://stackoverflow.com/questions/29047902/how-to-add-an-image-to-the-drawable-folder-in-android-studio Oct 19 2015
 http://stackoverflow.com/users/2513873/arshid-kv
+
+Java String Methods:
+http://docs.oracle.com/javase/7/docs/api/java/lang/String.html Oct 21, 2015
+
+Working with TableLayout:
+Steven Cronin, http://mrbool.com/how-to-deal-with-table-layout-in-android/28008, Oct 22, 2015
+
+Setting The Rating Bar to 5 Stars:
+Alex Volovoy, http://stackoverflow.com/questions/3858600/how-to-make-ratingbar-to-show-five-stars, Oct 22, 2015
+http://stackoverflow.com/users/176761/alex-volovoy
+
+Alignment in Table Cells:
+Sephy, http://stackoverflow.com/questions/2710793/what-is-the-equivalent-of-colspan-in-an-android-tablelayout, Oct 22, 2015
+http://stackoverflow.com/users/263521/sephy
+
+Limit text input in Edittext fields:
+Austin Hanson, http://stackoverflow.com/questions/3285412/limit-text-length-of-edittext-in-android, Oct 22, 2015
+http://stackoverflow.com/users/110762/austin-hanson
+
+Working with Bitmaps:
+GitHub, https://github.com/codepath/android_guides/wiki/Working-with-the-ImageView, Oct 22, 2015
+
+ToYonos, http://stackoverflow.com/questions/26865787/get-bitmap-from-imageview-in-android-l, Oct 22, 2015
+http://stackoverflow.com/users/2003986/toyonos
+
+Checking an Enum Value:
+Xavi Lopez, http://stackoverflow.com/questions/19586234/how-to-check-equals-on-enum-value, Oct 22, 2015
+http://stackoverflow.com/users/851811/xavi-l%c3%b3pez
+
+Getting a context for testing purposes:
+Salsero69, http://stackoverflow.com/questions/5544205/accessing-application-context-from-testsuite-in-setup-before-calling-getactivi, Oct 23, 2015
+http://stackoverflow.com/users/602030/salsero69
+
+Activity Moniter for UI testing:
+https://developer.android.com/training/activity-testing/activity-functional-testing.html, 2015-23-10

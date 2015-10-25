@@ -16,38 +16,19 @@ public class Account {
     private String username;
     private String city;
     private String email;
-    //private BookList booklist = new Booklist(); //uncomment this once it has been written
+
     //private Friendlist friendlist = new Friendlist(); //uncomment this once it has been written
-    private SaveLoad saveload; //for saving your account
+    private Inventory inventory;
+    //private SaveLoad saveload; //for saving your account
+    private Friends friends = new Friends(); //create friend list
 
 
-    public Account(String Username, String Email, String City) throws IllegalEmailException, NoSpacesException {
+    public Account() {
+        inventory = new Inventory();
         //checks to see if the account already exists, cant do this without the database
 
         //If(searchDatabase(Username)==true){throw new AlreadyExistsException;}
 
-
-
-        //all fields must be filled in:
-
-        if(Username.isEmpty()||Email.isEmpty()||City.isEmpty()){
-            throw new IllegalArgumentException();
-        } else
-
-        //must have a valid email
-        if(!Email.contains("@")){
-            throw new IllegalEmailException();
-        } else //fields cant have spaces
-        if(Username.contains(" ")||Email.contains(" ")||City.contains(" ")){
-            throw new NoSpacesException();
-        } else
-        {
-
-
-            this.username = Username;
-            this.email = Email;
-            this.city = City;
-        }
     }
 
    // public void SaveAccount(final Context context){
@@ -62,23 +43,75 @@ public class Account {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String username) throws NoSpacesException, TooLongException {
+//length constraint: 20 characters
+        if(username.isEmpty()){
+            throw new IllegalArgumentException();
+        } else
+            //fields cant have spaces
+                if(username.contains(" ")){
+                    throw new NoSpacesException();
+                    } else{
+                    if(username.length()>20){
+                        throw new TooLongException();
+                    }else
+                    this.username = username;
+                    }
     }
 
     public String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setCity(String city) throws NoSpacesException, TooLongException {
+//length constraint: 20 characters
+        if(city.isEmpty()){
+            throw new IllegalArgumentException();
+        } else
+        if(city.length()>20){
+            throw new TooLongException();
+        } else
+             //cities ARE allowed to have spaces
+                {
+                    this.city = city;
+                }
+
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String email) throws IllegalEmailException, NoSpacesException, TooLongException {
+//length constraint: 20 characters
+        if(email.isEmpty()){
+            throw new IllegalArgumentException();
+        } else
+            //must have a valid email
+            if(!email.contains("@")){
+                throw new IllegalEmailException();
+            } else //fields cant have spaces
+                if(email.contains(" ")){
+                    throw new NoSpacesException();
+                } else
+                if(email.length()>20){
+                    throw new TooLongException();
+                } else
+                {
+                    this.email = email;
+                   }
+
+    }
+
+    public Friends getFriends(){
+        return friends.getFriends();
+    }
+
+    //not sure how i can access the inventory otherwise - need this for tests
+    //change if you have to
+
+
+    public Inventory getInventory() {
+        return inventory;
     }
 }

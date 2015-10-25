@@ -7,11 +7,30 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
     Button logInButton;
     Button signUpButton;
+    EditText usernameText;
+
+    //for UI testing:-------------------------------------------
+    public Button getSignUpButton(){
+        return signUpButton;
+    }
+    public Button getLogInButton(){
+        return logInButton;
+    }
+    public EditText getEditText(){
+        return usernameText;
+    }
+//--------------------------------------------------------------
+
+    /*
+    String user;
+    private EditText userNameText;
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +39,7 @@ public class MainActivity extends ActionBarActivity {
 
         logInButton = (Button)findViewById(R.id.logInButton);
         signUpButton = (Button)findViewById(R.id.signUpButton);
+        usernameText = (EditText)findViewById(R.id.usernameText);
 
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,6 +49,12 @@ public class MainActivity extends ActionBarActivity {
 
                 //search through database
                 //if username exists:
+
+                /*
+                userNameText = (EditText) findViewById(R.id.usernameText);
+                user = userNameText.getText().toString();
+                */
+
                 Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
                 startActivity(lIntent);
 

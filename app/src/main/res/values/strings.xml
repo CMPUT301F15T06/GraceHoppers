@@ -8,7 +8,7 @@
     <string name="title_activity_add_book_screen">AddBookScreen</string>
 
     <string-array name="category_types">
-        <item>None</item>
+        <item>Add Category</item>
         <item>Hardback</item>
         <item>Paperback</item>
         <item>Audiobook</item>
@@ -20,5 +20,9 @@
         <item>Recipe Book</item>
         <item>Do It Yourself (DIY)</item>
     </string-array>
+    <string name="title_activity_friends_screen">FriendsScreen</string>
+    <string name="title_activity_profile_screen">ProfileScreen</string>
+    <string name="title_activity_history_of_trades_screen">HistoryOfTradesScreen</string>
+    <string name="title_activity_friend_profile_screen">FriendProfileScreen</string>
 
 </resources>
