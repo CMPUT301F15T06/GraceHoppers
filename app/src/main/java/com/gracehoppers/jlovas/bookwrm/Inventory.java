@@ -32,7 +32,7 @@ public class Inventory {
 
     public Book getBookByTitle(String name) {
         Book returnedBook = new Book();
-        for (int i = 0; i <= inventory.size(); i++) {
+        for (int i = 0; i < inventory.size(); i++) {
             Book book = (Book) inventory.get(i);
             if (name == book.getTitle()) {
                 returnedBook = book;

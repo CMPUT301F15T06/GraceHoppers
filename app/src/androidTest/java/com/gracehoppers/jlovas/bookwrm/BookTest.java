@@ -10,7 +10,7 @@ import android.widget.ImageView;
  */
 public class BookTest extends ActivityInstrumentationTestCase2 {
 
-    public BookTest(){super(AddBookScreen.class);}
+    public BookTest(){super(Book.class);} //should this be Book or AddBookScreen? I changed it to Book, still works and makes more sense
 
   //***PLEASE NOTE*** none of the tests below are testing for an added picture, only the DEFAULT!
     //Test for this once you figure that part out!
@@ -274,6 +274,16 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
             assertFalse(book.getDescription()=="");
         }
     }
+
+    //test connectvitiy ***cannot do this yet?
+
+    //test user uploading a non-photograph file ***haven't looked into adding unique photos yet
+
+    //test user adding a photo that is too large ***see above
+
+    //test user adding a blank (0 bytes) file - is that even possible?
+
+    //test connectivity ***will figure out later
 
 
 }
