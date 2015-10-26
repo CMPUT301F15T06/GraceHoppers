@@ -127,7 +127,7 @@ public class HomeScreen extends ActionBarActivity {
 
 
         inventory = testAccount.getInventory().getInventory();
-        adapter = new ArrayAdapter<Book>(this,R.layout.book_inventory_list, inventory);
+        adapter = new BookListAdapter(this,R.layout.book_inventory_list, inventory);
         inventoryList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
