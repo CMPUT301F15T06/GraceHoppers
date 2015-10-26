@@ -32,7 +32,7 @@ public class HomeScreen extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
-        //------------------------------------------------------------------------
+        //-------------------------DELTE ONCE SAVING AND LOADING ACCOUNT WORKS-----------------------------------------------
         Account testAccount = new Account();
         try {
             testAccount.setUsername("Jill");
@@ -66,6 +66,28 @@ public class HomeScreen extends ActionBarActivity {
         book1.setIsPrivate(false);
         //one book
         testAccount.getInventory().addBook(book1);
+
+        Book book2 = new Book(testImage);
+        book2.setTitle("Tokyo Ghoul");
+        book2.setAuthor("Not sure");
+
+        try {
+            book2.setQuantity("1");
+        } catch (NegativeNumberException e) {
+            e.printStackTrace();
+        }
+
+        book2.setCategory(testCategory.PAPERBACK);
+        try {
+            book2.setDescription("None");
+        } catch (BlankFieldException e) {
+            e.printStackTrace();
+        }
+        book2.setQuality(4);
+        book2.setIsPrivate(false);
+
+        //add second book
+        testAccount.getInventory().addBook(book2);
 
         //------------------------------------------------------------------------
 
@@ -88,7 +110,7 @@ public class HomeScreen extends ActionBarActivity {
     protected void onStart(){
         super.onStart();
 
-        //------------------------------------------------------------------------
+        //-------------------------DELTE ONCE SAVING AND LOADING ACCOUNT WORKS-----------------------------------------------
         Account testAccount = new Account();
         try {
             testAccount.setUsername("Jill");
@@ -122,6 +144,28 @@ public class HomeScreen extends ActionBarActivity {
         book1.setIsPrivate(false);
         //one book
         testAccount.getInventory().addBook(book1);
+
+        Book book2 = new Book(testImage);
+        book2.setTitle("Tokyo Ghoul");
+        book2.setAuthor("Not sure");
+
+        try {
+            book2.setQuantity("1");
+        } catch (NegativeNumberException e) {
+            e.printStackTrace();
+        }
+
+        book2.setCategory(testCategory.PAPERBACK);
+        try {
+            book2.setDescription("None");
+        } catch (BlankFieldException e) {
+            e.printStackTrace();
+        }
+        book2.setQuality(4);
+        book2.setIsPrivate(false);
+
+        //add second book
+        testAccount.getInventory().addBook(book2);
 
         //------------------------------------------------------------------------
 

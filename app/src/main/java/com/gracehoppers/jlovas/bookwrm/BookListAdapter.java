@@ -32,12 +32,12 @@ public class BookListAdapter extends ArrayAdapter<Book> {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.book_inventory_list, null, false);
             TextView textview = (TextView) convertView.findViewById(R.id.inventory_id);
-            textview.setText(bookArray.get(position).getTitle());
+            textview.setText("Book Name: " + bookArray.get(position).getTitle() + "\nAuthor: " + bookArray.get(position).getAuthor());
 
         } else {
 
             TextView textview = (TextView) convertView.findViewById(R.id.inventory_id);
-            textview.setText(bookArray.get(position).getTitle());
+            textview.setText("Book Name: " + bookArray.get(position).getTitle() + "\nAuthor: " + bookArray.get(position).getAuthor());
         }
 
         return convertView;
