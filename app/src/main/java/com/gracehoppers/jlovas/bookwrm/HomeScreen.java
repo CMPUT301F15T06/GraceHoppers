@@ -1,6 +1,8 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,18 +19,60 @@ import java.util.List;
 public class HomeScreen extends ActionBarActivity {
     Button addBookButton;
 
-    private ListView inventoryList;   //HC modified
-    private ArrayAdapter<Book> adapter; //HC
-    private ArrayList<Book> inventory = new ArrayList<Book>();    //HC
+    private ListView inventoryList;
+    private ArrayAdapter<Book> adapter;
+    private Inventory userInventory = new Inventory();
+    private ArrayList<Book> inventory;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
+        //------------------------------------------------------------------------
+        Account testAccount = new Account();
+        try {
+            testAccount.setUsername("Jill");
+            testAccount.setEmail("jlovas@ualberta.ca");
+            testAccount.setCity("GP");
+        } catch (NoSpacesException e) {
+            e.printStackTrace();
+        } catch (TooLongException e) {
+            e.printStackTrace();
+        } catch (IllegalEmailException e) {
+            e.printStackTrace();
+        }
+        Category testCategory = null;
+        Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
+        //create book 1
+        Book book1 = new Book(testImage);
+        book1.setTitle("Eragon");
+        book1.setAuthor("Christopher Paolini");
+        try {
+            book1.setQuantity("1");
+        } catch (NegativeNumberException e) {
+            e.printStackTrace();
+        }
+        book1.setCategory(testCategory.HARDBACK);
+        try {
+            book1.setDescription("None");
+        } catch (BlankFieldException e) {
+            e.printStackTrace();
+        }
+        book1.setQuality(4);
+        book1.setIsPrivate(false);
+        //one book
+        testAccount.getInventory().addBook(book1);
+
+        //------------------------------------------------------------------------
+
         addBookButton= (Button)findViewById(R.id.addBookButton);
 
-        inventoryList = (ListView)findViewById(R.id.inventory);         //HC
+        inventory = testAccount.getInventory().getInventory();
+        inventoryList = (ListView)findViewById(R.id.inventory);
 
         addBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,8 +85,48 @@ public class HomeScreen extends ActionBarActivity {
     }
 
     @Override
-    protected void onStart(){                           // HC
+    protected void onStart(){
         super.onStart();
+
+        //------------------------------------------------------------------------
+        Account testAccount = new Account();
+        try {
+            testAccount.setUsername("Jill");
+            testAccount.setEmail("jlovas@ualberta.ca");
+            testAccount.setCity("GP");
+        } catch (NoSpacesException e) {
+            e.printStackTrace();
+        } catch (TooLongException e) {
+            e.printStackTrace();
+        } catch (IllegalEmailException e) {
+            e.printStackTrace();
+        }
+        Category testCategory = null;
+        Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
+        //create book 1
+        Book book1 = new Book(testImage);
+        book1.setTitle("Eragon");
+        book1.setAuthor("Christopher Paolini");
+        try {
+            book1.setQuantity("1");
+        } catch (NegativeNumberException e) {
+            e.printStackTrace();
+        }
+        book1.setCategory(testCategory.HARDBACK);
+        try {
+            book1.setDescription("None");
+        } catch (BlankFieldException e) {
+            e.printStackTrace();
+        }
+        book1.setQuality(4);
+        book1.setIsPrivate(false);
+        //one book
+        testAccount.getInventory().addBook(book1);
+
+        //------------------------------------------------------------------------
+
+
+        inventory = testAccount.getInventory().getInventory();
         adapter = new ArrayAdapter<Book>(this,R.layout.book_inventory_list, inventory);
         inventoryList.setAdapter(adapter);
         adapter.notifyDataSetChanged();

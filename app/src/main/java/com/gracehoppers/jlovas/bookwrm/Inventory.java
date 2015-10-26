@@ -40,4 +40,8 @@ public class Inventory {
         }
         return returnedBook;
     }
+
+    public ArrayList<Book> getInventory(){
+        return inventory;
+    }
 }
