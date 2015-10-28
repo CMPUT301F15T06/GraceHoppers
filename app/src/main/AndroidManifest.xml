@@ -50,6 +50,10 @@
             android:name=".AddCommentsScreen"
             android:label="@string/title_activity_add_comments_screen" >
         </activity>
+        <activity
+            android:name=".EditBookActivity"
+            android:label="@string/title_activity_edit_book" >
+        </activity>
     </application>
 
 </manifest>

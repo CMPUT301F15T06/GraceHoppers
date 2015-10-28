@@ -15,6 +15,9 @@ TechIn4mation, https://www.youtube.com/watch?v=NoSri0OSOaA, Oct 17, 2015
 Gson Library:
 https://sites.google.com/site/gson/gson-user-guide, Oct 16, 2015
 
+How to Use Gson:
+Code from the CMPUT 301 labs. University of Alberta: TA's Joshua Campbell, Shida He, Stephen Romansky, and Ian Watts, 2015-16-10
+
 Android Toasts:
 http://javatechig.com/android/android-toast-example, Oct 17, 2015
 
@@ -59,3 +62,6 @@ http://stackoverflow.com/users/602030/salsero69
 
 Activity Moniter for UI testing:
 https://developer.android.com/training/activity-testing/activity-functional-testing.html, 2015-23-10
+
+Clicking on a Listview to edit a single item:
+Referenced CMPUT 301 lab, University of Alberta, TA's Joshua Campbell, Shida He, Stephen Romansky, and Ian Watts, 2015-28-10
