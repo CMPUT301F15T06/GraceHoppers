@@ -24,5 +24,6 @@
     <string name="title_activity_profile_screen">ProfileScreen</string>
     <string name="title_activity_history_of_trades_screen">HistoryOfTradesScreen</string>
     <string name="title_activity_friend_profile_screen">FriendProfileScreen</string>
+    <string name="title_activity_add_comments_screen">AddCommentsScreen</string>
 
 </resources>

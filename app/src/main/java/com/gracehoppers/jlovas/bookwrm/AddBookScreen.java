@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 
 public class AddBookScreen extends ActionBarActivity {
     Book myBook;
+    Category spinValue; //might be a better way to do this, but eh
+    String madeComments;
 
     EditText titleText;
     EditText authorText;
@@ -37,6 +40,8 @@ public class AddBookScreen extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book_screen);
 
+        //madeComments = "";
+
         titleText = (EditText)findViewById(R.id.titleText);
         authorText = (EditText)findViewById(R.id.authorText);
         quantityText = (EditText)findViewById(R.id.quantityText);
@@ -50,6 +55,69 @@ public class AddBookScreen extends ActionBarActivity {
         privateCheckBox = (CheckBox)findViewById(R.id.privateListingCheckbox);
         stars.setNumStars(5);
 
+
+
+        //spinner/dropdown clicklistener -automatically set to 0/none on creation
+        //credit to Mike James for this code/note to use this way of doing this:
+        //Mike James, http://www.i-programmer.info/programming/android/6388-android-adventures-spinners-and-pickers.html?start=1, Oct 28, 2015
+        AdapterView.OnItemSelectedListener onSpinner = new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(
+                    AdapterView<?> parent,
+                    View view,
+                    int position,
+                    long id) {
+                //testing purposes
+                Toast.makeText(getApplicationContext(), "Position is " + position + "!", Toast.LENGTH_SHORT).show();
+
+                //switch case to set category properly - move to within the class somehow?
+                switch (position) {
+                    case 0:
+                        spinValue = Category.NONE;
+                        break;
+                    case 1:
+                        spinValue = Category.HARDBACK;
+                        break;
+                    case 2:
+                        spinValue = Category.PAPERBACK;
+                        break;
+                    case 3:
+                        spinValue = Category.AUDIOBOOK;
+                        break;
+                    case 4:
+                        spinValue = Category.COMIC;
+                        break;
+                    case 5:
+                        spinValue = Category.TEXTBOOK;
+                        break;
+                    case 6:
+                        spinValue = Category.PICTURE;
+                        break;
+                    case 7:
+                        spinValue = Category.BRAILLE;
+                        break;
+                    case 8:
+                        spinValue = Category.REFERENCE;
+                        break;
+                    case 9:
+                        spinValue = Category.RECIPE;
+                        break;
+                    case 10:
+                        spinValue = Category.DIY;
+                        break;
+                    default:
+                        spinValue = Category.NONE;
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(
+                    AdapterView<?>  parent) {
+            }
+        };
+
+        mySpinner.setOnItemSelectedListener(onSpinner);
 
 
         //I would like the photo to be clickable and offer the user the ability to choose an image from their photo gallery
@@ -124,7 +192,7 @@ public class AddBookScreen extends ActionBarActivity {
         });
 
 
-
+        //button for creating the book
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,6 +204,7 @@ public class AddBookScreen extends ActionBarActivity {
 
                 //a ton of exception catching goes here
 
+                //set title
                 try{
                     myBook.setTitle(titleText.getText().toString());
                 }catch(IllegalArgumentException e){
@@ -144,6 +213,7 @@ public class AddBookScreen extends ActionBarActivity {
                     //**should add somethig here maybe to emphasize what fields meant maaaaaybe, but would have to be all
                 }
 
+                //set author
                 try{
                     myBook.setAuthor(authorText.getText().toString());
                 }catch(IllegalArgumentException e){
@@ -151,7 +221,7 @@ public class AddBookScreen extends ActionBarActivity {
 
                 }
 
-
+                //set quantity
                 try{
                     myBook.setQuantity(quantityText.getText().toString());
                 }catch(IllegalArgumentException e){
@@ -162,9 +232,17 @@ public class AddBookScreen extends ActionBarActivity {
                 } catch(NegativeNumberException d){
                     Toast.makeText(getApplicationContext(), "Invalid quantity type. Quantity must be positive", Toast.LENGTH_SHORT).show();
 
-
                 }
 
+                //set quality -what happens if none set? 0?
+                myBook.setQuality(stars.getRating());
+
+                //set category
+                myBook.setCategory(spinValue);
+
+                //set comments
+
+                //set private/public
 
                 //not going to move to new activity until this works right
                 //Intent addBIntent = new Intent(HomeScreen.this, AddBookScreen.class);
@@ -176,7 +254,9 @@ public class AddBookScreen extends ActionBarActivity {
                 comments.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Toast.makeText(getApplicationContext(), "You wanted to add a comment!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "You wanted to add a comment!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(AddBookScreen.this, AddCommentsScreen.class);
+                startActivityForResult(intent, 0);
             }
         });
 
@@ -184,6 +264,21 @@ public class AddBookScreen extends ActionBarActivity {
 
 
     } //end of onCreate function
+
+    //catch comments made in another activity
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+            if(requestCode == 0)
+                if (resultCode == AddCommentsScreen.RESULT_OK) {
+                    // TODO Extract the data returned from the child Activity.
+                    madeComments = data.getStringExtra("COMMENTS");
+                    Toast.makeText(getApplicationContext(), "Got" + madeComments +" from child.", Toast.LENGTH_SHORT).show();
+                }
+    }
+
+
+    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
