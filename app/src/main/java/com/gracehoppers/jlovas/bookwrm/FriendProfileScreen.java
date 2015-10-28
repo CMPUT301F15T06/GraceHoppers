@@ -4,11 +4,25 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class FriendProfileScreen extends ActionBarActivity {
 
+    TextView name;
+    TextView email;
+    TextView city;
+    Account account;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        name =(TextView) findViewById(R.id.fname);
+        email =(TextView) findViewById(R.id.femail);
+        city = (TextView) findViewById(R.id.fcity);
+
+        name.setText(account.getUsername());
+        email.setText(account.getEmail());
+        city.setText(account.getCity());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_profile_screen);
     }
