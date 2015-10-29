@@ -55,8 +55,13 @@
             android:label="@string/title_activity_edit_book" >
         </activity>
         <activity
+<<<<<<< HEAD
             android:name=".CreateTradeActivity"
             android:label="@string/title_activity_trade" >
+=======
+            android:name=".ProcessTradeScreen"
+            android:label="@string/title_activity_process_trade_screen" >
+>>>>>>> 8df81569358950010f26c1b1e01009e2d25f33c1
         </activity>
     </application>
 
