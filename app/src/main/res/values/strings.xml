@@ -26,5 +26,6 @@
     <string name="title_activity_friend_profile_screen">FriendProfileScreen</string>
     <string name="title_activity_add_comments_screen">AddCommentsScreen</string>
     <string name="title_activity_edit_book">EditBookActivity</string>
+    <string name="title_activity_process_trade_screen">ProcessTradeScreen</string>
 
 </resources>
