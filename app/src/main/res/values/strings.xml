@@ -26,6 +26,10 @@
     <string name="title_activity_friend_profile_screen">FriendProfileScreen</string>
     <string name="title_activity_add_comments_screen">AddCommentsScreen</string>
     <string name="title_activity_edit_book">EditBookActivity</string>
+<<<<<<< HEAD
+    <string name="title_activity_trade">TradeActivity</string>
+=======
     <string name="title_activity_process_trade_screen">ProcessTradeScreen</string>
+>>>>>>> 8df81569358950010f26c1b1e01009e2d25f33c1
 
 </resources>

@@ -1,6 +1,13 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+<<<<<<< HEAD
+import android.app.Activity;
+import android.net.wifi.WifiConfiguration;
+
+import java.util.Stack;
+=======
 import java.util.ArrayList;
+>>>>>>> 8df81569358950010f26c1b1e01009e2d25f33c1
 
 /**
  * trade holds the information about the trade:
@@ -9,6 +16,36 @@ import java.util.ArrayList;
  * -uhhh some other stuff
  */
 public class Trade {
+<<<<<<< HEAD
+    private TradeStatus status;
+    //is there a need for trade and createTrade to be separate?
+    private int tradeID;
+    private Account borrower;
+    private Account owner;
+    private Book borrowerItem;
+    private Book ownerItem;
+
+
+    public Trade(Account borrower, Account owner, TradeStatus status){
+        this.borrower = borrower;
+        this.owner = owner;
+        this.status = status;
+
+    }
+
+
+    public void createTrade(Book borrowerItemFromInventory, Book ownerItemFromInventory){
+        this.borrowerItem = borrowerItemFromInventory;
+        this.ownerItem = ownerItemFromInventory;
+    }
+
+    public void changeStatus(TradeStatus newStatus){
+        this.status = newStatus;
+    }
+
+    public TradeStatus getStatus(){
+        return status;
+=======
     private Boolean accepted;
     private Boolean declined;
     //if a trade is accepted or declined, it will be in history of trade list
@@ -29,6 +66,7 @@ public class Trade {
 
     public void setOwner(Account owner) {
         this.owner = owner;
+>>>>>>> 8df81569358950010f26c1b1e01009e2d25f33c1
     }
 
     public void setBorrower(Account borrower) {
