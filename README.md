@@ -65,3 +65,6 @@ https://developer.android.com/training/activity-testing/activity-functional-test
 
 Clicking on a Listview to edit a single item:
 Referenced CMPUT 301 lab, University of Alberta, TA's Joshua Campbell, Shida He, Stephen Romansky, and Ian Watts, 2015-28-10
+
+Passing Extra with Intents:
+https://youtu.be/ViwazAAR-vE, TZCoder, 2015-30-10
