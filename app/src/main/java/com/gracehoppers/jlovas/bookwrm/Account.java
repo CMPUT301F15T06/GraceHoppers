@@ -13,7 +13,6 @@ public class Account {
     The Account of the user, which includes their username, city, email, friendlist, and booklist,
      */
 
-
     private String username;
     private String city;
     private String email;
@@ -38,7 +37,6 @@ public class Account {
 
 
    // }
-
 
 
     public String getUsername() {
