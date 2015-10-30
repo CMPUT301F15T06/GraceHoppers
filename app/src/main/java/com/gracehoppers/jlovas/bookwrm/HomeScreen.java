@@ -91,12 +91,14 @@ public class HomeScreen extends ActionBarActivity {
         //add second book
         testAccount.getInventory().addBook(book2);
 
+
+
         //------------------------------------------------------------------------
 
         addBookButton= (Button)findViewById(R.id.addBookButton);
 
         inventory = testAccount.getInventory().getInventory();
-        inventoryList = (ListView)findViewById(R.id.inventory);
+        inventoryList = (ListView)findViewById(R.id.inventory1);
 
         addBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,6 +182,7 @@ public class HomeScreen extends ActionBarActivity {
 
         //add second book
         testAccount.getInventory().addBook(book2);
+
 
         //------------------------------------------------------------------------
 

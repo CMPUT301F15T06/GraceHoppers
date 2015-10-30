@@ -1,5 +1,7 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import java.util.ArrayList;
+
 /**
  * trade holds the information about the trade:
  * -who it is between
@@ -13,8 +15,8 @@ public class Trade {
     //otherwise, it will be in current trade list
     private Account owner;
     private Account borrower;
-    private Book ownerBook;  //can be 1
-    private ArrayList<Book> borrowerBook; //can be 0 or more
+    private Book ownerBook = new Book();  //can be 1
+    private ArrayList<Book> borrowerBook = new ArrayList<Book>(); //can be 0 or more
     private String ownerComment;
 
     public void setAccepted(Boolean accepted) {
@@ -71,6 +73,10 @@ public class Trade {
 
     public String getOwnerComment() {
         return ownerComment;
+    }
+
+    public void addToBorrowerBook(Book newBook){
+        this.borrowerBook.add(newBook);
     }
 
 }
