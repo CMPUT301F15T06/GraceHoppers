@@ -4,33 +4,35 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 
-public class FriendProfileScreen extends ActionBarActivity {
+import java.util.ArrayList;
 
-    TextView name;
-    TextView email;
-    TextView city;
-    Account account;
+public class ProcessTradeScreen extends ActionBarActivity {
+
+    private Account owner;
+    private Account borrower;
+    private Book ownerBook;  //can be 1
+    private ArrayList<Book> borrowerBook; //can be 0 or more
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        name =(TextView) findViewById(R.id.fname);
-        email =(TextView) findViewById(R.id.femail);
-        city = (TextView) findViewById(R.id.fcity);
-
-        name.setText(account.getUsername());
-        email.setText(account.getEmail());
-        city.setText(account.getCity());
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_friend_profile_screen);
+        setContentView(R.layout.activity_process_trade_screen);
+
+        TextView bName = (TextView)findViewById(R.id.bName);
+        TextView bBook = (TextView)findViewById(R.id.bBook);
+        TextView oBook = (TextView)findViewById(R.id.oBook);
+        Button accept =(Button)findViewById(R.id.accept);
+        Button decline = (Button)findViewById(R.id.decline);
+        
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_friend_profile_screen, menu);
+        getMenuInflater().inflate(R.menu.menu_process_trade_screen, menu);
         return true;
     }
 

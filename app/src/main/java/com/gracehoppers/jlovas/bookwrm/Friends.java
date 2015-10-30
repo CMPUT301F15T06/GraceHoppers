@@ -20,8 +20,22 @@ public class Friends {
         return this;
     }
 
-    public void addFriend(Account friend){
-        friends.add(friend);
+    public int addFriend(Account newFriend){ //Need to search the server for Account
+        //3 Cases
+        //Check first if friends already:
+        //1. A & B already friends! Return 1
+        if (friends.contains(newFriend)){
+            return 1;
+        } else {
+
+            //Search AccountB in the server. If existent, Case 1.
+
+            //2. newFriend exists. Expected scenario. Return 2
+            friends.add(newFriend);
+            return 2;
+            //3. B does not exist. Cannot add ghost. Return 3
+
+        }
     }
 
     public void unFriend(Account friend){
