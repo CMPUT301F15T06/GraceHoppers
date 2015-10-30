@@ -54,6 +54,10 @@
             android:name=".EditBookActivity"
             android:label="@string/title_activity_edit_book" >
         </activity>
+        <activity
+            android:name=".ViewBookActivity"
+            android:label="@string/title_activity_view_book" >
+        </activity>
     </application>
 
 </manifest>

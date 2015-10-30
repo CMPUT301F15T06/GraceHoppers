@@ -7,10 +7,19 @@ import android.view.MenuItem;
 
 public class EditBookActivity extends ActionBarActivity {
 
+    /*
+    The screen which allows the user to edit a book or delete it
+     */
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_book);
+
+
+
     }
 
     @Override

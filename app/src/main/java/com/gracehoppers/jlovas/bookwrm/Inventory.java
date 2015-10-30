@@ -44,4 +44,8 @@ public class Inventory {
     public ArrayList<Book> getInventory(){
         return inventory;
     }
+
+    public Book getBookByIndex(int i){
+        return (Book) inventory.get(i);
+    }
 }

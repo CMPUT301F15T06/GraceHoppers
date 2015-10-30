@@ -10,8 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Edit Book"
-        android:id="@+id/editbooktextView"
+        android:text="Book Title"
+        android:id="@+id/BookTitletextView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/TitleeditText"
-        android:layout_below="@+id/editbooktextView"
+        android:layout_below="@+id/BookTitletextView"
         android:layout_alignParentStart="true"
         android:layout_marginTop="29dp"
         android:text="Title" />
@@ -28,9 +28,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/AuthoreditText"
+        android:text="Author"
         android:layout_below="@+id/TitleeditText"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="27dp"
-        android:text="Author" />
+        android:layout_marginTop="74dp" />
 
 </RelativeLayout>

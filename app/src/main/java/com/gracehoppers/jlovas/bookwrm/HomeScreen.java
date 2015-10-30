@@ -25,8 +25,8 @@ public class HomeScreen extends ActionBarActivity {
     private ArrayAdapter<Book> adapter;
     private Inventory userInventory = new Inventory();
     private ArrayList<Book> inventory;
-
-
+    Account testAccount = new Account();
+    private SaveLoad saveload= new SaveLoad();
 
 
     @Override
@@ -35,7 +35,7 @@ public class HomeScreen extends ActionBarActivity {
         setContentView(R.layout.activity_home_screen);
 
         //-------------------------DELTE ONCE SAVING AND LOADING ACCOUNT WORKS-----------------------------------------------
-        Account testAccount = new Account();
+
         try {
             testAccount.setUsername("Jill");
             testAccount.setEmail("jlovas@ualberta.ca");
@@ -110,10 +110,13 @@ public class HomeScreen extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                Toast.makeText(getApplicationContext(), ((TextView) view).getText(),
-                        Toast.LENGTH_SHORT).show();
+                Book book = testAccount.getInventory().getBookByIndex(position);
+                Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(HomeScreen.this, EditBookActivity.class);
+
+
+                Intent intent = new Intent(HomeScreen.this, ViewBookActivity.class);
+                intent.putExtra("listPosition", position);
                 startActivity(intent);
             }
         });
