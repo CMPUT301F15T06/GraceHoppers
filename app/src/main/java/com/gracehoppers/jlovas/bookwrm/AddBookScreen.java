@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class AddBookScreen extends ActionBarActivity {
+    SaveLoad mySaveLoad;
+    Account me;
     Book myBook;
     Category spinValue; //might be a better way to do this, but eh
     String madeComments;
@@ -40,7 +42,8 @@ public class AddBookScreen extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book_screen);
 
-        //madeComments = "";
+        mySaveLoad = new SaveLoad();
+        me = mySaveLoad.loadFromFile(getApplicationContext());
 
         titleText = (EditText)findViewById(R.id.titleText);
         authorText = (EditText)findViewById(R.id.authorText);
@@ -68,7 +71,7 @@ public class AddBookScreen extends ActionBarActivity {
                     int position,
                     long id) {
                 //testing purposes
-                Toast.makeText(getApplicationContext(), "Position is " + position + "!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Position is " + position + "!", Toast.LENGTH_SHORT).show();
 
                 //switch case to set category properly - move to within the class somehow?
                 switch (position) {
@@ -202,6 +205,8 @@ public class AddBookScreen extends ActionBarActivity {
                 Bitmap bMap = thePhoto.getDrawingCache();
                 myBook = new Book(bMap);
 
+                boolean success = false;
+
                 //a ton of exception catching goes here
 
                 //set title
@@ -234,19 +239,38 @@ public class AddBookScreen extends ActionBarActivity {
 
                 }
 
-                //set quality -what happens if none set? 0?
+                //OPTIONAL THINGS
+                //rating doesn't seem to be optional but it is... will come back to fix that later if I can
+
+                //set quality
                 myBook.setQuality(stars.getRating());
+                //Toast.makeText(getApplicationContext(), "Rating is: " +stars.getRating(), Toast.LENGTH_SHORT).show();
 
                 //set category
                 myBook.setCategory(spinValue);
 
-                //set comments
+                //set comments -HAS ISSUES
+                /*
+                try{
+                myBook.setDescription(madeComments);
+                }catch(BlankFieldException e){
+                    Toast.makeText(getApplicationContext(), "It counts as an empty oh noes!", Toast.LENGTH_SHORT).show(); //ISSUE FIX ME, ACCIDENTL MADE MANDETORY COMMENTS
+                }
+                */
 
                 //set private/public
+                if(privateCheckBox.isChecked()){
+                    //set as private in Book
+                    myBook.setIsPrivate(true);
+                }else{
+                    myBook.setIsPrivate(false);
+                }
 
-                //not going to move to new activity until this works right
-                //Intent addBIntent = new Intent(HomeScreen.this, AddBookScreen.class);
-                //startActivity(addBIntent);
+
+                //save into Gson and end the activity
+                mySaveLoad.saveInFile(getApplicationContext(), me);
+                Toast.makeText(getApplicationContext(), "Successfully added book to inventory", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
 
@@ -271,14 +295,14 @@ public class AddBookScreen extends ActionBarActivity {
         super.onActivityResult(requestCode, resultCode, data);
             if(requestCode == 0)
                 if (resultCode == AddCommentsScreen.RESULT_OK) {
-                    // TODO Extract the data returned from the child Activity.
+                    // TODO Extract the data returned from the child Activity. -DONE! :D
                     madeComments = data.getStringExtra("COMMENTS");
-                    Toast.makeText(getApplicationContext(), "Got" + madeComments +" from child.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Got " + madeComments +" from child.", Toast.LENGTH_SHORT).show();
                 }
     }
 
 
-    
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
