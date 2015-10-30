@@ -111,7 +111,7 @@ public class HomeScreen extends ActionBarActivity {
 
 
                 Book book = testAccount.getInventory().getBookByIndex(position);
-                Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
 
 
 
@@ -183,6 +183,8 @@ public class HomeScreen extends ActionBarActivity {
 
         //add second book
         testAccount.getInventory().addBook(book2);
+
+        saveload.saveInFile(HomeScreen.this,testAccount); //delete this once server is working
 
         //------------------------------------------------------------------------
 

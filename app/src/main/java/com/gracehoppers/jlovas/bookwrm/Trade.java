@@ -1,5 +1,7 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import java.util.ArrayList;
+
 /**
  * trade holds the information about the trade:
  * -who it is between

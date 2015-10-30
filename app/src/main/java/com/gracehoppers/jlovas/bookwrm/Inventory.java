@@ -10,7 +10,7 @@ public class Inventory {
     public Inventory() {
     }
 
-    ArrayList inventory = new ArrayList<Book>();
+    ArrayList<Book> inventory = new ArrayList<Book>();
 
     public void addBook(Book book) {
         inventory.add(book);
@@ -33,7 +33,7 @@ public class Inventory {
     public Book getBookByTitle(String name) {
         Book returnedBook = new Book();
         for (int i = 0; i < inventory.size(); i++) {
-            Book book = (Book) inventory.get(i);
+            Book book = inventory.get(i);
             if (name == book.getTitle()) {
                 returnedBook = book;
             }
@@ -46,6 +46,10 @@ public class Inventory {
     }
 
     public Book getBookByIndex(int i){
-        return (Book) inventory.get(i);
+        if(i>inventory.size()){ //if the requested position exceeds inventory size, return empty book
+            return new Book();
+        }
+
+        return inventory.get(i);
     }
 }
