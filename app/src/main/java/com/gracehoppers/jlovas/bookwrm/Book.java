@@ -90,8 +90,47 @@ public class Book {
         return category;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategory(int category) {
+
+        switch (category) {
+            case 0:
+                this.category = Category.NONE;
+                break;
+            case 1:
+                this.category = Category.HARDBACK;
+                break;
+            case 2:
+                this.category = Category.PAPERBACK;
+                break;
+            case 3:
+                this.category = Category.AUDIOBOOK;
+                break;
+            case 4:
+                this.category = Category.COMIC;
+                break;
+            case 5:
+                this.category = Category.TEXTBOOK;
+                break;
+            case 6:
+                this.category = Category.PICTURE;
+                break;
+            case 7:
+                this.category = Category.BRAILLE;
+                break;
+            case 8:
+                this.category = Category.REFERENCE;
+                break;
+            case 9:
+                this.category = Category.RECIPE;
+                break;
+            case 10:
+                this.category = Category.DIY;
+                break;
+            default:
+                this.category = Category.NONE;
+                break;
+        }
+
     }
 
     public boolean isPrivate() {
@@ -106,9 +145,9 @@ public class Book {
         return description;
     }
 
-    public void setDescription(String description) throws BlankFieldException {
+    public void setDescription(String description) {
         if(description.isEmpty()){
-            throw new BlankFieldException();
+            this.description = "None";
         }else
 
             this.description = description;
@@ -129,7 +168,7 @@ public class Book {
             throw new NegativeNumberException();
         }
         else {
-            //this.quantity = converted;
+            this.quantity = converted;
         }
     }
 /*

@@ -47,7 +47,7 @@ public class HomeScreen extends ActionBarActivity {
         } catch (IllegalEmailException e) {
             e.printStackTrace();
         }
-        Category testCategory = null;
+        int testCategory =1;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
         //create book 1
         Book book1 = new Book(testImage);
@@ -58,12 +58,10 @@ public class HomeScreen extends ActionBarActivity {
         } catch (NegativeNumberException e) {
             e.printStackTrace();
         }
-        book1.setCategory(testCategory.HARDBACK);
-        try {
+        book1.setCategory(testCategory);
+
             book1.setDescription("None");
-        } catch (BlankFieldException e) {
-            e.printStackTrace();
-        }
+
         book1.setQuality(4);
         book1.setIsPrivate(false);
         //one book
@@ -79,12 +77,10 @@ public class HomeScreen extends ActionBarActivity {
             e.printStackTrace();
         }
 
-        book2.setCategory(testCategory.PAPERBACK);
-        try {
+        book2.setCategory(testCategory);
+
             book2.setDescription("None");
-        } catch (BlankFieldException e) {
-            e.printStackTrace();
-        }
+
         book2.setQuality(4);
         book2.setIsPrivate(false);
 
@@ -137,7 +133,7 @@ public class HomeScreen extends ActionBarActivity {
         } catch (IllegalEmailException e) {
             e.printStackTrace();
         }
-        Category testCategory = null;
+        int testCategory =1;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
         //create book 1
         Book book1 = new Book(testImage);
@@ -148,12 +144,10 @@ public class HomeScreen extends ActionBarActivity {
         } catch (NegativeNumberException e) {
             e.printStackTrace();
         }
-        book1.setCategory(testCategory.HARDBACK);
-        try {
+        book1.setCategory(testCategory);
+
             book1.setDescription("None");
-        } catch (BlankFieldException e) {
-            e.printStackTrace();
-        }
+
         book1.setQuality(4);
         book1.setIsPrivate(false);
         //one book
@@ -169,12 +163,10 @@ public class HomeScreen extends ActionBarActivity {
             e.printStackTrace();
         }
 
-        book2.setCategory(testCategory.PAPERBACK);
-        try {
+        book2.setCategory(testCategory);
+
             book2.setDescription("None");
-        } catch (BlankFieldException e) {
-            e.printStackTrace();
-        }
+
         book2.setQuality(4);
         book2.setIsPrivate(false);
 
