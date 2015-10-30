@@ -1,5 +1,6 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,9 +23,10 @@ public class ProfileScreen extends ActionBarActivity {
     TextView city;
     Button edit;
     Button confirm;
-    String newname;
     String newemail;
     String newcity;
+    Account account;
+    SaveLoad saveload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +45,10 @@ public class ProfileScreen extends ActionBarActivity {
         edit = (Button) findViewById(R.id.editprofile);
         final ArrayList<View> originalList = new ArrayList<View>((Arrays.asList(name,city,email,edit)));
 
-        String oldname="";
-        String oldemail="";
-        String oldcity="";
 
-        name.setText(oldname);
-        email.setText(oldemail);
-        city.setText(oldcity);
+        name.setText(account.getUsername());
+        email.setText(account.getEmail());
+        city.setText(account.getCity());
 
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,12 +58,33 @@ public class ProfileScreen extends ActionBarActivity {
             }
         });
 
-        confirm.setOnClickListener(new View.OnClickListener() {
+        confirm.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View view) {
-                newemail = editemail.getText().toString();
-                newcity = editcity.getText().toString();
 
+                try {
+                    newemail = editemail.getText().toString();
+                    newcity = editcity.getText().toString();
+
+                    account.setEmail(newemail);
+                    account.setCity(newcity);
+                    saveload.saveInFile(ProfileScreen.this, account);
+                    Toast.makeText(getApplicationContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
+                    Intent sIntent = new Intent(ProfileScreen.this, ProfileScreen.class); //sends user to profile
+                    startActivity(sIntent);
+                } catch (IllegalArgumentException e) {
+                    Toast.makeText(getApplicationContext(), "All Fields must be filled",
+                            Toast.LENGTH_SHORT).show();
+                } catch (IllegalEmailException f) {
+                    Toast.makeText(getApplicationContext(), "Must have valid email",
+                            Toast.LENGTH_SHORT).show();
+                } catch (NoSpacesException s) {
+                    Toast.makeText(getApplicationContext(), "Fields cannot contain spaces",
+                            Toast.LENGTH_SHORT).show();
+                } catch (TooLongException w) {
+                    Toast.makeText(getApplicationContext(), "A field is too long",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
