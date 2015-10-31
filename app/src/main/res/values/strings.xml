@@ -26,6 +26,12 @@
     <string name="title_activity_friend_profile_screen">FriendProfileScreen</string>
     <string name="title_activity_add_comments_screen">AddCommentsScreen</string>
     <string name="title_activity_edit_book">EditBookActivity</string>
+    <string name="title_activity_create_trade_screen">CreateTradeScreen</string>
+    <string name="title_activity_select_from_borrower_inventory">
+        SelectFromBorrowerInventoryActivity
+    </string>
+    <string name="title_activity_select_from_owner_inventory">SelectFromOwnerInventoryActivity
+    </string>
     <string name="title_activity_view_book">ViewBookActivity</string>
 
 </resources>
