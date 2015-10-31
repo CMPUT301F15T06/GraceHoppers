@@ -16,6 +16,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
@@ -33,6 +34,7 @@ public class AccountManager {
     }
 
     public void addAccount(Account account) {
+        System.out.print(URL+account.getUsername());
         HttpClient httpClient=new DefaultHttpClient();
         try{
             HttpPost addRequest=new HttpPost(URL+account.getUsername());
@@ -53,9 +55,9 @@ public class AccountManager {
         HttpGet httpGet=new HttpGet(URL+username);
         System.out.print(URL+username);
 
-        HttpResponse response;
+        HttpResponse response=null;
 
-        try {
+       /* try {
             response = httpClient.execute(httpGet);
         } catch (ClientProtocolException e1) {
             throw new RuntimeException(e1);
@@ -77,8 +79,8 @@ public class AccountManager {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-        /*try{
+        }*/
+        try{
             //System.out.print("1");
             response=httpClient.execute(httpGet);
             //System.err.print(response.toString());
@@ -95,13 +97,13 @@ public class AccountManager {
 
             System.out.print("result2 "+result2);
 
-            Type type=new TypeToken<SearchResult<Account>>() {}.getType();
+            Type type=new TypeToken<SearchHit<Account>>() {}.getType();
 
-            SearchResult<Account> accounts=gson.fromJson(result2,type);
+            SearchHit<Account> accounts=gson.fromJson(result2,type);
             return accounts.getSource();
 
 
-        }catch(Exception e){e.printStackTrace();}*/
+        }catch(Exception e){e.printStackTrace();}
         return sr.getSource();
     }
 
