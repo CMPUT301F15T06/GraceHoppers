@@ -1,6 +1,11 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 import com.google.gson.Gson;
+import com.gracehoppers.jlovas.bookwrm.Account;
+import com.gracehoppers.jlovas.bookwrm.AccountManager;
+import com.gracehoppers.jlovas.bookwrm.IllegalEmailException;
+import com.gracehoppers.jlovas.bookwrm.NoSpacesException;
+import com.gracehoppers.jlovas.bookwrm.TooLongException;
 
 import junit.framework.TestCase;
 
@@ -9,7 +14,7 @@ import junit.framework.TestCase;
  */
 public class AccountManagerTest extends TestCase {
 
-    public void testaddAccount() throws NoSpacesException, TooLongException, IllegalEmailException{
+    public void testaddAccount() throws NoSpacesException, TooLongException, IllegalEmailException {
         AccountManager accountManager=new AccountManager();
         //accountManager.deleteAccount("asdf");
         String username="asf";
