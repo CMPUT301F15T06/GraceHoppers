@@ -25,7 +25,8 @@ public class InventoryTest extends ActivityInstrumentationTestCase2 {
         testAccount.setEmail("jlovas@ualberta.ca");
         testAccount.setCity("GP");
 
-        Category testCategory = null;
+        int testCategory1 = 1;
+        int testCategory2 = 2;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
         //create book 1
@@ -35,7 +36,7 @@ public class InventoryTest extends ActivityInstrumentationTestCase2 {
 
         book1.setQuantity("1");
 
-        book1.setCategory(testCategory.HARDBACK);
+        book1.setCategory(testCategory1);
         book1.setDescription("None");
         book1.setQuality(4);
         book1.setIsPrivate(false);
@@ -51,7 +52,7 @@ public class InventoryTest extends ActivityInstrumentationTestCase2 {
 
         book2.setQuantity("1");
 
-        book2.setCategory(testCategory.PAPERBACK);
+        book2.setCategory(testCategory2);
         book2.setDescription("None");
         book2.setQuality(4);
         book2.setIsPrivate(false);
@@ -71,7 +72,8 @@ public class InventoryTest extends ActivityInstrumentationTestCase2 {
         testAccount.setEmail("jlovas@ualberta.ca");
         testAccount.setCity("GP");
 
-        Category testCategory = null;
+        int testCategory1 = 1;
+        int testCategory2 = 2;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
         //create book 1
@@ -81,7 +83,7 @@ public class InventoryTest extends ActivityInstrumentationTestCase2 {
 
         book1.setQuantity("1");
 
-        book1.setCategory(testCategory.HARDBACK);
+        book1.setCategory(testCategory1);
         book1.setDescription("None");
         book1.setQuality(4);
         book1.setIsPrivate(false);
@@ -94,7 +96,7 @@ public class InventoryTest extends ActivityInstrumentationTestCase2 {
 
         book2.setQuantity("1");
 
-        book2.setCategory(testCategory.PAPERBACK);
+        book2.setCategory(testCategory2);
         book2.setDescription("None");
         book2.setQuality(4);
         book2.setIsPrivate(false);

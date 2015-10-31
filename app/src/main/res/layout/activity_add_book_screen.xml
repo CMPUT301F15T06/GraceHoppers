@@ -39,7 +39,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/titleText"
                 android:layout_marginTop="5dp"
-                android:maxLength="30"
+                android:singleLine="true"
+                android:maxLength="70"
+                android:scrollHorizontally="true"
                 android:textSize="14sp"
                 android:hint="Title" />
 
@@ -55,7 +57,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/authorText"
-                android:maxLength="30"
+                android:singleLine="true"
+                android:scrollHorizontally="true"
+                android:maxLength="70"
                 android:textSize="14sp"
                 android:layout_marginTop="5dp"
                 android:hint="Author" />

@@ -86,8 +86,37 @@ public class Book {
         return quantity;
     }
 
-    public Category getCategory() {
-        return category;
+    //getCategory is a String because it is easier for it to be displayed
+    //it will display the category like a normal person would want it
+    //example: NONE = None, PAPERBACK = paperback, etc
+    public String getCategory() {
+
+        switch (this.category) {
+            case NONE:
+                return "None";
+            case HARDBACK:
+                return "Hardback";
+            case PAPERBACK:
+                return "Paperback";
+            case AUDIOBOOK:
+                return "Audiobook";
+            case COMIC:
+                return "Comic";
+            case TEXTBOOK:
+                return "Textbook";
+            case PICTURE:
+                return "Picture";
+            case BRAILLE:
+                return "Braille";
+            case REFERENCE:
+                return "Reference";
+            case RECIPE:
+                return "Recipe";
+            case DIY:
+                return "DIY";
+            default:
+                return "None";
+        }
     }
 
     public void setCategory(int category) {

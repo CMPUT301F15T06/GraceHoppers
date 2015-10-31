@@ -33,7 +33,7 @@ public class SaveLoadTest extends ActivityInstrumentationTestCase2 {
         saveload.saveInFile(context, testa); //save testa into the file
         Account testa2 = new Account();
         testa2.setUsername("JadeHarley");
-        testa2=saveload.loadFromFile(context,testa2);
+        testa2=saveload.loadFromFile(context);
      assertTrue(testa2.getUsername().equals(testa.getUsername()) && testa2.getEmail().equals(testa.getEmail()) && testa2.getCity().equals(testa.getCity())
                 && testa2.getInventory().getSize()==testa.getInventory().getSize());
 
