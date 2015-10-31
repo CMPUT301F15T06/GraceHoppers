@@ -47,8 +47,8 @@ public class SaveLoad {
         }
 
         //load your account
-        public Account loadFromFile(Context context,Account account) {
-            account=null;
+        public Account loadFromFile(Context context) {
+            Account account=null;
             try {
 
                 FileInputStream fis = context.openFileInput(FILENAME);

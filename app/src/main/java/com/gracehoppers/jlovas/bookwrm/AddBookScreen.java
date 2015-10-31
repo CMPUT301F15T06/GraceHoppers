@@ -19,9 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class AddBookScreen extends ActionBarActivity {
+    SaveLoad mySaveLoad;
+    Account me;
     Book myBook;
-    Category spinValue; //might be a better way to do this, but eh
-    String madeComments;
+    int spinValue; //might be a better way to do this, but eh
+    String madeComments = "None";
 
     EditText titleText;
     EditText authorText;
@@ -40,7 +42,11 @@ public class AddBookScreen extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book_screen);
 
-        //madeComments = "";
+        Toast.makeText(getApplicationContext(), "Madecomments =" + madeComments, Toast.LENGTH_SHORT).show();
+
+
+        mySaveLoad = new SaveLoad();
+        me = mySaveLoad.loadFromFile(getApplicationContext());
 
         titleText = (EditText)findViewById(R.id.titleText);
         authorText = (EditText)findViewById(R.id.authorText);
@@ -67,48 +73,8 @@ public class AddBookScreen extends ActionBarActivity {
                     View view,
                     int position,
                     long id) {
-                //testing purposes
-                Toast.makeText(getApplicationContext(), "Position is " + position + "!", Toast.LENGTH_SHORT).show();
-
-                //switch case to set category properly - move to within the class somehow?
-                switch (position) {
-                    case 0:
-                        spinValue = Category.NONE;
-                        break;
-                    case 1:
-                        spinValue = Category.HARDBACK;
-                        break;
-                    case 2:
-                        spinValue = Category.PAPERBACK;
-                        break;
-                    case 3:
-                        spinValue = Category.AUDIOBOOK;
-                        break;
-                    case 4:
-                        spinValue = Category.COMIC;
-                        break;
-                    case 5:
-                        spinValue = Category.TEXTBOOK;
-                        break;
-                    case 6:
-                        spinValue = Category.PICTURE;
-                        break;
-                    case 7:
-                        spinValue = Category.BRAILLE;
-                        break;
-                    case 8:
-                        spinValue = Category.REFERENCE;
-                        break;
-                    case 9:
-                        spinValue = Category.RECIPE;
-                        break;
-                    case 10:
-                        spinValue = Category.DIY;
-                        break;
-                    default:
-                        spinValue = Category.NONE;
-                        break;
-                }
+                //assign to 'global' for sending to Book
+                spinValue = position;
             }
 
             @Override
@@ -142,7 +108,6 @@ public class AddBookScreen extends ActionBarActivity {
                     }
 
                     if (tempQuantity > 1) {
-
                         tempQuantity--;
                         quantityText.setText(String.valueOf(tempQuantity));
 
@@ -203,55 +168,42 @@ public class AddBookScreen extends ActionBarActivity {
                 myBook = new Book(bMap);
 
                 //a ton of exception catching goes here
-
-                //set title
                 try{
                     myBook.setTitle(titleText.getText().toString());
+                    myBook.setAuthor(authorText.getText().toString());
+                    myBook.setQuantity(quantityText.getText().toString());
+
+                    //OPTIONAL THINGS
+                    //rating doesn't seem to be optional but it is... will come back to fix that later if I can
+                    myBook.setQuality(stars.getRating());
+                    myBook.setCategory(spinValue);
+                    myBook.setDescription(madeComments);
+
+                    //set private/public
+                    if(privateCheckBox.isChecked()){
+                        //set as private in Book
+                        myBook.setIsPrivate(true);
+                    }else{
+                        myBook.setIsPrivate(false);
+                    }
+
+                    //save into Gson and end the activity
+                    mySaveLoad.saveInFile(getApplicationContext(), me);
+                    Toast.makeText(getApplicationContext(), "Successfully added book to inventory", Toast.LENGTH_SHORT).show();
+                    finish();
                 }catch(IllegalArgumentException e){
                     //titleText.setText("NO TITLE"); //test to see what we can do
                     Toast.makeText(getApplicationContext(), "Fields cannot be blank", Toast.LENGTH_SHORT).show();
-                    //**should add somethig here maybe to emphasize what fields meant maaaaaybe, but would have to be all
-                }
-
-                //set author
-                try{
-                    myBook.setAuthor(authorText.getText().toString());
-                }catch(IllegalArgumentException e){
-                    Toast.makeText(getApplicationContext(), "Fields cannot be blank", Toast.LENGTH_SHORT).show();
-
-                }
-
-                //set quantity
-                try{
-                    myBook.setQuantity(quantityText.getText().toString());
-                }catch(IllegalArgumentException e){
-                    //need to catch if they enter letters in the quantity
-                    //also catch negative or 0 quantity
-                    Toast.makeText(getApplicationContext(), "Illegal quantity type, please choose a number", Toast.LENGTH_SHORT).show();
-
-                } catch(NegativeNumberException d){
+                    //**should add something here maybe to emphasize what fields meant maaaaaybe, but would have to be all
+                }catch(NegativeNumberException d) {
                     Toast.makeText(getApplicationContext(), "Invalid quantity type. Quantity must be positive", Toast.LENGTH_SHORT).show();
-
                 }
 
-                //set quality -what happens if none set? 0?
-                myBook.setQuality(stars.getRating());
-
-                //set category
-                myBook.setCategory(spinValue);
-
-                //set comments
-
-                //set private/public
-
-                //not going to move to new activity until this works right
-                //Intent addBIntent = new Intent(HomeScreen.this, AddBookScreen.class);
-                //startActivity(addBIntent);
             }
         });
 
 
-                comments.setOnClickListener(new View.OnClickListener(){
+        comments.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 //Toast.makeText(getApplicationContext(), "You wanted to add a comment!", Toast.LENGTH_SHORT).show();
@@ -271,14 +223,14 @@ public class AddBookScreen extends ActionBarActivity {
         super.onActivityResult(requestCode, resultCode, data);
             if(requestCode == 0)
                 if (resultCode == AddCommentsScreen.RESULT_OK) {
-                    // TODO Extract the data returned from the child Activity.
+                    // TODO Extract the data returned from the child Activity. -DONE! :D
                     madeComments = data.getStringExtra("COMMENTS");
-                    Toast.makeText(getApplicationContext(), "Got" + madeComments +" from child.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Got " + madeComments +" from child.", Toast.LENGTH_SHORT).show();
                 }
     }
 
 
-    
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
