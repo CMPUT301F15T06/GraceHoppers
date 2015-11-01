@@ -68,3 +68,13 @@ Referenced CMPUT 301 lab, University of Alberta, TA's Joshua Campbell, Shida He,
 
 Passing Extra with Intents:
 https://youtu.be/ViwazAAR-vE, TZCoder, 2015-30-10
+
+Returning the correct type from an arraylist
+http://www.javaprogrammingforums.com/collections-generics/16169-arraylist-get-returning-incompatible-type.html, 2015-30-10
+
+Scrollview:
+http://javatechig.com/android/android-scrollview-example, 2015-31-10
+
+Scrollview not scrolling to the bottom, solution:
+Doge, http://stackoverflow.com/questions/11660937/android-scrollview-refuses-to-scroll-to-bottom, 2015-31-10
+http://stackoverflow.com/users/280664/doge
