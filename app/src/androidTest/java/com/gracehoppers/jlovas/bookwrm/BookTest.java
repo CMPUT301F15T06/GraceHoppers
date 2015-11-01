@@ -12,8 +12,8 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
 
     public BookTest(){super(Book.class);} //should this be Book or AddBookScreen? I changed it to Book, still works and makes more sense
 
-  //***PLEASE NOTE*** none of the tests below are testing for an added picture, only the DEFAULT!
-    //Test for this once you figure that part out!
+  //***PLEASE NOTE*** none of the tests below are testing for an added picture, only the DEFAULT
+  // Test for this once you figure that part out!
 
     public void testAddBook() throws NoSpacesException, NegativeNumberException, IllegalEmailException, TooLongException, BlankFieldException {
 
@@ -24,7 +24,7 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
         testAccount.setEmail("jlovas@ualberta.ca");
         testAccount.setCity("GP");
 
-        Category testCategory = null;
+        int testCategory1 = 1;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
         Book book = new Book(testImage);
@@ -33,7 +33,7 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
 
         book.setQuantity("1");
 
-        book.setCategory(testCategory.HARDBACK);
+        book.setCategory(testCategory1);
         book.setDescription("None");
         book.setQuality(4);
         book.setIsPrivate(false);
@@ -46,11 +46,6 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
     }
 
 
-
-
-        //test creation of book with comment vs no comment
-
-
     //test creation of a book with no title
     public void testsetTitle() throws NoSpacesException, NegativeNumberException, IllegalEmailException, TooLongException, BlankFieldException{
         Account testAccount = new Account();
@@ -58,14 +53,14 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
         testAccount.setEmail("jlovas@ualberta.ca");
         testAccount.setCity("GP");
 
-        Category testCategory = null;
+        int testCategory = 1;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
         Book book = new Book(testImage);
 
         book.setAuthor("Christopher Paolini");
         book.setQuantity("1");
-        book.setCategory(testCategory.HARDBACK);
+        book.setCategory(testCategory);
         book.setDescription("None");
         book.setQuality(4);
         book.setIsPrivate(false);
@@ -83,7 +78,7 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
         testAccount.setEmail("jlovas@ualberta.ca");
         testAccount.setCity("GP");
 
-        Category testCategory = null;
+        int testCategory = 1;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
         Book book = new Book(testImage);
@@ -92,7 +87,7 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
 
         book.setQuantity("1");
 
-        book.setCategory(testCategory.HARDBACK);
+        book.setCategory(testCategory);
         book.setDescription("None");
         book.setQuality(4);
         book.setIsPrivate(false);
@@ -112,14 +107,14 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
         testAccount.setEmail("jlovas@ualberta.ca");
         testAccount.setCity("GP");
 
-        Category testCategory = null;
+        int testCategory = 1;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
         Book book = new Book(testImage);
         book.setTitle("Eragon");
         book.setAuthor("Christopher Paolini");
 
-        book.setCategory(testCategory.HARDBACK);
+        book.setCategory(testCategory);
         book.setDescription("None");
         book.setQuality(4);
         book.setIsPrivate(false);
@@ -140,14 +135,14 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
         testAccount.setEmail("jlovas@ualberta.ca");
         testAccount.setCity("GP");
 
-        Category testCategory = null;
+        int testCategory = 1;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
         Book book = new Book(testImage);
         book.setTitle("Eragon");
         book.setAuthor("Christopher Paolini");
 
-        book.setCategory(testCategory.HARDBACK);
+        book.setCategory(testCategory);
         book.setDescription("None");
         book.setQuality(4);
         book.setIsPrivate(false);
@@ -161,14 +156,14 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
 
     }
 
-    //test uhhh no chosen category for a book is correct? category is pretty secure user-wise
+    //test setting category and category return value (it's a string now for ease of display in UI)
     public void testsetCategory() throws NoSpacesException, NegativeNumberException, IllegalEmailException, TooLongException, BlankFieldException{
         Account testAccount = new Account();
         testAccount.setUsername("Jill");
         testAccount.setEmail("jlovas@ualberta.ca");
         testAccount.setCity("GP");
 
-        Category testCategory = null;
+        int testCategory = 7;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
         Book book = new Book(testImage);
@@ -183,22 +178,23 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
         book.setIsPrivate(false);
 
 
-        book.setCategory(testCategory.NONE);
+        book.setCategory(testCategory);
+        String testGetCategory = book.getCategory();
 
-        assertTrue(book.getCategory().equals(testCategory.NONE));
+        assertTrue(testGetCategory.equals("Braille"));
 
     }
 
 
     //test creation of book with half quality value - these are pretty weak but im not sure how
-    // to test something this secure. It made me change it from int to double though
+    // to test something this secure. It made me change it from int to double though -TDD!
     public void testsetQuality() throws NoSpacesException, NegativeNumberException, IllegalEmailException, TooLongException, BlankFieldException{
         Account testAccount = new Account();
         testAccount.setUsername("Jill");
         testAccount.setEmail("jlovas@ualberta.ca");
         testAccount.setCity("GP");
 
-        Category testCategory = null;
+        int testCategory = 1;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
         Book book = new Book(testImage);
@@ -207,7 +203,7 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
 
         book.setQuantity("1");
 
-        book.setCategory(testCategory.HARDBACK);
+        book.setCategory(testCategory);
         book.setDescription("None");
         book.setIsPrivate(false);
 
@@ -228,7 +224,7 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
         testAccount.setEmail("jlovas@ualberta.ca");
         testAccount.setCity("GP");
 
-        Category testCategory = null;
+        int testCategory = 1;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
         Book book = new Book(testImage);
@@ -237,7 +233,7 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
 
         book.setQuantity("1");
 
-        book.setCategory(testCategory.HARDBACK);
+        book.setCategory(testCategory);
         book.setDescription("None");
         book.setQuality(4);
 
@@ -257,7 +253,7 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
         testAccount.setEmail("jlovas@ualberta.ca");
         testAccount.setCity("GP");
 
-        Category testCategory = null;
+        int testCategory = 1;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
         Book book = new Book(testImage);
@@ -266,14 +262,41 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
 
         book.setQuantity("1");
 
-        book.setCategory(testCategory.HARDBACK);
+        book.setCategory(testCategory);
         book.setQuality(4);
         book.setIsPrivate(false);
-        try{book.setDescription(""); //cant be blank
-        } catch (BlankFieldException e){
-            assertFalse(book.getDescription()=="");
+        book.setDescription(""); //cant be blank
+
+        assertFalse(book.getDescription().equals(""));
+        assertTrue(book.getDescription().equals("None"));
         }
+
+    //test adding a comment, very similar to above test
+    public void testAddGoodComment() throws NoSpacesException, NegativeNumberException, IllegalEmailException, TooLongException{
+        Account testAccount = new Account();
+        testAccount.setUsername("Jill");
+        testAccount.setEmail("jlovas@ualberta.ca");
+        testAccount.setCity("GP");
+
+        int testCategory = 1;
+        Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
+
+        Book book = new Book(testImage);
+        book.setTitle("Eragon");
+        book.setAuthor("Christopher Paolini");
+
+        book.setQuantity("1");
+
+        book.setCategory(testCategory);
+        book.setQuality(4);
+        book.setIsPrivate(false);
+        book.setDescription("Wow I've set a description!"); //cant be blank
+
+        assertFalse(book.getDescription().equals(""));
+        assertFalse(book.getDescription().equals("None"));
+        assertTrue(book.getDescription().equals("Wow I've set a description!"));
     }
+
 
     //test connectvitiy ***cannot do this yet?
 

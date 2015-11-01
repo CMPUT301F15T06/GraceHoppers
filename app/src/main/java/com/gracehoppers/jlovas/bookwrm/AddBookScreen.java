@@ -41,9 +41,6 @@ public class AddBookScreen extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book_screen);
 
-        Toast.makeText(getApplicationContext(), "Madecomments =" + madeComments, Toast.LENGTH_SHORT).show();
-
-
         mySaveLoad = new SaveLoad();
         me = mySaveLoad.loadFromFile(getApplicationContext());
 
@@ -72,7 +69,7 @@ public class AddBookScreen extends ActionBarActivity {
                     View view,
                     int position,
                     long id) {
-                //assign to 'global' for sending to Book
+                //assign to 'global' for sending to Book on ok button press
                 spinValue = position;
             }
 
@@ -90,6 +87,7 @@ public class AddBookScreen extends ActionBarActivity {
         //to the user so they can see what it will look like.
         // Will get this in in time, functionality first. -Jill
 
+        //makes quantity go down
         minusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,6 +121,7 @@ public class AddBookScreen extends ActionBarActivity {
             }
         });
 
+        //makes quantity go up
         plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -173,7 +172,7 @@ public class AddBookScreen extends ActionBarActivity {
                     myBook.setQuantity(quantityText.getText().toString());
 
                     //OPTIONAL THINGS
-                    //rating doesn't seem to be optional but it is... will come back to fix that later if I can
+                    //rating doesn't seem to be optional in the UI but it is... will come back to fix that later if I can
                     myBook.setQuality(stars.getRating());
                     myBook.setCategory(spinValue);
                     myBook.setDescription(madeComments);
@@ -201,7 +200,7 @@ public class AddBookScreen extends ActionBarActivity {
             }
         });
 
-
+        //text button for adding comments - made this as text because a button would take up space/be clunky
         comments.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -210,13 +209,9 @@ public class AddBookScreen extends ActionBarActivity {
                 startActivityForResult(intent, 0);
             }
         });
-
-
-
-
     } //end of onCreate function
 
-    //catch comments made in another activity
+    //catch comments made in another activity - need this for comments, passes the result to madeComments
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
@@ -224,7 +219,7 @@ public class AddBookScreen extends ActionBarActivity {
                 if (resultCode == AddCommentsScreen.RESULT_OK) {
                     // TODO Extract the data returned from the child Activity. -DONE! :D
                     madeComments = data.getStringExtra("COMMENTS");
-                    Toast.makeText(getApplicationContext(), "Got " + madeComments +" from child.", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Got " + madeComments +" from child.", Toast.LENGTH_SHORT).show();
                 }
     }
 
