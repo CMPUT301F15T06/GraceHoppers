@@ -2,7 +2,6 @@ package com.gracehoppers.jlovas.bookwrm;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -48,7 +47,7 @@ public class AddBookScreen extends ActionBarActivity {
         titleText = (EditText)findViewById(R.id.titleText);
         authorText = (EditText)findViewById(R.id.authorText);
         quantityText = (EditText)findViewById(R.id.quantityText);
-        okButton = (Button)findViewById(R.id.okButton);
+        okButton = (Button)findViewById(R.id.EditBookButton);
         thePhoto = (ImageView)findViewById(R.id.bookImage);
         minusButton = (Button)findViewById(R.id.minusButton);
         plusButton = (Button)findViewById(R.id.plusButton);

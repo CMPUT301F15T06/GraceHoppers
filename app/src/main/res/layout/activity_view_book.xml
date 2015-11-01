@@ -1,27 +1,194 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.gracehoppers.jlovas.bookwrm.ViewBookActivity">
+    tools:context="com.gracehoppers.jlovas.bookwrm.AddBookScreen">
 
-    <TextView
-        android:layout_width="wrap_content"
+
+    <TableLayout
+        android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Book Title"
-        android:id="@+id/BookTitletextView"
+        android:stretchColumns="0"
+        android:id="@+id/tableLayout2"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/scrollView">
 
-    <TextView
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFA0D0D8">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Book Title"
+                android:id="@+id/BookTitletextView"
+                android:layout_column="0"
+                android:textSize="14sp"
+                android:layout_gravity="center"
+                android:textColor="#000000"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFA0D0D8">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/authortextView"
+                android:maxLength="30"
+                android:textSize="14sp"
+                android:layout_marginTop="5dp"
+                android:hint="Author"
+                android:text="Book Author"
+                android:layout_gravity="center"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_marginBottom="2dp" />
+
+        </TableRow>
+
+    </TableLayout>
+
+
+    <Button
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:id="@+id/EditBookButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Book Author"
-        android:id="@+id/authortextView"
-        android:layout_below="@+id/BookTitletextView"
+        android:text="Delete"
+        android:id="@+id/deleteBookbutton"
+        android:layout_alignParentBottom="true" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView"
+        android:fadeScrollbars="false"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="29dp" />
+        android:layout_below="@+id/tableLayout2"
+        android:layout_above="@+id/EditBookButton">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="1"
+            android:orientation="vertical"
+            android:layout_below="@+id/tableLayout2"
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="115dp">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bookImage"
+                android:src="@drawable/defaultbook"
+
+                android:layout_gravity="center"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Category"
+                android:id="@+id/categorytextview"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="325dp"
+                android:layout_marginLeft="30dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Quantity"
+                android:id="@+id/quantitytextview"
+                android:layout_marginRight="30dp"
+                android:layout_alignTop="@+id/categorytextview"
+                android:layout_alignEnd="@+id/bookImage" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="category name"
+                android:id="@+id/categorytypetextview"
+                android:layout_marginLeft="0dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/categorytextview"
+                android:layout_marginTop="345dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="quantity num"
+                android:id="@+id/quantitynumtextview"
+                android:layout_alignTop="@+id/categorytypetextview"
+                android:layout_alignStart="@+id/quantitytextview" />
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ratingBar2"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="380dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Private Book"
+                android:id="@+id/privatebooktextview"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="400dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Comments"
+                android:id="@+id/commentstextview"
+                android:layout_below="@+id/privatebooktextview"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="comments go here"
+                android:id="@+id/commentsdesctextview"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="450dp" />
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+
 </RelativeLayout>

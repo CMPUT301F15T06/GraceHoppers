@@ -23,6 +23,7 @@ public class SignUpActivity extends ActionBarActivity {
     EditText city;
     Button signupButton;
     private SaveLoad saveload= new SaveLoad();
+    private AccountManager accountManager=new AccountManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,10 @@ public class SignUpActivity extends ActionBarActivity {
                     account.setEmail(email.getText().toString());
                     account.setCity(city.getText().toString());
                     saveload.saveInFile(SignUpActivity.this, account);
+
+                    accountManager.addAccount(account);
+                    Toast.makeText(getApplicationContext(), username.getText().toString(),
+                            Toast.LENGTH_SHORT).show();
                     Toast.makeText(getApplicationContext(), "Account created",
                             Toast.LENGTH_SHORT).show();
                     Intent sIntent = new Intent(SignUpActivity.this, HomeScreen.class); //sends user to profile
