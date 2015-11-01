@@ -78,3 +78,7 @@ http://javatechig.com/android/android-scrollview-example, 2015-31-10
 Scrollview not scrolling to the bottom, solution:
 Doge, http://stackoverflow.com/questions/11660937/android-scrollview-refuses-to-scroll-to-bottom, 2015-31-10
 http://stackoverflow.com/users/280664/doge
+
+Showing the scrollbar at all times:
+Rejinderi, http://stackoverflow.com/questions/5702502/how-to-always-show-scrollbar, 2015-31-10
+http://stackoverflow.com/users/745270/rejinderi

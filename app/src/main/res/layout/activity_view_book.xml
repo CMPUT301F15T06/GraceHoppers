@@ -81,6 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/scrollView"
+        android:fadeScrollbars="false"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/tableLayout2"
         android:layout_above="@+id/EditBookButton">
