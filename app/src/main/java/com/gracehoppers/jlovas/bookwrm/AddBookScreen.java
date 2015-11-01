@@ -185,6 +185,8 @@ public class AddBookScreen extends ActionBarActivity {
                         myBook.setIsPrivate(false);
                     }
 
+                    me.getInventory().addBook(myBook);
+
                     //save into Gson and end the activity
                     mySaveLoad.saveInFile(getApplicationContext(), me);
                     Toast.makeText(getApplicationContext(), "Successfully added book to inventory", Toast.LENGTH_SHORT).show();

@@ -14,6 +14,7 @@ public class MainActivity extends ActionBarActivity {
     Button logInButton;
     Button signUpButton;
     EditText usernameText;
+    SaveLoad saveLoad;
 
     //for UI testing:-------------------------------------------
     public Button getSignUpButton(){
@@ -36,6 +37,30 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        saveLoad = new SaveLoad();
+
+        //----------------Delete me when login server stuff is working -----------------------------
+
+        //please be aware that because this makes a new account every time you log in (tempoarily),
+        //the data from the previous log in will not be there - this is not an error!
+        //if you don't want that happening just delete/comment out this stuff and sign up once, then
+        //log in
+        Account account = new Account();
+        try {
+            account.setUsername("Jill");
+            account.setEmail("jlovas@ualberta.ca");
+            account.setCity("GP");
+        } catch (NoSpacesException e) {
+            e.printStackTrace();
+        } catch (TooLongException e) {
+            e.printStackTrace();
+        } catch (IllegalEmailException e) {
+            e.printStackTrace();
+        }
+
+        saveLoad.saveInFile(getApplicationContext(), account);
+        //------------------------------------------------------------------------------------------
+
 
         logInButton = (Button)findViewById(R.id.logInButton);
         signUpButton = (Button)findViewById(R.id.signUpButton);
@@ -54,6 +79,9 @@ public class MainActivity extends ActionBarActivity {
                 userNameText = (EditText) findViewById(R.id.usernameText);
                 user = userNameText.getText().toString();
                 */
+
+                //TODO: put the new account into the Gson or whatever we store it with so we can pull it out on further screens!
+
 
                 Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
                 startActivity(lIntent);

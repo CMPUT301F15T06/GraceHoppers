@@ -12,11 +12,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HomeScreen extends ActionBarActivity {
     Button addBookButton;
@@ -25,7 +23,7 @@ public class HomeScreen extends ActionBarActivity {
     private ArrayAdapter<Book> adapter;
     private Inventory userInventory = new Inventory();
     private ArrayList<Book> inventory;
-    Account testAccount = new Account();
+    Account account; //= new Account();
     private SaveLoad saveload= new SaveLoad();
 
 
@@ -35,11 +33,11 @@ public class HomeScreen extends ActionBarActivity {
         setContentView(R.layout.activity_home_screen);
 
         //-------------------------DELTE ONCE SAVING AND LOADING ACCOUNT WORKS-----------------------------------------------
-
+/*
         try {
-            testAccount.setUsername("Jill");
-            testAccount.setEmail("jlovas@ualberta.ca");
-            testAccount.setCity("GP");
+            account.setUsername("Jill");
+            account.setEmail("jlovas@ualberta.ca");
+            account.setCity("GP");
         } catch (NoSpacesException e) {
             e.printStackTrace();
         } catch (TooLongException e) {
@@ -47,6 +45,7 @@ public class HomeScreen extends ActionBarActivity {
         } catch (IllegalEmailException e) {
             e.printStackTrace();
         }
+
         int testCategory =1;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
         //create book 1
@@ -65,7 +64,7 @@ public class HomeScreen extends ActionBarActivity {
         book1.setQuality(4);
         book1.setIsPrivate(false);
         //one book
-        testAccount.getInventory().addBook(book1);
+        account.getInventory().addBook(book1);
 
         Book book2 = new Book(testImage);
         book2.setTitle("Tokyo Ghoul");
@@ -85,15 +84,19 @@ public class HomeScreen extends ActionBarActivity {
         book2.setIsPrivate(false);
 
         //add second book
-        testAccount.getInventory().addBook(book2);
+        account.getInventory().addBook(book2);
 
 
-
+*/
         //------------------------------------------------------------------------
 
         addBookButton= (Button)findViewById(R.id.addBookButton);
 
-        inventory = testAccount.getInventory().getInventory();
+        account = saveload.loadFromFile(getApplicationContext());
+
+
+
+        inventory = account.getInventory().getInventory();
         inventoryList = (ListView)findViewById(R.id.inventory1);
 
         addBookButton.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +111,7 @@ public class HomeScreen extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                Book book = testAccount.getInventory().getBookByIndex(position);
+                Book book = account.getInventory().getBookByIndex(position);
                 //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
 
 
@@ -126,6 +129,7 @@ public class HomeScreen extends ActionBarActivity {
         super.onStart();
 
         //-------------------------DELTE ONCE SAVING AND LOADING ACCOUNT WORKS-----------------------------------------------
+        /*
         Account testAccount = new Account();
         try {
             testAccount.setUsername("Jill");
@@ -181,13 +185,26 @@ public class HomeScreen extends ActionBarActivity {
         saveload.saveInFile(HomeScreen.this,testAccount); //delete this once server is working
 
         //------------------------------------------------------------------------
+*/
 
+        //inventory = account.getInventory().getInventory();
+        //adapter = new BookListAdapter(this,R.layout.book_inventory_list, inventory);
+        //inventoryList.setAdapter(adapter);
+        //adapter.notifyDataSetChanged();
+    }
 
-        inventory = testAccount.getInventory().getInventory();
+    //onResume() knowledge of using this coems from class presentation of activity lifecycle
+    //Abram Hindle, CMPUT301 Fall 2015, September, University of Alberta
+    protected void onResume(){
+        super.onResume();
+        account = saveload.loadFromFile(getApplicationContext());
+        inventory = account.getInventory().getInventory();
         adapter = new BookListAdapter(this,R.layout.book_inventory_list, inventory);
         inventoryList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        //Toast.makeText(getApplicationContext(), "COME ON", Toast.LENGTH_SHORT).show();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
