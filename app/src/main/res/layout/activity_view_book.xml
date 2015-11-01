@@ -55,7 +55,8 @@
                 android:layout_gravity="center"
                 android:textColor="#000000"
                 android:textStyle="bold"
-                android:layout_marginBottom="2dp" />
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="5dp" />
 
         </TableRow>
 
@@ -143,15 +144,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="quantity num"
+                android:text="0"
                 android:id="@+id/quantitynumtextview"
                 android:layout_alignTop="@+id/categorytypetextview"
-                android:layout_alignStart="@+id/quantitytextview" />
+                android:layout_alignStart="@+id/quantitytextview"
+                android:layout_marginStart="20dp" />
 
             <RatingBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ratingBar2"
+                android:id="@+id/qualityrating"
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"

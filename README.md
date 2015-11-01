@@ -82,3 +82,7 @@ http://stackoverflow.com/users/280664/doge
 Showing the scrollbar at all times:
 Rejinderi, http://stackoverflow.com/questions/5702502/how-to-always-show-scrollbar, 2015-31-10
 http://stackoverflow.com/users/745270/rejinderi
+
+Alert Dialog
+Heloisasim, http://stackoverflow.com/questions/31151306/how-to-show-a-dialog-with-android-studio, 2015-31-10
+http://stackoverflow.com/users/2646261/heloisasim
