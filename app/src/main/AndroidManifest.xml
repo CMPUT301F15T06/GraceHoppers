@@ -70,6 +70,10 @@
             android:name=".ViewBookActivity"
             android:label="@string/title_activity_view_book" >
         </activity>
+        <activity
+            android:name=".CounterTradeScreen"
+            android:label="@string/title_activity_counter_trade_screen" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,11 +1,17 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -15,6 +21,7 @@ public class ProcessTradeScreen extends ActionBarActivity {
     private Account borrower;
     private Book ownerBook;  //can be 1
     private ArrayList<Book> borrowerBook; //can be 0 or more
+    private Trade trade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +33,81 @@ public class ProcessTradeScreen extends ActionBarActivity {
         TextView oBook = (TextView)findViewById(R.id.oBook);
         Button accept =(Button)findViewById(R.id.accept);
         Button decline = (Button)findViewById(R.id.decline);
-        
+
+        //if owner chooses to accept email
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //set status of trade to accepted
+                trade.setAccepted(Boolean.TRUE);
+
+                //pop a dialog to promote owner to continue trade by sending email
+                AlertDialog.Builder dialog = new AlertDialog.Builder(ProcessTradeScreen.this);
+                dialog.setMessage("Continue the trade by sending email to borrower?");
+
+                //continue to send email
+                dialog.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        send_email();
+                    }
+                });
+
+                dialog.setPositiveButton("No", null);
+
+                dialog.create();
+                dialog.show();
+            }
+        });
+
+        decline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                trade.setDeclined(Boolean.TRUE);
+                //pop a dialog to promote owner to continue trade by sending email
+                AlertDialog.Builder dialog = new AlertDialog.Builder(ProcessTradeScreen.this);
+                dialog.setMessage("Create a counter trade?");
+
+                //continue to send email
+                dialog.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //counter trade
+                    }
+                });
+
+                dialog.setPositiveButton("No", null);
+
+                dialog.create();
+                dialog.show();
+            }
+        });
+
+    }
+
+    public void send_email(){
+        String email = trade.getBorrower().getEmail();
+        String subject = "Trade accepted by owner!";
+        String content = "Trade information: \n Books provided by borrower :";
+        for (Book b: borrowerBook){
+            content= content+ b.getTitle()+"\n";
+        }
+        content= content+"Books requested \n"+ ownerBook.getTitle();
+
+        Intent sendEmail= new Intent(Intent.ACTION_SEND, Uri.parse("mailTo"));
+        sendEmail.setType("text/plain");
+        //send recipent,content to email app
+        sendEmail.putExtra(Intent.EXTRA_EMAIL, new String[] {email});
+        sendEmail.putExtra(Intent.EXTRA_SUBJECT,subject);
+        sendEmail.putExtra(Intent.EXTRA_TEXT,content);
+
+        try{
+            startActivity(sendEmail);
+
+        }catch (android.content.ActivityNotFoundException ex){
+            //if no supported app
+            Toast.makeText(ProcessTradeScreen.this, "No email client found", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

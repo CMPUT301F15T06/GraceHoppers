@@ -28,7 +28,6 @@ public class CreateTradeScreen extends Activity {
     Button submitTrade;
     Button cancelTrade;
 
-
     @Override
     protected void onStart(){
         super.onStart();
