@@ -59,10 +59,9 @@ public class SignUpActivity extends ActionBarActivity {
                     Thread thread=new AddThread(account);
                     thread.start();
 
-                    Toast.makeText(getApplicationContext(), username.getText().toString(),
-                            Toast.LENGTH_SHORT).show();
                     Toast.makeText(getApplicationContext(), "Account created",
                             Toast.LENGTH_SHORT).show();
+
                     Intent sIntent = new Intent(SignUpActivity.this, HomeScreen.class); //sends user to profile
                     startActivity(sIntent);
                 } catch (IllegalArgumentException e) {
@@ -110,6 +109,8 @@ public class SignUpActivity extends ActionBarActivity {
     class AddThread extends Thread {
         private Account account;
         public AddThread(Account account) {this.account=account;}
+
+        @Override
         public void run(){
             accountManager.addAccount(account);
 

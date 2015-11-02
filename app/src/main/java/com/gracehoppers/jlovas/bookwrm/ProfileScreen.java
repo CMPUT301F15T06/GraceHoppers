@@ -27,6 +27,7 @@ public class ProfileScreen extends ActionBarActivity {
     String newcity;
     Account account;
     SaveLoad saveload;
+    AccountManager accountManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,8 @@ public class ProfileScreen extends ActionBarActivity {
                     account.setEmail(newemail);
                     account.setCity(newcity);
                     saveload.saveInFile(ProfileScreen.this, account);
+
+
                     Toast.makeText(getApplicationContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
                     Intent sIntent = new Intent(ProfileScreen.this, ProfileScreen.class); //sends user to profile
                     startActivity(sIntent);
@@ -121,5 +124,12 @@ public class ProfileScreen extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    class getThread extends Thread {
+        private String username;
+        public getThread(String username){this.username=username;}
+
+
     }
 }

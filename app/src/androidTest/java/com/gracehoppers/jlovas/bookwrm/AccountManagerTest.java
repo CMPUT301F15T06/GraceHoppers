@@ -24,11 +24,10 @@ public class AccountManagerTest extends TestCase {
         account.setUsername(username);
         account.setCity(city);
         account.setEmail(email);
-        System.out.println(account.getUsername());
+
         accountManager.addAccount(account);
 
-        //Account result=accountManager.getAccount(account.getUsername());
-        Account result=accountManager.getAccount("asf");
+        Account result=accountManager.getAccount(account.getUsername());
 
         accountManager.addAccount(result);
 
