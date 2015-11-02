@@ -220,7 +220,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/categoryDropdown"
-                android:entries="@array/category_types"
+                android:entries="@array/edit_category"
                 android:background = "#FFFFFFFF"/>
 
             <TextView

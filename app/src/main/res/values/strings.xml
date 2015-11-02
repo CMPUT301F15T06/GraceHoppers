@@ -20,6 +20,20 @@
         <item>Recipe Book</item>
         <item>Do It Yourself (DIY)</item>
     </string-array>
+
+    <string-array name="edit_category">
+        <item>None</item>
+        <item>Hardback</item>
+        <item>Paperback</item>
+        <item>Audiobook</item>
+        <item>Comic Book</item>
+        <item>Textbook</item>
+        <item>Picture Book</item>
+        <item>Braille</item>
+        <item>Reference</item>
+        <item>Recipe Book</item>
+        <item>Do It Yourself (DIY)</item>
+    </string-array>
     <string name="title_activity_friends_screen">FriendsScreen</string>
     <string name="title_activity_profile_screen">ProfileScreen</string>
     <string name="title_activity_history_of_trades_screen">HistoryOfTradesScreen</string>

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -31,6 +32,7 @@ public class EditBookActivity extends ActionBarActivity {
     CheckBox privateCheckBox;
     TextView bookDescText;
     Button okButton;
+    int spinValue;
 
 
     @Override
@@ -58,7 +60,7 @@ public class EditBookActivity extends ActionBarActivity {
         String author = getIntent().getStringExtra("bookAuthor");
         int quantity = getIntent().getIntExtra("bookQuantity", 1);
         double quality = getIntent().getDoubleExtra("bookQuality", 0);
-        String category = getIntent().getStringExtra("bookCategory");
+        int category = getIntent().getIntExtra("bookCategory", 0);
         boolean isprivate = getIntent().getBooleanExtra("bookPrivacy", false);
         String description = getIntent().getStringExtra("bookDesc");
         //photo stuff here
@@ -141,6 +143,28 @@ public class EditBookActivity extends ActionBarActivity {
 
             }
         });
+
+
+        bookCategory.setSelection(category);
+
+        AdapterView.OnItemSelectedListener onSpinner = new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(
+                    AdapterView<?> parent,
+                    View view,
+                    int position,
+                    long id) {
+                //assign to 'global' for sending to Book on ok button press
+                spinValue = position;
+            }
+
+            @Override
+            public void onNothingSelected(
+                    AdapterView<?>  parent) {
+            }
+        };
+
+        bookCategory.setOnItemSelectedListener(onSpinner);
 
 
 

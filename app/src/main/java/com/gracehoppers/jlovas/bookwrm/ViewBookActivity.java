@@ -100,7 +100,7 @@ public class ViewBookActivity extends ActionBarActivity {
                 intent.putExtra("bookAuthor", tempBook.getAuthor());
                 intent.putExtra("bookQuantity", tempBook.getQuantity());
                 intent.putExtra("bookQuality", tempBook.getQuality());
-                intent.putExtra("bookCategory", tempBook.getCategory());
+                intent.putExtra("bookCategory", tempBook.getCategoryNumber());
                 intent.putExtra("bookPrivacy", tempBook.isPrivate());
                 intent.putExtra("bookDesc", tempBook.getDescription());
                 //put photo stuff here...if it cant be passed by intent, pass the inventory index position and use gson instead of using the above!

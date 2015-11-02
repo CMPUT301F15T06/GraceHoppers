@@ -119,6 +119,36 @@ public class Book {
         }
     }
 
+    public int getCategoryNumber() {
+
+        switch (this.category) {
+            case NONE:
+                return 0;
+            case HARDBACK:
+                return 1;
+            case PAPERBACK:
+                return 2;
+            case AUDIOBOOK:
+                return 3;
+            case COMIC:
+                return 4;
+            case TEXTBOOK:
+                return 5;
+            case PICTURE:
+                return 6;
+            case BRAILLE:
+                return 7;
+            case REFERENCE:
+                return 8;
+            case RECIPE:
+                return 9;
+            case DIY:
+                return 10;
+            default:
+                return 0;
+        }
+    }
+
     public void setCategory(int category) {
 
         switch (category) {
