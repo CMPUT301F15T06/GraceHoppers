@@ -120,7 +120,7 @@ public class HomeScreen extends ActionBarActivity {
                 startActivity(intent);
             }
         });
-        
+
         Button profile = (Button)findViewById(R.id.profileButton);
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
