@@ -86,3 +86,7 @@ http://stackoverflow.com/users/745270/rejinderi
 Alert Dialog
 Heloisasim, http://stackoverflow.com/questions/31151306/how-to-show-a-dialog-with-android-studio, 2015-31-10
 http://stackoverflow.com/users/2646261/heloisasim
+
+Changing the color of ratingBar stars
+Mirek Michalak, http://stackoverflow.com/questions/2446270/android-ratingbar-change-star-colors,2015-1-11
+http://stackoverflow.com/users/2047471/mirek-michalak

@@ -3,6 +3,9 @@ package com.gracehoppers.jlovas.bookwrm;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ViewBookActivity extends ActionBarActivity {
 
@@ -29,6 +33,10 @@ public class ViewBookActivity extends ActionBarActivity {
     Button editButton;
     //put photo stuff here
 
+    Account account;
+    Book tempBook;
+    private Boolean delete=false;
+
     private SaveLoad saveload = new SaveLoad();
 
     @Override
@@ -45,19 +53,21 @@ public class ViewBookActivity extends ActionBarActivity {
         description= (TextView)findViewById(R.id.commentsdesctextview);
         rating= (RatingBar)findViewById(R.id.qualityrating);
         rating.setNumStars(5);
+        LayerDrawable stars = (LayerDrawable) rating.getProgressDrawable(); //Mirek Michalak, http://stackoverflow.com/questions/2446270/android-ratingbar-change-star-colors,2015-1-11
+        stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP); //make filled stars yellow
         deleteButton= (Button)findViewById(R.id.deleteBookbutton);
         editButton= (Button)findViewById(R.id.EditBookButton);
         //----------------------------------------------------------------
 
 
 
-        int pos = getIntent().getIntExtra("listPosition", 0); //https://youtu.be/ViwazAAR-vE, TZCoder, 2015-30-10
+        int pos = getIntent().getIntExtra("listPosition", 0);
 
-        Account account;
+
 
         account = saveload.loadFromFile(ViewBookActivity.this);
 
-        Book tempBook = account.getInventory().getBookByIndex(pos);
+        tempBook = account.getInventory().getBookByIndex(pos);
 
         bookTitle.setText(tempBook.getTitle());
         bookAuthor.setText(tempBook.getAuthor());
@@ -76,9 +86,7 @@ public class ViewBookActivity extends ActionBarActivity {
             public void onClick(View view) {
                 //ask the user if they're sure they want to delete this book
                 openDialog();
-
-
-            }
+}
         });
 
 
@@ -86,6 +94,16 @@ public class ViewBookActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ViewBookActivity.this, EditBookActivity.class);
+
+                //pass the book info by intent
+                intent.putExtra("bookTitle", tempBook.getTitle());
+                intent.putExtra("bookAuthor", tempBook.getAuthor());
+                intent.putExtra("bookQuantity", tempBook.getQuantity());
+                intent.putExtra("bookQuality", tempBook.getQuality());
+                intent.putExtra("bookCategory", tempBook.getCategory());
+                intent.putExtra("bookPrivacy", tempBook.isPrivate());
+                intent.putExtra("bookDesc", tempBook.getDescription());
+                //put photo stuff here...if it cant be passed by intent, pass the inventory index position and use gson instead of using the above!
                 startActivity(intent);
 
 
@@ -127,13 +145,15 @@ public class ViewBookActivity extends ActionBarActivity {
         singleInfo.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                //user wants to delete the book
+                deleteBook();
+                dialog.dismiss();
                 finish();
             }
         })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                      // user does not want to delete the book, do nothing
-                        dialog.dismiss();
+                       dialog.dismiss();
                     }
 
                 });
@@ -141,6 +161,13 @@ public class ViewBookActivity extends ActionBarActivity {
         SingleInfo.show();
     }
 
+    public void deleteBook(){
+//deletes the book and saves the change with gson
+        account.getInventory().deleteBook(tempBook);
+        saveload.saveInFile(getApplicationContext(), account);
 
+        Toast.makeText(getApplicationContext(),"Book deleted",Toast.LENGTH_SHORT).show();
+
+    }
 
 }
