@@ -208,6 +208,7 @@ public class AddBookScreen extends ActionBarActivity {
             public void onClick(View view){
                 //Toast.makeText(getApplicationContext(), "You wanted to add a comment!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(AddBookScreen.this, AddCommentsScreen.class);
+                intent.putExtra("flag","add");
                 startActivityForResult(intent, 0);
             }
         });

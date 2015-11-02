@@ -93,3 +93,7 @@ http://stackoverflow.com/users/2047471/mirek-michalak
 
 Setting the ratingBar as an indicator:
 http://developer.android.com/reference/android/widget/RatingBar.html, 2015-1-11
+
+Differentiating two activities headed to the same activity:
+Anil Bhatiya, http://stackoverflow.com/questions/21953839/how-to-decide-which-activity-we-came-from, 2015-2-11
+http://stackoverflow.com/users/1965587/anil-bhatiya
