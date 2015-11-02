@@ -34,7 +34,7 @@ public class AccountManager {
     }
 
     public void addAccount(Account account) {
-        System.out.print(URL+account.getUsername());
+        //System.out.print(URL+account.getUsername());
         HttpClient httpClient=new DefaultHttpClient();
         try{
             HttpPost addRequest=new HttpPost(URL+account.getUsername());
