@@ -24,6 +24,12 @@ public class SignUpActivity extends ActionBarActivity {
     Button signupButton;
     private SaveLoad saveload= new SaveLoad();
     private AccountManager accountManager=new AccountManager();
+    private Runnable doFinishAdd=new Runnable() {
+        @Override
+        public void run() {
+            finish();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +55,10 @@ public class SignUpActivity extends ActionBarActivity {
                     account.setCity(city.getText().toString());
                     saveload.saveInFile(SignUpActivity.this, account);
 
-                    accountManager.addAccount(account);
+                    //execute thread
+                    Thread thread=new AddThread(account);
+                    thread.start();
+
                     Toast.makeText(getApplicationContext(), username.getText().toString(),
                             Toast.LENGTH_SHORT).show();
                     Toast.makeText(getApplicationContext(), "Account created",
@@ -97,4 +106,21 @@ public class SignUpActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    class AddThread extends Thread {
+        private Account account;
+        public AddThread(Account account) {this.account=account;}
+        public void run(){
+            accountManager.addAccount(account);
+
+            //give some time to get updated info
+            try{
+                Thread.sleep(500);
+            } catch(InterruptedException e){e.printStackTrace();}
+
+            runOnUiThread(doFinishAdd);
+        }
+    }
 }
+
+
