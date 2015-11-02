@@ -25,14 +25,24 @@ public class ProfileScreen extends ActionBarActivity {
     Button confirm;
     String newemail;
     String newcity;
-    Account account;
+    Account account = new Account();
     SaveLoad saveload;
     AccountManager accountManager;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_screen);
+
+        try{
+            account.setCity("Lulala");
+            account.setUsername("hahaha");
+            account.setEmail("wow@cool.ca");
+        }catch(IllegalEmailException e){
+        }catch(TooLongException te){
+        }catch (NoSpacesException ne){
+        }
+
 
         editemail = (EditText) findViewById(R.id.editemail);
         editcity = (EditText) findViewById(R.id.editcity);
@@ -45,7 +55,6 @@ public class ProfileScreen extends ActionBarActivity {
         city = (TextView) findViewById(R.id.originalcity);
         edit = (Button) findViewById(R.id.editprofile);
         final ArrayList<View> originalList = new ArrayList<View>((Arrays.asList(name,city,email,edit)));
-
 
         name.setText(account.getUsername());
         email.setText(account.getEmail());
@@ -103,6 +112,7 @@ public class ProfileScreen extends ActionBarActivity {
             v.setVisibility(View.VISIBLE);
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
