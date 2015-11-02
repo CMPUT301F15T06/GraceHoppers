@@ -115,13 +115,29 @@ public class HomeScreen extends ActionBarActivity {
                 //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
 
 
-
                 Intent intent = new Intent(HomeScreen.this, ViewBookActivity.class);
                 intent.putExtra("listPosition", position);
                 startActivity(intent);
             }
         });
+        
+        Button profile = (Button)findViewById(R.id.profileButton);
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent turnProfile = new Intent(HomeScreen.this, ProfileScreen.class);
+                startActivity(turnProfile);
+            }
+        });
 
+        Button friend = (Button) findViewById(R.id.friendsButton);
+        friend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent turnFriend = new Intent(HomeScreen.this, FriendsScreen.class);
+                startActivity(turnFriend);
+            }
+        });
     }
 
     @Override
