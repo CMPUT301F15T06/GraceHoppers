@@ -11,41 +11,56 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Trade Information"
-        android:textSize="30dp" />
+        android:textSize="30dp"
+        android:layout_gravity="center"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Borrower Name"
         android:textSize="20dp"
-        android:id="@+id/bName"/>
+        android:id="@+id/bName"
+        android:layout_marginTop="20dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="BorrowerBook"
+        android:text="Books provided by borrower:"
         android:textSize="20dp"
-        android:id="@+id/bBook"/>
+        android:id="@+id/bBook"
+        android:layout_marginTop="20dp"/>
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="RequestedBook"
+        android:text="Requested Book from owner:"
         android:textSize="20dp"
-        android:id="@+id/oBook"/>
+        android:id="@+id/oBook"
+        android:layout_marginTop="20dp"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Accept"
-        android:id="@+id/accept"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="decline"
-        android:id="@+id/decline"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accept"
+            android:id="@+id/accept"
+            android:layout_marginTop="20dp"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="decline"
+            android:id="@+id/decline"
+            android:layout_toRightOf="@+id/accept"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="170dp"
+            />
+
+    </RelativeLayout>
 
 
 </LinearLayout>
