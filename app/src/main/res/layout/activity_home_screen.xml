@@ -24,7 +24,7 @@
         android:smoothScrollbar="true" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:text="Trade"
         android:id="@+id/tradeButton"
@@ -32,10 +32,21 @@
         android:layout_toEndOf="@+id/friendsButton" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:text="Friends"
         android:id="@+id/friendsButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="Profile"
+        android:id="@+id/profileButton"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/tradeButton" />
+
+
+
 </RelativeLayout>
