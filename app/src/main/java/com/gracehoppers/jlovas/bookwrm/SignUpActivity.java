@@ -85,6 +85,7 @@ public class SignUpActivity extends ActionBarActivity {
                             Toast.LENGTH_SHORT).show();
 
                     Intent sIntent = new Intent(SignUpActivity.this, HomeScreen.class); //sends user to profile
+                    sIntent.putExtra("username",account.getUsername().toString());
                     startActivity(sIntent);
                 } catch (IllegalArgumentException e) {
                     Toast.makeText(getApplicationContext(), "All Fields must be filled",
