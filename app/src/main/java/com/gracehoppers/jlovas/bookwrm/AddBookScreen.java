@@ -17,6 +17,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class AddBookScreen extends ActionBarActivity {
     SaveLoad mySaveLoad;
     Account me;
@@ -35,6 +37,36 @@ public class AddBookScreen extends ActionBarActivity {
     RatingBar stars;
     TextView comments;
     CheckBox privateCheckBox;
+
+    //For UI testing -----------------------------------------
+    private ArrayList<Book> books = new ArrayList<Book>();
+    public ArrayList<Book> getBooks(){return books;}
+
+    public String getMadeComments() {return madeComments;}
+
+    public EditText getTitleText() {return titleText;}
+
+    public EditText getAuthorText() {return authorText;}
+
+    public EditText getQuantityText() {return quantityText;}
+
+    public Spinner getMySpinner() {return mySpinner;}
+
+    public Button getOkButton() {return okButton;}
+
+    public ImageView getThePhoto() {return thePhoto;}
+
+    public Button getMinusButton() {return minusButton;}
+
+    public Button getPlusButton() {return plusButton;}
+
+    public RatingBar getStars() {return stars;}
+
+    public TextView getComments() {return comments;}
+
+    public CheckBox getPrivateCheckBox() {return privateCheckBox;}
+    //-------------------------------------------------------
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,6 +218,7 @@ public class AddBookScreen extends ActionBarActivity {
                     }
 
                     me.getInventory().addBook(myBook);
+                    books.add(myBook); //For UI testing
 
                     //save into Gson and end the activity
                     mySaveLoad.saveInFile(getApplicationContext(), me);
