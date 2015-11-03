@@ -16,6 +16,8 @@ public class MainActivity extends ActionBarActivity {
     EditText usernameText;
     SaveLoad saveLoad;
 
+
+
     //for UI testing:-------------------------------------------
     public Button getSignUpButton(){
         return signUpButton;
@@ -64,7 +66,7 @@ public class MainActivity extends ActionBarActivity {
 
         logInButton = (Button)findViewById(R.id.logInButton);
         signUpButton = (Button)findViewById(R.id.signUpButton);
-        usernameText = (EditText)findViewById(R.id.usernameText);
+
 
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,8 +84,10 @@ public class MainActivity extends ActionBarActivity {
 
                 //TODO: put the new account into the Gson or whatever we store it with so we can pull it out on further screens!
 
-
+                usernameText = (EditText)findViewById(R.id.usernameText);
+                final String username=usernameText.getText().toString();
                 Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
+                lIntent.putExtra("username",username);
                 startActivity(lIntent);
 
                 //else;

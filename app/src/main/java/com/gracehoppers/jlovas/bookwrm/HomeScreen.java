@@ -25,12 +25,17 @@ public class HomeScreen extends ActionBarActivity {
     private ArrayList<Book> inventory;
     Account account; //= new Account();
     private SaveLoad saveload= new SaveLoad();
+    String username;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+
+        Intent i=getIntent();
+        Bundle Username=i.getExtras();
+        username=Username.getString("username");
 
         //-------------------------DELTE ONCE SAVING AND LOADING ACCOUNT WORKS-----------------------------------------------
 /*
@@ -126,6 +131,8 @@ public class HomeScreen extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent turnProfile = new Intent(HomeScreen.this, ProfileScreen.class);
+                //turnProfile.putExtra(ProfileScreen.Username,username);
+                turnProfile.putExtra("Username",username);
                 startActivity(turnProfile);
             }
         });
