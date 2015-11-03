@@ -184,11 +184,6 @@ public class FriendsScreenTest extends ActivityInstrumentationTestCase2  {
         //test that the profile screen starts up with the friend
         assertEquals("testFriend", ((Account) oldFriendsList.getItemAtPosition(0)).getUsername());
 
-        //test that we can unFriend someone with the unFriend button
-        //needs to be in the Ui thread
-        //final Button unFriendButton = profileActivity.getUnFriendButton;
-
-
     }
 
 

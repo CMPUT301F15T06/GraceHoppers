@@ -20,16 +20,16 @@ public class FriendsScreen extends ActionBarActivity {
 
     //------------------------------------------------------------
     //For UI testing
+    public ListView getOldFriendsList() {return oldFriendsList;}
+    public ArrayList<Account> getFriendList() {return friendList;}
+    public EditText getFriendUsername() {return friendUsername;}
+    public Button getAddFriendButton() {return  addFriendButton;}
+
     private Button addFriendButton;
     private EditText friendUsername;
     private ArrayList<Account> friendList;
     private ListView oldFriendsList;
     private ArrayAdapter<Account> friendsAdapter;
-
-    public ListView getOldFriendsList() {return oldFriendsList;}
-    public ArrayList<Account> getFriendList() {return friendList;}
-    public EditText getFriendUsername() {return friendUsername;}
-    public Button getAddFriendButton() {return  addFriendButton;}
     //------------------------------------------------------------
 
     @Override
@@ -47,6 +47,7 @@ public class FriendsScreen extends ActionBarActivity {
                 //String newFriend = friendUsername.getText().toString();
                 //How to call the user's friends list.
                 //How to pass the context of the account?
+                //Can NOT implement until server search/get is ready
                 int  addFriendResult = 2; //For testing
                 String newFriend = "usernameX"; //For testing
                 //int addFriendResult = friendList.add(newFriend);
