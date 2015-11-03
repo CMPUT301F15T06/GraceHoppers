@@ -17,7 +17,7 @@ public class AccountManagerTest extends TestCase {
     public void testaddAccount() throws NoSpacesException, TooLongException, IllegalEmailException {
         AccountManager accountManager=new AccountManager();
         //accountManager.deleteAccount("asdf");
-        String username="a";
+        String username="b";
         String city="Arizna";
         String email="a@gmail.com";
         Account account=new Account();
@@ -35,10 +35,11 @@ public class AccountManagerTest extends TestCase {
         assertEquals(account.getCity(), result.getCity());
         assertEquals(account.getEmail(),result.getEmail());
 
-        accountManager.deleteAccount(account.getUsername());
+        //accountManager.deleteAccount(account.getUsername());
     }
 
-   /* public void testgetAccount() throws NoSpacesException, TooLongException, IllegalEmailException{
+    public void testgetAccount() throws NoSpacesException, TooLongException, IllegalEmailException{
+        AccountManager accountManager=new AccountManager();
         String username="asdf";
         String city="Arizna";
         String email="a@gmail.com";
@@ -47,17 +48,17 @@ public class AccountManagerTest extends TestCase {
         account.setCity(city);
         account.setEmail(email);
 
-        AccountManager accountManager=new AccountManager();
         accountManager.addAccount(account);
 
         Account result=accountManager.getAccount(account.getUsername());
+        accountManager.addAccount(result);
         assertEquals(account.getUsername(), result.getUsername());
         assertEquals(account.getCity(), result.getCity());
         assertEquals(account.getEmail(), result.getEmail());
 
         accountManager.deleteAccount(account.getUsername());
     }
-
+/*
     public void testdeleteAccount() throws NoSpacesException, TooLongException, IllegalEmailException{
         String username="asdf";
         String city="Arizna";
