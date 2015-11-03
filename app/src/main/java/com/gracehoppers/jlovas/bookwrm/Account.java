@@ -31,12 +31,6 @@ public class Account {
 
     }
 
-   // public void SaveAccount(final Context context){
-
-//this doesnt need to be done within the class(?)
-
-
-   // }
 
 
     public String getUsername() {
