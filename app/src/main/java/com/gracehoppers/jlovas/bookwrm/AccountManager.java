@@ -25,20 +25,20 @@ import java.lang.reflect.Type;
  * Created by dzhang4 on 10/31/15.
  */
 public class AccountManager {
-    private static final String URL="http://cmput301.softwareprocess.es:8080/cmput301f15t06/account/";
-    private static final String TAG="AccountSearch";
+    private static final String URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t06/account/";
+    private static final String TAG = "AccountSearch";
     Gson gson;
 
     public AccountManager() {
-        gson=new Gson();
+        gson = new Gson();
     }
 
     public void addAccount(Account account) {
         //System.out.print(URL+account.getUsername());
-        HttpClient httpClient=new DefaultHttpClient();
-        try{
-            HttpPost addRequest=new HttpPost(URL+account.getUsername());
-            StringEntity stringEntity=new StringEntity(gson.toJson(account));
+        HttpClient httpClient = new DefaultHttpClient();
+        try {
+            HttpPost addRequest = new HttpPost(URL + account.getUsername());
+            StringEntity stringEntity = new StringEntity(gson.toJson(account));
 
             addRequest.setEntity(stringEntity);
             addRequest.setHeader("Accept", "application/json");
@@ -46,18 +46,20 @@ public class AccountManager {
             String status = response.getStatusLine().toString();
 
             Log.i(TAG, status);
-        }catch(Exception e) {e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Account getAccount(String username) {
-        SearchHit<Account> sr=null;
-        HttpClient httpClient=new DefaultHttpClient();
-        HttpGet httpGet=new HttpGet(URL+username);
-        System.out.print(URL+username);
+        SearchHit<Account> sr = null;
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet(URL + username);
+        System.out.print(URL + username);
 
-        HttpResponse response=null;
+        HttpResponse response = null;
 
-       /* try {
+        try {
             response = httpClient.execute(httpGet);
         } catch (ClientProtocolException e1) {
             throw new RuntimeException(e1);
@@ -65,7 +67,8 @@ public class AccountManager {
             throw new RuntimeException(e1);
         }
 
-        Type searchHitType = new TypeToken<SearchHit<Account>>() {}.getType();
+        Type searchHitType = new TypeToken<SearchHit<Account>>() {
+        }.getType();
 
         try {
             sr = gson.fromJson(
@@ -79,8 +82,10 @@ public class AccountManager {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }*/
-        try{
+        }
+
+        return sr.getSource();
+        /*try{
             //System.out.print("1");
             response=httpClient.execute(httpGet);
             //System.err.print(response.toString());
@@ -104,7 +109,7 @@ public class AccountManager {
 
 
         }catch(Exception e){e.printStackTrace();}
-        return sr.getSource();
+        return sr.getSource();*/
     }
 
     public void deleteAccount(String username) {

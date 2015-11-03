@@ -1,12 +1,18 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class FriendProfileScreen extends ActionBarActivity {
+
+    private Activity profileActivity = this;
+    private Button unFriendButton;
+    public Button getUnFriendButton(){return unFriendButton;}
 
     TextView name;
     TextView email;

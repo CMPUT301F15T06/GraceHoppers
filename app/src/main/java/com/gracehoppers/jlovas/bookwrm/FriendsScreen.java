@@ -1,16 +1,74 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class FriendsScreen extends ActionBarActivity {
+    private Activity activity = this;
+
+    //------------------------------------------------------------
+    //For UI testing
+    public ListView getOldFriendsList() {return oldFriendsList;}
+    public ArrayList<Account> getFriendList() {return friendList;}
+    public EditText getFriendUsername() {return friendUsername;}
+    public Button getAddFriendButton() {return  addFriendButton;}
+
+    private Button addFriendButton;
+    private EditText friendUsername;
+    private ArrayList<Account> friendList;
+    private ListView oldFriendsList;
+    private ArrayAdapter<Account> friendsAdapter;
+    //------------------------------------------------------------
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_screen);
+
+        friendUsername = (EditText) findViewById(R.id.newFriendText);
+        addFriendButton = (Button) findViewById(R.id.addFriendButton);
+        oldFriendsList = (ListView) findViewById(R.id.FriendListView);
+
+        addFriendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //String newFriend = friendUsername.getText().toString();
+                //How to call the user's friends list.
+                //How to pass the context of the account?
+                //Can NOT implement until server search/get is ready
+                int  addFriendResult = 2; //For testing
+                String newFriend = "usernameX"; //For testing
+                //int addFriendResult = friendList.add(newFriend);
+                if  (addFriendResult == 1) {
+                    Toast.makeText(activity, newFriend + "is your friend already!", Toast.LENGTH_SHORT).show();
+                }
+                if (addFriendResult == 2) {
+                    Toast.makeText(activity, newFriend + "added as a friend!", Toast.LENGTH_SHORT).show();
+                    //FriendsList actually changes here.
+                    //friendsAdapter.notifyDataSetChanged();
+                    //saveInFile();
+                }
+                if (addFriendResult == 3) {
+                    Toast.makeText(activity, newFriend + "is not a Bookwrm user yet!", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+        });
+
+
     }
 
     @Override
@@ -34,4 +92,6 @@ public class FriendsScreen extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
