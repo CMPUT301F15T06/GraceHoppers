@@ -13,19 +13,24 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class FriendsScreen extends ActionBarActivity {
     private Activity activity = this;
 
+    //------------------------------------------------------------
+    //For UI testing
     private Button addFriendButton;
     private EditText friendUsername;
-    private Friends friendList;
+    private ArrayList<Account> friendList;
     private ListView oldFriendsList;
     private ArrayAdapter<Account> friendsAdapter;
 
     public ListView getOldFriendsList() {return oldFriendsList;}
-    public Friends getFriendList() {return friendList;}
+    public ArrayList<Account> getFriendList() {return friendList;}
     public EditText getFriendUsername() {return friendUsername;}
     public Button getAddFriendButton() {return  addFriendButton;}
+    //------------------------------------------------------------
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
