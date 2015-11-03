@@ -3,6 +3,7 @@ package com.gracehoppers.jlovas.bookwrm;
 import java.util.ArrayList;
 import java.util.Collection;
 
+
 /**
  * Created by chen1 on 10/19/15.
  */
@@ -13,7 +14,7 @@ public class Inventory {
     ArrayList<Book> inventory = new ArrayList<Book>();
 
     public void addBook(Book book) {
-        inventory.add(book);
+        inventory.add(0, book);
     }
 
     public void deleteBook(Book book) {
@@ -30,25 +31,33 @@ public class Inventory {
         return inventory.size();
     }
 
-    public Book getBookByTitle(String name) {
-        Book returnedBook = new Book();
+    public ArrayList<Book> getBookByTitle(String name) throws ItemNotFoundException{
+        ArrayList<Book> booklist = new ArrayList<Book>();
+
         for (int i = 0; i < inventory.size(); i++) {
             Book book = inventory.get(i);
             if (name == book.getTitle()) {
-                returnedBook = book;
+                booklist.add(book);
+
             }
         }
-        return returnedBook;
+        if(booklist.size()>0) return booklist;
+        else
+        //ItemNotFound will only be thrown if no books in the booklist
+        throw new ItemNotFoundException();
+
     }
 
     public ArrayList<Book> getInventory(){
         return inventory;
     }
 
-    public Book getBookByIndex(int i){
-        if(i>inventory.size()){ //if the requested position exceeds inventory size, return empty book
-            return new Book();
-        }
+    public Book getBookByIndex(int i) throws NegativeNumberException, TooLongException{
+        if(i <0){
+            throw new NegativeNumberException();
+        }else if(i>inventory.size()){ //if the requested position exceeds inventory size, throw exception
+            throw new TooLongException();
+        }else
 
         return inventory.get(i);
     }
