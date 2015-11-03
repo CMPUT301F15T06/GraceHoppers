@@ -6,9 +6,7 @@ import java.util.ArrayList;
  * Created by ljuarezr on 10/20/15.
  */
 public class Friends {
-    //List of friends for a specific account
-    //Each account should have exactly one Friends instance associated with it
-    //Should we call the constructor in the SignUp/CreateAccount???
+    //A user's list of friends.
 
     private ArrayList<Account> friends = new ArrayList<Account>();
 

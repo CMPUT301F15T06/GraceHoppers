@@ -1,5 +1,6 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -33,12 +34,28 @@ public class EditBookActivity extends ActionBarActivity {
     TextView bookDescText;
     Button okButton;
     int spinValue;
-
+    String title;
+    String author;
+    int quantity;
+    double quality;
+    boolean isprivate;
+    String description;
+    int categorynum;
+    String category;
+    Book tempBook;
+    SaveLoad saveload;
+    Account tempAccount;
+    int pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_book);
+
+        //load the account
+        saveload = new SaveLoad();
+        tempAccount = saveload.loadFromFile(EditBookActivity.this);
+
 
         //set the UI parts---------------------------------
         bookDescText= (TextView)findViewById(R.id.descriptionText);
@@ -56,13 +73,14 @@ public class EditBookActivity extends ActionBarActivity {
     //--------------------------------------------------------------
 
         //obtain book info from the intent (if photos cant be passed by intent, replace all of these with gson)
-        String title = getIntent().getStringExtra("bookTitle");
-        String author = getIntent().getStringExtra("bookAuthor");
-        int quantity = getIntent().getIntExtra("bookQuantity", 1);
-        double quality = getIntent().getDoubleExtra("bookQuality", 0);
-        int category = getIntent().getIntExtra("bookCategory", 0);
-        boolean isprivate = getIntent().getBooleanExtra("bookPrivacy", false);
-        String description = getIntent().getStringExtra("bookDesc");
+        title = getIntent().getStringExtra("bookTitle");
+        author = getIntent().getStringExtra("bookAuthor");
+        quantity = getIntent().getIntExtra("bookQuantity", 1);
+        quality = getIntent().getDoubleExtra("bookQuality", 0);
+        categorynum = getIntent().getIntExtra("bookCategory", 0);
+        isprivate = getIntent().getBooleanExtra("bookPrivacy", false);
+        description = getIntent().getStringExtra("bookDesc");
+        pos = getIntent().getIntExtra("bookPosition", 0);
         //photo stuff here
         //----------------------------------------------------------
 
@@ -145,7 +163,7 @@ public class EditBookActivity extends ActionBarActivity {
         });
 
 
-        bookCategory.setSelection(category);
+        bookCategory.setSelection(categorynum);
 
         AdapterView.OnItemSelectedListener onSpinner = new AdapterView.OnItemSelectedListener(){
             @Override
@@ -166,11 +184,110 @@ public class EditBookActivity extends ActionBarActivity {
 
         bookCategory.setOnItemSelectedListener(onSpinner);
 
+        bookDescText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //send the user to the comments activity if they want to edit the description
+                Intent intent = new Intent(EditBookActivity.this, AddCommentsScreen.class);
+                intent.putExtra("bookDescription", description);
+                intent.putExtra("flag", "edit");
+                startActivityForResult(intent, 0);
+            }
+        });
+
+        if(isprivate){
+            privateCheckBox.setChecked(true);
+        }
+
+        //add code here for showing the book's current image
+
+
+    //now, to save all of the user's edits (and check to make sure they are still valid)-----------------------------
+
+
+        tempBook = new Book(); //use the book class' exceptions to ensure changes are valid
+
+
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //send changes back to previous activity
+
+                try {
+                   // title = bookTitle.getText().toString();
+                   // author = bookTitle.getText().toString();
+                   // quality = bookRating.getRating();
+
+                  //  if(privateCheckBox.isChecked()){
+
+                    //    tempBook.setIsPrivate(true);
+                    //}else {
+                    //    tempBook.setIsPrivate(false);
+                   // }
+
+                    //do i even need to set the default values???? theyre only needed for setting the defaults
+                    //tempBook.setTitle(bookTitle.getText().toString());
+                    //tempBook.setAuthor(bookAuthor.getText().toString());
+                    //tempBook.setQuantity(bookQuantity.getText().toString());
+                   // quantity = tempBook.getQuantity(); // returns an int (setter only accepts a string)
+                    //tempBook.setQuality(bookRating.getRating());
+                   // tempBook.setCategory(spinValue);
+                   // category = tempBook.getCategory(); //category in string form
+                    //tempBook.setDescription(description);
+                   // description = tempBook.getDescription(); //in case its blank, it will set description to "none"
+
+                    tempAccount.getInventory().getBookByIndex(pos).setTitle(bookTitle.getText().toString());
+                    tempAccount.getInventory().getBookByIndex(pos).setAuthor(bookAuthor.getText().toString());
+                    tempAccount.getInventory().getBookByIndex(pos).setQuantity(bookQuantity.getText().toString());
+                    tempAccount.getInventory().getBookByIndex(pos).setQuality(bookRating.getRating());
+                    tempAccount.getInventory().getBookByIndex(pos).setCategory(spinValue);
+                    tempAccount.getInventory().getBookByIndex(pos).setDescription(description);
+                    if(privateCheckBox.isChecked()){
+
+                        tempAccount.getInventory().getBookByIndex(pos).setIsPrivate(true);
+                    }else {
+                        tempAccount.getInventory().getBookByIndex(pos).setIsPrivate(false);
+                    }
+                    saveload.saveInFile(getApplicationContext(),tempAccount);
+
+                    Toast.makeText(getApplicationContext(), "Changes saved", Toast.LENGTH_SHORT).show();
+                    //credit to Reto Meler for the result method of doing this:
+                    //Reto Meler, http://stackoverflow.com/questions/920306/sending-data-back-to-the-main-activity-in-android, Oct 28, 2015
+                    //http://stackoverflow.com/users/822/reto-meier
+                    Intent result = new Intent();
+                    //result.putExtra("", comments.getText().toString());
+                    setResult(AddCommentsScreen.RESULT_OK, result);
+                    finish();
+
+                } catch(IllegalArgumentException e){
+                    Toast.makeText(getApplicationContext(), "Fields cannot be blank", Toast.LENGTH_SHORT).show();
+                } catch (NegativeNumberException x){
+                    Toast.makeText(getApplicationContext(), "Invalid quantity type. Quantity must be positive", Toast.LENGTH_SHORT).show();
+                }
+
+
+
+
+            }
+        });
+
 
 
 
 
     }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        //grabs the information on the description if the user edits the description
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 0)
+            if (resultCode == AddCommentsScreen.RESULT_OK) {
+                description = data.getStringExtra("COMMENTS");
+                //Toast.makeText(getApplicationContext(), "Got " + description +" from child.", Toast.LENGTH_SHORT).show();
+            }
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

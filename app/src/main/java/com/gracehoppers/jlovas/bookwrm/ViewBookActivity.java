@@ -35,6 +35,7 @@ public class ViewBookActivity extends ActionBarActivity {
 
     Account account;
     Book tempBook;
+    int pos;
     private Boolean delete=false;
 
     private SaveLoad saveload = new SaveLoad();
@@ -61,7 +62,14 @@ public class ViewBookActivity extends ActionBarActivity {
 
 
 
-        int pos = getIntent().getIntExtra("listPosition", 0);
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        pos = getIntent().getIntExtra("listPosition", 0);
 
 
 
@@ -79,14 +87,14 @@ public class ViewBookActivity extends ActionBarActivity {
         if(tempBook.isPrivate()){
             privacy.setText("Private Book");
         } else privacy.setText("Public Book");
-    //put photo stuff here
+        //put photo stuff here
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //ask the user if they're sure they want to delete this book
                 openDialog();
-}
+            }
         });
 
 
@@ -94,6 +102,7 @@ public class ViewBookActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ViewBookActivity.this, EditBookActivity.class);
+
 
                 //pass the book info by intent
                 intent.putExtra("bookTitle", tempBook.getTitle());
@@ -103,12 +112,15 @@ public class ViewBookActivity extends ActionBarActivity {
                 intent.putExtra("bookCategory", tempBook.getCategoryNumber());
                 intent.putExtra("bookPrivacy", tempBook.isPrivate());
                 intent.putExtra("bookDesc", tempBook.getDescription());
+                intent.putExtra("bookPosition", pos);
                 //put photo stuff here...if it cant be passed by intent, pass the inventory index position and use gson instead of using the above!
                 startActivity(intent);
 
 
             }
         });
+
+
 
 
     }

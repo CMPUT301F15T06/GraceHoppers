@@ -8,33 +8,64 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class AddCommentsScreen extends ActionBarActivity {
     EditText comments;
     Button okCommentsButton;
+    TextView titleWords;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_comments_screen);
+        comments = (EditText) findViewById(R.id.commentsEditText);
+        okCommentsButton = (Button) findViewById(R.id.okCommentsButton);
+        titleWords = (TextView) findViewById(R.id.addCommentsTitleText);
 
-        comments = (EditText)findViewById(R.id.commentsEditText);
-        okCommentsButton = (Button)findViewById(R.id.okCommentsButton);
+        if(getIntent().getStringExtra("flag").equals("edit")){
+        //if this activity is being accessed from the edit book activity
+            titleWords.setText("Edit Comments");
+            comments.setText(getIntent().getStringExtra("bookDescription"));
 
-        okCommentsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //send text back to previous activity
+            okCommentsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //send text back to previous activity
 
-                //credit to Reto Meler for the result method of doing this:
-                //Reto Meler, http://stackoverflow.com/questions/920306/sending-data-back-to-the-main-activity-in-android, Oct 28, 2015
-                //http://stackoverflow.com/users/822/reto-meier
-                Intent result = new Intent();
-                result.putExtra("COMMENTS", comments.getText().toString());
-                setResult(AddCommentsScreen.RESULT_OK, result);
-                finish();
-            }
-        });
+                    //credit to Reto Meler for the result method of doing this:
+                    //Reto Meler, http://stackoverflow.com/questions/920306/sending-data-back-to-the-main-activity-in-android, Oct 28, 2015
+                    //http://stackoverflow.com/users/822/reto-meier
+                    Intent result = new Intent();
+                    result.putExtra("COMMENTS", comments.getText().toString());
+                    setResult(AddCommentsScreen.RESULT_OK, result);
+                    finish();
+                }
+            });
+
+
+        }
+
+        else { //this activity is being accessed from the add book activity
+
+
+
+            okCommentsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //send text back to previous activity
+
+                    //credit to Reto Meler for the result method of doing this:
+                    //Reto Meler, http://stackoverflow.com/questions/920306/sending-data-back-to-the-main-activity-in-android, Oct 28, 2015
+                    //http://stackoverflow.com/users/822/reto-meier
+                    Intent result = new Intent();
+                    result.putExtra("COMMENTS", comments.getText().toString());
+                    setResult(AddCommentsScreen.RESULT_OK, result);
+                    finish();
+                }
+            });
+        }
 
     }
 
