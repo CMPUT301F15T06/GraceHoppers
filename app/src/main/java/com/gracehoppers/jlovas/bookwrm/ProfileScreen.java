@@ -53,11 +53,11 @@ public class ProfileScreen extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 set_visible(editList);
-                //set_invisible(originalList);
+                set_invisible(originalList);
             }
-            });
+            });*/
 
-            confirm.setOnClickListener(new View.OnClickListener()  {
+            /*confirm.setOnClickListener(new View.OnClickListener()  {
                 @Override
                 public void onClick(View view) {
 
@@ -88,8 +88,8 @@ public class ProfileScreen extends ActionBarActivity {
                     }
                 }
             });
-*/
 
+*/
         }
     };
     @Override
