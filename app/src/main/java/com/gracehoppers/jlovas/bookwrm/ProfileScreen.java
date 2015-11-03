@@ -34,34 +34,40 @@ public class ProfileScreen extends ActionBarActivity {
         public void run() {
 
             name =(TextView) findViewById(R.id.originalname);
-            email =(TextView) findViewById(R.id.originalemail);
-            city = (TextView) findViewById(R.id.originalcity);
-            //final ArrayList<View> originalList = new ArrayList<View>((Arrays.asList(editemail,editcity,confirm)));
-            //set_invisible(originalList);
-
             editemail = (EditText) findViewById(R.id.editemail);
             editcity = (EditText) findViewById(R.id.editcity);
             confirm = (Button) findViewById(R.id.confirm_edit);
-            final ArrayList<View> editList = new ArrayList<View>((Arrays.asList(editemail,editcity,confirm)));
+            final ArrayList<View> editList = new ArrayList<View>((Arrays.asList(name,editemail,editcity,confirm)));
             set_invisible(editList);
+
+            //name =(TextView) findViewById(R.id.originalname);
+            email =(TextView) findViewById(R.id.originalemail);
+            city = (TextView) findViewById(R.id.originalcity);
+            edit = (Button) findViewById(R.id.editprofile);
+            final ArrayList<View> originalList = new ArrayList<View>((Arrays.asList(name,city,email,edit)));
+            set_visible(originalList);
+
 
             name.setText(account.getUsername());
             email.setText(account.getEmail());
             city.setText(account.getCity());
 
-            /*edit.setOnClickListener(new View.OnClickListener() {
+            edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 set_visible(editList);
                 set_invisible(originalList);
             }
-            });*/
+            });
 
-            /*confirm.setOnClickListener(new View.OnClickListener()  {
+            confirm.setOnClickListener(new View.OnClickListener()  {
                 @Override
                 public void onClick(View view) {
-
                     try {
+                        Toast.makeText(getApplicationContext(), "Profile test 1", Toast.LENGTH_SHORT).show();
+                        editemail = (EditText) findViewById(R.id.editemail);
+                        editcity = (EditText) findViewById(R.id.editcity);
+
                         newemail = editemail.getText().toString();
                         newcity = editcity.getText().toString();
 
@@ -69,9 +75,12 @@ public class ProfileScreen extends ActionBarActivity {
                         account.setCity(newcity);
                         saveload.saveInFile(ProfileScreen.this, account);
 
+                        accountManager.addAccount(account);
+
 
                         Toast.makeText(getApplicationContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
                         Intent sIntent = new Intent(ProfileScreen.this, ProfileScreen.class); //sends user to profile
+                        sIntent.putExtra("Username",account.getUsername());
                         startActivity(sIntent);
                     } catch (IllegalArgumentException e) {
                         Toast.makeText(getApplicationContext(), "All Fields must be filled",
@@ -89,7 +98,8 @@ public class ProfileScreen extends ActionBarActivity {
                 }
             });
 
-*/
+
+
         }
     };
     @Override
@@ -109,17 +119,17 @@ public class ProfileScreen extends ActionBarActivity {
         }catch (NoSpacesException ne){
         }*/
 
-        /*editemail = (EditText) findViewById(R.id.editemail);
-        editcity = (EditText) findViewById(R.id.editcity);
-        confirm = (Button) findViewById(R.id.confirm_edit);
-        final ArrayList<View> editList = new ArrayList<View>((Arrays.asList(editemail,editcity,confirm)));
-        set_invisible(editList);*/
+        //editemail = (EditText) findViewById(R.id.editemail);
+        //editcity = (EditText) findViewById(R.id.editcity);
+        //confirm = (Button) findViewById(R.id.confirm_edit);
+        //final ArrayList<View> editList = new ArrayList<View>((Arrays.asList(editemail,editcity,confirm)));
+        //set_invisible(editList);
 
         /*name =(TextView) findViewById(R.id.originalname);
         email =(TextView) findViewById(R.id.originalemail);
-        city = (TextView) findViewById(R.id.originalcity);
-        edit = (Button) findViewById(R.id.editprofile);
-        final ArrayList<View> originalList = new ArrayList<View>((Arrays.asList(name,city,email,edit)));*/
+        city = (TextView) findViewById(R.id.originalcity);*/
+        //edit = (Button) findViewById(R.id.editprofile);
+        //final ArrayList<View> originalList = new ArrayList<View>((Arrays.asList(name,city,email,edit)));
 
         /*name.setText(account.getUsername());
         email.setText(account.getEmail());
