@@ -22,33 +22,31 @@ import java.util.ArrayList;
 public class CreateTradeScreen extends Activity {
 
     private ListView borrowerInventoryListView;
+    private ListView ownerBookListView;
     private Account me;
     private Account myFriend;
     private ArrayAdapter<Book> adapter;
+    private ArrayAdapter<Book> adapterO;
     private ArrayList<Book> selectedBorrowerBooks;
-    private Book ownerBook;
+    private ArrayList<Book> selectedOwnerBook = new ArrayList<Book>();
     static Trade newTrade = new Trade();
     private SaveLoad mySaveLoad;
     Button borrowerAdd;
     Button ownerSelect;
     Button submitTrade;
     Button cancelTrade;
-    int pos;
+    private int pos;
+    private int pos2;
 
     @Override
     protected void onStart(){
         super.onStart();
 
-
-
-        ownerBook = newTrade.getOwnerBook();
-        TextView ownerBookTextView = (TextView)findViewById(R.id.ownerBookText);
-        ownerBookTextView.setText(ownerBook.getTitle());
-
         mySaveLoad = new SaveLoad();
         me = mySaveLoad.loadFromFile(getApplicationContext());
 
-        pos = getIntent().getIntExtra("aPosition", (int)Double.POSITIVE_INFINITY);
+        pos = getIntent().getIntExtra("aPosition", (int) Double.POSITIVE_INFINITY);
+        pos2 = getIntent().getIntExtra("bPosition", (int) Double.POSITIVE_INFINITY);
 
         try {
             newTrade.getBorrowerBook().add(me.getInventory().getBookByIndex(pos));
@@ -57,12 +55,33 @@ public class CreateTradeScreen extends Activity {
         } catch (TooLongException e) {
             e.printStackTrace();
         }
+
+        try {
+            newTrade.setOwnerBook(me.getInventory().getBookByIndex(pos2));
+        } catch (NegativeNumberException e) {
+            e.printStackTrace();
+        } catch (TooLongException e) {
+            e.printStackTrace();
+        }
+
+
         selectedBorrowerBooks = newTrade.getBorrowerBook();
         borrowerInventoryListView = (ListView)findViewById(R.id.borrowerInventory);
         adapter = new BookListAdapter(this,R.layout.book_inventory_list, selectedBorrowerBooks);
         borrowerInventoryListView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-        pos = getIntent().getIntExtra("aPosition", 0);
+
+        if (selectedOwnerBook.isEmpty()){
+            if (newTrade.getOwnerBook().getTitle() != null) {
+                selectedOwnerBook.add((newTrade.getOwnerBook()));
+            }
+        }else {
+            selectedOwnerBook.set(0, newTrade.getOwnerBook());
+        }
+        ownerBookListView = (ListView)findViewById(R.id.ownerInventory);
+        adapterO = new BookListAdapter(this,R.layout.book_inventory_list, selectedOwnerBook);
+        ownerBookListView.setAdapter(adapterO);
+        adapterO.notifyDataSetChanged();
 
 
 
@@ -79,6 +98,19 @@ public class CreateTradeScreen extends Activity {
         adapter = new BookListAdapter(this,R.layout.book_inventory_list, selectedBorrowerBooks);
         borrowerInventoryListView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+
+        if (selectedOwnerBook.isEmpty()){
+            if (newTrade.getOwnerBook().getTitle() != null) {
+                selectedOwnerBook.add((newTrade.getOwnerBook()));
+            }
+        }else {
+            selectedOwnerBook.set(0, newTrade.getOwnerBook());
+        }
+        ownerBookListView = (ListView)findViewById(R.id.ownerInventory);
+        adapterO = new BookListAdapter(this,R.layout.book_inventory_list, selectedOwnerBook);
+        ownerBookListView.setAdapter(adapterO);
+        adapterO.notifyDataSetChanged();
 
         borrowerInventoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -130,6 +162,7 @@ public class CreateTradeScreen extends Activity {
             public void onClick(View view) {
                 Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, SelectFromOwnerInventoryActivity.class);
                 startActivity(borrowerAddIntent);
+
             }
         });
 
@@ -139,8 +172,8 @@ public class CreateTradeScreen extends Activity {
             public void onClick(View view) {
                 me.getTradeHistory().addTrade(newTrade);
                 newTrade = new Trade();
-                //add this Trade into Trade History
-
+                //add this Trade into Trade History and empty newTrade
+                finish();
             }
         });
 
@@ -149,13 +182,10 @@ public class CreateTradeScreen extends Activity {
             @Override
             public void onClick(View view) {
                 newTrade = new Trade();
-                Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, HomeScreen.class);
-                startActivity(borrowerAddIntent);
+                finish();
             }
         });
 
-        mySaveLoad = new SaveLoad();
-        me = mySaveLoad.loadFromFile(getApplicationContext());
 
 
     }
