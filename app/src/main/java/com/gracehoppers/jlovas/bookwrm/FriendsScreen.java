@@ -13,19 +13,24 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class FriendsScreen extends ActionBarActivity {
     private Activity activity = this;
 
-    private Button addFriendButton;
-    private EditText friendUsername;
-    private Friends friendList;
-    private ListView oldFriendsList;
-    private ArrayAdapter<Account> friendsAdapter;
-
+    //------------------------------------------------------------
+    //For UI testing
     public ListView getOldFriendsList() {return oldFriendsList;}
-    public Friends getFriendList() {return friendList;}
+    public ArrayList<Account> getFriendList() {return friendList;}
     public EditText getFriendUsername() {return friendUsername;}
     public Button getAddFriendButton() {return  addFriendButton;}
+
+    private Button addFriendButton;
+    private EditText friendUsername;
+    private ArrayList<Account> friendList;
+    private ListView oldFriendsList;
+    private ArrayAdapter<Account> friendsAdapter;
+    //------------------------------------------------------------
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,7 @@ public class FriendsScreen extends ActionBarActivity {
                 //String newFriend = friendUsername.getText().toString();
                 //How to call the user's friends list.
                 //How to pass the context of the account?
+                //Can NOT implement until server search/get is ready
                 int  addFriendResult = 2; //For testing
                 String newFriend = "usernameX"; //For testing
                 //int addFriendResult = friendList.add(newFriend);

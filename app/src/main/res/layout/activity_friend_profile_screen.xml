@@ -67,4 +67,13 @@
         android:layout_marginTop="170dp"
         android:id="@+id/femail"/>
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="unFriend"
+        android:id="@+id/unFriendButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>

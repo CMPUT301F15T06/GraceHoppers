@@ -1,5 +1,6 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -11,12 +12,31 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class SignUpActivity extends ActionBarActivity {
 
     /*
     Activity where the user signs up
      */
+
+
+
+    //---------------------------------------------------------------
+    //For UI testing
+    public Activity getActivity(){return this;}
+
+    private ArrayList<Account> accounts = new ArrayList<Account>();
+    public ArrayList<Account> getAccounts() {return accounts;}
+
+    public EditText getCityText() {return city;}
+
+    public EditText getUsernameText(){return username;}
+
+    public EditText getEmailText(){return email;}
+
+    public Button getSignButton(){return signupButton;}
+    //----------------------------------------------------------------
 
     EditText username;
     EditText email;
@@ -55,15 +75,17 @@ public class SignUpActivity extends ActionBarActivity {
                     account.setCity(city.getText().toString());
                     saveload.saveInFile(SignUpActivity.this, account);
 
+                    accounts.add(account); //for UI testing
+
                     //execute thread
                     Thread thread=new AddThread(account);
                     thread.start();
 
-                    Toast.makeText(getApplicationContext(), username.getText().toString(),
-                            Toast.LENGTH_SHORT).show();
                     Toast.makeText(getApplicationContext(), "Account created",
                             Toast.LENGTH_SHORT).show();
+
                     Intent sIntent = new Intent(SignUpActivity.this, HomeScreen.class); //sends user to profile
+                    sIntent.putExtra("username",account.getUsername());
                     startActivity(sIntent);
                 } catch (IllegalArgumentException e) {
                     Toast.makeText(getApplicationContext(), "All Fields must be filled",
@@ -110,6 +132,8 @@ public class SignUpActivity extends ActionBarActivity {
     class AddThread extends Thread {
         private Account account;
         public AddThread(Account account) {this.account=account;}
+
+        @Override
         public void run(){
             accountManager.addAccount(account);
 
