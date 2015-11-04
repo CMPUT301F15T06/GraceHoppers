@@ -82,10 +82,16 @@ public void testAccountcreation() throws IllegalEmailException, NoSpacesExceptio
         assertTrue(account.getCity()=="Grande Prairie");
     }
 
-    //test to see that the account creates an inventory:
+    //test to see that the account creates an empty inventory:
 
-    //test to see that the account creates a friendlist:
+    Inventory inventory = new Inventory();
+    assertTrue(account.getInventory().getSize()==inventory.getSize());
+    assertTrue(account.getInventory().getSize()==0);
 
+    //test to see that the account creates an empty friendlist:
+    Friends friends = new Friends();
+    assertTrue(account.getFriends().getSize()==friends.getSize());
+    assertTrue(account.getFriends().getSize()==0);
 }
 
     }

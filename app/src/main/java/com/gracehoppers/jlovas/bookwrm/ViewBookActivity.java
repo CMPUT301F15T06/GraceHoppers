@@ -32,13 +32,18 @@ public class ViewBookActivity extends ActionBarActivity {
     Button deleteButton;
     Button editButton;
     //put photo stuff here
-
     Account account;
     Book tempBook;
     int pos;
-    private Boolean delete=false;
-
     private SaveLoad saveload = new SaveLoad();
+
+    // for UI testing --------------------------------------------------
+    public Button getDeleteButton(){return deleteButton;}
+    AlertDialog SingleInfo;
+    public AlertDialog getAlertDialog(){return SingleInfo;}
+    Button okButton;
+    Button cancelButton;
+    //------------------------------------------------------------------
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,7 +180,8 @@ public class ViewBookActivity extends ActionBarActivity {
                     }
 
                 });
-        AlertDialog SingleInfo=singleInfo.create();
+        //AlertDialog SingleInfo=singleInfo.create();
+        SingleInfo=singleInfo.create();
         SingleInfo.show();
     }
 

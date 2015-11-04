@@ -54,7 +54,9 @@ public class Friends {
         return friend;
     }
 
-
+    public int getSize(){
+        return friends.size();
+    }
 
 
 
