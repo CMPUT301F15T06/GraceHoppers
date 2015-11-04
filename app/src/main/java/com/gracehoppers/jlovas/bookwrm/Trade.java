@@ -11,8 +11,18 @@ import java.util.ArrayList;
 public class Trade {
     private Boolean accepted;
     private Boolean declined;
+
+    public TradeStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TradeStatus status) {
+        this.status = status;
+    }
+
     //if a trade is accepted or declined, it will be in history of trade list
     //otherwise, it will be in current trade list
+    private TradeStatus status;
     private Account owner;
     private Account borrower;
     private Book ownerBook = new Book();  //can be 1
@@ -78,5 +88,6 @@ public class Trade {
     public void addToBorrowerBook(Book newBook){
         this.borrowerBook.add(newBook);
     }
+
 
 }

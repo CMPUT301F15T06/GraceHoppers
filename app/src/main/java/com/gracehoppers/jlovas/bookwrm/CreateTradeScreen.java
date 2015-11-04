@@ -1,12 +1,15 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -19,27 +22,43 @@ import java.util.ArrayList;
 public class CreateTradeScreen extends Activity {
 
     private ListView borrowerInventoryListView;
+    private Account me;
+    private Account myFriend;
     private ArrayAdapter<Book> adapter;
     private ArrayList<Book> selectedBorrowerBooks;
     private Book ownerBook;
-    private Trade newTrade = new Trade();
+    static Trade newTrade = new Trade();
+    private SaveLoad mySaveLoad;
     Button borrowerAdd;
     Button ownerSelect;
     Button submitTrade;
     Button cancelTrade;
+    int pos;
 
     @Override
     protected void onStart(){
         super.onStart();
+
+
+
+        ownerBook = newTrade.getOwnerBook();
+        TextView ownerBookTextView = (TextView)findViewById(R.id.ownerBookText);
+        ownerBookTextView.setText(ownerBook.getTitle());
+
+        mySaveLoad = new SaveLoad();
+        me = mySaveLoad.loadFromFile(getApplicationContext());
+
+        pos = getIntent().getIntExtra("aPosition",0);
+
+        newTrade.getBorrowerBook().add(me.getInventory().getBookByIndex(pos));
         selectedBorrowerBooks = newTrade.getBorrowerBook();
         borrowerInventoryListView = (ListView)findViewById(R.id.borrowerInventory);
         adapter = new BookListAdapter(this,R.layout.book_inventory_list, selectedBorrowerBooks);
         borrowerInventoryListView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        pos = getIntent().getIntExtra("aPosition", 0);
 
-        ownerBook = newTrade.getOwnerBook();
-        TextView ownerBookTextView = (TextView)findViewById(R.id.ownerBookText);
-        ownerBookTextView.setText(ownerBook.getTitle());
+
 
     }
 
@@ -47,6 +66,48 @@ public class CreateTradeScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_trade_screen);
+
+
+        selectedBorrowerBooks = newTrade.getBorrowerBook();
+        borrowerInventoryListView = (ListView)findViewById(R.id.borrowerInventory);
+        adapter = new BookListAdapter(this,R.layout.book_inventory_list, selectedBorrowerBooks);
+        borrowerInventoryListView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+        borrowerInventoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Book book = selectedBorrowerBooks.get(position);
+
+                //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
+                AlertDialog alertDialog = new AlertDialog.Builder(CreateTradeScreen.this).create();
+                alertDialog.setMessage("");
+                alertDialog.setCanceledOnTouchOutside(false);
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Add",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Replace",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                alertDialog.show();
+
+            }
+        });
+
 
         borrowerAdd = (Button)findViewById(R.id.borrowerAdd);
         borrowerAdd.setOnClickListener(new View.OnClickListener() {
@@ -80,11 +141,15 @@ public class CreateTradeScreen extends Activity {
         cancelTrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newTrade = null;
+                newTrade = new Trade();
                 Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, HomeScreen.class);
                 startActivity(borrowerAddIntent);
             }
         });
+
+        mySaveLoad = new SaveLoad();
+        me = mySaveLoad.loadFromFile(getApplicationContext());
+
 
     }
 
@@ -110,5 +175,8 @@ public class CreateTradeScreen extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
 
 }
