@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.ListView;
 
 /**
- * Created by jlovas on 10/17/15.
+ * Created by jlovas on 10/17/15.****going to come back to this, going to write demoAccount in first
  */
 public class HomeScreenTest extends ActivityInstrumentationTestCase2 {
 

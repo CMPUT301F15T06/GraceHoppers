@@ -17,6 +17,8 @@ import java.util.ArrayList;
 
 public class FriendsScreen extends ActionBarActivity {
     private Activity activity = this;
+    SaveLoad saveLoad;
+    Account account;
 
     //------------------------------------------------------------
     //For UI testing
@@ -41,15 +43,40 @@ public class FriendsScreen extends ActionBarActivity {
         addFriendButton = (Button) findViewById(R.id.addFriendButton);
         oldFriendsList = (ListView) findViewById(R.id.FriendListView);
 
+        saveLoad = new SaveLoad();
+        account= saveLoad.loadFromFile(getApplicationContext());
+
+
         addFriendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //String newFriend = friendUsername.getText().toString();
+                String newFriend = friendUsername.getText().toString();
+                //****demoAccount stuff here for finding DemoAccount in the list of Accounts *******
+                //protect against adding the same friend again and again!!
+                if(account.isInAccounts(newFriend)) {
+
+                    try {
+                        account.getFriends().addFriend(account.searchAccountsByUsername(newFriend));
+                        Toast.makeText(getApplicationContext(), newFriend + " successfully added as a friend", Toast.LENGTH_SHORT).show();
+                    } catch (DoesNotExistException e) {
+                        Toast.makeText(getApplicationContext(), newFriend + " does not exist", Toast.LENGTH_SHORT).show();
+                    } catch (BlankFieldException e) {
+                        Toast.makeText(FriendsScreen.this, "No username input found", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(), newFriend + " does not exist", Toast.LENGTH_SHORT).show(); //doesn't work so well for blank search but eh
+                }
+
+                //**********************************************************************************
+
+
+                //***put this stuff back once server is ready to go
+                /*
                 //How to call the user's friends list.
                 //How to pass the context of the account?
                 //Can NOT implement until server search/get is ready
                 int  addFriendResult = 2; //For testing
-                String newFriend = "usernameX"; //For testing
+                //String newFriend = "usernameX"; //For testing //commented out for now for demoAccount (put back after and also for tests) -JL
                 //int addFriendResult = friendList.add(newFriend);
                 if  (addFriendResult == 1) {
                     Toast.makeText(activity, newFriend + "is your friend already!", Toast.LENGTH_SHORT).show();
@@ -63,7 +90,7 @@ public class FriendsScreen extends ActionBarActivity {
                 if (addFriendResult == 3) {
                     Toast.makeText(activity, newFriend + "is not a Bookwrm user yet!", Toast.LENGTH_SHORT).show();
                 }
-
+*/
             }
 
         });

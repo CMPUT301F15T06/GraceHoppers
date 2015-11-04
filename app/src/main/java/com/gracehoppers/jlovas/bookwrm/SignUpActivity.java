@@ -2,6 +2,8 @@ package com.gracehoppers.jlovas.bookwrm;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -73,7 +75,7 @@ public class SignUpActivity extends ActionBarActivity {
                     account.setUsername(username.getText().toString());
                     account.setEmail(email.getText().toString());
                     account.setCity(city.getText().toString());
-                    saveload.saveInFile(SignUpActivity.this, account);
+                    //saveload.saveInFile(SignUpActivity.this, account); //moving this line down for demoAccount for now
 
                     accounts.add(account); //for UI testing
 
@@ -83,6 +85,39 @@ public class SignUpActivity extends ActionBarActivity {
 
                     Toast.makeText(getApplicationContext(), "Account created",
                             Toast.LENGTH_SHORT).show();
+
+                    //****Demo Account part, delete afterwards *************************************
+
+                    Account demoAccount = new Account();
+                    demoAccount.setUsername("DemoAccount");
+                    demoAccount.setEmail("demo@hotmail.com");
+                    demoAccount.setCity("Demoville");
+
+                    Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
+
+                    Book book1 = new Book(testImage);
+                    book1.setTitle("A Cool Guy Book");
+                    book1.setAuthor("Joseph Campbell");
+                    book1.setCategory(3);
+                    book1.setQuality(4);
+                    book1.setIsPrivate(false);
+                    book1.setDescription("This book is pretty cool. Maybe too cool.");
+                    //let these set to quantity default of 1 so i don't have to add extra exception catches for temporary code
+
+                    Book book2 = new Book(testImage);
+                    book2.setTitle("Undertale");
+                    book2.setDescription("I'm watching Markiplier play this so I don't need to read it anymore");
+                    book2.setAuthor("Not sure");
+                    book2.setCategory(0);
+                    book2.setQuality(5);
+                    //let these set to quantity default of 1 so i don't have to add extra exception catches for temporary code
+
+                    demoAccount.getInventory().addBook(book1);
+                    demoAccount.getInventory().addBook(book2);
+
+                    account.getAccounts().add(demoAccount);
+                    saveload.saveInFile(SignUpActivity.this, account);
+                    //******************************************************************************
 
                     Intent sIntent = new Intent(SignUpActivity.this, HomeScreen.class); //sends user to profile
                     sIntent.putExtra("username",account.getUsername());

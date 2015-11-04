@@ -3,6 +3,7 @@ package com.gracehoppers.jlovas.bookwrm;
 import android.content.Context;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by nlovas on 10/15/15.
@@ -31,6 +32,43 @@ public class Account {
     }
 
     private TradeHistory tradeHistory = new TradeHistory(); // create trade history
+
+    //****For DemoAccount use, delete after server works********************************************
+    //for storing a list of existing accounts
+
+    private ArrayList<Account> totalAccounts = new ArrayList<Account>();
+
+    public ArrayList<Account> getAccounts(){
+        return totalAccounts;
+    }
+
+    public boolean isInAccounts(String username){
+        for(int i=0; i < totalAccounts.size(); i++){
+            if(totalAccounts.get(i).getUsername().equals(username)) return true;
+        }
+        return false;
+    }
+
+    public Account searchAccountsByUsername(String username) throws DoesNotExistException, BlankFieldException{
+        //need to protect string inputs
+        if(username.equals("")) throw new BlankFieldException();
+        //if it's a number, throw exception, not sure if it's worth writing it for a demo though
+
+
+
+        if(totalAccounts.size() ==0) throw new DoesNotExistException();
+        else if(totalAccounts.size() ==1) return totalAccounts.get(0);
+
+        else {
+            for (int i = 0; i < totalAccounts.size(); i++) {
+                if(totalAccounts.get(i).getUsername().equals(username)) return totalAccounts.get(i);
+            }
+        }
+        //did not find it
+        throw new DoesNotExistException();
+    }
+
+    //**********************************************************************************************
 
 
     public Account() {
