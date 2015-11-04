@@ -27,6 +27,12 @@ public class HomeScreen extends ActionBarActivity {
     private SaveLoad saveload= new SaveLoad();
     String username;
 
+    //For UI testing -----------------------------------------
+    //private ArrayList<Book> inventory = new ArrayList<Book>();
+    public ArrayList<Book> getInventory(){return inventory;}
+    public ListView getInventoryList() {return inventoryList;}
+    //-------------------------------------------------------
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
