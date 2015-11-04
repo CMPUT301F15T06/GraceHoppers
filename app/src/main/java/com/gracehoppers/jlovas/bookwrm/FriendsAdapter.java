@@ -28,13 +28,13 @@ public class FriendsAdapter extends ArrayAdapter<Account>{
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.book_inventory_list, null, false);
-            TextView textview = (TextView) convertView.findViewById(R.id.inventory_id);
+            convertView = inflater.inflate(R.layout.friend_list, null, false);
+            TextView textview = (TextView) convertView.findViewById(R.id.friend_id);
             textview.setText("\nUsername: " + friendArray.get(position).getUsername() + "\nCity: " + friendArray.get(position).getCity());
 
         } else {
 
-            TextView textview = (TextView) convertView.findViewById(R.id.inventory_id);
+            TextView textview = (TextView) convertView.findViewById(R.id.friend_id);
             textview.setText("\nUsername: " + friendArray.get(position).getUsername() + "\nCity: " + friendArray.get(position).getCity());
         }
 

@@ -1,12 +1,14 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FriendProfileScreen extends ActionBarActivity {
 
@@ -18,16 +20,35 @@ public class FriendProfileScreen extends ActionBarActivity {
     TextView email;
     TextView city;
     Account account;
+    Account myFriend;
+
+    SaveLoad saveLoad;
+    int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        position = getIntent().getIntExtra("listPosition", 0);
+
+
+        saveLoad = new SaveLoad();
+        account = saveLoad.loadFromFile(FriendProfileScreen.this);
+
+        try {
+            myFriend = account.getFriends().getFriendByIndex(position);
+        }catch(NegativeNumberException e){
+            Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
+        }catch(TooLongException e) {
+            Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
+        }
+
         name =(TextView) findViewById(R.id.fname);
         email =(TextView) findViewById(R.id.femail);
         city = (TextView) findViewById(R.id.fcity);
 
-        name.setText(account.getUsername());
-        email.setText(account.getEmail());
-        city.setText(account.getCity());
+        name.setText(myFriend.getUsername());
+        email.setText(myFriend.getEmail());
+        city.setText(myFriend.getCity());
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_profile_screen);

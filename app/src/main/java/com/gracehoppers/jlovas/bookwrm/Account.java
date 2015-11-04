@@ -21,7 +21,7 @@ public class Account {
     //private Friendlist friendlist = new Friendlist(); //uncomment this once it has been written
     private Inventory inventory;
     //private SaveLoad saveload; //for saving your account
-    private Friends friends = new Friends(); //create friend list
+    private Friends friends; //create friend list
 
     public TradeHistory getTradeHistory() {
         return tradeHistory;
@@ -44,21 +44,18 @@ public class Account {
 
     public boolean isInAccounts(String username){
         for(int i=0; i < totalAccounts.size(); i++){
-            if(totalAccounts.get(i).getUsername().equals(username)) return true;
+            if(totalAccounts.get(i).getUsername().equals(username)) {
+                return true;
+            }
         }
         return false;
     }
 
-    public Account searchAccountsByUsername(String username) throws DoesNotExistException, BlankFieldException{
+    public Account searchAccountsByUsername(String username) throws DoesNotExistException, BlankFieldException, AlreadyAddedException{
         //need to protect string inputs
         if(username.equals("")) throw new BlankFieldException();
-        //if it's a number, throw exception, not sure if it's worth writing it for a demo though
-
-
-
         if(totalAccounts.size() ==0) throw new DoesNotExistException();
-        else if(totalAccounts.size() ==1) return totalAccounts.get(0);
-
+        if(totalAccounts.size() ==1) return totalAccounts.get(0);
         else {
             for (int i = 0; i < totalAccounts.size(); i++) {
                 if(totalAccounts.get(i).getUsername().equals(username)) return totalAccounts.get(i);
@@ -73,6 +70,7 @@ public class Account {
 
     public Account() {
         inventory = new Inventory();
+        friends = new Friends();
         //checks to see if the account already exists, cant do this without the database
 
         //If(searchDatabase(Username)==true){throw new AlreadyExistsException;}
@@ -146,7 +144,7 @@ public class Account {
     }
 
     public Friends getFriends(){
-        return friends.getFriends();
+        return friends;
     }
 
     //not sure how i can access the inventory otherwise - need this for tests

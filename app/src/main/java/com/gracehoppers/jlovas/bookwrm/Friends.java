@@ -14,16 +14,17 @@ public class Friends {
        return friends;
     }
 
-    public Friends getFriends(){
-        return this;
+    public ArrayList<Account> getFriends(){
+        return friends;
     }
 
-    public int addFriend(Account newFriend){ //Need to search the server for Account
+    public int addFriend(Account newFriend)throws AlreadyAddedException{ //Need to search the server for Account
         //3 Cases
         //Check first if friends already:
         //1. A & B already friends! Return 1
         if (friends.contains(newFriend)){
-            return 1;
+            throw new AlreadyAddedException();
+            //return 1;
         } else {
 
             //Search AccountB in the server. If existent, Case 1.
@@ -58,6 +59,16 @@ public class Friends {
         return friends.size();
     }
 
+    //Need to run tests for this
+    public Account getFriendByIndex(int i)throws NegativeNumberException, TooLongException{
+        if(i <0){
+            throw new NegativeNumberException();
+        }else if(i>friends.size()){ //if the requested position exceeds inventory size, throw exception
+            throw new TooLongException();
+        }else
+
+            return friends.get(i);
+    }
 
 
 

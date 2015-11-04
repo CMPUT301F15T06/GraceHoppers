@@ -250,7 +250,6 @@ public class HomeScreen extends Activity {
         adapter = new BookListAdapter(this,R.layout.book_inventory_list, inventory);
         inventoryList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-        //Toast.makeText(getApplicationContext(), "COME ON", Toast.LENGTH_SHORT).show();
     }
 
 

@@ -2,11 +2,13 @@ package com.gracehoppers.jlovas.bookwrm;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +21,8 @@ public class FriendsScreen extends ActionBarActivity {
     private Activity activity = this;
     SaveLoad saveLoad;
     Account account;
+    private ArrayAdapter<Account> adapter;
+    private ArrayList<Account> friends;
 
     //------------------------------------------------------------
     //For UI testing
@@ -45,27 +49,38 @@ public class FriendsScreen extends ActionBarActivity {
 
         saveLoad = new SaveLoad();
         account= saveLoad.loadFromFile(getApplicationContext());
-
+        friends = account.getFriends().getFriends();
 
         addFriendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String newFriend = friendUsername.getText().toString();
                 //****demoAccount stuff here for finding DemoAccount in the list of Accounts *******
-                //protect against adding the same friend again and again!!
+                //add a better requirement for this if statement later
                 if(account.isInAccounts(newFriend)) {
 
                     try {
-                        account.getFriends().addFriend(account.searchAccountsByUsername(newFriend));
+                        account.getFriends().addFriend(account.searchAccountsByUsername(newFriend)); //want to return an account to add the friend BUT prevent doubles
                         Toast.makeText(getApplicationContext(), newFriend + " successfully added as a friend", Toast.LENGTH_SHORT).show();
+                        adapter = new FriendsAdapter(getApplicationContext(),R.layout.friend_list, friends);
+                        oldFriendsList.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                        saveLoad.saveInFile(getApplicationContext(), account);
                     } catch (DoesNotExistException e) {
                         Toast.makeText(getApplicationContext(), newFriend + " does not exist", Toast.LENGTH_SHORT).show();
                     } catch (BlankFieldException e) {
                         Toast.makeText(FriendsScreen.this, "No username input found", Toast.LENGTH_SHORT).show();
+                    }catch(AlreadyAddedException e){
+                        Toast.makeText(FriendsScreen.this, "Already added this user", Toast.LENGTH_SHORT).show();
                     }
                 }else{
                     Toast.makeText(getApplicationContext(), newFriend + " does not exist", Toast.LENGTH_SHORT).show(); //doesn't work so well for blank search but eh
                 }
+
+                //test code
+                Toast.makeText(getApplicationContext(),"Friends has "+ friends.size()+ " people in it!", Toast.LENGTH_SHORT).show();
+
+
 
                 //**********************************************************************************
 
@@ -95,8 +110,36 @@ public class FriendsScreen extends ActionBarActivity {
 
         });
 
+        oldFriendsList.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                try {
+                    Account friendAccount = account.getFriends().getFriendByIndex(position);
+                    //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
+                } catch (NegativeNumberException e) {
+                    //these will only trip if its a bug on our end, not user's fault
+                    Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
+                } catch (TooLongException e) {
+                    //these will only trip if its a bug on our end, not user's fault
+                    Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
+                }
+
+                Intent intent = new Intent(FriendsScreen.this, FriendProfileScreen.class);
+                intent.putExtra("listPosition", position);
+                startActivity(intent);
+            }
+        });
+
 
     }
+
+    protected void onStart(){
+        super.onStart();
+        adapter = new FriendsAdapter(getApplicationContext(),R.layout.friend_list, friends);
+        oldFriendsList.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
