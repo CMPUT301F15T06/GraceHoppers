@@ -6,6 +6,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -66,6 +68,28 @@ public class FriendProfileScreen extends ActionBarActivity {
         adapter = new BookListAdapter(getApplicationContext(),R.layout.friend_inventory_list, friendInventory);
         friendInventoryList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+
+        friendInventoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                try {
+                    Book book = myFriend.getInventory().getBookByIndex(position);
+                    //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
+                } catch (NegativeNumberException e) {
+                    //these will only trip if its a bug on our end, not user's fault
+                    Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
+                } catch (TooLongException e) {
+                    //these will only trip if its a bug on our end, not user's fault
+                    Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
+                }
+
+                Intent intent = new Intent(FriendProfileScreen.this, ViewBookActivity.class);
+                intent.putExtra("listPosition", position);
+                intent.putExtra("flag","friendItem");
+                startActivity(intent);
+            }
+        });
 
 
     }

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -20,6 +21,9 @@ public class ViewBookActivity extends ActionBarActivity {
 
     /*
     When a user clicks on a book in their inventory, they can view its details, choose to edit it, or delete it.
+
+    PLEASE NOTE: If you are writing an intent to go here, please set it with a flag
+
      */
 
     TextView bookTitle;
@@ -32,8 +36,8 @@ public class ViewBookActivity extends ActionBarActivity {
     Button deleteButton;
     Button editButton;
     //put photo stuff here
-    Account account;
-    Book tempBook;
+    Account account, myFriend;
+    Book tempBook, friendBook;
     int pos;
     private SaveLoad saveload = new SaveLoad();
 
@@ -74,67 +78,130 @@ public class ViewBookActivity extends ActionBarActivity {
     @Override
     public void onResume() {
         super.onResume();
-        pos = getIntent().getIntExtra("listPosition", 0);
+        if (getIntent().getStringExtra("flag").equals("Homescreen")) {
+            pos = getIntent().getIntExtra("listPosition", 0);
 
 
+            account = saveload.loadFromFile(ViewBookActivity.this);
 
-        account = saveload.loadFromFile(ViewBookActivity.this);
+            try {
+                tempBook = account.getInventory().getBookByIndex(pos);
+            } catch (NegativeNumberException e) {
+                Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
+            } catch (TooLongException e) {
+                Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
+            }
 
-        try {
-            tempBook = account.getInventory().getBookByIndex(pos);
-        }catch(NegativeNumberException e){
-            Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
-        }catch(TooLongException e) {
-            Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
+            bookTitle.setText(tempBook.getTitle());
+            bookAuthor.setText(tempBook.getAuthor());
+            category.setText(tempBook.getCategory());
+            quantity.setText(tempBook.getQuantity() + "");
+            description.setText(tempBook.getDescription());
+            rating.setRating((float) tempBook.getQuality());
+
+            if (tempBook.isPrivate()) {
+                privacy.setText("Private Book");
+            } else privacy.setText("Public Book");
+            //put photo stuff here
+
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //ask the user if they're sure they want to delete this book
+                    openDialog();
+                }
+            });
+
+
+            editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ViewBookActivity.this, EditBookActivity.class);
+
+
+                    //pass the book info by intent
+                    intent.putExtra("bookTitle", tempBook.getTitle());
+                    intent.putExtra("bookAuthor", tempBook.getAuthor());
+                    intent.putExtra("bookQuantity", tempBook.getQuantity());
+                    intent.putExtra("bookQuality", tempBook.getQuality());
+                    intent.putExtra("bookCategory", tempBook.getCategoryNumber());
+                    intent.putExtra("bookPrivacy", tempBook.isPrivate());
+                    intent.putExtra("bookDesc", tempBook.getDescription());
+                    intent.putExtra("bookPosition", pos);
+                    //put photo stuff here...if it cant be passed by intent, pass the inventory index position and use gson instead of using the above!
+                    startActivity(intent);
+
+
+                }
+            });
+        } else { //***********************************************************************************
+            //the item is a friend's - do not want to offer edit and delete
+
+            pos = getIntent().getIntExtra("listPosition", 0);
+
+
+            account = saveload.loadFromFile(ViewBookActivity.this);
+
+            try {
+                myFriend = account.getFriends().getFriendByIndex(pos); //***BUG if you pick the second item in the list!
+            } catch (NegativeNumberException e) {
+                Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
+            } catch (TooLongException e) {
+                Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
+            }
+
+            try {
+                friendBook = myFriend.getInventory().getBookByIndex(pos);
+            } catch (NegativeNumberException e) {
+                Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
+            } catch (TooLongException e) {
+                Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
+            }
+
+            bookTitle.setText(friendBook.getTitle());
+            bookAuthor.setText(friendBook.getAuthor());
+            category.setText(friendBook.getCategory());
+            quantity.setText(friendBook.getQuantity() + "");
+            description.setText(friendBook.getDescription());
+            rating.setRating((float) friendBook.getQuality());
+
+            if (friendBook.isPrivate()) {
+                privacy.setText("Private Book");
+            } else privacy.setText("Public Book");
+            //put photo stuff here
+
+            //remove the delete button, edit button changes to trade button
+            ViewGroup parentView = (ViewGroup) deleteButton.getParent();
+            parentView.removeView(deleteButton);
+
+            Button tradeButton = editButton;
+
+            tradeButton.setText("Trade");
+
+            tradeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ViewBookActivity.this, CreateTradeScreen.class);
+
+                    /*
+                    //pass the book info by intent
+                    intent.putExtra("bookTitle", tempBook.getTitle());
+                    intent.putExtra("bookAuthor", tempBook.getAuthor());
+                    intent.putExtra("bookQuantity", tempBook.getQuantity());
+                    intent.putExtra("bookQuality", tempBook.getQuality());
+                    intent.putExtra("bookCategory", tempBook.getCategoryNumber());
+                    intent.putExtra("bookPrivacy", tempBook.isPrivate());
+                    intent.putExtra("bookDesc", tempBook.getDescription());
+                    intent.putExtra("bookPosition", pos);
+                    //put photo stuff here...if it cant be passed by intent, pass the inventory index position and use gson instead of using the above!
+                    */
+                    startActivity(intent);
+
+                }
+            });
         }
-
-        bookTitle.setText(tempBook.getTitle());
-        bookAuthor.setText(tempBook.getAuthor());
-        category.setText(tempBook.getCategory());
-        quantity.setText(tempBook.getQuantity() + "");
-        description.setText(tempBook.getDescription());
-        rating.setRating((float) tempBook.getQuality());
-
-        if(tempBook.isPrivate()){
-            privacy.setText("Private Book");
-        } else privacy.setText("Public Book");
-        //put photo stuff here
-
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //ask the user if they're sure they want to delete this book
-                openDialog();
-            }
-        });
-
-
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ViewBookActivity.this, EditBookActivity.class);
-
-
-                //pass the book info by intent
-                intent.putExtra("bookTitle", tempBook.getTitle());
-                intent.putExtra("bookAuthor", tempBook.getAuthor());
-                intent.putExtra("bookQuantity", tempBook.getQuantity());
-                intent.putExtra("bookQuality", tempBook.getQuality());
-                intent.putExtra("bookCategory", tempBook.getCategoryNumber());
-                intent.putExtra("bookPrivacy", tempBook.isPrivate());
-                intent.putExtra("bookDesc", tempBook.getDescription());
-                intent.putExtra("bookPosition", pos);
-                //put photo stuff here...if it cant be passed by intent, pass the inventory index position and use gson instead of using the above!
-                startActivity(intent);
-
-
-            }
-        });
-
-
-
-
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

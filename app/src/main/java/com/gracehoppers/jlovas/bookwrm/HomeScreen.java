@@ -135,6 +135,7 @@ public class HomeScreen extends Activity {
 
                 Intent intent = new Intent(HomeScreen.this, ViewBookActivity.class);
                 intent.putExtra("listPosition", position);
+                intent.putExtra("flag", "Homescreen");
                 startActivity(intent);
             }
         });
