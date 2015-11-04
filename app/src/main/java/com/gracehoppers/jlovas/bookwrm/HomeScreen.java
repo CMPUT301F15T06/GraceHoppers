@@ -115,10 +115,16 @@ public class HomeScreen extends ActionBarActivity {
         inventoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
-                Book book = account.getInventory().getBookByIndex(position);
-                //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
-
+                try {
+                    Book book = account.getInventory().getBookByIndex(position);
+                    //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
+                }catch(NegativeNumberException e){
+                    //these will only trip if its a bug on our end, not user's fault
+                    Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
+                }catch(TooLongException e){
+                    //these will only trip if its a bug on our end, not user's fault
+                    Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
+                }
 
                 Intent intent = new Intent(HomeScreen.this, ViewBookActivity.class);
                 intent.putExtra("listPosition", position);
