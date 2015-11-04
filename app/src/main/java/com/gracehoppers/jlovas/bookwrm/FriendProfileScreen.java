@@ -6,9 +6,13 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class FriendProfileScreen extends ActionBarActivity {
 
@@ -24,9 +28,14 @@ public class FriendProfileScreen extends ActionBarActivity {
 
     SaveLoad saveLoad;
     int position;
+    private ArrayAdapter<Book> adapter;
+    ListView friendInventoryList;
+    private ArrayList<Book> friendInventory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_friend_profile_screen);
 
         position = getIntent().getIntExtra("listPosition", 0);
 
@@ -45,13 +54,20 @@ public class FriendProfileScreen extends ActionBarActivity {
         name =(TextView) findViewById(R.id.fname);
         email =(TextView) findViewById(R.id.femail);
         city = (TextView) findViewById(R.id.fcity);
+        friendInventoryList = (ListView)findViewById(R.id.friendInventoryList);
 
         name.setText(myFriend.getUsername());
         email.setText(myFriend.getEmail());
         city.setText(myFriend.getCity());
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_friend_profile_screen);
+        friendInventory = myFriend.getInventory().getInventory();
+
+        //populate the friend's inventory list with their stuff
+        adapter = new BookListAdapter(getApplicationContext(),R.layout.friend_inventory_list, friendInventory);
+        friendInventoryList.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+
     }
 
     @Override

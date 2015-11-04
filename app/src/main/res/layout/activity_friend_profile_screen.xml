@@ -11,22 +11,22 @@
         android:layout_height="wrap_content"
         android:text="Profile"
         android:textSize="40dp"
-        android:layout_marginLeft="110dp"
-        android:layout_marginTop="30dp"/>
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:text="UserName:"
-        android:layout_marginTop="120dp"
         android:textSize="20dp"
-        android:id="@+id/textname1"/>
+        android:id="@+id/textname1"
+        android:layout_marginTop="50dp"/>
 
     <TextView
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/textname1"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="50dp"
         android:textSize="20dp"
         android:text="name"
         android:id="@+id/fname"/>
@@ -35,7 +35,7 @@
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:text="Email:"
-        android:layout_marginTop="170dp"
+        android:layout_marginTop="90dp"
         android:textSize="20dp"
         android:id="@+id/textemail1"/>
 
@@ -43,7 +43,7 @@
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:text="City:"
-        android:layout_marginTop="225dp"
+        android:layout_marginTop="130dp"
         android:textSize="20dp"
         android:id="@+id/textcity1"/>
 
@@ -54,7 +54,7 @@
         android:text = "city"
         android:textSize="20dp"
         android:layout_toRightOf="@id/textcity1"
-        android:layout_marginTop="225dp"
+        android:layout_marginTop="130dp"
         android:id="@+id/fcity"/>
 
 
@@ -64,7 +64,7 @@
         android:text="email"
         android:textSize="20dp"
         android:layout_toRightOf="@id/textemail1"
-        android:layout_marginTop="170dp"
+        android:layout_marginTop="90dp"
         android:id="@+id/femail"/>
 
     <Button
@@ -75,5 +75,14 @@
         android:id="@+id/unFriendButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/friendInventoryList"
+        android:layout_below="@+id/textcity1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="50dp"/>
 
 </RelativeLayout>
