@@ -1,5 +1,6 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,7 +17,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class HomeScreen extends ActionBarActivity {
+public class HomeScreen extends Activity {
     Button addBookButton;
 
     private ListView inventoryList;
@@ -124,10 +125,10 @@ public class HomeScreen extends ActionBarActivity {
                 try {
                     Book book = account.getInventory().getBookByIndex(position);
                     //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
-                }catch(NegativeNumberException e){
+                } catch (NegativeNumberException e) {
                     //these will only trip if its a bug on our end, not user's fault
                     Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
-                }catch(TooLongException e){
+                } catch (TooLongException e) {
                     //these will only trip if its a bug on our end, not user's fault
                     Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
                 }
@@ -157,7 +158,19 @@ public class HomeScreen extends ActionBarActivity {
                 startActivity(turnFriend);
             }
         });
+
+        Button trade = (Button) findViewById(R.id.tradeButton);
+        trade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent turnTrade = new Intent(HomeScreen.this, CreateTradeScreen.class);
+                startActivity(turnTrade);
+            }
+        });
+
     }
+
+
 
     @Override
     protected void onStart(){
