@@ -2,6 +2,7 @@ package com.gracehoppers.jlovas.bookwrm;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -87,6 +88,7 @@ public class AddBookScreen extends ActionBarActivity {
         mySpinner = (Spinner)findViewById(R.id.categoryDropdown);
         comments = (TextView)findViewById(R.id.descriptionText);
         privateCheckBox = (CheckBox)findViewById(R.id.privateListingCheckbox);
+        thePhoto = (ImageView)findViewById(R.id.bookImage);
         stars.setNumStars(5);
 
 
@@ -245,7 +247,25 @@ public class AddBookScreen extends ActionBarActivity {
                 startActivityForResult(intent, 0);
             }
         });
+
+
+    thePhoto.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(AddBookScreen.this, PhotoActivity.class);
+            intent.putExtra("flag","add");
+            startActivityForResult(intent, 1);
+
+
+        }
+    });
+
+
+
     } //end of onCreate function
+
+
+
 
     //catch comments made in another activity - need this for comments, passes the result to madeComments
     @Override
@@ -256,6 +276,9 @@ public class AddBookScreen extends ActionBarActivity {
                     // TODO Extract the data returned from the child Activity. -DONE! :D
                     madeComments = data.getStringExtra("COMMENTS");
                     //Toast.makeText(getApplicationContext(), "Got " + madeComments +" from child.", Toast.LENGTH_SHORT).show();
+                }
+            else{
+                    Toast.makeText(getApplicationContext(), "Got a photo!", Toast.LENGTH_SHORT).show();
                 }
     }
 

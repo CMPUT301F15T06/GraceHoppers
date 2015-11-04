@@ -48,5 +48,6 @@
     </string>
     <string name="title_activity_view_book">ViewBookActivity</string>
     <string name="title_activity_counter_trade_screen">CounterTradeScreen</string>
+    <string name="title_activity_photo">PhotoActivity</string>
 
 </resources>

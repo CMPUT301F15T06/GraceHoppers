@@ -74,6 +74,10 @@
             android:name=".CounterTradeScreen"
             android:label="@string/title_activity_counter_trade_screen" >
         </activity>
+        <activity
+            android:name=".PhotoActivity"
+            android:label="@string/title_activity_photo" >
+        </activity>
     </application>
 
 </manifest>
