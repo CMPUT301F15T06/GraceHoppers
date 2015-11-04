@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:text="Select"
         android:id="@+id/selectFromFriend"
-        android:layout_below="@+id/ownerBookText"
+        android:layout_above="@+id/submitButton"
         android:layout_alignParentStart="true" />
 
     <Button
@@ -64,14 +64,12 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
 
-    <TextView
+    <ListView
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/ownerBookText"
-        android:layout_below="@+id/textView2"
+        android:layout_height="wrap_content"
+        android:id="@+id/ownerInventory"
         android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/textView2"
-        android:autoText="false"
-        android:background="#fffbf4" />
+        android:layout_below="@+id/textView2"
+        android:layout_above="@+id/selectFromFriend" />
+
 </RelativeLayout>

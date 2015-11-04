@@ -18,14 +18,13 @@
         android:textStyle="bold" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
+        android:maxLength="550"
         android:id="@+id/commentsEditText"
+        android:hint="Add comments..."
         android:layout_below="@+id/addCommentsTitleText"
-        android:layout_alignEnd="@+id/addCommentsTitleText"
-        android:hint="Add comments..." />
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"

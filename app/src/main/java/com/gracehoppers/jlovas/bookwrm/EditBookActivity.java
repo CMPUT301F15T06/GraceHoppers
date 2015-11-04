@@ -242,6 +242,7 @@ public class EditBookActivity extends ActionBarActivity {
                     tempAccount.getInventory().getBookByIndex(pos).setQuality(bookRating.getRating());
                     tempAccount.getInventory().getBookByIndex(pos).setCategory(spinValue);
                     tempAccount.getInventory().getBookByIndex(pos).setDescription(description);
+
                     if(privateCheckBox.isChecked()){
 
                         tempAccount.getInventory().getBookByIndex(pos).setIsPrivate(true);
@@ -262,8 +263,12 @@ public class EditBookActivity extends ActionBarActivity {
                 } catch(IllegalArgumentException e){
                     Toast.makeText(getApplicationContext(), "Fields cannot be blank", Toast.LENGTH_SHORT).show();
                 } catch (NegativeNumberException x){
+                    //this may possibly trip if there is a negative inventory index number somehow
                     Toast.makeText(getApplicationContext(), "Invalid quantity type. Quantity must be positive", Toast.LENGTH_SHORT).show();
-                }
+                }catch(TooLongException e){
+                    //these will only trip if its a bug on our end, not user's fault
+                    Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
+                    }
 
 
 

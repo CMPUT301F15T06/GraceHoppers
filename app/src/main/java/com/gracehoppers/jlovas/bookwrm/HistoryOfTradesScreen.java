@@ -11,6 +11,7 @@ public class HistoryOfTradesScreen extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_of_trades_screen);
+
     }
 
     @Override

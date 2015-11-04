@@ -15,12 +15,12 @@ public class TradeHistory {
 
     //add the trade into the list of trades
     public void addTrade(Trade trade){
-
+        tradeHistory.add(trade);
     }
 
     //delete the trade
     public void deleteTrade(Trade trade){
-
+        tradeHistory.remove(trade);
     }
 
     /* Not sure yet until trade is written more, how will we call up a trade?

@@ -80,7 +80,13 @@ public class ViewBookActivity extends ActionBarActivity {
 
         account = saveload.loadFromFile(ViewBookActivity.this);
 
-        tempBook = account.getInventory().getBookByIndex(pos);
+        try {
+            tempBook = account.getInventory().getBookByIndex(pos);
+        }catch(NegativeNumberException e){
+            Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
+        }catch(TooLongException e) {
+            Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
+        }
 
         bookTitle.setText(tempBook.getTitle());
         bookAuthor.setText(tempBook.getAuthor());
