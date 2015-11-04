@@ -37,7 +37,13 @@ public class SelectFromBorrowerInventoryActivity extends ActionBarActivity {
         inventoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Book book = me.getInventory().getBookByIndex(position);
+                try {
+                    Book book = me.getInventory().getBookByIndex(position);
+                } catch (NegativeNumberException e) {
+                    e.printStackTrace();
+                } catch (TooLongException e) {
+                    e.printStackTrace();
+                }
                 //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(SelectFromBorrowerInventoryActivity.this, CreateTradeScreen.class);

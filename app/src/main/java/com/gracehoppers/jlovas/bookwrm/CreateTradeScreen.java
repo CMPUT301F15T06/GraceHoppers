@@ -48,9 +48,15 @@ public class CreateTradeScreen extends Activity {
         mySaveLoad = new SaveLoad();
         me = mySaveLoad.loadFromFile(getApplicationContext());
 
-        pos = getIntent().getIntExtra("aPosition",0);
+        pos = getIntent().getIntExtra("aPosition", (int)Double.POSITIVE_INFINITY);
 
-        newTrade.getBorrowerBook().add(me.getInventory().getBookByIndex(pos));
+        try {
+            newTrade.getBorrowerBook().add(me.getInventory().getBookByIndex(pos));
+        } catch (NegativeNumberException e) {
+            e.printStackTrace();
+        } catch (TooLongException e) {
+            e.printStackTrace();
+        }
         selectedBorrowerBooks = newTrade.getBorrowerBook();
         borrowerInventoryListView = (ListView)findViewById(R.id.borrowerInventory);
         adapter = new BookListAdapter(this,R.layout.book_inventory_list, selectedBorrowerBooks);
@@ -131,7 +137,8 @@ public class CreateTradeScreen extends Activity {
         submitTrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                me.getTradeHistory().addTrade(newTrade);
+                newTrade = new Trade();
                 //add this Trade into Trade History
 
             }

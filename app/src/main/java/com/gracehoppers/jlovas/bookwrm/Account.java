@@ -22,6 +22,16 @@ public class Account {
     //private SaveLoad saveload; //for saving your account
     private Friends friends = new Friends(); //create friend list
 
+    public TradeHistory getTradeHistory() {
+        return tradeHistory;
+    }
+
+    public void setTradeHistory(TradeHistory tradeHistory) {
+        this.tradeHistory = tradeHistory;
+    }
+
+    private TradeHistory tradeHistory = new TradeHistory(); // create trade history
+
 
     public Account() {
         inventory = new Inventory();
