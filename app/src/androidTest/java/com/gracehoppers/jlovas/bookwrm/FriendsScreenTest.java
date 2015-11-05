@@ -23,7 +23,8 @@ public class FriendsScreenTest extends ActivityInstrumentationTestCase2  {
 
     //Test that we can add a friend
 
-    public void testAddFriendNonUI() throws IllegalEmailException, NoSpacesException, TooLongException{
+    public void testAddFriendNonUI() throws IllegalEmailException, NoSpacesException,
+                                            TooLongException, AlreadyAddedException{
         //Create 2 accounts first
         Account accountA = new Account();
         Account accountB = new Account();
@@ -45,7 +46,8 @@ public class FriendsScreenTest extends ActivityInstrumentationTestCase2  {
 
     }
 
-    public void testUnFriend() throws IllegalEmailException, NoSpacesException, TooLongException{
+    public void testUnFriend() throws IllegalEmailException, NoSpacesException, TooLongException,
+                                        AlreadyAddedException{
         //Create 2 accounts first
         Account accountA = new Account();
         Account accountB = new Account();
@@ -74,7 +76,8 @@ public class FriendsScreenTest extends ActivityInstrumentationTestCase2  {
         assertFalse(accountB.getFriends().hasFriend(accountA));
     }
 
-    public void testGetFriend() throws IllegalEmailException, NoSpacesException, TooLongException{
+    public void testGetFriend() throws IllegalEmailException, NoSpacesException, TooLongException,
+                                        AlreadyAddedException{
         //Create 2 accounts first
         Account accountA = new Account();
         Account accountB = new Account();

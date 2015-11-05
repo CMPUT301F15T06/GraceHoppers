@@ -48,6 +48,7 @@ public class FriendsScreen extends ActionBarActivity {
         oldFriendsList = (ListView) findViewById(R.id.FriendListView);
 
         saveLoad = new SaveLoad();
+
         account= saveLoad.loadFromFile(getApplicationContext());
         friends = account.getFriends().getFriends();
 
