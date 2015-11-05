@@ -33,7 +33,7 @@ public class FriendsScreen extends ActionBarActivity {
 
     private Button addFriendButton;
     private EditText friendUsername;
-    private ArrayList<Account> friendList;
+    private ArrayList<Account> friendList = new ArrayList<Account>();
     private ListView oldFriendsList;
     private ArrayAdapter<Account> friendsAdapter;
     //------------------------------------------------------------
