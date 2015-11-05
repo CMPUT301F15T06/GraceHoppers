@@ -24,9 +24,10 @@ public class HomeScreen extends Activity {
     private ArrayAdapter<Book> adapter;
     private Inventory userInventory = new Inventory();
     private ArrayList<Book> inventory;
-    Account account; //= new Account();
+    Account account;
     private SaveLoad saveload= new SaveLoad();
     String username;
+
 
     //For UI testing -----------------------------------------
     //private ArrayList<Book> inventory = new ArrayList<Book>();
@@ -44,63 +45,7 @@ public class HomeScreen extends Activity {
         Bundle Username=i.getExtras();
         username=Username.getString("username");
 
-        //-------------------------DELTE ONCE SAVING AND LOADING ACCOUNT WORKS-----------------------------------------------
-/*
-        try {
-            account.setUsername("Jill");
-            account.setEmail("jlovas@ualberta.ca");
-            account.setCity("GP");
-        } catch (NoSpacesException e) {
-            e.printStackTrace();
-        } catch (TooLongException e) {
-            e.printStackTrace();
-        } catch (IllegalEmailException e) {
-            e.printStackTrace();
-        }
-
-        int testCategory =1;
-        Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
-        //create book 1
-        Book book1 = new Book(testImage);
-        book1.setTitle("Eragon");
-        book1.setAuthor("Christopher Paolini");
-        try {
-            book1.setQuantity("1");
-        } catch (NegativeNumberException e) {
-            e.printStackTrace();
-        }
-        book1.setCategory(testCategory);
-
-            book1.setDescription("None");
-
-        book1.setQuality(4);
-        book1.setIsPrivate(false);
-        //one book
-        account.getInventory().addBook(book1);
-
-        Book book2 = new Book(testImage);
-        book2.setTitle("Tokyo Ghoul");
-        book2.setAuthor("Not sure");
-
-        try {
-            book2.setQuantity("1");
-        } catch (NegativeNumberException e) {
-            e.printStackTrace();
-        }
-
-        book2.setCategory(testCategory);
-
-            book2.setDescription("None");
-
-        book2.setQuality(4);
-        book2.setIsPrivate(false);
-
-        //add second book
-        account.getInventory().addBook(book2);
-
-
-*/
-        //------------------------------------------------------------------------
+        //took out the test books that used to be here
 
         addBookButton= (Button)findViewById(R.id.addBookButton);
 
@@ -110,6 +55,13 @@ public class HomeScreen extends Activity {
 
         inventory = account.getInventory().getInventory();
         inventoryList = (ListView)findViewById(R.id.inventory1);
+
+        //----for UI--------------------------------
+        adapter = new BookListAdapter(this,R.layout.book_inventory_list, inventory);
+        inventoryList.setAdapter(adapter);
+        //------------------------------------------
+
+
 
         addBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -237,9 +189,9 @@ public class HomeScreen extends Activity {
 */
 
         //inventory = account.getInventory().getInventory();
-        //adapter = new BookListAdapter(this,R.layout.book_inventory_list, inventory);
-        //inventoryList.setAdapter(adapter);
-        //adapter.notifyDataSetChanged();
+        adapter = new BookListAdapter(this,R.layout.book_inventory_list, inventory);
+        inventoryList.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     //onResume() knowledge of using this coems from class presentation of activity lifecycle
