@@ -89,8 +89,8 @@ public class HomeScreenTest extends ActivityInstrumentationTestCase2 {
             }
         });
         getInstrumentation().waitForIdleSync();
-
 */
+
     }
 
     public void testNavigateToAddBook(){
