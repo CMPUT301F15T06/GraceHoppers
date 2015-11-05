@@ -121,6 +121,24 @@ public class HomeScreen extends Activity {
             }
         });
 
+        Button tradeHistory = (Button) findViewById(R.id.TradeHistoryButton);
+        tradeHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent turnTradeHistory = new Intent(HomeScreen.this, HistoryOfTradesScreen.class);
+                startActivity(turnTradeHistory);
+            }
+        });
+
+        Button counter = (Button) findViewById(R.id.turnCounter);
+        counter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent turnCounter = new Intent(HomeScreen.this, CounterTradeScreen.class);
+                startActivity(turnCounter);
+            }
+        });
+
     }
 
 

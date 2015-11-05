@@ -9,8 +9,9 @@ import java.util.ArrayList;
  * -uhhh some other stuff
  */
 public class Trade {
-    private Boolean accepted;
-    private Boolean declined;
+    //initialize trade to be unaccepted and undeclined
+    private Boolean accepted=Boolean.FALSE;
+    private Boolean declined=Boolean.FALSE;
 
     public TradeStatus getStatus() {
         return status;
@@ -87,6 +88,51 @@ public class Trade {
 
     public void addToBorrowerBook(Book newBook){
         this.borrowerBook.add(newBook);
+    }
+
+    //Override the toString() method to show the borrower, and the books traded.
+    @Override
+    public String toString(){
+
+        //3 Cases : Accepted, Declined and Countered
+
+        String myBook = getOwnerBook().getTitle().toString();
+        ArrayList<Book> friendBooks = getBorrowerBook();
+        String friendBookStr = "";
+        String friend = getBorrower().getUsername();
+        String status = getStatus().toString();
+        String finalView = "";
+        for (Book book: friendBooks) {
+            friendBookStr = friendBookStr + book.getTitle() + " '";
+        }
+
+        //ACCEPTED CASE
+        if (status == "ACCEPTED"){
+            finalView = status + ": Traded my" + myBook + "for " + friend + "'s " +
+                    friendBookStr ;
+        }
+
+        //DECLINED CASE
+        if (status == "DECLINED"){
+            finalView = status + ": Refused to trade my " + myBook + "for " + friend + "'s " +
+                    friendBookStr ;
+        }
+
+
+        //Confused about the Counter Trade (where is the counter book stored?)
+        //COUNTER CASE
+        /*
+        if (status == "COUNTERED"){
+            finalView = status + ": Refused to trade my " + myBook + "for " + friend + "'s " +
+                    friendBookStr + " but took my";
+        }
+        */
+
+        //Does this mean that not all variables are set? Confused again :/
+        //INPROCESS CASE
+
+
+        return finalView;
     }
 
 

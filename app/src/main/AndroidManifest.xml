@@ -78,6 +78,10 @@
             android:name=".PhotoActivity"
             android:label="@string/title_activity_photo" >
         </activity>
+        <activity
+            android:name=".SelectCounterBooksActivity"
+            android:label="@string/title_activity_select_counter_books" >
+        </activity>
     </application>
 
 </manifest>

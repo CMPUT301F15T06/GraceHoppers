@@ -47,6 +47,21 @@
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/tradeButton" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trade History"
+        android:id="@+id/TradeHistoryButton"
+        android:layout_above="@+id/tradeButton"
+        android:layout_alignParentStart="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/turnCounter"
+        android:layout_toRightOf="@+id/TradeHistoryButton"
+        android:layout_above="@+id/profileButton"
+        android:text="COUNTER"/>
 
 </RelativeLayout>
