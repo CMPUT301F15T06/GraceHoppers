@@ -8,6 +8,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,9 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 
 public class ViewBookActivity extends ActionBarActivity {
 
@@ -264,7 +268,10 @@ public class ViewBookActivity extends ActionBarActivity {
 
     public void deleteBook(){
 //deletes the book and saves the change with gson
+       // Log.e("Got to method", "Made it to deleteBook");
         account.getInventory().deleteBook(tempBook);
+        assertFalse(account.getInventory().hasBook(tempBook));
+        Log.e("Got to method", "assertion succeeded");
         saveload.saveInFile(getApplicationContext(), account);
 
         Toast.makeText(getApplicationContext(),"Book deleted",Toast.LENGTH_SHORT).show();

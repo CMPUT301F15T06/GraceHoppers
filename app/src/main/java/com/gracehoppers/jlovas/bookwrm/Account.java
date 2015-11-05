@@ -10,17 +10,20 @@ import java.util.ArrayList;
  */
 
 public class Account {
-    /*
-    The Account of the user, which includes their username, city, email, friendlist, and booklist,
+     /**
+     * The account used by a user once they have logged in or signed up.
+      * <p>
+      * Contains Strings city, email, and a unique username.
+      * also has an Inventory, Friends, and TradeHistory
+      * Account has getters for all of these and setters for the Strings and Inventories
+      *@see Inventory , Friends , TradeHistory
      */
 
     private String username;
     private String city;
     private String email;
-
-    //private Friendlist friendlist = new Friendlist(); //uncomment this once it has been written
+    private TradeHistory tradeHistory = new TradeHistory(); // create trade history
     private Inventory inventory;
-    //private SaveLoad saveload; //for saving your account
     private Friends friends; //create friend list
 
     public TradeHistory getTradeHistory() {
@@ -31,7 +34,6 @@ public class Account {
         this.tradeHistory = tradeHistory;
     }
 
-    private TradeHistory tradeHistory = new TradeHistory(); // create trade history
 
     //****For DemoAccount use, delete after server works********************************************
     //for storing a list of existing accounts
@@ -42,7 +44,7 @@ public class Account {
         return totalAccounts;
     }
 
-    public boolean isInAccounts(String username){
+      public boolean isInAccounts(String username){
         for(int i=0; i < totalAccounts.size(); i++){
             if(totalAccounts.get(i).getUsername().equals(username)) {
                 return true;
@@ -70,7 +72,9 @@ public class Account {
 
     //**********************************************************************************************
 
-
+    /**
+     * Constructor for Account creates an empty Inventory and empty Friends
+     */
     public Account() {
         inventory = new Inventory();
         friends = new Friends();

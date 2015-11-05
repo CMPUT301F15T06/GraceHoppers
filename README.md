@@ -112,3 +112,9 @@ Comparing two Drawables:
 Majonzhan, http://stackoverflow.com/questions/9125229/comparing-two-drawables-in-android, Nov 5th, 2015
 http://stackoverflow.com/users/1043256/mejonzhan
 
+Printing in the logCat:
+CMPUT 301 lab, Ian Watts, 2015-04-11
+
+Generating Javadocs:
+Jiri Pinkas, https://youtu.be/Hx-8BD_Osdw, 2015-05-11
+
