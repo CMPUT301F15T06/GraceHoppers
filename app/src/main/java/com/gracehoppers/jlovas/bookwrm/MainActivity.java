@@ -130,6 +130,10 @@ public class MainActivity extends ActionBarActivity {
 
                 usernameText = (EditText)findViewById(R.id.usernameText);
                 final String username=usernameText.getText().toString();
+
+                Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
+                lIntent.putExtra("username", username);
+                startActivity(lIntent);
                 //it's all your fault
                 //result=accountManager.searchAccount(username);
 
@@ -142,8 +146,8 @@ public class MainActivity extends ActionBarActivity {
                     }
                 }*/
 
-                SearchThread thread=new SearchThread(username);
-                thread.start();
+                //SearchThread thread=new SearchThread(username);
+                //thread.start();
                 //Toast.makeText(getApplicationContext(), result.getUsername(), Toast.LENGTH_SHORT).show();
                 /*if(gotAccount.getUsername()!=null) {
                     Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);

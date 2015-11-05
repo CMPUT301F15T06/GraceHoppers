@@ -38,7 +38,7 @@ public class SelectCounterBooksActivity extends ActionBarActivity {
         counterList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-        //set Onclicklistener to book
+        //set onClicklistener to book
         counterList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -107,3 +107,4 @@ public class SelectCounterBooksActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+

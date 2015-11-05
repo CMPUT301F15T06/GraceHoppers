@@ -154,4 +154,8 @@ public class Account {
     public Inventory getInventory() {
         return inventory;
     }
+
+    public void setInventory(Inventory anInventory){
+        inventory = anInventory;
+    }
 }

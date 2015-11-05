@@ -9,8 +9,9 @@ import java.util.ArrayList;
  * -uhhh some other stuff
  */
 public class Trade {
-    private Boolean accepted;
-    private Boolean declined;
+    //initialize trade to be unaccepted and undeclined
+    private Boolean accepted=Boolean.FALSE;
+    private Boolean declined=Boolean.FALSE;
 
     public TradeStatus getStatus() {
         return status;
