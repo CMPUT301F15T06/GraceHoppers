@@ -29,24 +29,29 @@ public class ProfileScreen extends ActionBarActivity {
     Account account;
     SaveLoad saveload;
     AccountManager accountManager;
+    public ArrayList<View> editList;
+    public ArrayList<View> originalList;
+
 
     private Runnable doUpdateGUIDetails=new Runnable() {
         public void run() {
-
+            
+            /*
             name =(TextView) findViewById(R.id.originalname);
             editemail = (EditText) findViewById(R.id.editemail);
             editcity = (EditText) findViewById(R.id.editcity);
             confirm = (Button) findViewById(R.id.confirm_edit);
-            final ArrayList<View> editList = new ArrayList<View>((Arrays.asList(name,editemail,editcity,confirm)));
+            editList = new ArrayList<View>((Arrays.asList(editemail, editcity, confirm)));
             set_invisible(editList);
 
             //name =(TextView) findViewById(R.id.originalname);
             email =(TextView) findViewById(R.id.originalemail);
             city = (TextView) findViewById(R.id.originalcity);
             edit = (Button) findViewById(R.id.editprofile);
-            final ArrayList<View> originalList = new ArrayList<View>((Arrays.asList(name,city,email,edit)));
+            originalList = new ArrayList<View>((Arrays.asList(city,email,edit)));
             set_visible(originalList);
 
+            */
 
             name.setText(account.getUsername());
             email.setText(account.getEmail());
@@ -102,12 +107,26 @@ public class ProfileScreen extends ActionBarActivity {
 
         }
     };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_screen);
 
+        name =(TextView) findViewById(R.id.originalname);
+        editemail = (EditText) findViewById(R.id.editemail);
+        editcity = (EditText) findViewById(R.id.editcity);
+        confirm = (Button) findViewById(R.id.confirm_edit);
+        editList = new ArrayList<View>((Arrays.asList(editemail, editcity, confirm)));
+        set_invisible(editList);
 
+        //name =(TextView) findViewById(R.id.originalname);
+        email =(TextView) findViewById(R.id.originalemail);
+        city = (TextView) findViewById(R.id.originalcity);
+        edit = (Button) findViewById(R.id.editprofile);
+        originalList = new ArrayList<View>((Arrays.asList(city,email,edit)));
+        set_visible(originalList);
 
 
         /*try{

@@ -22,6 +22,7 @@ public class FriendsScreenTest extends ActivityInstrumentationTestCase2  {
     public FriendsScreenTest(){super(FriendsScreen.class);}
 
     //Test that we can add a friend
+    /*
 
     public void testAddFriendNonUI() throws IllegalEmailException, NoSpacesException,
                                             TooLongException, AlreadyAddedException{
@@ -202,6 +203,6 @@ public class FriendsScreenTest extends ActivityInstrumentationTestCase2  {
         assertEquals("DemoAccount", ((Account) oldFriendsList.getItemAtPosition(0)).getUsername());
 
     }
-
+*/
 
 }

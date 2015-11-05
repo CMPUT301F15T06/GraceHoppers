@@ -101,6 +101,7 @@ public class AccountManager {
         }catch(Exception e) {e.printStackTrace();}
     }
 
+    /*
     public Accounts searchAccount(String username) {
         Accounts result=new Accounts();
         HttpPost searchRequest = new HttpPost("http://cmput301.softwareprocess.es:8080/cmput301f15t06/account/_search");
@@ -159,7 +160,7 @@ public class AccountManager {
         //result.notifyObservers();
 
         return result;
-        /*HttpClient httpClient=new DefaultHttpClient();
+        HttpClient httpClient=new DefaultHttpClient();
         try {
             HttpPost searchRequest = new HttpPost("http://cmput301.softwareprocess.es:8080/cmput301f15t06/account/_search");
             HttpResponse response=httpClient.execute(searchRequest);
@@ -181,10 +182,9 @@ public class AccountManager {
             hits.getTotal();
 
 
-        }catch(IOException e) {e.printStackTrace();}*/
+        }catch(IOException e) {e.printStackTrace();}
         //return result;
 
-    }
-
+    }*/
 
 }

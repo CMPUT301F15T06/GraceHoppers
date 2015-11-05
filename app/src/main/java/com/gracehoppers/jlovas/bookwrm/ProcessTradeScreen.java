@@ -21,7 +21,13 @@ public class ProcessTradeScreen extends ActionBarActivity {
     private Account borrower;
     private Book ownerBook;  //can be 1
     private ArrayList<Book> borrowerBook; //can be 0 or more
-    private Trade trade;
+    public Trade trade;
+    public TradeHistory tradeHistory;
+
+    Button accept;
+    Button decline;
+    public AlertDialog.Builder dialog;
+    public AlertDialog.Builder dialog1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +37,8 @@ public class ProcessTradeScreen extends ActionBarActivity {
         TextView bName = (TextView)findViewById(R.id.bName);
         TextView bBook = (TextView)findViewById(R.id.bBook);
         TextView oBook = (TextView)findViewById(R.id.oBook);
-        Button accept =(Button)findViewById(R.id.accept);
-        Button decline = (Button)findViewById(R.id.decline);
+        accept =(Button)findViewById(R.id.accept);
+        decline = (Button)findViewById(R.id.decline);
 
         //if owner chooses to accept email
         accept.setOnClickListener(new View.OnClickListener() {
@@ -42,7 +48,9 @@ public class ProcessTradeScreen extends ActionBarActivity {
                 trade.setAccepted(Boolean.TRUE);
 
                 //pop a dialog to promote owner to continue trade by sending email
-                AlertDialog.Builder dialog = new AlertDialog.Builder(ProcessTradeScreen.this);
+
+                dialog = new AlertDialog.Builder(ProcessTradeScreen.this);
+
                 dialog.setMessage("Continue the trade by sending email to borrower?");
 
                 //continue to send email
@@ -65,21 +73,22 @@ public class ProcessTradeScreen extends ActionBarActivity {
             public void onClick(View v) {
                 trade.setDeclined(Boolean.TRUE);
                 //pop a dialog to promote owner to continue trade by sending email
-                AlertDialog.Builder dialog = new AlertDialog.Builder(ProcessTradeScreen.this);
-                dialog.setMessage("Create a counter trade?");
+                dialog1 = new AlertDialog.Builder(ProcessTradeScreen.this);
+                dialog1.setMessage("Create a counter trade?");
 
                 //continue to send email
-                dialog.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                dialog1.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //counter trade
+                        Intent turnCounter = new Intent(ProcessTradeScreen.this, CounterTradeScreen.class);
+                        startActivity(turnCounter);
                     }
                 });
 
-                dialog.setPositiveButton("No", null);
+                dialog1.setPositiveButton("No", null);
 
-                dialog.create();
-                dialog.show();
+                dialog1.create();
+                dialog1.show();
             }
         });
 
