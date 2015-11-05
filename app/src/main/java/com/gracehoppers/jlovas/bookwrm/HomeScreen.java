@@ -178,6 +178,15 @@ public class HomeScreen extends Activity {
             }
         });
 
+        Button counter = (Button) findViewById(R.id.turnCounter);
+        counter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent turnCounter = new Intent(HomeScreen.this, CounterTradeScreen.class);
+                startActivity(turnCounter);
+            }
+        });
+
     }
 
 

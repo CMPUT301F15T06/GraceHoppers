@@ -18,6 +18,10 @@ public class TradeHistory {
         tradeHistory.add(trade);
     }
 
+    public Trade getTradeByIndex(int i){
+        return tradeHistory.get(i);
+    }
+
     /* Not sure yet until trade is written more, how will we call up a trade?
     public Trade getTradeWithUser(Account username){
         return ;
