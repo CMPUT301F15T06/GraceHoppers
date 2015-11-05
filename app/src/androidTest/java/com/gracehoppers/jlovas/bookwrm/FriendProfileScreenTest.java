@@ -125,5 +125,5 @@ public class FriendProfileScreenTest extends ActivityInstrumentationTestCase2{
         assertFalse(testAccount.getFriends().hasFriend(friendAccount));
 
     }
-    
+
 }

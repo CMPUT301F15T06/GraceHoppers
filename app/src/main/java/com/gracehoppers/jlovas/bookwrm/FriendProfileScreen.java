@@ -56,12 +56,10 @@ public class FriendProfileScreen extends ActionBarActivity {
         saveLoad = new SaveLoad();
         account = saveLoad.loadFromFile(FriendProfileScreen.this);
 
-
+        Log.e("Position", "Position is: "+ position);
 
         try {
             myFriend = account.getFriends().getFriendByIndex(position);
-            Log.e("Me", "My username is: " + account.getUsername());
-            Log.e("Friend", "My Friend is: " + myFriend.getUsername());
         }catch(NegativeNumberException e){
             Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
         }catch(TooLongException e) {
