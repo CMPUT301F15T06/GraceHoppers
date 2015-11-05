@@ -169,6 +169,15 @@ public class HomeScreen extends Activity {
             }
         });
 
+        Button tradeHistory = (Button) findViewById(R.id.TradeHistoryButton);
+        tradeHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent turnTradeHistory = new Intent(HomeScreen.this, HistoryOfTradesScreen.class);
+                startActivity(turnTradeHistory);
+            }
+        });
+
     }
 
 
