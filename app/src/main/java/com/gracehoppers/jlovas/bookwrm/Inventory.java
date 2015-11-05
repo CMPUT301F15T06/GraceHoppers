@@ -36,7 +36,7 @@ public class Inventory {
 
         for (int i = 0; i < inventory.size(); i++) {
             Book book = inventory.get(i);
-            if (name == book.getTitle()) {
+            if (name.equals( book.getTitle())) {
                 booklist.add(book);
 
             }
