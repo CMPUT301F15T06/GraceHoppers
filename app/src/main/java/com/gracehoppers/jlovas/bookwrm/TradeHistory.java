@@ -18,9 +18,8 @@ public class TradeHistory {
         tradeHistory.add(trade);
     }
 
-    //delete the trade
-    public void deleteTrade(Trade trade){
-        tradeHistory.remove(trade);
+    public Trade getTradeByIndex(int i){
+        return tradeHistory.get(i);
     }
 
     /* Not sure yet until trade is written more, how will we call up a trade?
@@ -29,9 +28,6 @@ public class TradeHistory {
     }
     */
 
-    //clear the history of trades (but keep current trades)
-    public void clearHistory(){
-        //check through list, put current trades into a temp list
-        //copy back or assign historylist to newly made list
-    }
+    //deleted the delete() method. Don't need one. Not in the requirements.
+    //deleted the clear() method. Don't need one. Not in the requirements.
 }

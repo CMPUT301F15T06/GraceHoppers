@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,13 +41,20 @@ public class FriendProfileScreen extends ActionBarActivity {
         setContentView(R.layout.activity_friend_profile_screen);
 
         position = getIntent().getIntExtra("listPosition", 0);
-
+        Log.e("Position", "Position is: " + position);
 
         saveLoad = new SaveLoad();
         account = saveLoad.loadFromFile(FriendProfileScreen.this);
+        Log.e("Me", "My username is: " + account.getUsername());
+        try {
+            Log.e("Friend", "My Friend is: " + account.getFriends().getFriendByIndex(0).getUsername());
+        }catch(NegativeNumberException e){}
+        catch(TooLongException e){}
 
         try {
             myFriend = account.getFriends().getFriendByIndex(position);
+            Log.e("Me", "My username is: " + account.getUsername());
+            Log.e("Friend", "My Friend is: " + myFriend.getUsername());
         }catch(NegativeNumberException e){
             Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
         }catch(TooLongException e) {
@@ -71,10 +79,10 @@ public class FriendProfileScreen extends ActionBarActivity {
 
 
         friendInventoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position2, long id) {
 
                 try {
-                    Book book = myFriend.getInventory().getBookByIndex(position);
+                    Book book = myFriend.getInventory().getBookByIndex(position2);
                     //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
                 } catch (NegativeNumberException e) {
                     //these will only trip if its a bug on our end, not user's fault
@@ -85,7 +93,8 @@ public class FriendProfileScreen extends ActionBarActivity {
                 }
 
                 Intent intent = new Intent(FriendProfileScreen.this, ViewBookActivity.class);
-                intent.putExtra("listPosition", position);
+                intent.putExtra("listPosition", position2);
+                intent.putExtra("position2", position);
                 intent.putExtra("flag","friendItem");
                 startActivity(intent);
             }

@@ -53,6 +53,7 @@ public class Account {
 
     public Account searchAccountsByUsername(String username) throws DoesNotExistException, BlankFieldException, AlreadyAddedException{
         //need to protect string inputs
+        /*
         if(username.equals("")) throw new BlankFieldException();
         if(totalAccounts.size() ==0) throw new DoesNotExistException();
         if(totalAccounts.size() ==1) return totalAccounts.get(0);
@@ -63,6 +64,8 @@ public class Account {
         }
         //did not find it
         throw new DoesNotExistException();
+*/
+        return totalAccounts.get(0);
     }
 
     //**********************************************************************************************
@@ -153,5 +156,9 @@ public class Account {
 
     public Inventory getInventory() {
         return inventory;
+    }
+
+    public void setInventory(Inventory anInventory){
+        inventory = anInventory;
     }
 }

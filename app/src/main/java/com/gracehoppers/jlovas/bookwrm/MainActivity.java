@@ -1,6 +1,8 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,11 +12,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends ActionBarActivity {
     Button logInButton;
     Button signUpButton;
     EditText usernameText;
     SaveLoad saveLoad;
+    AccountManager accountManager;
+    Accounts result;
 
 
 
@@ -47,7 +53,7 @@ public class MainActivity extends ActionBarActivity {
         //the data from the previous log in will not be there - this is not an error!
         //if you don't want that happening just delete/comment out this stuff and sign up once, then
         //log in
-        Account account = new Account();
+        final Account account = new Account();
         try {
             account.setUsername("Jill");
             account.setEmail("jlovas@ualberta.ca");
@@ -60,8 +66,53 @@ public class MainActivity extends ActionBarActivity {
             e.printStackTrace();
         }
 
+        //****Demo Account part, delete afterwards as well!*************************************
+
+        Account demoAccount = new Account();
+        try {
+            demoAccount.setUsername("DemoAccount");
+            demoAccount.setEmail("demo@hotmail.com");
+            demoAccount.setCity("Demoville");
+        }catch(NoSpacesException e){
+
+        }catch(TooLongException e){
+
+        }catch(IllegalEmailException e){
+
+        }
+
+        Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
+
+        Book book1 = new Book(testImage);
+        book1.setTitle("A Cool Guy Book");
+        book1.setAuthor("Joseph Campbell");
+        book1.setCategory(3);
+        book1.setQuality(4);
+        book1.setIsPrivate(false);
+        book1.setDescription("This book is pretty cool. Maybe too cool.");
+        //let these set to quantity default of 1 so i don't have to add extra exception catches for temporary code
+
+        Book book2 = new Book(testImage);
+        book2.setTitle("Undertale");
+        book2.setDescription("I'm watching Markiplier play this so I don't need to read it anymore");
+        book2.setAuthor("Not sure");
+        book2.setCategory(0);
+        book2.setQuality(5);
+        //let these set to quantity default of 1 so i don't have to add extra exception catches for temporary code
+
+        demoAccount.getInventory().addBook(book1);
+        demoAccount.getInventory().addBook(book2);
+
+        account.getAccounts().add(demoAccount);
+        //******************************************************************************
+
+
+
+
+
         saveLoad.saveInFile(getApplicationContext(), account);
         //------------------------------------------------------------------------------------------
+
 
 
         logInButton = (Button)findViewById(R.id.logInButton);
@@ -72,26 +123,42 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 //add conditions for this to work here!!
-                Toast.makeText(getApplicationContext(), "Login not set up quite yet, I go through regardless for testing book purposes! c:", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Login not set up quite yet, I go through regardless for testing book purposes! c:", Toast.LENGTH_SHORT).show();
 
-                //search through database
-                //if username exists:
-
-                /*
-                userNameText = (EditText) findViewById(R.id.usernameText);
-                user = userNameText.getText().toString();
-                */
 
                 //TODO: put the new account into the Gson or whatever we store it with so we can pull it out on further screens!
 
                 usernameText = (EditText)findViewById(R.id.usernameText);
                 final String username=usernameText.getText().toString();
-                Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
-                lIntent.putExtra("username",username);
-                startActivity(lIntent);
 
-                //else;
-                //Toast.makeText(getApplicationContext(), "username does not exist, please sign up or enter the correct username.", Toast.LENGTH_LONG).show();
+                Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
+                lIntent.putExtra("username", username);
+                startActivity(lIntent);
+                //it's all your fault
+                //result=accountManager.searchAccount(username);
+
+                /*for (int i=0;i<result.size();i++) {
+                    Toast.makeText(getApplicationContext(), result.get(i).getUsername(), Toast.LENGTH_SHORT).show();
+                    if(username.equals(result.get(i).getUsername())) {
+                        Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
+                        lIntent.putExtra("username", username);
+                        startActivity(lIntent);
+                    }
+                }*/
+
+                //SearchThread thread=new SearchThread(username);
+                //thread.start();
+                //Toast.makeText(getApplicationContext(), result.getUsername(), Toast.LENGTH_SHORT).show();
+                /*if(gotAccount.getUsername()!=null) {
+                    Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
+                    lIntent.putExtra("username", username);
+                    startActivity(lIntent);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Username does not exist, please sign up or enter the correct username", Toast.LENGTH_SHORT).show();
+                }*/
+
+
             }
         });
 
@@ -125,5 +192,32 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    class SearchThread extends Thread {
+        private String search;
+
+        public SearchThread(String search) {
+            this.search = search;
+        }
+
+        @Override
+        public void run() {
+            result=new Accounts();
+            accountManager=new AccountManager();
+            result=(accountManager.searchAccount(search));
+
+           /* if(result!=null) {
+                    Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
+                    lIntent.putExtra("username", search);
+                    startActivity(lIntent);
+                }
+            else {
+                Toast.makeText(getApplicationContext(), "Username does not exist, please sign up or enter the correct username", Toast.LENGTH_SHORT).show();
+            }
+*/
+            //notifyUpdated();
+        }
+
     }
 }

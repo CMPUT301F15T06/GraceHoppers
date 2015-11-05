@@ -2,10 +2,13 @@ package com.gracehoppers.jlovas.bookwrm;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 /**
@@ -16,6 +19,7 @@ public class HomeScreenTest extends ActivityInstrumentationTestCase2 {
     public HomeScreenTest() {
         super(com.gracehoppers.jlovas.bookwrm.HomeScreen.class);
     }
+
 
     //tests for the homescreen can go here
     //Much of this code is referenced directly or altered from the CMPUT 301 labs. University of Alberta:
@@ -28,6 +32,12 @@ public class HomeScreenTest extends ActivityInstrumentationTestCase2 {
     public void testHomeScreen(){
 
         //tests that the Homescreen UI behaves as expected
+
+        //pass intent to it for the getExtra stuff!
+        Context context = this.getInstrumentation().getTargetContext().getApplicationContext();
+        Intent intent = new Intent();
+        intent.putExtra("username", "hello");
+        setActivityIntent(intent);
         HomeScreen activity = (HomeScreen) getActivity();
 
         //reset the app to a known state
@@ -35,13 +45,26 @@ public class HomeScreenTest extends ActivityInstrumentationTestCase2 {
 
         //test tapping a book entry
         //requires a book to be made first
-        Account accountA = new Account();
+        SaveLoad saveLoad = new SaveLoad();
+        Account accountA = saveLoad.loadFromFile(context);
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
-        Book book = new Book(testImage); //has a value at defaul so im not going to boher giving it any
+        Book book = new Book(testImage); //has a value at default so im not going to boher giving it any
         accountA.getInventory().addBook(book);
 
         final ListView inventoryList = activity.getInventoryList();
-        //Book gotBook = (Book) inventoryList.getItemAtPosition(0);
+
+        final ArrayAdapter<Book> adapter = (ArrayAdapter) inventoryList.getAdapter();
+
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                adapter.notifyDataSetChanged();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+
+
+
 
         //click on the book - ensure the viewBookActivity starts up
 
@@ -51,12 +74,17 @@ public class HomeScreenTest extends ActivityInstrumentationTestCase2 {
         Instrumentation.ActivityMonitor receiverActivityMonitor =
                 getInstrumentation().addMonitor(ViewBookActivity.class.getName(),
                         null, false);
-        //do the click action
+
+        assertTrue(inventoryList.getChildCount() >0);
+
+        //do the click action on a list item
 
         activity.runOnUiThread(new Runnable() {
             public void run() {
                 View v = inventoryList.getChildAt(0);
-                inventoryList.performItemClick(v, 0,v.getId());
+                inventoryList.performItemClick(v, 0, v.getId());
+
+                Book gotBook = (Book) inventoryList.getItemAtPosition(0);
             }
         });
         getInstrumentation().waitForIdleSync();
@@ -89,8 +117,8 @@ public class HomeScreenTest extends ActivityInstrumentationTestCase2 {
             }
         });
         getInstrumentation().waitForIdleSync();
-
 */
+
     }
 
     public void testNavigateToAddBook(){

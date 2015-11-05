@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,6 +49,7 @@ public class FriendsScreen extends ActionBarActivity {
         oldFriendsList = (ListView) findViewById(R.id.FriendListView);
 
         saveLoad = new SaveLoad();
+
         account= saveLoad.loadFromFile(getApplicationContext());
         friends = account.getFriends().getFriends();
 
@@ -78,7 +80,7 @@ public class FriendsScreen extends ActionBarActivity {
                 }
 
                 //test code
-                Toast.makeText(getApplicationContext(),"Friends has "+ friends.size()+ " people in it!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Friends has "+ account.getFriends().getSize()+ " people in it!", Toast.LENGTH_SHORT).show();
 
 
 
@@ -113,20 +115,23 @@ public class FriendsScreen extends ActionBarActivity {
         oldFriendsList.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                try {
-                    Account friendAccount = account.getFriends().getFriendByIndex(position);
-                    //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
+               /* try {
+                    //friendAccount = account.getFriends().getFriendByIndex(position);
+                    //Log.e("FriendName", "My friend's name is:" + friendAccount.getUsername());
+                    //Toast.makeText(getApplicationContext(), "Position is: " + position, Toast.LENGTH_SHORT).show();
+
                 } catch (NegativeNumberException e) {
                     //these will only trip if its a bug on our end, not user's fault
                     Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
                 } catch (TooLongException e) {
                     //these will only trip if its a bug on our end, not user's fault
                     Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
-                }
-
+                }*/
+                saveLoad.saveInFile(getApplicationContext(), account);
                 Intent intent = new Intent(FriendsScreen.this, FriendProfileScreen.class);
                 intent.putExtra("listPosition", position);
                 startActivity(intent);
+
             }
         });
 

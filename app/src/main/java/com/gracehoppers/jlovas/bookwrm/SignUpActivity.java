@@ -119,6 +119,7 @@ public class SignUpActivity extends ActionBarActivity {
                     saveload.saveInFile(SignUpActivity.this, account);
                     //******************************************************************************
 
+                    accountManager.addAccount(account);
                     Intent sIntent = new Intent(SignUpActivity.this, HomeScreen.class); //sends user to profile
                     sIntent.putExtra("username",account.getUsername());
                     startActivity(sIntent);
