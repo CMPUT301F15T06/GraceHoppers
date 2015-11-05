@@ -100,3 +100,9 @@ http://stackoverflow.com/users/1965587/anil-bhatiya
 
 Finding the buttons in an alertDialogue for UI testing:
 http://developer.android.com/reference/android/app/AlertDialog.html#getButton%28int%29, 2015-3-11
+
+Printing in the logCat:
+CMPUT 301 lab, Ian Watts, 2015-04-11
+
+Generating Javadocs:
+Jiri Pinkas, https://youtu.be/Hx-8BD_Osdw, 2015-05-11
