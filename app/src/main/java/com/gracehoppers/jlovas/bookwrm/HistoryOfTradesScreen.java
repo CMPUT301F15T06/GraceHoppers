@@ -4,13 +4,46 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Adapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class HistoryOfTradesScreen extends ActionBarActivity {
+
+    //No buttons on this screen; only the ListView
+    //Not sure if there needs to be a click on item here to view more of a trade
+    private ArrayList<Trade> history;
+    private SaveLoad saveLoad;
+    private Account account;
+    private ListView historyView;
+    private ListAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_of_trades_screen);
+
+        //Link the TradeHistory array with the ListView
+        /* This is a static view, since we can't delete
+           And can't add a trade from the same activity/screen */
+
+        saveLoad = new SaveLoad();
+
+        account = saveLoad.loadFromFile(getApplicationContext());
+        //history = account.getTradeHistory();
+
+        historyView = (ListView)findViewById(R.id.HistoryView);
+
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        adapter = new TradeHistoryListAdapter(getApplicationContext(), R.layout.trade_history_list, history);
+        historyView.setAdapter(adapter);
 
     }
 

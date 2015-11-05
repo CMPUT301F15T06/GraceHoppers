@@ -71,10 +71,10 @@ public class FriendProfileScreen extends ActionBarActivity {
 
 
         friendInventoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position2, long id) {
 
                 try {
-                    Book book = myFriend.getInventory().getBookByIndex(position);
+                    Book book = myFriend.getInventory().getBookByIndex(position2);
                     //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
                 } catch (NegativeNumberException e) {
                     //these will only trip if its a bug on our end, not user's fault
@@ -85,7 +85,8 @@ public class FriendProfileScreen extends ActionBarActivity {
                 }
 
                 Intent intent = new Intent(FriendProfileScreen.this, ViewBookActivity.class);
-                intent.putExtra("listPosition", position);
+                intent.putExtra("listPosition", position2);
+                intent.putExtra("position2", position);
                 intent.putExtra("flag","friendItem");
                 startActivity(intent);
             }
