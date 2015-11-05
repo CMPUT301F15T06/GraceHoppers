@@ -19,7 +19,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 /**
  * Created by dzhang4 on 10/31/15.
@@ -85,31 +87,6 @@ public class AccountManager {
         }
 
         return sr.getSource();
-        /*try{
-            //System.out.print("1");
-            response=httpClient.execute(httpGet);
-            //System.err.print(response.toString());
-
-            BufferedReader reader=new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-
-            StringBuffer result=new StringBuffer();
-            String info;
-            while((info=reader.readLine())!=null) {
-                result.append(info);
-                //System.out.println("Info"+info);
-            }
-            String result2=result.toString();
-
-            System.out.print("result2 "+result2);
-
-            Type type=new TypeToken<SearchHit<Account>>() {}.getType();
-
-            SearchHit<Account> accounts=gson.fromJson(result2,type);
-            return accounts.getSource();
-
-
-        }catch(Exception e){e.printStackTrace();}
-        return sr.getSource();*/
     }
 
     public void deleteAccount(String username) {
@@ -122,6 +99,91 @@ public class AccountManager {
             String status=response.getStatusLine().toString();
             Log.i(TAG,status);
         }catch(Exception e) {e.printStackTrace();}
+    }
+
+    public Accounts searchAccount(String username) {
+        Accounts result=new Accounts();
+        HttpPost searchRequest = new HttpPost("http://cmput301.softwareprocess.es:8080/cmput301f15t06/account/_search");
+        SimpleSearchCommand command=new SimpleSearchCommand(username);
+
+        String query=gson.toJson(command);
+        Log.i(TAG, "Json command: " + query);
+
+        StringEntity stringEntity = null;
+        try {
+            stringEntity = new StringEntity(query);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+
+        searchRequest.setHeader("Accept", "application/json");
+        searchRequest.setEntity(stringEntity);
+
+        HttpClient httpClient = new DefaultHttpClient();
+
+        HttpResponse response = null;
+        try {
+            response = httpClient.execute(searchRequest);
+        } catch (ClientProtocolException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        Type searchResponseType = new TypeToken<SearchResponse<Account>>() {
+        }.getType();
+
+        SearchResponse<Account> esResponse;
+
+        try {
+            esResponse = gson.fromJson(
+                    new InputStreamReader(response.getEntity().getContent()),
+                    searchResponseType);
+        } catch (JsonIOException e) {
+            throw new RuntimeException(e);
+        } catch (JsonSyntaxException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalStateException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        for (SearchHit<Account> hit : esResponse.getHits().getHits()) {
+            result.add(hit.getSource());
+        }
+
+
+
+        //result.notifyObservers();
+
+        return result;
+        /*HttpClient httpClient=new DefaultHttpClient();
+        try {
+            HttpPost searchRequest = new HttpPost("http://cmput301.softwareprocess.es:8080/cmput301f15t06/account/_search");
+            HttpResponse response=httpClient.execute(searchRequest);
+
+            String status=response.getStatusLine().toString();
+            Log.i(TAG, status);
+
+            BufferedReader rd = new BufferedReader(new InputStreamReader(response
+                    .getEntity().getContent()));
+            StringBuffer buffer=new StringBuffer();
+            String line="";
+            while((line=rd.readLine())!=null) {
+                buffer.append(line);
+            }
+            String json=buffer.toString();
+            Type searchResponseType=new TypeToken<SearchResponse<Account>>() {}.getType();
+            SearchResponse<Account> esResponse=gson.fromJson(json,searchResponseType);
+            Hits<Account> hits=esResponse.getHits();
+            hits.getTotal();
+
+
+        }catch(IOException e) {e.printStackTrace();}*/
+        //return result;
+
     }
 
 

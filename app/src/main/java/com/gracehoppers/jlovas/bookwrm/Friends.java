@@ -5,26 +5,28 @@ import java.util.ArrayList;
 /**
  * Created by ljuarezr on 10/20/15.
  */
-public class Friends {
+public class Friends extends ArrayList<Account>{
     //A user's list of friends.
 
     private ArrayList<Account> friends = new ArrayList<Account>();
 
-    public ArrayList<Account> Friends(){
-       return friends;
+    public Friends(){
+       //return friends;
     }
 
     public ArrayList<Account> getFriends(){
         return friends;
     }
 
-    public int addFriend(Account newFriend)throws AlreadyAddedException{ //Need to search the server for Account
+    
+    public int addFriend(Account newFriend){ //Need to search the server for Account
         //3 Cases
         //Check first if friends already:
         //1. A & B already friends! Return 1
         if (friends.contains(newFriend)){
-            throw new AlreadyAddedException();
+            //throw new AlreadyAddedException();
             //return 1;
+            return 2;
         } else {
 
             //Search AccountB in the server. If existent, Case 1.
@@ -58,6 +60,8 @@ public class Friends {
     public int getSize(){
         return friends.size();
     }
+
+    public void clear() {friends.clear();}
 
     //Need to run tests for this
     public Account getFriendByIndex(int i)throws NegativeNumberException, TooLongException{
