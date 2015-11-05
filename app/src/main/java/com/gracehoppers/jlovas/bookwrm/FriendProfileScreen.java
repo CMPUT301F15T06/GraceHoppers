@@ -35,21 +35,28 @@ public class FriendProfileScreen extends ActionBarActivity {
     ListView friendInventoryList;
     private ArrayList<Book> friendInventory;
 
+    //UI test stuff ---------------------------------------------------------------
+    public SaveLoad getSaveLoad(){return saveLoad;}
+    public Account getMyFriend(){return myFriend;}
+    public TextView getFriendName(){return name;}
+    public TextView getFriendEmail(){return email;}
+    public TextView getFriendCity(){return city;}
+    public ListView getFriendInventoryListView(){return friendInventoryList;}
+    //-----------------------------------------------------------------------------
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_profile_screen);
 
         position = getIntent().getIntExtra("listPosition", 0);
-        Log.e("Position", "Position is: " + position);
+
 
         saveLoad = new SaveLoad();
         account = saveLoad.loadFromFile(FriendProfileScreen.this);
-        Log.e("Me", "My username is: " + account.getUsername());
-        try {
-            Log.e("Friend", "My Friend is: " + account.getFriends().getFriendByIndex(0).getUsername());
-        }catch(NegativeNumberException e){}
-        catch(TooLongException e){}
+
+
 
         try {
             myFriend = account.getFriends().getFriendByIndex(position);
@@ -65,6 +72,7 @@ public class FriendProfileScreen extends ActionBarActivity {
         email =(TextView) findViewById(R.id.femail);
         city = (TextView) findViewById(R.id.fcity);
         friendInventoryList = (ListView)findViewById(R.id.friendInventoryList);
+        unFriendButton = (Button)findViewById(R.id.unFriendButton);
 
         name.setText(myFriend.getUsername());
         email.setText(myFriend.getEmail());
@@ -95,8 +103,21 @@ public class FriendProfileScreen extends ActionBarActivity {
                 Intent intent = new Intent(FriendProfileScreen.this, ViewBookActivity.class);
                 intent.putExtra("listPosition", position2);
                 intent.putExtra("position2", position);
-                intent.putExtra("flag","friendItem");
+                intent.putExtra("flag", "friendItem");
                 startActivity(intent);
+            }
+        });
+
+        unFriendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //clicking this button will unfriend the person
+
+                //**NOT ENTIRELY FUNCTIONAL YET *** return to me afterwards and update stuff so it's gone ***
+                account.getFriends().unFriend(myFriend);
+                Toast.makeText(getApplicationContext(), "Friend removed", Toast.LENGTH_SHORT).show();
+                saveLoad.saveInFile(getApplicationContext(), account);
+                finish();
             }
         });
 

@@ -49,6 +49,12 @@ public class ViewBookActivity extends ActionBarActivity {
     public AlertDialog getAlertDialog(){return SingleInfo;}
     Button okButton;
     Button cancelButton;
+    public TextView getBookTitle(){return bookTitle;}
+    public TextView getBookAuthor(){return bookAuthor;}
+    public TextView getCategory(){return category;}
+    public TextView getQuantity(){return quantity;}
+    public TextView getPrivacy(){return privacy;}
+    public TextView getDescription(){return description;}
     //------------------------------------------------------------------
 
     @Override
