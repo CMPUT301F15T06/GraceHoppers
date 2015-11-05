@@ -39,6 +39,8 @@ public class ViewBookActivity extends ActionBarActivity {
     Account account, myFriend;
     Book tempBook, friendBook;
     int pos;
+    int posBook;
+    int posFriend;
     private SaveLoad saveload = new SaveLoad();
 
     // for UI testing --------------------------------------------------
@@ -137,13 +139,14 @@ public class ViewBookActivity extends ActionBarActivity {
         } else { //***********************************************************************************
             //the item is a friend's - do not want to offer edit and delete
 
-            pos = getIntent().getIntExtra("listPosition", 0);
-
+            posBook = getIntent().getIntExtra("listPosition", 0);
+            posFriend = getIntent().getIntExtra("position2",0);
 
             account = saveload.loadFromFile(ViewBookActivity.this);
 
             try {
-                myFriend = account.getFriends().getFriendByIndex(pos); //***BUG if you pick the second item in the list!
+                //find the friend by a certain position
+                myFriend = account.getFriends().getFriendByIndex(posFriend); //***BUG if you pick the second item in the list!
             } catch (NegativeNumberException e) {
                 Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
             } catch (TooLongException e) {
@@ -151,7 +154,8 @@ public class ViewBookActivity extends ActionBarActivity {
             }
 
             try {
-                friendBook = myFriend.getInventory().getBookByIndex(pos);
+                //find the book by a different position than the friend's position
+                friendBook = myFriend.getInventory().getBookByIndex(posBook);
             } catch (NegativeNumberException e) {
                 Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
             } catch (TooLongException e) {
