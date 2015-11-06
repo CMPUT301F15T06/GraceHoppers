@@ -34,16 +34,19 @@ public class HistoryOfTradesScreen extends ActionBarActivity {
         saveLoad = new SaveLoad();
 
         account = saveLoad.loadFromFile(getApplicationContext());
-        //history = account.getTradeHistory();
+
 
         historyView = (ListView)findViewById(R.id.HistoryView);
+
+        adapter = new TradeHistoryListAdapter(getApplicationContext(), R.layout.trade_history_list, account.getTradeHistory().tradeHistory);
+        historyView.setAdapter(adapter);
 
     }
 
     @Override
     protected void onStart(){
         super.onStart();
-        adapter = new TradeHistoryListAdapter(getApplicationContext(), R.layout.trade_history_list, history);
+        adapter = new TradeHistoryListAdapter(getApplicationContext(), R.layout.trade_history_list, account.getTradeHistory().tradeHistory);
         historyView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 

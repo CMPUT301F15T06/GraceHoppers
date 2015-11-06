@@ -5,24 +5,23 @@ import android.content.Context;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 /**
- * Created by nlovas on 10/15/15.
+ * The account used by a user once they have logged in or signed up.
+ * <p>
+ * Contains Strings city, email, and a unique username.
+ * also has an Inventory, Friends, and TradeHistory
+ * Account has getters for all of these and setters for the Strings and Inventories
+ *@see Inventory , Friends , TradeHistory
  */
 
 public class Account {
-     /**
-     * The account used by a user once they have logged in or signed up.
-      * <p>
-      * Contains Strings city, email, and a unique username.
-      * also has an Inventory, Friends, and TradeHistory
-      * Account has getters for all of these and setters for the Strings and Inventories
-      *@see Inventory , Friends , TradeHistory
-     */
+
 
     private String username;
     private String city;
     private String email;
-    private TradeHistory tradeHistory = new TradeHistory(); // create trade history
+    private TradeHistory tradeHistory; // create trade history
     private Inventory inventory;
     private Friends friends; //create friend list
 
@@ -78,6 +77,7 @@ public class Account {
     public Account() {
         inventory = new Inventory();
         friends = new Friends();
+        tradeHistory = new TradeHistory();
         //checks to see if the account already exists, cant do this without the database
 
         //If(searchDatabase(Username)==true){throw new AlreadyExistsException;}

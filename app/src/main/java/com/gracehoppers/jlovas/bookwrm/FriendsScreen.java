@@ -80,7 +80,7 @@ public class FriendsScreen extends ActionBarActivity {
                 }
 
                 //test code
-                Toast.makeText(getApplicationContext(),"Friends has "+ account.getFriends().getSize()+ " people in it!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"Friends has "+ account.getFriends().getSize()+ " people in it!", Toast.LENGTH_SHORT).show();
 
 
 
