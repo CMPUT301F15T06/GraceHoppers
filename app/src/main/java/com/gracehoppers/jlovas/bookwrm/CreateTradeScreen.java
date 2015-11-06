@@ -31,7 +31,7 @@ public class CreateTradeScreen extends Activity {
     private ArrayAdapter<Book> adapterO;
     private ArrayList<Book> selectedBorrowerBooks;
     private ArrayList<Book> selectedOwnerBook = new ArrayList<Book>();
-    static Trade newTrade = new Trade();
+    private static Trade newTrade = new Trade();
     private SaveLoad mySaveLoad;
     Button borrowerAdd;
     Button ownerSelect;
@@ -161,7 +161,7 @@ public class CreateTradeScreen extends Activity {
         submitTrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TradeHistory tradeHistory =  me.getTradeHistory();
+                me.getTradeHistory().addTrade(newTrade);
                 sendEmail();
                 newTrade = new Trade();
                 //add this Trade into Trade History and empty newTrade
@@ -210,7 +210,7 @@ public class CreateTradeScreen extends Activity {
     }
 
     public void sendEmail(){
-        String[] TO = {newTrade.getOwner().getEmail().toString()};
+        String[] TO = {""};
         String[] CC = {""};
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.setData(Uri.parse("mailto:"));
