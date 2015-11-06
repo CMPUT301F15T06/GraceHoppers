@@ -66,16 +66,29 @@ public class CounterTradeScreen extends ActionBarActivity {
             public void onClick(View view) {
                 //oldTrade.getOwner().getTradeHistory().addTrade(counterTrade);
                 //oldTrade.getBorrower().getTradeHistory().addTrade(counterTrade);
-                Intent submitAll = new Intent(CounterTradeScreen.this,HomeScreen.class);
-                startActivity(submitAll);
+
+                //tradeHistory.addTrade(counterTrade);
+
+                //Intent submitAll = new Intent(CounterTradeScreen.this,HomeScreen.class);
+                //startActivity(submitAll);
+
+                Toast toast = Toast.makeText(CounterTradeScreen.this, "Haven't implement, will do saving trade into account's history", Toast.LENGTH_SHORT);
+                toast.show();
+                finish();
             }
         });
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent cancelAll = new Intent(CounterTradeScreen.this, ProcessTradeScreen.class);
-                startActivity(cancelAll);
+                //Intent cancelAll = new Intent(CounterTradeScreen.this, ProcessTradeScreen.class);
+                //startActivity(cancelAll);
+                if(text.getText().toString()==""){
+                    Toast toast = Toast.makeText(CounterTradeScreen.this, "Borrower BookList already empty", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                text.setText("");
+
             }
         });
 

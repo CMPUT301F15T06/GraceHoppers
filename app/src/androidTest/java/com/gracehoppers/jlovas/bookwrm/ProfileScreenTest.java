@@ -35,7 +35,20 @@ public class ProfileScreenTest extends ActivityInstrumentationTestCase2 {
         Activity activity = getActivity();
     }
 
-    /*
+    public void testView(){
+        activity = (ProfileScreen)getActivity();
+        name = activity.name;
+        city = activity.city;
+        email= activity.email;
+
+        //make sure name and such are all the same
+        assertTrue(name.getText().toString().equals(activity.account.getUsername()));
+        assertTrue(city.getText().toString().equals(activity.account.getCity()));
+        assertTrue(email.getText().toString().equals(activity.account.getEmail()));
+
+    }
+
+    //do not pass, do not know how to test thread in activity yet
     public void testSetVisible(){
         activity = (ProfileScreen)getActivity();
         final ArrayList<View> visibles = new ArrayList<View>();
@@ -135,7 +148,7 @@ public class ProfileScreenTest extends ActivityInstrumentationTestCase2 {
 
         getInstrumentation().removeMonitor(receiverActivityMonitor);
 
-    }*/
+    }
 
     public void testEdit(){
         activity = (ProfileScreen)getActivity();
