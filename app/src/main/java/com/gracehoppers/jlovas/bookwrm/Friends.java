@@ -3,13 +3,14 @@ package com.gracehoppers.jlovas.bookwrm;
 import java.util.ArrayList;
 
 /**
- * @author ljuarezr on 10/20/15.
+ *
  * A list of Accounts that act as the friend list for the user.
  *Includes a getter and ways to add or remove a friend account,
  * check if it has a friend,
  * clear the list,
  * or look for a friend by index number
  * @see Account
+ * @author ljuarezr on 10/20/15.
  */
 public class Friends{
     //A user's list of friends.
