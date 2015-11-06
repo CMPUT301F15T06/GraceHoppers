@@ -41,7 +41,7 @@ public class CreateTradeScreen extends Activity {
     private ArrayAdapter<Book> adapterO;
     private ArrayList<Book> selectedBorrowerBooks;
     private ArrayList<Book> selectedOwnerBook = new ArrayList<Book>();
-    static Trade newTrade = new Trade();
+    private static Trade newTrade = new Trade();
     private SaveLoad mySaveLoad;
     Button borrowerAdd;
     Button ownerSelect;
@@ -104,7 +104,7 @@ public class CreateTradeScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_trade_screen);
 
-
+        newTrade.setStatus(TradeStatus.INPROCESS);
         selectedBorrowerBooks = newTrade.getBorrowerBook();
         borrowerInventoryListView = (ListView)findViewById(R.id.borrowerInventory);
         adapter = new BookListAdapter(this,R.layout.book_inventory_list, selectedBorrowerBooks);
@@ -152,6 +152,7 @@ public class CreateTradeScreen extends Activity {
             public void onClick(View view) {
                 Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, SelectFromBorrowerInventoryActivity.class);
                 startActivity(borrowerAddIntent);
+                finish();
             }
         });
 
@@ -161,6 +162,7 @@ public class CreateTradeScreen extends Activity {
             public void onClick(View view) {
                 Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, SelectFromOwnerInventoryActivity.class);
                 startActivity(borrowerAddIntent);
+                finish();
 
             }
         });
@@ -169,7 +171,7 @@ public class CreateTradeScreen extends Activity {
         submitTrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //me.getTradeHistory().addTrade(newTrade);
+                me.getTradeHistory().addTrade(newTrade);
                 sendEmail();
                 newTrade = new Trade();
                 //add this Trade into Trade History and empty newTrade
@@ -210,11 +212,19 @@ public class CreateTradeScreen extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+
     /**
      * This method will call the activity to send the email to notify the other user of the trade request.
      *
      * @throws android.content.ActivityNotFoundException
      */
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        newTrade = new Trade();
+        finish();
+    }
+
     public void sendEmail(){
         String[] TO = {""};
         String[] CC = {""};
