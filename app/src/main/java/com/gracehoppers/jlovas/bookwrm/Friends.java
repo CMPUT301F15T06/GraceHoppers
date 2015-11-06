@@ -3,7 +3,13 @@ package com.gracehoppers.jlovas.bookwrm;
 import java.util.ArrayList;
 
 /**
- * Created by ljuarezr on 10/20/15.
+ * @author ljuarezr on 10/20/15.
+ * A list of Accounts that act as the friend list for the user.
+ *Includes a getter and ways to add or remove a friend account,
+ * check if it has a friend,
+ * clear the list,
+ * or look for a friend by index number
+ * @see Account
  */
 public class Friends{
     //A user's list of friends.
@@ -18,7 +24,12 @@ public class Friends{
         return friends;
     }
 
-    
+    /**
+     * Adds a new friend account into the list, but if the friend account has already been added, it throws the AlreadyAddedException
+     * @param newFriend - the friend being put into the list
+     * @return int - shows success
+     * @throws AlreadyAddedException
+     */
     public int addFriend(Account newFriend) throws AlreadyAddedException{ //Need to search the server for Account
         //3 Cases
         //Check first if friends already:
@@ -39,10 +50,19 @@ public class Friends{
         }
     }
 
+    /**
+     * removes the friend account from the list
+     * @param friend - the friend account being removed
+     */
     public void unFriend(Account friend){
         friends.remove(friend);
     }
 
+    /**
+     *Checks to see if the list contains the friend account given in the parameter
+     * @param friend - the friend account being checked
+     * @return boolean - true if the list does have this friend account
+     */
     public boolean hasFriend(Account friend){
         return friends.contains(friend);
     }
@@ -57,13 +77,29 @@ public class Friends{
         return friend;
     }
 
+    /**
+     * returns the number of friends, the size of the list of accounts.
+     * @return int - the size of the list
+     */
     public int getSize(){
         return friends.size();
     }
 
+    /**
+     * removes all friend accounts from the list
+     */
     public void clear() {friends.clear();}
 
     //Need to run tests for this
+
+    /**
+     * returns the friend at the index given by the parameter. Throws a TooLongException if the parameter int is longer than the list size,
+     * throws NegativeNumberException if the int parameter is negative
+     * @param i - the position in the list to check
+     * @return Account - the account at the given position
+     * @throws NegativeNumberException
+     * @throws TooLongException
+     */
     public Account getFriendByIndex(int i)throws NegativeNumberException, TooLongException{
         if(i <0){
             throw new NegativeNumberException();

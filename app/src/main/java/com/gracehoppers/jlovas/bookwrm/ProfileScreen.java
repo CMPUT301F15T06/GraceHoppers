@@ -13,8 +13,19 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+/**
+ * Created by dzhang4 on 11/3/15.
+ */
 
 public class ProfileScreen extends ActionBarActivity {
+
+    /**Activity representing the view of a user account details.
+     * Allows for editing funtionality.
+     * Contains a TextView of the name, email, city of a user; as well as
+     * edit/confirm buttons and the corresponding EditTexts for name, email and
+     * user if editing. Getters and Setters for these.
+     * @see Account, AccountManager, SaveLoad.
+     */
 
     //public static String Username="Username";
     EditText editemail;
@@ -32,6 +43,15 @@ public class ProfileScreen extends ActionBarActivity {
     public ArrayList<View> editList;
     public ArrayList<View> originalList;
 
+    /**
+     * This is the activity for the mean functionality of answering a question. This
+     * activity will be acted when the "Add Answer" button in the
+     * QuestionDetailActivity.java is clicked.
+     *
+     * @author Hong Wang
+     * @author Di Zhang
+     *
+     */
 
     private Runnable doUpdateGUIDetails=new Runnable() {
         public void run() {

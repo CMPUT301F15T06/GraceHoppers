@@ -24,7 +24,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 /**
- * Created by dzhang4 on 10/31/15.
+ * @author dzhang4 on 10/31/15.
+ * @deprecated  until part 5
  */
 public class AccountManager {
     private static final String URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t06/account/";
