@@ -94,7 +94,7 @@ public class CreateTradeScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_trade_screen);
 
-
+        newTrade.setStatus(TradeStatus.INPROCESS);
         selectedBorrowerBooks = newTrade.getBorrowerBook();
         borrowerInventoryListView = (ListView)findViewById(R.id.borrowerInventory);
         adapter = new BookListAdapter(this,R.layout.book_inventory_list, selectedBorrowerBooks);
@@ -142,6 +142,7 @@ public class CreateTradeScreen extends Activity {
             public void onClick(View view) {
                 Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, SelectFromBorrowerInventoryActivity.class);
                 startActivity(borrowerAddIntent);
+                finish();
             }
         });
 
@@ -151,6 +152,7 @@ public class CreateTradeScreen extends Activity {
             public void onClick(View view) {
                 Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, SelectFromOwnerInventoryActivity.class);
                 startActivity(borrowerAddIntent);
+                finish();
 
             }
         });
@@ -200,8 +202,15 @@ public class CreateTradeScreen extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        newTrade = new Trade();
+        finish();
+    }
+
     public void sendEmail(){
-        String[] TO = {""};
+        String[] TO = {newTrade.getOwner().getEmail().toString()};
         String[] CC = {""};
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.setData(Uri.parse("mailto:"));

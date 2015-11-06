@@ -32,12 +32,12 @@ public class TradeHistoryListAdapter extends ArrayAdapter<Trade> {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.trade_history_list, null, false);
             TextView textview = (TextView) convertView.findViewById(R.id.trade_inventory_id);
-            textview.setText("Borrower: " + tradeArray.get(position).getBorrower() + "\nOwner: " + tradeArray.get(position).getOwner() + "\nBook" + tradeArray.get(position).getOwnerBook());
+            textview.setText("Borrower: " + tradeArray.get(position).getBorrower().getUsername().toString() + "\nOwner: " + tradeArray.get(position).getOwner().getUsername().toString() + "\nBook" + tradeArray.get(position).getOwnerBook().getTitle().toString());
 
         } else {
 
             TextView textview = (TextView) convertView.findViewById(R.id.trade_inventory_id);
-            textview.setText("Borrower: " + tradeArray.get(position).getBorrower() + "\nOwner: " + tradeArray.get(position).getOwner() + "\nBook"+ tradeArray.get(position).getOwnerBook());
+            textview.setText("Borrower: " + tradeArray.get(position).getBorrower().getUsername().toString() + "\nOwner: " + tradeArray.get(position).getOwner().getUsername().toString() + "\nBook"+ tradeArray.get(position).getOwnerBook().getTitle().toString());
 
         }
 

@@ -52,6 +52,7 @@ public class SelectFromBorrowerInventoryActivity extends ActionBarActivity {
                 Intent intent = new Intent(SelectFromBorrowerInventoryActivity.this, CreateTradeScreen.class);
                 intent.putExtra("aPosition", position);
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -76,6 +77,14 @@ public class SelectFromBorrowerInventoryActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        Intent intent = new Intent(SelectFromBorrowerInventoryActivity.this, CreateTradeScreen.class);
+        startActivity(intent);
+        finish();
     }
 
     public ListView getMyInventory() {

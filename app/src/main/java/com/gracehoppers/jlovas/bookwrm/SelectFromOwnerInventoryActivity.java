@@ -54,6 +54,7 @@ public class SelectFromOwnerInventoryActivity extends ActionBarActivity {
                 Intent intent = new Intent(SelectFromOwnerInventoryActivity.this, CreateTradeScreen.class);
                 intent.putExtra("bPosition", position);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -81,4 +82,13 @@ public class SelectFromOwnerInventoryActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        Intent intent = new Intent(SelectFromOwnerInventoryActivity.this, CreateTradeScreen.class);
+        startActivity(intent);
+        finish();
+    }
+
 }
