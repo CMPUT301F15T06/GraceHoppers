@@ -193,7 +193,7 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
+/*
     class SearchThread extends Thread {
         private String search;
 
@@ -206,7 +206,7 @@ public class MainActivity extends ActionBarActivity {
             result=new Accounts();
             accountManager=new AccountManager();
             result=(accountManager.searchAccount(search));
-
+*/
            /* if(result!=null) {
                     Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
                     lIntent.putExtra("username", search);
@@ -217,7 +217,7 @@ public class MainActivity extends ActionBarActivity {
             }
 */
             //notifyUpdated();
-        }
+        //}
 
-    }
+    //}
 }
