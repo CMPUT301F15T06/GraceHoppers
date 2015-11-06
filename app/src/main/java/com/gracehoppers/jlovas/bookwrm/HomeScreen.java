@@ -152,65 +152,6 @@ public class HomeScreen extends Activity {
     protected void onStart(){
         super.onStart();
 
-        //-------------------------DELTE ONCE SAVING AND LOADING ACCOUNT WORKS-----------------------------------------------
-        /*
-        Account testAccount = new Account();
-        try {
-            testAccount.setUsername("Jill");
-            testAccount.setEmail("jlovas@ualberta.ca");
-            testAccount.setCity("GP");
-        } catch (NoSpacesException e) {
-            e.printStackTrace();
-        } catch (TooLongException e) {
-            e.printStackTrace();
-        } catch (IllegalEmailException e) {
-            e.printStackTrace();
-        }
-        int testCategory =1;
-        Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
-        //create book 1
-        Book book1 = new Book(testImage);
-        book1.setTitle("Eragon");
-        book1.setAuthor("Christopher Paolini");
-        try {
-            book1.setQuantity("1");
-        } catch (NegativeNumberException e) {
-            e.printStackTrace();
-        }
-        book1.setCategory(testCategory);
-
-            book1.setDescription("None");
-
-        book1.setQuality(4);
-        book1.setIsPrivate(false);
-        //one book
-        testAccount.getInventory().addBook(book1);
-
-        Book book2 = new Book(testImage);
-        book2.setTitle("Tokyo Ghoul");
-        book2.setAuthor("Not sure");
-
-        try {
-            book2.setQuantity("1");
-        } catch (NegativeNumberException e) {
-            e.printStackTrace();
-        }
-
-        book2.setCategory(testCategory);
-
-            book2.setDescription("None");
-
-        book2.setQuality(4);
-        book2.setIsPrivate(false);
-
-        //add second book
-        testAccount.getInventory().addBook(book2);
-
-        saveload.saveInFile(HomeScreen.this,testAccount); //delete this once server is working
-
-        //------------------------------------------------------------------------
-*/
-
         //inventory = account.getInventory().getInventory();
         adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory()); //second parameter used to be inventory
         inventoryList.setAdapter(adapter);

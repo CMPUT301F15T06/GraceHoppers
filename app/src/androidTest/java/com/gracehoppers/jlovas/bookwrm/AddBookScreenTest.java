@@ -73,7 +73,8 @@ public class AddBookScreenTest extends ActivityInstrumentationTestCase2 {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                stars.performHapticFeedback(5);
+                //stars.performHapticFeedback(5);
+                stars.setRating(5);
             }
         });
         getInstrumentation().waitForIdleSync();

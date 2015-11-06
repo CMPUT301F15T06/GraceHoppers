@@ -65,5 +65,6 @@ public class CounterTradeScreenTest extends ActivityInstrumentationTestCase2{
         getInstrumentation().removeMonitor(receiverActivityMonitor);
         receiverActivity.finish();
     }
+    //Button for Submit and Cancel haven't completely finish
 
 }

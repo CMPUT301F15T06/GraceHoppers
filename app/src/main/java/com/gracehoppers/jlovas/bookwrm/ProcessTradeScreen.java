@@ -64,7 +64,7 @@ public class ProcessTradeScreen extends ActionBarActivity {
                 trade.setAccepted(Boolean.TRUE);
 
                 //pop a dialog to promote owner to continue trade by sending email
-                /*
+
                 dialog = new AlertDialog.Builder(ProcessTradeScreen.this);
 
                 dialog.setMessage("Continue the trade by sending email to borrower?");
@@ -81,7 +81,7 @@ public class ProcessTradeScreen extends ActionBarActivity {
 
                 dialog.create();
                 dialog.show();
-                */
+
             }
         });
 
@@ -89,7 +89,8 @@ public class ProcessTradeScreen extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 trade.setDeclined(Boolean.TRUE);
-
+                Toast toast = Toast.makeText(ProcessTradeScreen.this, "Create a counter trade", Toast.LENGTH_LONG);
+                toast.show();
                 /*
                 //pop a dialog to promote owner to continue trade by sending email
                 dialog1 = new AlertDialog.Builder(ProcessTradeScreen.this);
@@ -108,9 +109,12 @@ public class ProcessTradeScreen extends ActionBarActivity {
 
                 dialog1.create();
                 dialog1.show();
-                */
+                  */
                 Intent turnCounter = new Intent(ProcessTradeScreen.this, CounterTradeScreen.class);
                 startActivity(turnCounter);
+                finish();
+
+
             }
         });
     }

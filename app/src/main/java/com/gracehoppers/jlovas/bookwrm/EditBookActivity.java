@@ -54,8 +54,10 @@ public class EditBookActivity extends ActionBarActivity {
     public RatingBar getRatingBar(){return bookRating;}
     public Spinner getSpinner(){return bookCategory;}
     public CheckBox getCheckBox(){return privateCheckBox;}
-
-
+    public TextView getComments(){return bookDescText;}
+    public Button getMinusButton(){return minusButton;}
+    public Button getPlusButton(){return plusButton;}
+    public Button getOkButton(){return okButton;}
 
    //------------------------------------------------------------
 
