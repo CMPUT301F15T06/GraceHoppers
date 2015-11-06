@@ -11,7 +11,7 @@ import android.widget.Button;
 public class CreateTradeScreenTest extends ActivityInstrumentationTestCase2 {
 
     public CreateTradeScreenTest(){
-        super(ProcessTradeScreen.class);
+        super(CreateTradeScreen.class);
     }
 
     public void testStart() throws Exception {

@@ -122,19 +122,6 @@ public class CreateTradeScreen extends Activity {
                 AlertDialog alertDialog = new AlertDialog.Builder(CreateTradeScreen.this).create();
                 alertDialog.setMessage("");
                 alertDialog.setCanceledOnTouchOutside(false);
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Add",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Replace",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
 
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancel",
                         new DialogInterface.OnClickListener() {
