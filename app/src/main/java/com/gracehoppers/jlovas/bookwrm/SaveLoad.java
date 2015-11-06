@@ -19,12 +19,12 @@ import java.lang.reflect.Type;
  * Created by nlovas on 10/16/15.
  */
 public class SaveLoad {
-    /*
-    Saves and loads to the SD card using gson
-    Code from the CMPUT 301 labs. University of Alberta:
-     TA's Joshua Campbell, Shida He, Stephen Romansky, and Ian Watts, 2015-16-10
-     */
 
+    /**
+     * Class that saves and loads from/to the SD card of the device using Gson
+     * Code from the CMPUT 301 labs. University of Alberta:
+     * TA's Joshua Campbell, Shida He, Stephen Romansky, and Ian Watts, 2015-16-10
+     */
 
         protected static final String FILENAME = "file.sav";
 

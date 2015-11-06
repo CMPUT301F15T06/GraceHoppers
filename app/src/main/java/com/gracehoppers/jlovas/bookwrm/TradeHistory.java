@@ -1,10 +1,14 @@
 package com.gracehoppers.jlovas.bookwrm;
-
+/**
+ * Created by chen1 on 10/19/15.
+ */
 import java.util.ArrayList;
 
 /**
  * Holds all the trades ever because a history of trades is everything
  * Current and past trades, as specified in OS 20.
+ * Contains methods addTrade and get TradebyIndex
+ * @see Trade
  */
 public class TradeHistory {
     ArrayList<Trade> tradeHistory;
