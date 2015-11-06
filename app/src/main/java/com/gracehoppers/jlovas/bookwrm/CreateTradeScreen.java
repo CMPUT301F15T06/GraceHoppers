@@ -172,11 +172,10 @@ public class CreateTradeScreen extends Activity {
         submitTrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                me.getTradeHistory().addTrade(newTrade);
-                sendEmail(view);
+                //me.getTradeHistory().addTrade(newTrade);
+                sendEmail();
                 newTrade = new Trade();
                 //add this Trade into Trade History and empty newTrade
-                finish();
             }
         });
 
@@ -214,14 +213,14 @@ public class CreateTradeScreen extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void sendEmail(View view){
+    public void sendEmail(){
         String[] TO = {""};
         String[] CC = {""};
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.setData(Uri.parse("mailto:"));
         emailIntent.setType("text/plain");
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Borrower: " + newTrade.getBorrower().getUsername() + "Owner: " + newTrade.getOwner().getUsername());
+        //emailIntent.putExtra(Intent.EXTRA_TEXT, "Borrower: " + newTrade.getBorrower().getUsername() + "Owner: " + newTrade.getOwner().getUsername());
         try {
             startActivity(Intent.createChooser(emailIntent, "Send mail..."));
             finish();

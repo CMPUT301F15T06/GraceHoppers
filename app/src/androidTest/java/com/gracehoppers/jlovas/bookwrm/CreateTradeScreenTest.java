@@ -45,7 +45,7 @@ public class CreateTradeScreenTest extends ActivityInstrumentationTestCase2 {
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, receiverActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                ProfileScreen.class, receiverActivity.getClass());
+                SelectFromBorrowerInventoryActivity.class, receiverActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);
@@ -79,7 +79,7 @@ public class CreateTradeScreenTest extends ActivityInstrumentationTestCase2 {
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, receiverActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                ProfileScreen.class, receiverActivity.getClass());
+                SelectFromOwnerInventoryActivity.class, receiverActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);
