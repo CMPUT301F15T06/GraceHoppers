@@ -93,8 +93,8 @@ public class CounterTradeScreen extends ActionBarActivity {
                 //Intent cancelAll = new Intent(CounterTradeScreen.this, ProcessTradeScreen.class);
                 //startActivity(cancelAll);
                 if(text.getText().toString()==""){
-                    Toast toast = Toast.makeText(CounterTradeScreen.this, "Borrower BookList already empty", Toast.LENGTH_SHORT);
-                    toast.show();
+                    //Toast toast = Toast.makeText(CounterTradeScreen.this, "Borrower BookList already empty", Toast.LENGTH_SHORT);
+                    //toast.show();
                 }
                 text.setText("");
 
