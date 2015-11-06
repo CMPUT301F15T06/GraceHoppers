@@ -5,33 +5,22 @@ import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 
 /**
- * Created by jlovas on 10/17/15.
- * Hello I am a book!
- * I contain:
- *  -the name of the book
- *  -author
- *  -quantity
- *  -quality
- *  -category (easier as an enum I would think)
- *  -private/public view ability
- *  -comments/description
- *  -photo (will figure this out in time)
+ * The Book class creates instances of a book which contain the various information
+ * about the book the user would like to trade.
+ * <p>
+ * The user sets the title, author, quantity, quality, category, privacy, photo, and description.
+ * </p>
  *
- *  -setters and getters for each
+ * @author Jillian Lovas
+ *
+ * @see AddBookScreen, ViewBookActivity.
  */
 public class Book {
 
     public Book() {
 
     }
-/* will be removing if not needed, I put it into its own file
 
-    private enum Category{
-            //Enum will give each a number by default. NONE=0, HARDBACK=1, etc
-        NONE, HARDBACK, PAPERBACK, AUDIOBOOK, COMIC, TEXTBOOK, PICTURE, BRAILLE, REFERENCE, RECIPE, DIY;
-
-    }
-*/
     private String title;
     private String author;
     private int quantity;
@@ -41,7 +30,12 @@ public class Book {
     private double quality;
     Bitmap photo; //will figure out if they change the image stuff later
 
-
+    /**
+     * Constructor or the book creates a book with default values (to be overwritten when user provides information.
+     *
+     *
+     * @param photo or adding the chosen or default image (may change).
+     */
     public Book(Bitmap photo) {
         //no args? just creates a book
         //default values here - may remove these and put into setters
@@ -86,9 +80,12 @@ public class Book {
         return quantity;
     }
 
-    //getCategory is a String because it is easier for it to be displayed
-    //it will display the category like a normal person would want it
-    //example: NONE = None, PAPERBACK = paperback, etc
+    /**
+     * This method returns a string because it is easier to work with a String to display than
+     * a number.
+     *
+     * @return a string of the category type.
+     */
     public String getCategory() {
 
         switch (this.category) {

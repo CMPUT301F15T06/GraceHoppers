@@ -1,7 +1,12 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 /**
- * Created by jlovas on 10/21/15.
+ * This class is an enum for the categories of books. Each number corresponds to a
+ * type of book.
+ *
+ * @Author Jillian Lovas
+ *
+ * @see Book, AddBookScreen
  */
 public enum Category {
 
