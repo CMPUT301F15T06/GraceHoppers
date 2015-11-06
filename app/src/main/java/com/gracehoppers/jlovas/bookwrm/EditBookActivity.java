@@ -47,6 +47,18 @@ public class EditBookActivity extends ActionBarActivity {
     Account tempAccount;
     int pos;
 
+    // for UI testing-------------------------------------------
+    public EditText getBookTitle(){return bookTitle;}
+    public EditText getBookAuthor(){return bookAuthor;}
+    public EditText getBookQuantity(){return bookQuantity;}
+    public RatingBar getRatingBar(){return bookRating;}
+    public Spinner getSpinner(){return bookCategory;}
+    public CheckBox getCheckBox(){return privateCheckBox;}
+
+
+
+   //------------------------------------------------------------
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
