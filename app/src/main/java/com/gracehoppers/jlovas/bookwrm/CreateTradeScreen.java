@@ -21,6 +21,16 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+/**
+ * This activity begins a trade with the friend whose page you are currently on.
+ * It allows for the user to pick many of their own items and choose one of the
+ * friend's items to trade with.
+ *
+ * @author Hong Chen, Hong Wang
+ *
+ * @see Trade, TradeHistory
+ */
+
 public class CreateTradeScreen extends Activity {
 
     private ListView borrowerInventoryListView;
@@ -200,6 +210,11 @@ public class CreateTradeScreen extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * This method will call the activity to send the email to notify the other user of the trade request.
+     *
+     * @throws android.content.ActivityNotFoundException
+     */
     public void sendEmail(){
         String[] TO = {""};
         String[] CC = {""};

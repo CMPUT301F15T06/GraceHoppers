@@ -9,6 +9,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+/**
+ * PhotoActivity allows the user to look at the image listed for their book.
+ * <p>
+ *     They can choose to accept the image, take one with their camera, or choose from their phone's
+ *     photo gallery. The image is displayed large on this screen for the user to see clearly.
+ *     There is not a lot of functionality on this page because adding an image has not yet
+ *     been implemented.
+ * </p>
+ *
+ * @author Jillian Lovas
+ *
+ * @see AddBookScreen, EditBookActivity, Book
+ *
+ */
 public class PhotoActivity extends ActionBarActivity {
     Button okButton;
     Button takePhotoButton;

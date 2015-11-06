@@ -11,6 +11,17 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+/**
+ * The HistoryOfTrades Screen displays the current trades the user has with other users,
+ * as well as the past trades and their results. Currently this page is not displaying the information
+ * because the trade functionality is not fully implemented, but will be in time.
+ *
+ * @author Hong Chen, Hong Wang
+ *
+ * @see Trade, TradeHistory
+ *
+ */
+
 public class HistoryOfTradesScreen extends ActionBarActivity {
 
     //No buttons on this screen; only the ListView

@@ -16,6 +16,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * EditBookActivity allows for the user to modify the information in one of their own books they
+ * had made.
+ *
+ * @Author Nicole Lovas
+ *
+ * @See AddBookScreen, Book, ViewBookActivity
+ */
 public class EditBookActivity extends ActionBarActivity {
 
     /*
@@ -296,6 +304,14 @@ public class EditBookActivity extends ActionBarActivity {
 
     }
 
+    /**
+     * This method will run when a user has clicked to edit comments (see method above) and returns
+     * the results to the parent function on result.
+     *
+     * @param requestCode the code to tell which is returning
+     * @param resultCode checks that the result is ok
+     * @param data the data returning from the child activity
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         //grabs the information on the description if the user edits the description
         super.onActivityResult(requestCode, resultCode, data);

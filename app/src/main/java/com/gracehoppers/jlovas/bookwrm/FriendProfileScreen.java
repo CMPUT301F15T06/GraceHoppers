@@ -17,6 +17,13 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/**
+ * This activity is to display the chosen friend from the list of friends that your account has made.
+ *
+ * @author Patricia Reyes, Jillian Lovas
+ *
+ * @see Friends, FriendsScreen, Account
+ */
 public class FriendProfileScreen extends ActionBarActivity {
 
     private Activity profileActivity = this;

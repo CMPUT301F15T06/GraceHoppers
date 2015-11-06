@@ -15,6 +15,15 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/**
+ * This activity creates the countertrade screen where the user can create a counter trade against
+ * the friend. At this moment, trades are not fully implemented so this activity is not fully ready
+ * to function but all UI functionality is possible.
+ *
+ * @author Hong Wang
+ *
+ * @see Trade, TradeHistory
+ */
 public class CounterTradeScreen extends ActionBarActivity {
 
     Trade oldTrade = new Trade();
@@ -98,7 +107,7 @@ public class CounterTradeScreen extends ActionBarActivity {
         text.setText(bookTitle);
 
     }
-
+    //temporary function until fully functioning
     public void setUp(){
         try{
             account1.setCity("Lulala");

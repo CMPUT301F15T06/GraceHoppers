@@ -18,6 +18,17 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/**
+ * This activity allows or searching the server for other registered users which can be added
+ * as friends to trade with. Currently the search for users is artificial and does not actually
+ * search the server (functionality coming soon). A user can then click on the added friend
+ * to explore their profile and items.
+ *
+ * @see Friends, FriendsListAdapter, Account, FriendProfileScreen
+ *
+ * @author Hong Wang, Jillian Lovas, Patricia Reyes
+ */
+
 public class FriendsScreen extends ActionBarActivity {
     private Activity activity = this;
     SaveLoad saveLoad;

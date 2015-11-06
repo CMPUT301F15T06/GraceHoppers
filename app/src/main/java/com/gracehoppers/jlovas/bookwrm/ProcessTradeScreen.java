@@ -15,6 +15,13 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/**
+ * ProcessTradeScreen displays the information about a trade the user is having with a friend.
+ * Accept and decline are offered to a user on a current trade, while the history displays
+ * as a reciept of the past trade.
+ *
+ * @author Hong Wang
+ */
 public class ProcessTradeScreen extends ActionBarActivity {
 
 
