@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -171,6 +173,7 @@ public class CreateTradeScreen extends Activity {
             @Override
             public void onClick(View view) {
                 me.getTradeHistory().addTrade(newTrade);
+                sendEmail(view);
                 newTrade = new Trade();
                 //add this Trade into Trade History and empty newTrade
                 finish();
@@ -185,8 +188,6 @@ public class CreateTradeScreen extends Activity {
                 finish();
             }
         });
-
-
 
     }
 
@@ -213,6 +214,21 @@ public class CreateTradeScreen extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void sendEmail(View view){
+        String[] TO = {""};
+        String[] CC = {""};
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.setData(Uri.parse("mailto:"));
+        emailIntent.setType("text/plain");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Borrower: " + newTrade.getBorrower().getUsername() + "Owner: " + newTrade.getOwner().getUsername());
+        try {
+            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+            finish();
+        }catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(CreateTradeScreen.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
 

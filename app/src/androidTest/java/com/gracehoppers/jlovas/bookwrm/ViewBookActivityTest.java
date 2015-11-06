@@ -38,6 +38,13 @@ public class ViewBookActivityTest extends ActivityInstrumentationTestCase2 {
 
         //first start out in homescreen and set up a book to view
         //HomeScreen activity1 = (HomeScreen)getActivity();
+
+        Intent intent = new Intent(this.getInstrumentation().getTargetContext().getApplicationContext(), ViewBookActivity.class);
+        intent.putExtra("flag", "Homescreen");
+        intent.putExtra("listPosition",0);
+        setActivityIntent(intent);
+        ViewBookActivity activity = (ViewBookActivity)getActivity();
+
         Account account = new Account();
         Book book = new Book();
         book.setTitle("Harry Potter");
@@ -55,15 +62,11 @@ public class ViewBookActivityTest extends ActivityInstrumentationTestCase2 {
         assertFalse(account.getInventory().hasBook(book));
 
         account.getInventory().addBook(book);
-        assertTrue(account.getInventory().getSize()==1);
+        assertTrue(account.getInventory().getSize() == 1);
         //book has been created and added to inventory
-        saveload.saveInFile(this.getInstrumentation().getTargetContext().getApplicationContext(),account);
+        saveload.saveInFile(this.getInstrumentation().getTargetContext().getApplicationContext(), account);
 
-        Intent intent = new Intent(this.getInstrumentation().getTargetContext().getApplicationContext(), ViewBookActivity.class);
-        intent.putExtra("flag", "Homescreen");
-        intent.putExtra("listPosition",0);
-        setActivityIntent(intent);
-        ViewBookActivity activity = (ViewBookActivity)getActivity();
+
 
         deleteButton = activity.getDeleteButton();
 

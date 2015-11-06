@@ -23,16 +23,21 @@ public class HomeScreen extends Activity {
     private ListView inventoryList;
     private ArrayAdapter<Book> adapter;
     private Inventory userInventory = new Inventory();
-    private ArrayList<Book> inventory;
+    //private ArrayList<Book> inventory;
     Account account;
     private SaveLoad saveload= new SaveLoad();
     String username;
+    Button profile;
+    Button friend;
 
 
     //For UI testing -----------------------------------------
-    //private ArrayList<Book> inventory = new ArrayList<Book>();
-    public ArrayList<Book> getInventory(){return inventory;}
+    public SaveLoad getSaveload(){return saveload;}
+    //public ArrayList<Book> getInventory(){return inventory;}
     public ListView getInventoryList() {return inventoryList;}
+    public Button getAddBookButton(){return addBookButton;}
+    public Button getProfileButton(){return profile;}
+    public Button getFriendButton(){return friend;}
     //-------------------------------------------------------
 
 
@@ -53,11 +58,11 @@ public class HomeScreen extends Activity {
 
 
 
-        inventory = account.getInventory().getInventory();
+        //inventory = account.getInventory().getInventory();
         inventoryList = (ListView)findViewById(R.id.inventory1);
 
         //----for UI--------------------------------
-        adapter = new BookListAdapter(this,R.layout.book_inventory_list, inventory);
+        adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory()); //second parameter used to be inventory
         inventoryList.setAdapter(adapter);
         //------------------------------------------
 
@@ -73,7 +78,7 @@ public class HomeScreen extends Activity {
 
         inventoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                /*
                 try {
                     Book book = account.getInventory().getBookByIndex(position);
                     //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
@@ -84,7 +89,7 @@ public class HomeScreen extends Activity {
                     //these will only trip if its a bug on our end, not user's fault
                     Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
                 }
-
+                */
                 Intent intent = new Intent(HomeScreen.this, ViewBookActivity.class);
                 intent.putExtra("listPosition", position);
                 intent.putExtra("flag", "Homescreen");
@@ -92,7 +97,7 @@ public class HomeScreen extends Activity {
             }
         });
 
-        Button profile = (Button)findViewById(R.id.profileButton);
+        profile = (Button)findViewById(R.id.profileButton);
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +108,7 @@ public class HomeScreen extends Activity {
             }
         });
 
-        Button friend = (Button) findViewById(R.id.friendsButton);
+        friend = (Button) findViewById(R.id.friendsButton);
         friend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -207,7 +212,7 @@ public class HomeScreen extends Activity {
 */
 
         //inventory = account.getInventory().getInventory();
-        adapter = new BookListAdapter(this,R.layout.book_inventory_list, inventory);
+        adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory()); //second parameter used to be inventory
         inventoryList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -217,8 +222,8 @@ public class HomeScreen extends Activity {
     protected void onResume(){
         super.onResume();
         account = saveload.loadFromFile(getApplicationContext());
-        inventory = account.getInventory().getInventory();
-        adapter = new BookListAdapter(this,R.layout.book_inventory_list, inventory);
+        //inventory = account.getInventory().getInventory();
+        adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory()); //second parameeter used to be inventory
         inventoryList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
