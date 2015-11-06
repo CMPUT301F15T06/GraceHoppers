@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Current and past trades, as specified in OS 20.
  */
 public class TradeHistory {
-    ArrayList<Trade> tradeHistory;
+    ArrayList<Trade> tradeHistory = new ArrayList<Trade>();
 
     public TradeHistory(){
         tradeHistory = new ArrayList<Trade>();
@@ -20,6 +20,10 @@ public class TradeHistory {
 
     public Trade getTradeByIndex(int i){
         return tradeHistory.get(i);
+    }
+
+    public ArrayList<Trade> getTradeHistory(){
+        return tradeHistory;
     }
 
     /* Not sure yet until trade is written more, how will we call up a trade?

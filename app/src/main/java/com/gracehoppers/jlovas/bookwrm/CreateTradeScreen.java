@@ -161,7 +161,7 @@ public class CreateTradeScreen extends Activity {
         submitTrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //me.getTradeHistory().addTrade(newTrade);
+                //TradeHistory tradeHistory =  me.getTradeHistory();
                 sendEmail();
                 newTrade = new Trade();
                 //add this Trade into Trade History and empty newTrade
