@@ -25,6 +25,7 @@ public class ProfileScreenTest extends ActivityInstrumentationTestCase2 {
     Button confirm;
     ProfileScreen activity;
 
+
     public ProfileScreenTest(){
         super(ProfileScreen.class);
     }
@@ -34,7 +35,7 @@ public class ProfileScreenTest extends ActivityInstrumentationTestCase2 {
         Activity activity = getActivity();
     }
 
-
+    /*
     public void testSetVisible(){
         activity = (ProfileScreen)getActivity();
         final ArrayList<View> visibles = new ArrayList<View>();
@@ -99,8 +100,7 @@ public class ProfileScreenTest extends ActivityInstrumentationTestCase2 {
         name=activity.name;
         email=activity.email;
         city=activity.city;
-        editcity=activity.editcity;
-        editemail=activity.editemail;
+
 
         //Set up ActivityMonitor
         Instrumentation.ActivityMonitor receiverActivityMonitor = getInstrumentation().addMonitor(ProfileScreen.class.getName(), null, false);
@@ -135,6 +135,37 @@ public class ProfileScreenTest extends ActivityInstrumentationTestCase2 {
 
         getInstrumentation().removeMonitor(receiverActivityMonitor);
 
+    }*/
+
+    public void testEdit(){
+        activity = (ProfileScreen)getActivity();
+
+        //Set up ActivityMonitor
+        Instrumentation.ActivityMonitor receiverActivityMonitor = getInstrumentation().addMonitor(ProfileScreen.class.getName(), null, false);
+
+        editcity=activity.editcity;
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                editcity.setText("Edmonton");
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        editemail=activity.editemail;
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                editemail.setText("well@well.com");
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        ProfileScreen receiverActivity = (ProfileScreen) receiverActivityMonitor.waitForActivityWithTimeout(1000);
+        assertEquals("Edmonton", receiverActivity.account.getCity());
+        assertEquals("well@well.com", receiverActivity.account.getEmail());
+
+        getInstrumentation().removeMonitor(receiverActivityMonitor);
     }
 
 }
