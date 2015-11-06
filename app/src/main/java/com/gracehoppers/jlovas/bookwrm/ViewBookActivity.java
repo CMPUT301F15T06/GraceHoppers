@@ -49,6 +49,7 @@ public class ViewBookActivity extends ActionBarActivity {
 
     // for UI testing --------------------------------------------------
     public Button getDeleteButton(){return deleteButton;}
+    public Button getEditButton(){return editButton;}
     AlertDialog SingleInfo;
     public AlertDialog getAlertDialog(){return SingleInfo;}
     Button okButton;
@@ -90,6 +91,7 @@ public class ViewBookActivity extends ActionBarActivity {
     @Override
     public void onResume() {
         super.onResume();
+        Log.e("intent", "intent extra is: " + getIntent().getStringExtra("flag"));
         if (getIntent().getStringExtra("flag").equals("Homescreen")) {
             pos = getIntent().getIntExtra("listPosition", 0);
 
@@ -270,8 +272,9 @@ public class ViewBookActivity extends ActionBarActivity {
 //deletes the book and saves the change with gson
        // Log.e("Got to method", "Made it to deleteBook");
         account.getInventory().deleteBook(tempBook);
+       // account.getInventory().deleteBookByIndex(pos);
         assertFalse(account.getInventory().hasBook(tempBook));
-        Log.e("Got to method", "assertion succeeded");
+        Log.e("size", "size of inv is: "+ account.getInventory().getSize());
         saveload.saveInFile(getApplicationContext(), account);
 
         Toast.makeText(getApplicationContext(),"Book deleted",Toast.LENGTH_SHORT).show();

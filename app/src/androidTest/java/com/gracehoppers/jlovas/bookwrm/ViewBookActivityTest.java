@@ -2,8 +2,11 @@ package com.gracehoppers.jlovas.bookwrm;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Instrumentation;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.ViewAsserts;
+import android.view.View;
 import android.widget.Button;
 
 import org.apache.http.impl.conn.SingleClientConnManager;
@@ -30,20 +33,54 @@ public class ViewBookActivityTest extends ActivityInstrumentationTestCase2 {
 
     public void testStart() throws Exception {
         Activity activity = getActivity();
+        }
+    //First: Testing for viewing your OWN book!-----------------------------------------------------------
+    public void testViewOwnBook(){
+//test that you can view the correct buttons when viewing your own book
+        Account account = new Account();
+        Book book = new Book();
+        book.setTitle("Harry Potter");
+        book.setAuthor("J.K. Rowling");
+        book.setIsPrivate(false);
+        book.setDescription("Harry Potter was a lizard");
+        book.setCategory(3);
+        book.setQuality(5);
+        try {
+            book.setQuantity("3");
+        }catch (NegativeNumberException e){
+            assertTrue(book.getQuantity()>0);
+        }
+
+        assertFalse(account.getInventory().hasBook(book));
+
+        Intent intenty = new Intent(this.getInstrumentation().getTargetContext().getApplicationContext(), ViewBookActivity.class);
+        intenty.putExtra("flag", "Homescreen");
+        intenty.putExtra("listPosition", 0);
+        setActivityIntent(intenty);
+        ViewBookActivity activity = (ViewBookActivity)getActivity();
+
+
+        account.getInventory().addBook(book);
+        assertTrue(account.getInventory().getSize() == 1);
+        //book has been created and added to inventory
+        saveload.saveInFile(this.getInstrumentation().getTargetContext().getApplicationContext(), account);
+
+
+        editButton = activity.getEditButton();
+        deleteButton = activity.getDeleteButton();
+        boolean ed = editButton.isShown();
+        boolean del = deleteButton.isShown();
+        assertTrue(ed&&del); //both buttons are shown
+
+
     }
 
-    //First: Testing for viewing your OWN book!
+
     public void testDeleteBook(){
 //test to see if delete button process works as expected.
 
         //first start out in homescreen and set up a book to view
-        //HomeScreen activity1 = (HomeScreen)getActivity();
 
-        Intent intent = new Intent(this.getInstrumentation().getTargetContext().getApplicationContext(), ViewBookActivity.class);
-        intent.putExtra("flag", "Homescreen");
-        intent.putExtra("listPosition",0);
-        setActivityIntent(intent);
-        ViewBookActivity activity = (ViewBookActivity)getActivity();
 
         Account account = new Account();
         Book book = new Book();
@@ -60,6 +97,15 @@ public class ViewBookActivityTest extends ActivityInstrumentationTestCase2 {
         }
 
         assertFalse(account.getInventory().hasBook(book));
+
+        Intent intenty = new Intent(this.getInstrumentation().getTargetContext().getApplicationContext(), ViewBookActivity.class);
+        intenty.putExtra("flag", "Homescreen");
+        intenty.putExtra("listPosition", 0);
+        setActivityIntent(intenty);
+        ViewBookActivity activity = (ViewBookActivity)getActivity();
+
+
+
 
         account.getInventory().addBook(book);
         assertTrue(account.getInventory().getSize() == 1);
@@ -126,10 +172,133 @@ public class ViewBookActivityTest extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        assertTrue(account.getInventory().getSize()==0);
+        assertTrue(account.getInventory().getSize()==0); //fails :(
         assertFalse(account.getInventory().hasBook(book)); //assert that the book has been deleted
 
+    }
+
+    public void testEditBookButton(){
+//test to see if it makes it to the correct activity after clicking the edit book button
+
+        Account account = new Account();
+        Book book = new Book();
+        book.setTitle("Harry Potter");
+        book.setAuthor("J.K. Rowling");
+        book.setIsPrivate(false);
+        book.setDescription("Harry Potter was a lizard");
+        book.setCategory(3);
+        book.setQuality(5);
+        try {
+            book.setQuantity("3");
+        }catch (NegativeNumberException e){
+            assertTrue(book.getQuantity()>0);
+        }
+
+        assertFalse(account.getInventory().hasBook(book));
+
+        Intent intenty = new Intent(this.getInstrumentation().getTargetContext().getApplicationContext(), ViewBookActivity.class);
+        intenty.putExtra("flag", "Homescreen");
+        intenty.putExtra("listPosition", 0);
+        setActivityIntent(intenty);
+        ViewBookActivity activity = (ViewBookActivity)getActivity();
+
+        account.getInventory().addBook(book);
+        assertTrue(account.getInventory().getSize() == 1);
+        //book has been created and added to inventory
+        saveload.saveInFile(this.getInstrumentation().getTargetContext().getApplicationContext(), account);
+
+
+        editButton = activity.getEditButton();
+
+
+
+
+        //following from https://developer.android.com/training/activity-testing/activity-functional-testing.html ,2015-5-11
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor receiverActivityMonitor =
+                getInstrumentation().addMonitor(EditBookActivity.class.getName(),
+                        null, false);
+
+
+        //code where they clicked was here
+        //click on the tweet to edit
+        activity.runOnUiThread(new Runnable() {
+
+            public void run() {
+                editButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        EditBookActivity receiverActivity = (EditBookActivity)
+                receiverActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", receiverActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, receiverActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                EditBookActivity.class, receiverActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(receiverActivityMonitor);
 
 
     }
+
+    //next: viewing another person's book------------------------------------------------------------
+
+    public void testViewFriendBook(){
+//test to see if the edit and delete buttons are hidden
+        Account account = new Account();
+        Account friendAccount = new Account();
+
+        Book book = new Book();
+        book.setTitle("Harry Potter");
+        book.setAuthor("J.K. Rowling");
+        book.setIsPrivate(false);
+        book.setDescription("Harry Potter was a lizard");
+        book.setCategory(3);
+        book.setQuality(5);
+        try {
+            friendAccount.setUsername("testyy");
+            book.setQuantity("3");
+        }catch (NegativeNumberException e){
+            assertTrue(book.getQuantity()>0);
+        }catch(NoSpacesException e){
+            assertTrue(friendAccount.getUsername().equals("testyy"));
+        } catch(TooLongException e){
+            assertTrue(friendAccount.getUsername().length()<20);
+        }
+
+        assertFalse(friendAccount.getInventory().hasBook(book));
+
+        try { //add the pseudofriend as a friend
+            account.getFriends().addFriend(friendAccount);
+        } catch(AlreadyAddedException e){
+            assertTrue(account.getFriends().hasFriend(friendAccount));
+        }
+        assertTrue(account.getFriends().hasFriend(friendAccount));
+
+        Intent intenty = new Intent(this.getInstrumentation().getTargetContext().getApplicationContext(), ViewBookActivity.class);
+        intenty.putExtra("flag", "viewfriend");
+        intenty.putExtra("listPosition", 0);
+        setActivityIntent(intenty);
+        ViewBookActivity activity = (ViewBookActivity)getActivity();
+
+        friendAccount.getInventory().addBook(book); //give the friend a book for us to look at
+        assertTrue(account.getFriends().getFriend(friendAccount.getUsername()).getInventory().getSize() == 1);
+        //book has been created and added to friend's inventory
+        saveload.saveInFile(this.getInstrumentation().getTargetContext().getApplicationContext(), account);
+
+        editButton = activity.getEditButton();
+        deleteButton = activity.getDeleteButton();
+        boolean ed = editButton.isShown();
+        boolean del = deleteButton.isShown();
+        assertTrue(!ed&&!del); //both buttons are hidden. fails :(
+
+
+    }
+
+
+
 }

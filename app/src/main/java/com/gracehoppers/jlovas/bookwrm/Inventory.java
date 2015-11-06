@@ -21,7 +21,7 @@ public class Inventory {
         inventory.remove(book);
     }
 
-    // IMPORTANT: to edit an item book, delete the book from the inventory first and then add the modified one after editing
+       // IMPORTANT: to edit an item book, delete the book from the inventory first and then add the modified one after editing
 
     public boolean hasBook(Book book) {
         return inventory.contains(book);
