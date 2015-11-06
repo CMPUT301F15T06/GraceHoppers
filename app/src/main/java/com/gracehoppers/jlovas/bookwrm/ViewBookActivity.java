@@ -185,10 +185,16 @@ public class ViewBookActivity extends ActionBarActivity {
             } else privacy.setText("Public Book");
             //put photo stuff here
 
+
+
             //remove the delete button, edit button changes to trade button
             ViewGroup parentView = (ViewGroup) deleteButton.getParent();
             parentView.removeView(deleteButton);
 
+            ViewGroup parentView2 = (ViewGroup) editButton.getParent();
+            parentView.removeView(editButton);
+
+            /*
             Button tradeButton = editButton;
 
             tradeButton.setText("Trade");
@@ -209,11 +215,12 @@ public class ViewBookActivity extends ActionBarActivity {
                     intent.putExtra("bookDesc", tempBook.getDescription());
                     intent.putExtra("bookPosition", pos);
                     //put photo stuff here...if it cant be passed by intent, pass the inventory index position and use gson instead of using the above!
-                    */
+
                     startActivity(intent);
 
                 }
             });
+    */
         }
     }
 
