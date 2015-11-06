@@ -135,4 +135,6 @@ public class ProcessTradeScreenTest extends ActivityInstrumentationTestCase2 {
         getInstrumentation().removeMonitor(receiverActivityMonitor);
         receiverActivity.finish();
     }
+
+    //email function can't implement before loading account information
 }
