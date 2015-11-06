@@ -17,12 +17,11 @@ import java.util.ArrayList;
 
 public class ProcessTradeScreen extends ActionBarActivity {
 
-    private Account owner;
+
+    private Account owner ;
     private Account borrower;
-    private Book ownerBook;  //can be 1
-    private ArrayList<Book> borrowerBook; //can be 0 or more
     public Trade trade;
-    public TradeHistory tradeHistory;
+    public TradeHistory tradeHistory = new TradeHistory();
 
     Button accept;
     Button decline;
@@ -40,12 +39,26 @@ public class ProcessTradeScreen extends ActionBarActivity {
         accept =(Button)findViewById(R.id.accept);
         decline = (Button)findViewById(R.id.decline);
 
-        //if owner chooses to accept email
+        setUp();
+        tradeHistory= owner.getTradeHistory();
+        trade= tradeHistory.getTradeByIndex(0);
+        borrower =trade.getBorrower();
+
+        bName.setText("Borrower Name:\n"+ borrower.getUsername());
+        oBook.setText("Owner Book:\n"+trade.getOwnerBook().getTitle());
+
+        String bookTitles ="";
+
+        for(Book b: trade.getBorrowerBook()){
+            bookTitles= bookTitles + b.getTitle() +"\n";
+        }
+        bBook.setText("Borrower Books:\n" + bookTitles );
+
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //set status of trade to accepted
-                trade.setAccepted(Boolean.TRUE);
+                //trade.setAccepted(Boolean.TRUE);
 
                 //pop a dialog to promote owner to continue trade by sending email
 
@@ -71,12 +84,13 @@ public class ProcessTradeScreen extends ActionBarActivity {
         decline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                trade.setDeclined(Boolean.TRUE);
+                //trade.setDeclined(Boolean.TRUE);
+
                 //pop a dialog to promote owner to continue trade by sending email
                 dialog1 = new AlertDialog.Builder(ProcessTradeScreen.this);
                 dialog1.setMessage("Create a counter trade?");
 
-                //continue to send email
+                //continue to counterTrade
                 dialog1.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -91,24 +105,57 @@ public class ProcessTradeScreen extends ActionBarActivity {
                 dialog1.show();
             }
         });
+    }
+
+    public void setUp(){
+        owner = new Account();
+        borrower = new Account();
+        try{
+            owner.setUsername("Why");
+            borrower.setUsername("GOGO");
+        }catch(TooLongException te){
+        }catch (NoSpacesException ne){
+        }
+
+        Book aBook = new Book();
+        aBook.setTitle("goodBook");
+
+        Book book1 = new Book();
+        book1.setTitle("book1");
+        Book book2 = new Book();
+        book2.setTitle("book2");
+        ArrayList<Book> bBooks = new ArrayList<Book>();
+        bBooks.add(book1);
+        bBooks.add(book2);
+
+
+        Trade newTrade = new Trade();
+        newTrade.setBorrower(borrower);
+        newTrade.setOwner(owner);
+        newTrade.setOwnerBook(aBook);
+        newTrade.setBorrowerBook(bBooks);
+
+        tradeHistory.addTrade(newTrade);
+        owner.setTradeHistory(tradeHistory);
+
 
     }
 
     public void send_email(){
         String email = trade.getBorrower().getEmail();
         String subject = "Trade accepted by owner!";
-        String content = "Trade information: \n Books provided by borrower :";
-        for (Book b: borrowerBook){
+        String content = "Trade information: \nBorrower Books :\n";
+        for (Book b: trade.getBorrowerBook()){
             content= content+ b.getTitle()+"\n";
         }
-        content= content+"Books requested \n"+ ownerBook.getTitle();
+        content= content+"Owner Book\n"+ trade.getOwnerBook().getTitle();
 
         Intent sendEmail= new Intent(Intent.ACTION_SEND, Uri.parse("mailTo"));
         sendEmail.setType("text/plain");
         //send recipent,content to email app
         sendEmail.putExtra(Intent.EXTRA_EMAIL, new String[] {email});
-        sendEmail.putExtra(Intent.EXTRA_SUBJECT,subject);
-        sendEmail.putExtra(Intent.EXTRA_TEXT,content);
+        sendEmail.putExtra(Intent.EXTRA_SUBJECT, subject);
+        sendEmail.putExtra(Intent.EXTRA_TEXT, content);
 
         try{
             startActivity(sendEmail);

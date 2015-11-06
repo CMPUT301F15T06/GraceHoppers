@@ -30,7 +30,6 @@
         android:id="@+id/bBook"
         android:layout_marginTop="20dp"/>
 
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,10 +56,11 @@
             android:id="@+id/decline"
             android:layout_toRightOf="@+id/accept"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="170dp"
+            android:layout_marginLeft="150dp"
             />
 
     </RelativeLayout>
+
 
 
 </LinearLayout>

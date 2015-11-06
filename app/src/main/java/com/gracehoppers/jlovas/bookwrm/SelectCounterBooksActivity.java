@@ -47,6 +47,7 @@ public class SelectCounterBooksActivity extends ActionBarActivity {
                 counterTrade.getBorrowerBook().add(aBook);
 
                 Intent intent = new Intent(SelectCounterBooksActivity.this, CounterTradeScreen.class);
+                intent.putExtra("BookName",aBook.getTitle());
                 startActivity(intent);
             }
         });
@@ -74,10 +75,14 @@ public class SelectCounterBooksActivity extends ActionBarActivity {
         counterTrade.setOwnerBook(ownerBook);
 
         Inventory inventory = new Inventory();
-        Book borrowerBook = new Book();
-        borrowerBook.setAuthor("aa");
-        borrowerBook.setTitle("workwork");
-        inventory.addBook(borrowerBook);
+        Book book1 = new Book();
+        book1.setTitle("book1");
+        book1.setAuthor("aa");
+        Book book2 = new Book();
+        book2.setTitle("book2");
+        book2.setAuthor("bb");
+        inventory.addBook(book1);
+        inventory.addBook(book2);
         account1.setInventory(inventory);
 
         TradeHistory tradeHistory = new TradeHistory();

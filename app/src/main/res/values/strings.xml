@@ -50,5 +50,6 @@
     <string name="title_activity_counter_trade_screen">CounterTradeScreen</string>
     <string name="title_activity_photo">PhotoActivity</string>
     <string name="title_activity_select_counter_books">SelectCounterBooksActivity</string>
+    <string name="title_activity_process_trade_screen">ProcessTradeScreen</string>
 
 </resources>

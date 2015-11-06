@@ -134,7 +134,7 @@ public class HomeScreen extends Activity {
         counter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent turnCounter = new Intent(HomeScreen.this, CounterTradeScreen.class);
+                Intent turnCounter = new Intent(HomeScreen.this, ProcessTradeScreen.class);
                 startActivity(turnCounter);
             }
         });
