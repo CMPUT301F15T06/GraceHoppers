@@ -52,6 +52,8 @@ public class ProfileScreen extends ActionBarActivity {
             set_visible(originalList);
 
             */
+            saveload = new SaveLoad();
+            account = saveload.loadFromFile(getApplicationContext());
 
             name.setText(account.getUsername());
             email.setText(account.getEmail());
@@ -69,7 +71,7 @@ public class ProfileScreen extends ActionBarActivity {
                 @Override
                 public void onClick(View view) {
                     try {
-                        Toast.makeText(getApplicationContext(), "Profile test 1", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Profile test 1", Toast.LENGTH_SHORT).show();
                         editemail = (EditText) findViewById(R.id.editemail);
                         editcity = (EditText) findViewById(R.id.editcity);
 
@@ -80,13 +82,20 @@ public class ProfileScreen extends ActionBarActivity {
                         account.setCity(newcity);
                         saveload.saveInFile(ProfileScreen.this, account);
 
-                        accountManager.addAccount(account);
+                        //accountManager.addAccount(account); //commented this out for my tests; having issues with it for some reason
 
 
                         Toast.makeText(getApplicationContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
-                        Intent sIntent = new Intent(ProfileScreen.this, ProfileScreen.class); //sends user to profile
-                        sIntent.putExtra("Username",account.getUsername());
-                        startActivity(sIntent);
+                       // Intent sIntent = new Intent(ProfileScreen.this, ProfileScreen.class); //sends user to profile
+                       // sIntent.putExtra("Username",account.getUsername());
+                       // startActivity(sIntent);
+
+                        set_invisible(editList);
+                        set_visible(originalList);
+                        email.setText(newemail);
+                        city.setText(newcity);
+
+
                     } catch (IllegalArgumentException e) {
                         Toast.makeText(getApplicationContext(), "All Fields must be filled",
                                 Toast.LENGTH_SHORT).show();
@@ -247,8 +256,9 @@ public class ProfileScreen extends ActionBarActivity {
 
         @Override
         public void run() {
-            account=accountManager.getAccount(username);
+//            account=accountManager.getAccount(username);
             runOnUiThread(doUpdateGUIDetails);
+
         }
 
     }

@@ -16,6 +16,12 @@ public class AddCommentsScreen extends ActionBarActivity {
     Button okCommentsButton;
     TextView titleWords;
 
+    //for UI testing --------------------------------------------------------
+    public EditText getCommentField(){return comments;}
+    public Button getOkButton(){return okCommentsButton;}
+    //-----------------------------------------------------------------------
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

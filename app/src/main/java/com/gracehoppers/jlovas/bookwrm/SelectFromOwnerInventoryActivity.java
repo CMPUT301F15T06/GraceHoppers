@@ -15,6 +15,11 @@ import java.util.ArrayList;
 public class SelectFromOwnerInventoryActivity extends ActionBarActivity {
 
     private Account me;
+
+    public ListView getMyInventory() {
+        return inventoryList;
+    }
+
     private ListView inventoryList;
     private SaveLoad mySaveLoad;
     private ArrayList<Book> myInventory;

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -18,7 +19,7 @@ public class HistoryOfTradesScreen extends ActionBarActivity {
     private SaveLoad saveLoad;
     private Account account;
     private ListView historyView;
-    private ListAdapter adapter;
+    private ArrayAdapter<Trade> adapter;
 
 
     @Override
@@ -44,6 +45,7 @@ public class HistoryOfTradesScreen extends ActionBarActivity {
         super.onStart();
         adapter = new TradeHistoryListAdapter(getApplicationContext(), R.layout.trade_history_list, history);
         historyView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
     }
 

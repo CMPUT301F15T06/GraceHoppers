@@ -201,12 +201,14 @@ public class MainActivity extends ActionBarActivity {
             this.search = search;
         }
 
-        @Override
-        public void run() {
+       // @Override
+     /*   public void run() {
             result=new Accounts();
             accountManager=new AccountManager();
+
             result=(accountManager.searchAccount(search));
 */
+
            /* if(result!=null) {
                     Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
                     lIntent.putExtra("username", search);
@@ -219,5 +221,6 @@ public class MainActivity extends ActionBarActivity {
             //notifyUpdated();
         //}
 
-    //}
-}
+
+    }
+//}

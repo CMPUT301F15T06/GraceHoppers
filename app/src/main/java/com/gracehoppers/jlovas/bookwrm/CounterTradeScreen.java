@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -19,9 +20,12 @@ public class CounterTradeScreen extends ActionBarActivity {
     private Trade oldTrade = new Trade();
     private Trade counterTrade = new Trade();
     private ArrayAdapter<Book> adapter;
-    private ListView bInventory;
+    //private ListView bInventory;
     private Account account1=new Account(); //borrower
     private Account account2=new Account(); //owner
+    private TextView text;
+    private TextView ownerText;
+    private String bookTitle="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +35,13 @@ public class CounterTradeScreen extends ActionBarActivity {
         Button add = (Button) findViewById(R.id.bAdd);
         Button submit = (Button) findViewById(R.id.submitCounter);
         Button cancel = (Button) findViewById(R.id.cancelCounter);
-        bInventory = (ListView)findViewById(R.id.bInventory);
+        //bInventory = (ListView)findViewById(R.id.bInventory);
+        text = (TextView) findViewById(R.id.textView);
+        ownerText =(TextView) findViewById(R.id.ownerBook);
 
         setUp();
         oldTrade =account1.getTradeHistory().getTradeByIndex(0);
+        ownerText.setText(oldTrade.getOwnerBook().getTitle());
 
         //initialize counterTrade with items in former declined trade
         Book oBook = oldTrade.getOwnerBook();
@@ -45,24 +52,32 @@ public class CounterTradeScreen extends ActionBarActivity {
             public void onClick(View view) {
                 Intent addBook = new Intent(CounterTradeScreen.this, SelectCounterBooksActivity.class);
                 startActivity(addBook);
+
             }
         });
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                oldTrade.getOwner().getTradeHistory().addTrade(counterTrade);
-                oldTrade.getBorrower().getTradeHistory().addTrade(counterTrade);
+                //oldTrade.getOwner().getTradeHistory().addTrade(counterTrade);
+                //oldTrade.getBorrower().getTradeHistory().addTrade(counterTrade);
+                Intent submitAll = new Intent(CounterTradeScreen.this,HomeScreen.class);
+                startActivity(submitAll);
             }
         });
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent cancelAll = new Intent(CounterTradeScreen.this,HomeScreen.class);
+                Intent cancelAll = new Intent(CounterTradeScreen.this, ProcessTradeScreen.class);
                 startActivity(cancelAll);
             }
         });
+
+        Intent intent = getIntent();
+        bookTitle = intent.getStringExtra("BookName");
+
+        text.setText(bookTitle);
 
     }
 
@@ -84,6 +99,7 @@ public class CounterTradeScreen extends ActionBarActivity {
         oldTrade.setBorrower(account1);
         oldTrade.setOwner(account2);
         Book ownerBook = new Book();
+        ownerBook.setTitle("goodBook");
         oldTrade.setOwnerBook(ownerBook);
 
         TradeHistory tradeHistory = new TradeHistory();
@@ -104,6 +120,14 @@ public class CounterTradeScreen extends ActionBarActivity {
             adapter.notifyDataSetChanged();
         }
 
+        <ListView
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:id="@+id/bInventory"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true"
+        android:background="#fffbf4" />
 
     }
     */

@@ -17,6 +17,9 @@ public class SelectFromBorrowerInventoryActivity extends ActionBarActivity {
     private Account me;
     private ListView inventoryList;
     private SaveLoad mySaveLoad;
+
+
+
     private ArrayList<Book> myInventory;
     private ArrayAdapter<Book> adapter;
 
@@ -73,5 +76,9 @@ public class SelectFromBorrowerInventoryActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public ListView getMyInventory() {
+        return inventoryList;
     }
 }

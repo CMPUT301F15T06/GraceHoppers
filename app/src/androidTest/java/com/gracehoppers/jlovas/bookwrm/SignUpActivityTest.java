@@ -1,7 +1,9 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 import android.app.Activity;
+import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -66,6 +68,12 @@ public class SignUpActivityTest extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         final Button signButton = activity.getSignButton();
+
+        Instrumentation.ActivityMonitor receiverActivityMonitor =
+                getInstrumentation().addMonitor(HomeScreen.class.getName(),
+                        null, false);
+        //the code where they clicked was here
+
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -74,9 +82,27 @@ public class SignUpActivityTest extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
+        // Validate that ReceiverActivity is started
+        HomeScreen receiverActivity = (HomeScreen)
+                receiverActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", receiverActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, receiverActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                HomeScreen.class, receiverActivity.getClass());
+
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(receiverActivityMonitor);
+
+        //clean up our activities at the end of the test
+        receiverActivity.finish();
+
+
         //Make sure that the account was actually added
         ArrayList<Account> accounts = activity.getAccounts();
         assertEquals("testAccount", accounts.get(0).getUsername());
+
     }
 
 
