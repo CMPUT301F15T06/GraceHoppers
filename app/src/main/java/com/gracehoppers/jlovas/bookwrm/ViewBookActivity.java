@@ -49,6 +49,7 @@ public class ViewBookActivity extends ActionBarActivity {
 
     // for UI testing --------------------------------------------------
     public Button getDeleteButton(){return deleteButton;}
+    public Button getEditButton(){return editButton;}
     AlertDialog SingleInfo;
     public AlertDialog getAlertDialog(){return SingleInfo;}
     Button okButton;
@@ -271,7 +272,7 @@ public class ViewBookActivity extends ActionBarActivity {
        // Log.e("Got to method", "Made it to deleteBook");
         account.getInventory().deleteBook(tempBook);
         assertFalse(account.getInventory().hasBook(tempBook));
-        Log.e("Got to method", "assertion succeeded");
+        //Log.e("Got to method", "assertion succeeded");
         saveload.saveInFile(getApplicationContext(), account);
 
         Toast.makeText(getApplicationContext(),"Book deleted",Toast.LENGTH_SHORT).show();
