@@ -25,8 +25,8 @@ import java.lang.reflect.Type;
  */
 public class SaveLoad {
 
-    protected static final String FILENAME = "file.sav";
 
+    protected static final String FILENAME = "file.sav";
     public SaveLoad() {
     }
 

@@ -13,6 +13,13 @@ import java.util.ArrayList;
  * Created by chen1 on 11/3/15.
  */
 public class TradeHistoryListAdapter extends ArrayAdapter<Trade> {
+
+    /**
+     * An Array Adapter used to populate the TradeHistory ListView.
+     * @see TradeHistory
+     *
+     */
+
     private Context context;
     private ArrayList<Trade> tradeArray;
 

@@ -1,12 +1,16 @@
 package com.gracehoppers.jlovas.bookwrm;
-
+/**
+ * Created by chen1, ljuarezr on 10/19/15.
+ */
 import java.util.ArrayList;
 
 /**
- * trade holds the information about the trade:
- * -who it is between
- * -items up for trade
- * -uhhh some other stuff
+ * Trade is a class that represents a trade between a borrower and an owner.
+ * Contains Booleans accpted and declined, an instance of the TradeStatus,
+ * an owner's book and a list of the borrower's books. As well as both the
+ * owner and the borrower accounts, and a string of comments on the trade.
+ * Getters and Setters for these fields.
+ * @see Account, TradeStatus, Book
  */
 public class Trade {
     //initialize trade to be unaccepted and undeclined
