@@ -32,6 +32,15 @@ public class ProfileScreen extends ActionBarActivity {
     public ArrayList<View> editList;
     public ArrayList<View> originalList;
 
+    /**
+     * This is the activity for the mean functionality of answering a question. This
+     * activity will be acted when the "Add Answer" button in the
+     * QuestionDetailActivity.java is clicked.
+     *
+     * @author Hong Wang
+     * @author Di Zhang
+     *
+     */
 
     private Runnable doUpdateGUIDetails=new Runnable() {
         public void run() {
