@@ -1,7 +1,8 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 /**
- * Created by jlovas on 11/4/15.
+ * @author jlovas on 11/4/15.
+ * @deprecated  until project part 5
  */
 public class OneAccount {
     private static OneAccount ourInstance = new OneAccount();

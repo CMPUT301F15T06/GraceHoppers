@@ -4,6 +4,13 @@ package com.gracehoppers.jlovas.bookwrm;
  * Created by dzhang4 on 11/3/15.
  */
 public class SimpleSearchCommand {
+
+    /**
+     * Implementation of search by Textual query.
+     * The constructor takes in a string that represents the query.
+     * Contains a getter and setter method for the query string.
+     *
+     */
     private SimpleSearchQuery query;
 
     public SimpleSearchCommand(String query) {

@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * Contains Strings city, email, and a unique username.
  * also has an Inventory, Friends, and TradeHistory
  * Account has getters for all of these and setters for the Strings and Inventories
+ * @author nlovas
  *@see Inventory , Friends , TradeHistory
  */
 

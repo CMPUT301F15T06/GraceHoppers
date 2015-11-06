@@ -17,7 +17,24 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/**
+ * @author jlovas
+ * Once the user is signed in or signed up, they are taken to this screen.
+ * <p>
+ * The Homescreen is the central screen with the most options available to the user.
+ * The user sees their book inventory on this screen and has options to:
+ * <ul>
+ *     <li>View their profile</li>
+ *     <li>Add a new book </li>
+ *     <li>View a book in their inventory, if any </li>
+ *     <li>Look up friends </li>
+ *     <li>View their trade history</li>
+ * </ul>
+ * Currently the options to trade and countertrade are on the homescreen and will be moved for part 5
+ * @see Account, Inventory
+ */
 public class HomeScreen extends Activity {
+
     Button addBookButton;
 
     private ListView inventoryList;

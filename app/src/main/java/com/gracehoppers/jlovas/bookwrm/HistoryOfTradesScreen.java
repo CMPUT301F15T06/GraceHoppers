@@ -29,7 +29,7 @@ public class HistoryOfTradesScreen extends ActionBarActivity {
     private ArrayList<Trade> history;
     private SaveLoad saveLoad;
     private Account account;
-    private ListView historyView;
+    ListView historyView;
     private ArrayAdapter<Trade> adapter;
 
 

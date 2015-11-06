@@ -3,7 +3,8 @@ package com.gracehoppers.jlovas.bookwrm;
 import java.util.List;
 
 /**
- * Created by dzhang4 on 11/3/15.
+ * @author dzhang4 on 11/3/15.
+ * @deprecated  until project part 5
  */
 public class Hits<T> {
     private int total;

@@ -14,6 +14,12 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/**
+ * @author jlovas
+ * The first screen the user sees when running the app.
+ * Gives the user the option to either sign up or sign in with a username.
+ *@see Account
+ */
 public class MainActivity extends ActionBarActivity {
     Button logInButton;
     Button signUpButton;
