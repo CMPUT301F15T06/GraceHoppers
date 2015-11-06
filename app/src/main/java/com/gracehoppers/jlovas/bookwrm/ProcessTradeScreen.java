@@ -27,15 +27,18 @@ public class ProcessTradeScreen extends ActionBarActivity {
     Button decline;
     public AlertDialog.Builder dialog;
     public AlertDialog.Builder dialog1;
+    TextView bName;
+    TextView bBook;
+    TextView oBook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_process_trade_screen);
 
-        TextView bName = (TextView)findViewById(R.id.bName);
-        TextView bBook = (TextView)findViewById(R.id.bBook);
-        TextView oBook = (TextView)findViewById(R.id.oBook);
+        bName = (TextView)findViewById(R.id.bName);
+        bBook = (TextView)findViewById(R.id.bBook);
+        oBook = (TextView)findViewById(R.id.oBook);
         accept =(Button)findViewById(R.id.accept);
         decline = (Button)findViewById(R.id.decline);
 
@@ -44,7 +47,7 @@ public class ProcessTradeScreen extends ActionBarActivity {
         trade= tradeHistory.getTradeByIndex(0);
         borrower =trade.getBorrower();
 
-        bName.setText("Borrower Name:\n"+ borrower.getUsername());
+        bName.setText("Borrower Name:\n" + borrower.getUsername());
         oBook.setText("Owner Book:\n"+trade.getOwnerBook().getTitle());
 
         String bookTitles ="";
@@ -58,10 +61,10 @@ public class ProcessTradeScreen extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 //set status of trade to accepted
-                //trade.setAccepted(Boolean.TRUE);
+                trade.setAccepted(Boolean.TRUE);
 
                 //pop a dialog to promote owner to continue trade by sending email
-
+                /*
                 dialog = new AlertDialog.Builder(ProcessTradeScreen.this);
 
                 dialog.setMessage("Continue the trade by sending email to borrower?");
@@ -78,14 +81,16 @@ public class ProcessTradeScreen extends ActionBarActivity {
 
                 dialog.create();
                 dialog.show();
+                */
             }
         });
 
         decline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //trade.setDeclined(Boolean.TRUE);
+                trade.setDeclined(Boolean.TRUE);
 
+                /*
                 //pop a dialog to promote owner to continue trade by sending email
                 dialog1 = new AlertDialog.Builder(ProcessTradeScreen.this);
                 dialog1.setMessage("Create a counter trade?");
@@ -103,6 +108,9 @@ public class ProcessTradeScreen extends ActionBarActivity {
 
                 dialog1.create();
                 dialog1.show();
+                */
+                Intent turnCounter = new Intent(ProcessTradeScreen.this, CounterTradeScreen.class);
+                startActivity(turnCounter);
             }
         });
     }

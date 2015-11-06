@@ -17,24 +17,29 @@ import java.util.ArrayList;
 
 public class CounterTradeScreen extends ActionBarActivity {
 
-    private Trade oldTrade = new Trade();
+    Trade oldTrade = new Trade();
     private Trade counterTrade = new Trade();
     private ArrayAdapter<Book> adapter;
     //private ListView bInventory;
     private Account account1=new Account(); //borrower
-    private Account account2=new Account(); //owner
+    Account account2=new Account(); //owner
     private TextView text;
-    private TextView ownerText;
+    TextView ownerText;
     private String bookTitle="";
+    Button add;
+    Button submit;
+    Button cancel;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_counter_trade_screen);
 
-        Button add = (Button) findViewById(R.id.bAdd);
-        Button submit = (Button) findViewById(R.id.submitCounter);
-        Button cancel = (Button) findViewById(R.id.cancelCounter);
+        add = (Button) findViewById(R.id.bAdd);
+        submit = (Button) findViewById(R.id.submitCounter);
+        cancel = (Button) findViewById(R.id.cancelCounter);
         //bInventory = (ListView)findViewById(R.id.bInventory);
         text = (TextView) findViewById(R.id.textView);
         ownerText =(TextView) findViewById(R.id.ownerBook);

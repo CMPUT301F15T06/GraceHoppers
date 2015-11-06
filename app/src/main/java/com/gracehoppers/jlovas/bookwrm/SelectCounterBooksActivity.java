@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class SelectCounterBooksActivity extends ActionBarActivity {
 
-    private ListView counterList;
+    ListView counterList;
     private Trade counterTrade = new Trade();
     private ArrayAdapter<Book> adapter;
     private ArrayList<Book> bookList=new ArrayList<Book>();
