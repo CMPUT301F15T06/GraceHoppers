@@ -12,18 +12,16 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 /**
- * Created by dzhang4 on 11/3/15.
+ * Activity where the user (as an owner) selects the Book to trade upon
+ * creating a trade.
+ * Contains a ListView of the user's inventory where the user chooses a
+ * book by clicking on the item.
+ * @see Inventory,  Account, BookListAdapter
+ * @author Linda Zhang
  */
 
 public class SelectFromOwnerInventoryActivity extends ActionBarActivity {
-    /**
-     * Activity where the user (as an owner) selects the Book to trade upon
-     * creating a trade.
-     * Contains a ListView of the user's inventory where the user chooses a
-     * book by clicking on the item.
-     * @see Inventory,  Account, BookListAdapter
-     *
-     */
+
 
     private Account me;
 

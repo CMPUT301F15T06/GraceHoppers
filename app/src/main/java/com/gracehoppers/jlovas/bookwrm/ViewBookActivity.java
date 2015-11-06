@@ -22,18 +22,16 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 /**
- * Created by jlovas on 10/19/15.
+ *Activity for viewing a book, including all of its attributes.
+ * <p>
+ * Contains textViews bookTitle, bookAuthor, category, quantity, privacy
+ * and description, as well as a RatingBar to represent the quality of the
+ * Book. These fields have getters and setters.
+ * Contains Edit and Delete button for that specific Book object.
+ * @see Inventory, Book
  */
 public class ViewBookActivity extends ActionBarActivity {
-    /**
-     *Activity for viewing a book, including all of its attributes.
-     * <p>
-     * Contains textViews bookTitle, bookAuthor, category, quantity, privacy
-     * and description, as well as a RatingBar to represent the quality of the
-     * Book. These fields have getters and setters.
-     * Contains Edit and Delete button for that specific Book object.
-     * @see Inventory, Book
-     */
+
 
 
     /*

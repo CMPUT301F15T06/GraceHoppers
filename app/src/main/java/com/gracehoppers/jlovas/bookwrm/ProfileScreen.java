@@ -13,19 +13,18 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-/**
- * Created by dzhang4 on 11/3/15.
+/**Activity representing the view of a user account details.
+ * Allows for editing funtionality.
+ * Contains a TextView of the name, email, city of a user; as well as
+ * edit/confirm buttons and the corresponding EditTexts for name, email and
+ * user if editing. Getters and Setters for these.
+ * @see Account, AccountManager, SaveLoad.
+ * @author Linda Zhang
  */
 
 public class ProfileScreen extends ActionBarActivity {
 
-    /**Activity representing the view of a user account details.
-     * Allows for editing funtionality.
-     * Contains a TextView of the name, email, city of a user; as well as
-     * edit/confirm buttons and the corresponding EditTexts for name, email and
-     * user if editing. Getters and Setters for these.
-     * @see Account, AccountManager, SaveLoad.
-     */
+
 
     //public static String Username="Username";
     EditText editemail;

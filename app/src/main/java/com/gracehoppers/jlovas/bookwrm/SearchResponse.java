@@ -1,14 +1,13 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 /**
- * Created by dzhang4 on 11/3/15.
+ * @deprecated until part 5
+ * Contains a collection of Hits returned form a search.
+ * Contains a Getter for this.
+ * @author Linda Zhang
  */
 public class SearchResponse<T> {
-    /**
-     * Contains a collection of Hits returned form a search.
-     * Contains a Getter for this.
-     *
-     */
+
 
     private Hits<T> hits;
     public SearchResponse() {}

@@ -16,18 +16,16 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.ArrayList;
 /**
- * Created by dzhang4 on 11/3/15.
+ * Activity where the user creates an account.
+ * Contains editTexts username, email and city; and a signUp button.
+ * Setters and Getters for these fields.
+ * @see Account, AccountManager
+ *
+ * @Author Linda Zhang
  */
 public class SignUpActivity extends ActionBarActivity {
 
-    /**
-     * Activity where the user creates an account.
-     * Contains editTexts username, email and city; and a signUp button.
-     * Setters and Getters for these fields.
-     * @see Account, AccountManager
-     *
-     * @return
-     */
+
 
 
 

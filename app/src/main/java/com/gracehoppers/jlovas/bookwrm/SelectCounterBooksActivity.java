@@ -13,6 +13,12 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/**
+ * This activity allows for the selection of counter items against a friend.
+ *
+ * @see Trade
+ *
+ */
 public class SelectCounterBooksActivity extends ActionBarActivity {
 
     ListView counterList;

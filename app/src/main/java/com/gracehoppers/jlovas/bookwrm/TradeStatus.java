@@ -1,7 +1,12 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 /**
- * Created by jlovas on 10/22/15.
+ * This class is an enum for the trade types. Each number corresponds to a
+ * type of book.
+ *
+ * @Author Jillian Lovas
+ *
+ * @see Trade
  */
 public enum TradeStatus {
     /**
