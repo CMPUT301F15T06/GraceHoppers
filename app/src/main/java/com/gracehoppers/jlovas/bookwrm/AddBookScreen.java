@@ -196,7 +196,7 @@ public class AddBookScreen extends ActionBarActivity {
             }
         });
 
-        
+
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
