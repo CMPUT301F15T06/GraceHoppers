@@ -55,7 +55,7 @@ public class Inventory {
     public Book getBookByIndex(int i) throws NegativeNumberException, TooLongException{
         if(i <0){
             throw new NegativeNumberException();
-        }else if(i>inventory.size()){ //if the requested position exceeds inventory size, throw exception
+        }else if(i>=inventory.size()){ //if the requested position exceeds inventory size, throw exception
             throw new TooLongException();
         }else
 

@@ -117,7 +117,7 @@ public class MainActivity extends ActionBarActivity {
 
         logInButton = (Button)findViewById(R.id.logInButton);
         signUpButton = (Button)findViewById(R.id.signUpButton);
-
+        usernameText = (EditText)findViewById(R.id.usernameText);
 
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +128,7 @@ public class MainActivity extends ActionBarActivity {
 
                 //TODO: put the new account into the Gson or whatever we store it with so we can pull it out on further screens!
 
-                usernameText = (EditText)findViewById(R.id.usernameText);
+
                 final String username=usernameText.getText().toString();
 
                 Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
@@ -201,12 +201,12 @@ public class MainActivity extends ActionBarActivity {
             this.search = search;
         }
 
-        @Override
-        public void run() {
+       // @Override
+     /*   public void run() {
             result=new Accounts();
             accountManager=new AccountManager();
             result=(accountManager.searchAccount(search));
-
+*/
            /* if(result!=null) {
                     Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
                     lIntent.putExtra("username", search);
@@ -220,4 +220,4 @@ public class MainActivity extends ActionBarActivity {
         }
 
     }
-}
+//}
