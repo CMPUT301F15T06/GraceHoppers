@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -120,19 +122,6 @@ public class CreateTradeScreen extends Activity {
                 AlertDialog alertDialog = new AlertDialog.Builder(CreateTradeScreen.this).create();
                 alertDialog.setMessage("");
                 alertDialog.setCanceledOnTouchOutside(false);
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Add",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Replace",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
 
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancel",
                         new DialogInterface.OnClickListener() {
@@ -170,10 +159,10 @@ public class CreateTradeScreen extends Activity {
         submitTrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                me.getTradeHistory().addTrade(newTrade);
+                //me.getTradeHistory().addTrade(newTrade);
+                sendEmail();
                 newTrade = new Trade();
                 //add this Trade into Trade History and empty newTrade
-                finish();
             }
         });
 
@@ -185,8 +174,6 @@ public class CreateTradeScreen extends Activity {
                 finish();
             }
         });
-
-
 
     }
 
@@ -213,6 +200,21 @@ public class CreateTradeScreen extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void sendEmail(){
+        String[] TO = {""};
+        String[] CC = {""};
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.setData(Uri.parse("mailto:"));
+        emailIntent.setType("text/plain");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
+        //emailIntent.putExtra(Intent.EXTRA_TEXT, "Borrower: " + newTrade.getBorrower().getUsername() + "Owner: " + newTrade.getOwner().getUsername());
+        try {
+            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+            finish();
+        }catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(CreateTradeScreen.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
 

@@ -205,8 +205,10 @@ public class MainActivity extends ActionBarActivity {
      /*   public void run() {
             result=new Accounts();
             accountManager=new AccountManager();
+<<<<<<< HEAD
             result=(accountManager.searchAccount(search));
 */
+
            /* if(result!=null) {
                     Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
                     lIntent.putExtra("username", search);
