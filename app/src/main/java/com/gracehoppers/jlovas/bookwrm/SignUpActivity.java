@@ -49,6 +49,9 @@ public class SignUpActivity extends ActionBarActivity {
     private Runnable doFinishAdd=new Runnable() {
         @Override
         public void run() {
+            Toast.makeText(getApplicationContext(), "Account created",
+                    Toast.LENGTH_SHORT).show();
+
             finish();
         }
     };
@@ -77,14 +80,15 @@ public class SignUpActivity extends ActionBarActivity {
                     account.setCity(city.getText().toString());
                     //saveload.saveInFile(SignUpActivity.this, account); //moving this line down for demoAccount for now
 
+
                     accounts.add(account); //for UI testing
 
-                    //execute thread
-                    Thread thread=new AddThread(account);
+                    SearchThread thread=new SearchThread(account);
                     thread.start();
 
-                    Toast.makeText(getApplicationContext(), "Account created",
-                            Toast.LENGTH_SHORT).show();
+
+
+
 
                     //****Demo Account part, delete afterwards *************************************
 
@@ -119,10 +123,6 @@ public class SignUpActivity extends ActionBarActivity {
                     saveload.saveInFile(SignUpActivity.this, account);
                     //******************************************************************************
 
-                    accountManager.addAccount(account);
-                    Intent sIntent = new Intent(SignUpActivity.this, HomeScreen.class); //sends user to profile
-                    sIntent.putExtra("username",account.getUsername());
-                    startActivity(sIntent);
                 } catch (IllegalArgumentException e) {
                     Toast.makeText(getApplicationContext(), "All Fields must be filled",
                             Toast.LENGTH_SHORT).show();
@@ -179,7 +179,45 @@ public class SignUpActivity extends ActionBarActivity {
             } catch(InterruptedException e){e.printStackTrace();}
 
             runOnUiThread(doFinishAdd);
+            Intent sIntent = new Intent(SignUpActivity.this, HomeScreen.class); //sends user to profile
+            sIntent.putExtra("username", account.getUsername());
+            startActivity(sIntent);
         }
+    }
+
+    class SearchThread extends Thread {
+        private Account search;
+
+        public SearchThread(Account search) {
+            this.search = search;
+        }
+
+        @Override
+        public void run() {
+            Account result;
+            accountManager=new AccountManager();
+            result=(accountManager.getAccount(search.getUsername()));
+
+            try {
+                if(result != null) {
+                    //username exists
+                    SignUpActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "Username exists, please choose a new username", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+                else {
+                    //add account
+                    Thread thread=new AddThread(search);
+                    thread.start();
+                }
+
+            }catch(RuntimeException e) {e.printStackTrace();}
+        }
+
     }
 }
 

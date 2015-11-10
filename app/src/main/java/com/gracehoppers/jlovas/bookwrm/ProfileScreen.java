@@ -29,11 +29,24 @@ public class ProfileScreen extends ActionBarActivity {
     Account account;
     SaveLoad saveload;
     AccountManager accountManager;
+    ArrayList<View> editList;
+    ArrayList<View> originalList;
+
+
+    private Runnable doUpdateGUIDetails2=new Runnable() {
+        @Override
+        public void run() {
+            Toast.makeText(getApplicationContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
+            Intent sIntent = new Intent(ProfileScreen.this, ProfileScreen.class); //sends user to profile
+            sIntent.putExtra("Username",account.getUsername());
+            startActivity(sIntent);
+        }
+    };
 
     private Runnable doUpdateGUIDetails=new Runnable() {
         public void run() {
 
-            name =(TextView) findViewById(R.id.originalname);
+            /*name =(TextView) findViewById(R.id.originalname);
             editemail = (EditText) findViewById(R.id.editemail);
             editcity = (EditText) findViewById(R.id.editcity);
             confirm = (Button) findViewById(R.id.confirm_edit);
@@ -46,7 +59,7 @@ public class ProfileScreen extends ActionBarActivity {
             edit = (Button) findViewById(R.id.editprofile);
             final ArrayList<View> originalList = new ArrayList<View>((Arrays.asList(name,city,email,edit)));
             set_visible(originalList);
-
+*/
 
             name.setText(account.getUsername());
             email.setText(account.getEmail());
@@ -64,7 +77,6 @@ public class ProfileScreen extends ActionBarActivity {
                 @Override
                 public void onClick(View view) {
                     try {
-                        Toast.makeText(getApplicationContext(), "Profile test 1", Toast.LENGTH_SHORT).show();
                         editemail = (EditText) findViewById(R.id.editemail);
                         editcity = (EditText) findViewById(R.id.editcity);
 
@@ -73,15 +85,17 @@ public class ProfileScreen extends ActionBarActivity {
 
                         account.setEmail(newemail);
                         account.setCity(newcity);
-                        saveload.saveInFile(ProfileScreen.this, account);
+                        //saveload.saveInFile(ProfileScreen.this, account);
 
-                        accountManager.addAccount(account);
+                        //accountManager.updateAccount(account);
+                        Thread thread=new updateThread(account);
+                        thread.start();
 
 
-                        Toast.makeText(getApplicationContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
+                        /*Toast.makeText(getApplicationContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
                         Intent sIntent = new Intent(ProfileScreen.this, ProfileScreen.class); //sends user to profile
                         sIntent.putExtra("Username",account.getUsername());
-                        startActivity(sIntent);
+                        startActivity(sIntent);*/
                     } catch (IllegalArgumentException e) {
                         Toast.makeText(getApplicationContext(), "All Fields must be filled",
                                 Toast.LENGTH_SHORT).show();
@@ -108,28 +122,20 @@ public class ProfileScreen extends ActionBarActivity {
         setContentView(R.layout.activity_profile_screen);
 
 
-
-
-        /*try{
-            account.setCity("Lulala");
-            account.setUsername("hahaha");
-            account.setEmail("wow@cool.ca");
-        }catch(IllegalEmailException e){
-        }catch(TooLongException te){
-        }catch (NoSpacesException ne){
-        }*/
-
-        //editemail = (EditText) findViewById(R.id.editemail);
-        //editcity = (EditText) findViewById(R.id.editcity);
-        //confirm = (Button) findViewById(R.id.confirm_edit);
+        editemail = (EditText) findViewById(R.id.editemail);
+        editcity = (EditText) findViewById(R.id.editcity);
+        confirm = (Button) findViewById(R.id.confirm_edit);
         //final ArrayList<View> editList = new ArrayList<View>((Arrays.asList(editemail,editcity,confirm)));
-        //set_invisible(editList);
+        editList = new ArrayList<View>((Arrays.asList(editemail,editcity,confirm)));
+        set_invisible(editList);
 
-        /*name =(TextView) findViewById(R.id.originalname);
+        name =(TextView) findViewById(R.id.originalname);
         email =(TextView) findViewById(R.id.originalemail);
-        city = (TextView) findViewById(R.id.originalcity);*/
-        //edit = (Button) findViewById(R.id.editprofile);
+        city = (TextView) findViewById(R.id.originalcity);
+        edit = (Button) findViewById(R.id.editprofile);
         //final ArrayList<View> originalList = new ArrayList<View>((Arrays.asList(name,city,email,edit)));
+        originalList = new ArrayList<View>((Arrays.asList(name,city,email,edit)));
+
 
         /*name.setText(account.getUsername());
         email.setText(account.getEmail());
@@ -232,5 +238,16 @@ public class ProfileScreen extends ActionBarActivity {
             runOnUiThread(doUpdateGUIDetails);
         }
 
+    }
+
+    class updateThread extends Thread {
+        private Account account;
+        public updateThread(Account account) {this.account=account;}
+
+        @Override
+        public void run() {
+            accountManager.updateAccount(account);
+            runOnUiThread(doUpdateGUIDetails2);
+        }
     }
 }
