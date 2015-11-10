@@ -20,6 +20,14 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/**
+ * This activity is for creating books to add to the account's inventory for trading.
+ * A user can add a title, author, quantity, quality, category, photo, and comments to a book.
+ * Books can be made for public or private viewing.
+ *
+ * @author Jillian Lovas
+ */
+
 public class AddBookScreen extends ActionBarActivity {
     SaveLoad mySaveLoad;
     Account me;
@@ -189,7 +197,6 @@ public class AddBookScreen extends ActionBarActivity {
         });
 
 
-        //button for creating the book
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -248,7 +255,7 @@ public class AddBookScreen extends ActionBarActivity {
             }
         });
 
-
+    //to add a photo
     thePhoto.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -259,15 +266,17 @@ public class AddBookScreen extends ActionBarActivity {
 
         }
     });
-
-
-
     } //end of onCreate function
 
 
-
-
-    //catch comments made in another activity - need this for comments, passes the result to madeComments
+    /**
+     * This method will run when a user has clicked to add comments (see method above) and returns
+     * the results to the parent function on result.
+     *
+     * @param requestCode the code to tell which is returning
+     * @param resultCode checks that the result is ok
+     * @param data the data returning from the child activity
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
@@ -278,7 +287,7 @@ public class AddBookScreen extends ActionBarActivity {
                     //Toast.makeText(getApplicationContext(), "Got " + madeComments +" from child.", Toast.LENGTH_SHORT).show();
                 }
             else{
-                    Toast.makeText(getApplicationContext(), "Got a photo!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Photo added", Toast.LENGTH_SHORT).show();
                 }
     }
 

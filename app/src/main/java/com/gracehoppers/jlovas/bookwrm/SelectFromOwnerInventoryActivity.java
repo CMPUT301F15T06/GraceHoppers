@@ -11,10 +11,24 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+/**
+ * Activity where the user (as an owner) selects the Book to trade upon
+ * creating a trade.
+ * Contains a ListView of the user's inventory where the user chooses a
+ * book by clicking on the item.
+ * @see Inventory,  Account, BookListAdapter
+ * @author Linda Zhang
+ */
 
 public class SelectFromOwnerInventoryActivity extends ActionBarActivity {
 
+
     private Account me;
+
+    public ListView getMyInventory() {
+        return inventoryList;
+    }
+
     private ListView inventoryList;
     private SaveLoad mySaveLoad;
     private ArrayList<Book> myInventory;
@@ -49,6 +63,7 @@ public class SelectFromOwnerInventoryActivity extends ActionBarActivity {
                 Intent intent = new Intent(SelectFromOwnerInventoryActivity.this, CreateTradeScreen.class);
                 intent.putExtra("bPosition", position);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -76,4 +91,13 @@ public class SelectFromOwnerInventoryActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        Intent intent = new Intent(SelectFromOwnerInventoryActivity.this, CreateTradeScreen.class);
+        startActivity(intent);
+        finish();
+    }
+
 }

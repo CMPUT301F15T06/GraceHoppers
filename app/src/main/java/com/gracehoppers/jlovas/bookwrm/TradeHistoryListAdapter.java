@@ -10,9 +10,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by chen1 on 11/3/15.
+ * An Array Adapter used to populate the TradeHistory ListView.
+ * @see TradeHistory
+ * @author Hong Chen
  */
 public class TradeHistoryListAdapter extends ArrayAdapter<Trade> {
+
+
+
     private Context context;
     private ArrayList<Trade> tradeArray;
 
@@ -31,13 +36,13 @@ public class TradeHistoryListAdapter extends ArrayAdapter<Trade> {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.trade_history_list, null, false);
-            TextView textview = (TextView) convertView.findViewById(R.id.inventory_id);
-            textview.setText("Borrower: " + tradeArray.get(position).getBorrower() + "\nOwner: " + tradeArray.get(position).getOwner() + "\nBook" + tradeArray.get(position).getOwnerBook());
+            TextView textview = (TextView) convertView.findViewById(R.id.trade_inventory_id);
+            textview.setText("Borrower: " + tradeArray.get(position).getBorrower().getUsername().toString() + "\nOwner: " + tradeArray.get(position).getOwner().getUsername().toString() + "\nBook" + tradeArray.get(position).getOwnerBook().getTitle().toString());
 
         } else {
 
-            TextView textview = (TextView) convertView.findViewById(R.id.inventory_id);
-            textview.setText("Borrower: " + tradeArray.get(position).getBorrower() + "\nOwner: " + tradeArray.get(position).getOwner() + "\nBook"+ tradeArray.get(position).getOwnerBook());
+            TextView textview = (TextView) convertView.findViewById(R.id.trade_inventory_id);
+            textview.setText("Borrower: " + tradeArray.get(position).getBorrower().getUsername().toString() + "\nOwner: " + tradeArray.get(position).getOwner().getUsername().toString() + "\nBook"+ tradeArray.get(position).getOwnerBook().getTitle().toString());
 
         }
 

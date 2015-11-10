@@ -10,7 +10,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by chen1 on 10/26/15.
+ * The Booklist Adapter is used to display the list of books in a listview.
+ *
+ * @see HomeScreen, FriendProfileScreen
+ *
+ * @author Hong Chen
  */
 public class BookListAdapter extends ArrayAdapter<Book> {
     private Context context;

@@ -8,6 +8,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +18,21 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
+
+/**
+ *Activity for viewing a book, including all of its attributes.
+ * <p>
+ * Contains textViews bookTitle, bookAuthor, category, quantity, privacy
+ * and description, as well as a RatingBar to represent the quality of the
+ * Book. These fields have getters and setters.
+ * Contains Edit and Delete button for that specific Book object.
+ * @see Inventory, Book
+ */
 public class ViewBookActivity extends ActionBarActivity {
+
+
 
     /*
     When a user clicks on a book in their inventory, they can view its details, choose to edit it, or delete it.
@@ -45,10 +60,17 @@ public class ViewBookActivity extends ActionBarActivity {
 
     // for UI testing --------------------------------------------------
     public Button getDeleteButton(){return deleteButton;}
+    public Button getEditButton(){return editButton;}
     AlertDialog SingleInfo;
     public AlertDialog getAlertDialog(){return SingleInfo;}
     Button okButton;
     Button cancelButton;
+    public TextView getBookTitle(){return bookTitle;}
+    public TextView getBookAuthor(){return bookAuthor;}
+    public TextView getCategory(){return category;}
+    public TextView getQuantity(){return quantity;}
+    public TextView getPrivacy(){return privacy;}
+    public TextView getDescription(){return description;}
     //------------------------------------------------------------------
 
     @Override
@@ -174,10 +196,16 @@ public class ViewBookActivity extends ActionBarActivity {
             } else privacy.setText("Public Book");
             //put photo stuff here
 
+
+
             //remove the delete button, edit button changes to trade button
             ViewGroup parentView = (ViewGroup) deleteButton.getParent();
             parentView.removeView(deleteButton);
 
+            ViewGroup parentView2 = (ViewGroup) editButton.getParent();
+            parentView.removeView(editButton);
+
+            /*
             Button tradeButton = editButton;
 
             tradeButton.setText("Trade");
@@ -198,11 +226,12 @@ public class ViewBookActivity extends ActionBarActivity {
                     intent.putExtra("bookDesc", tempBook.getDescription());
                     intent.putExtra("bookPosition", pos);
                     //put photo stuff here...if it cant be passed by intent, pass the inventory index position and use gson instead of using the above!
-                    */
+
                     startActivity(intent);
 
                 }
             });
+    */
         }
     }
 
@@ -258,7 +287,10 @@ public class ViewBookActivity extends ActionBarActivity {
 
     public void deleteBook(){
 //deletes the book and saves the change with gson
+       // Log.e("Got to method", "Made it to deleteBook");
         account.getInventory().deleteBook(tempBook);
+        assertFalse(account.getInventory().hasBook(tempBook));
+        //Log.e("Got to method", "assertion succeeded");
         saveload.saveInFile(getApplicationContext(), account);
 
         Toast.makeText(getApplicationContext(),"Book deleted",Toast.LENGTH_SHORT).show();

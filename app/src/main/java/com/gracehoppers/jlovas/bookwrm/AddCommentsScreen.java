@@ -11,10 +11,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Allows the user to add comments to a book they are making/editing.
+ *
+ * @author Jillian Lovas
+ */
 public class AddCommentsScreen extends ActionBarActivity {
     EditText comments;
     Button okCommentsButton;
     TextView titleWords;
+
+    //for UI testing --------------------------------------------------------
+    public EditText getCommentField(){return comments;}
+    public Button getOkButton(){return okCommentsButton;}
+    //-----------------------------------------------------------------------
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,7 +1,8 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 /**
- * Created by dzhang4 on 10/31/15.
+ * @deprecated until part 5
+ * @author Linda Zhang
  */
 public class SearchHit<T> {
     private T _source;

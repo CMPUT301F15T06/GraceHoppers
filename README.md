@@ -100,3 +100,21 @@ http://stackoverflow.com/users/1965587/anil-bhatiya
 
 Finding the buttons in an alertDialogue for UI testing:
 http://developer.android.com/reference/android/app/AlertDialog.html#getButton%28int%29, 2015-3-11
+
+Converting int to String:
+Bozho, http://stackoverflow.com/questions/5071040/java-convert-integer-to-string, Nov 5, 15
+http://stackoverflow.com/users/203907/bozho
+
+Various UI test information from LonelyTwitter by Joshua Campbell
+Cmput 301 Labs and Git repository file: https://github.com/joshua2ua/lonelyTwitter/blob/f15tuesday/app/src/androidTest/java/ca/ualberta/cs/lonelytwitter/LonelyTwitterActivityTest.java#L50, Nov 4-5, 2015
+
+Comparing two Drawables:
+Majonzhan, http://stackoverflow.com/questions/9125229/comparing-two-drawables-in-android, Nov 5th, 2015
+http://stackoverflow.com/users/1043256/mejonzhan
+
+Printing in the logCat:
+CMPUT 301 lab, Ian Watts, 2015-04-11
+
+Generating Javadocs:
+Jiri Pinkas, https://youtu.be/Hx-8BD_Osdw, 2015-05-11
+

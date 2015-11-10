@@ -1,16 +1,21 @@
 package com.gracehoppers.jlovas.bookwrm;
-
+/**
+ * Created by chen1, ljuarezr on 10/19/15.
+ */
 import java.util.ArrayList;
 
 /**
- * trade holds the information about the trade:
- * -who it is between
- * -items up for trade
- * -uhhh some other stuff
+ * Trade is a class that represents a trade between a borrower and an owner.
+ * Contains Booleans accpted and declined, an instance of the TradeStatus,
+ * an owner's book and a list of the borrower's books. As well as both the
+ * owner and the borrower accounts, and a string of comments on the trade.
+ * Getters and Setters for these fields.
+ * @see Account, TradeStatus, Book
  */
 public class Trade {
-    private Boolean accepted;
-    private Boolean declined;
+    //initialize trade to be unaccepted and undeclined
+    private Boolean accepted=Boolean.FALSE;
+    private Boolean declined=Boolean.FALSE;
 
     public TradeStatus getStatus() {
         return status;
@@ -87,6 +92,51 @@ public class Trade {
 
     public void addToBorrowerBook(Book newBook){
         this.borrowerBook.add(newBook);
+    }
+
+    //Override the toString() method to show the borrower, and the books traded.
+    @Override
+    public String toString(){
+
+        //3 Cases : Accepted, Declined and Countered
+
+        String myBook = getOwnerBook().getTitle().toString();
+        ArrayList<Book> friendBooks = getBorrowerBook();
+        String friendBookStr = "";
+        String friend = getBorrower().getUsername();
+        String status = getStatus().toString();
+        String finalView = "";
+        for (Book book: friendBooks) {
+            friendBookStr = friendBookStr + book.getTitle() + " '";
+        }
+
+        //ACCEPTED CASE
+        if (status == "ACCEPTED"){
+            finalView = status + ": Traded my" + myBook + "for " + friend + "'s " +
+                    friendBookStr ;
+        }
+
+        //DECLINED CASE
+        if (status == "DECLINED"){
+            finalView = status + ": Refused to trade my " + myBook + "for " + friend + "'s " +
+                    friendBookStr ;
+        }
+
+
+        //Confused about the Counter Trade (where is the counter book stored?)
+        //COUNTER CASE
+        /*
+        if (status == "COUNTERED"){
+            finalView = status + ": Refused to trade my " + myBook + "for " + friend + "'s " +
+                    friendBookStr + " but took my";
+        }
+        */
+
+        //Does this mean that not all variables are set? Confused again :/
+        //INPROCESS CASE
+
+
+        return finalView;
     }
 
 

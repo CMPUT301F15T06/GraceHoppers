@@ -9,7 +9,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by ljuarezr on 10/28/15.
+ * The Friendlist Adapter is used to display the list of your friends in a listview.
+ *
+ * @see Friends
+ *
+ * @author Patricia Reyes, Jillian Lovas
  */
 public class FriendsAdapter extends ArrayAdapter<Account>{
     private Context context;

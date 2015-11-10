@@ -5,22 +5,25 @@ import android.content.Context;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 /**
- * Created by nlovas on 10/15/15.
+ * The account used by a user once they have logged in or signed up.
+ * <p>
+ * Contains Strings city, email, and a unique username.
+ * also has an Inventory, Friends, and TradeHistory
+ * Account has getters for all of these and setters for the Strings and Inventories
+ * @author nlovas
+ *@see Inventory , Friends , TradeHistory
  */
 
 public class Account {
-    /*
-    The Account of the user, which includes their username, city, email, friendlist, and booklist,
-     */
+
 
     private String username;
     private String city;
     private String email;
-
-    //private Friendlist friendlist = new Friendlist(); //uncomment this once it has been written
+    private TradeHistory tradeHistory; // create trade history
     private Inventory inventory;
-    //private SaveLoad saveload; //for saving your account
     private Friends friends; //create friend list
 
     public TradeHistory getTradeHistory() {
@@ -31,7 +34,6 @@ public class Account {
         this.tradeHistory = tradeHistory;
     }
 
-    private TradeHistory tradeHistory = new TradeHistory(); // create trade history
 
     //****For DemoAccount use, delete after server works********************************************
     //for storing a list of existing accounts
@@ -42,7 +44,7 @@ public class Account {
         return totalAccounts;
     }
 
-    public boolean isInAccounts(String username){
+      public boolean isInAccounts(String username){
         for(int i=0; i < totalAccounts.size(); i++){
             if(totalAccounts.get(i).getUsername().equals(username)) {
                 return true;
@@ -53,6 +55,7 @@ public class Account {
 
     public Account searchAccountsByUsername(String username) throws DoesNotExistException, BlankFieldException, AlreadyAddedException{
         //need to protect string inputs
+        /*
         if(username.equals("")) throw new BlankFieldException();
         if(totalAccounts.size() ==0) throw new DoesNotExistException();
         if(totalAccounts.size() ==1) return totalAccounts.get(0);
@@ -63,14 +66,19 @@ public class Account {
         }
         //did not find it
         throw new DoesNotExistException();
+*/
+        return totalAccounts.get(0);
     }
 
     //**********************************************************************************************
 
-
+    /**
+     * Constructor for Account creates an empty Inventory and empty Friends
+     */
     public Account() {
         inventory = new Inventory();
         friends = new Friends();
+        tradeHistory = new TradeHistory();
         //checks to see if the account already exists, cant do this without the database
 
         //If(searchDatabase(Username)==true){throw new AlreadyExistsException;}
@@ -153,5 +161,9 @@ public class Account {
 
     public Inventory getInventory() {
         return inventory;
+    }
+
+    public void setInventory(Inventory anInventory){
+        inventory = anInventory;
     }
 }

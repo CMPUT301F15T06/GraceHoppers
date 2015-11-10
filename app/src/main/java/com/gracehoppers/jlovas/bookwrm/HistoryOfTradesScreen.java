@@ -5,10 +5,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+/**
+ * The HistoryOfTrades Screen displays the current trades the user has with other users,
+ * as well as the past trades and their results. Currently this page is not displaying the information
+ * because the trade functionality is not fully implemented, but will be in time.
+ *
+ * @author Hong Chen, Hong Wang
+ *
+ * @see Trade, TradeHistory
+ *
+ */
 
 public class HistoryOfTradesScreen extends ActionBarActivity {
 
@@ -17,8 +29,8 @@ public class HistoryOfTradesScreen extends ActionBarActivity {
     private ArrayList<Trade> history;
     private SaveLoad saveLoad;
     private Account account;
-    private ListView historyView;
-    private ListAdapter adapter;
+    ListView historyView;
+    private ArrayAdapter<Trade> adapter;
 
 
     @Override
@@ -33,17 +45,21 @@ public class HistoryOfTradesScreen extends ActionBarActivity {
         saveLoad = new SaveLoad();
 
         account = saveLoad.loadFromFile(getApplicationContext());
-        //history = account.getTradeHistory();
+
 
         historyView = (ListView)findViewById(R.id.HistoryView);
+
+        adapter = new TradeHistoryListAdapter(getApplicationContext(), R.layout.trade_history_list, account.getTradeHistory().tradeHistory);
+        historyView.setAdapter(adapter);
 
     }
 
     @Override
     protected void onStart(){
         super.onStart();
-        adapter = new TradeHistoryListAdapter(getApplicationContext(), R.layout.trade_history_list, history);
+        adapter = new TradeHistoryListAdapter(getApplicationContext(), R.layout.trade_history_list, account.getTradeHistory().tradeHistory);
         historyView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
     }
 

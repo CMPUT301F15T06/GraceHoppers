@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,10 +15,21 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+
+/**
+ * This activity begins a trade with the friend whose page you are currently on.
+ * It allows for the user to pick many of their own items and choose one of the
+ * friend's items to trade with.
+ *
+ * @author Hong Chen, Hong Wang
+ *
+ * @see Trade, TradeHistory
+ */
 
 public class CreateTradeScreen extends Activity {
 
@@ -29,7 +41,7 @@ public class CreateTradeScreen extends Activity {
     private ArrayAdapter<Book> adapterO;
     private ArrayList<Book> selectedBorrowerBooks;
     private ArrayList<Book> selectedOwnerBook = new ArrayList<Book>();
-    static Trade newTrade = new Trade();
+    private static Trade newTrade = new Trade();
     private SaveLoad mySaveLoad;
     Button borrowerAdd;
     Button ownerSelect;
@@ -92,7 +104,7 @@ public class CreateTradeScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_trade_screen);
 
-
+        newTrade.setStatus(TradeStatus.INPROCESS);
         selectedBorrowerBooks = newTrade.getBorrowerBook();
         borrowerInventoryListView = (ListView)findViewById(R.id.borrowerInventory);
         adapter = new BookListAdapter(this,R.layout.book_inventory_list, selectedBorrowerBooks);
@@ -120,19 +132,6 @@ public class CreateTradeScreen extends Activity {
                 AlertDialog alertDialog = new AlertDialog.Builder(CreateTradeScreen.this).create();
                 alertDialog.setMessage("");
                 alertDialog.setCanceledOnTouchOutside(false);
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Add",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Replace",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
 
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancel",
                         new DialogInterface.OnClickListener() {
@@ -153,6 +152,7 @@ public class CreateTradeScreen extends Activity {
             public void onClick(View view) {
                 Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, SelectFromBorrowerInventoryActivity.class);
                 startActivity(borrowerAddIntent);
+                finish();
             }
         });
 
@@ -162,6 +162,7 @@ public class CreateTradeScreen extends Activity {
             public void onClick(View view) {
                 Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, SelectFromOwnerInventoryActivity.class);
                 startActivity(borrowerAddIntent);
+                finish();
 
             }
         });
@@ -171,9 +172,9 @@ public class CreateTradeScreen extends Activity {
             @Override
             public void onClick(View view) {
                 me.getTradeHistory().addTrade(newTrade);
+                sendEmail();
                 newTrade = new Trade();
                 //add this Trade into Trade History and empty newTrade
-                finish();
             }
         });
 
@@ -185,8 +186,6 @@ public class CreateTradeScreen extends Activity {
                 finish();
             }
         });
-
-
 
     }
 
@@ -213,6 +212,34 @@ public class CreateTradeScreen extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    /**
+     * This method will call the activity to send the email to notify the other user of the trade request.
+     *
+     * @throws android.content.ActivityNotFoundException
+     */
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        newTrade = new Trade();
+        finish();
+    }
+
+    public void sendEmail(){
+        String[] TO = {""};
+        String[] CC = {""};
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.setData(Uri.parse("mailto:"));
+        emailIntent.setType("text/plain");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
+        //emailIntent.putExtra(Intent.EXTRA_TEXT, "Borrower: " + newTrade.getBorrower().getUsername() + "Owner: " + newTrade.getOwner().getUsername());
+        try {
+            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+            finish();
+        }catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(CreateTradeScreen.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
 

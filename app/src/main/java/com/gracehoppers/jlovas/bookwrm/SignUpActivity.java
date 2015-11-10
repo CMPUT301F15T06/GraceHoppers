@@ -15,12 +15,18 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
+/**
+ * Activity where the user creates an account.
+ * Contains editTexts username, email and city; and a signUp button.
+ * Setters and Getters for these fields.
+ * @see Account, AccountManager
+ *
+ * @Author Linda Zhang
+ */
 public class SignUpActivity extends ActionBarActivity {
 
-    /*
-    Activity where the user signs up
-     */
+
+
 
 
 
@@ -123,6 +129,13 @@ public class SignUpActivity extends ActionBarActivity {
                     saveload.saveInFile(SignUpActivity.this, account);
                     //******************************************************************************
 
+<<<<<<< HEAD
+=======
+                    //accountManager.addAccount(account); commented out to help fix tests
+                    Intent sIntent = new Intent(SignUpActivity.this, HomeScreen.class); //sends user to profile
+                    sIntent.putExtra("username",account.getUsername());
+                    startActivity(sIntent);
+>>>>>>> 2961a6e90e7b32fc2245f922dbacc30f99bc20c9
                 } catch (IllegalArgumentException e) {
                     Toast.makeText(getApplicationContext(), "All Fields must be filled",
                             Toast.LENGTH_SHORT).show();

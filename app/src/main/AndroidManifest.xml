@@ -78,6 +78,14 @@
             android:name=".PhotoActivity"
             android:label="@string/title_activity_photo" >
         </activity>
+        <activity
+            android:name=".SelectCounterBooksActivity"
+            android:label="@string/title_activity_select_counter_books" >
+        </activity>
+        <activity
+            android:name=".ProcessTradeScreen"
+            android:label="@string/title_activity_process_trade_screen" >
+        </activity>
     </application>
 
 </manifest>

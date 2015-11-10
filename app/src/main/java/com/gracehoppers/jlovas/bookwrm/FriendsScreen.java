@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,17 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+/**
+ * This activity allows or searching the server for other registered users which can be added
+ * as friends to trade with. Currently the search for users is artificial and does not actually
+ * search the server (functionality coming soon). A user can then click on the added friend
+ * to explore their profile and items.
+ *
+ * @see Friends, FriendsListAdapter, Account, FriendProfileScreen
+ *
+ * @author Hong Wang, Jillian Lovas, Patricia Reyes
+ */
 
 public class FriendsScreen extends ActionBarActivity {
     private Activity activity = this;
@@ -79,7 +91,7 @@ public class FriendsScreen extends ActionBarActivity {
                 }
 
                 //test code
-                Toast.makeText(getApplicationContext(),"Friends has "+ friends.size()+ " people in it!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"Friends has "+ account.getFriends().getSize()+ " people in it!", Toast.LENGTH_SHORT).show();
 
 
 
@@ -114,20 +126,23 @@ public class FriendsScreen extends ActionBarActivity {
         oldFriendsList.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                try {
-                    Account friendAccount = account.getFriends().getFriendByIndex(position);
-                    //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
+               /* try {
+                    //friendAccount = account.getFriends().getFriendByIndex(position);
+                    //Log.e("FriendName", "My friend's name is:" + friendAccount.getUsername());
+                    //Toast.makeText(getApplicationContext(), "Position is: " + position, Toast.LENGTH_SHORT).show();
+
                 } catch (NegativeNumberException e) {
                     //these will only trip if its a bug on our end, not user's fault
                     Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
                 } catch (TooLongException e) {
                     //these will only trip if its a bug on our end, not user's fault
                     Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
-                }
-
+                }*/
+                saveLoad.saveInFile(getApplicationContext(), account);
                 Intent intent = new Intent(FriendsScreen.this, FriendProfileScreen.class);
                 intent.putExtra("listPosition", position);
                 startActivity(intent);
+
             }
         });
 
