@@ -104,7 +104,7 @@ public class AccountManager {
         }catch(Exception e) {e.printStackTrace();}
     }
 
-<<<<<<< HEAD
+
     public void updateAccount(Account account) {
         HttpClient httpClient = new DefaultHttpClient();
 
@@ -125,15 +125,13 @@ public class AccountManager {
         }
     }
 
-=======
-    /*
->>>>>>> 2961a6e90e7b32fc2245f922dbacc30f99bc20c9
-    public Accounts searchAccount(String username) {
-        Accounts result=new Accounts();
-        HttpPost searchRequest = new HttpPost("http://cmput301.softwareprocess.es:8080/cmput301f15t06/account/_search");
-        SimpleSearchCommand command=new SimpleSearchCommand(username);
 
-        String query=gson.toJson(command);
+    public Accounts searchAccount(String username) {
+        Accounts result = new Accounts();
+        HttpPost searchRequest = new HttpPost("http://cmput301.softwareprocess.es:8080/cmput301f15t06/account/_search");
+        SimpleSearchCommand command = new SimpleSearchCommand(username);
+
+        String query = gson.toJson(command);
         Log.i(TAG, "Json command: " + query);
 
         StringEntity stringEntity = null;
@@ -182,38 +180,10 @@ public class AccountManager {
         }
 
 
-
         //result.notifyObservers();
 
         return result;
-<<<<<<< HEAD
-=======
-        HttpClient httpClient=new DefaultHttpClient();
-        try {
-            HttpPost searchRequest = new HttpPost("http://cmput301.softwareprocess.es:8080/cmput301f15t06/account/_search");
-            HttpResponse response=httpClient.execute(searchRequest);
+    }
 
-            String status=response.getStatusLine().toString();
-            Log.i(TAG, status);
-
-            BufferedReader rd = new BufferedReader(new InputStreamReader(response
-                    .getEntity().getContent()));
-            StringBuffer buffer=new StringBuffer();
-            String line="";
-            while((line=rd.readLine())!=null) {
-                buffer.append(line);
-            }
-            String json=buffer.toString();
-            Type searchResponseType=new TypeToken<SearchResponse<Account>>() {}.getType();
-            SearchResponse<Account> esResponse=gson.fromJson(json,searchResponseType);
-            Hits<Account> hits=esResponse.getHits();
-            hits.getTotal();
-
-
-        }catch(IOException e) {e.printStackTrace();}
-        //return result;
->>>>>>> 2961a6e90e7b32fc2245f922dbacc30f99bc20c9
-
-    }*/
 
 }

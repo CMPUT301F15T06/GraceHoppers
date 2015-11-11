@@ -12,11 +12,8 @@ import java.util.ArrayList;
  * @see Account
  * @author ljuarezr on 10/20/15.
  */
-<<<<<<< HEAD
-public class Friends {
-=======
+
 public class Friends{
->>>>>>> 2961a6e90e7b32fc2245f922dbacc30f99bc20c9
     //A user's list of friends.
 
     private ArrayList<Account> friends = new ArrayList<Account>();
@@ -29,16 +26,13 @@ public class Friends{
         return friends;
     }
 
-<<<<<<< HEAD
-
-=======
     /**
      * Adds a new friend account into the list, but if the friend account has already been added, it throws the AlreadyAddedException
      * @param newFriend - the friend being put into the list
      * @return int - shows success
      * @throws AlreadyAddedException
      */
->>>>>>> 2961a6e90e7b32fc2245f922dbacc30f99bc20c9
+
     public int addFriend(Account newFriend) throws AlreadyAddedException{ //Need to search the server for Account
         //3 Cases
         //Check first if friends already:

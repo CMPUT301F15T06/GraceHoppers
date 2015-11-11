@@ -129,13 +129,6 @@ public class SignUpActivity extends ActionBarActivity {
                     saveload.saveInFile(SignUpActivity.this, account);
                     //******************************************************************************
 
-<<<<<<< HEAD
-=======
-                    //accountManager.addAccount(account); commented out to help fix tests
-                    Intent sIntent = new Intent(SignUpActivity.this, HomeScreen.class); //sends user to profile
-                    sIntent.putExtra("username",account.getUsername());
-                    startActivity(sIntent);
->>>>>>> 2961a6e90e7b32fc2245f922dbacc30f99bc20c9
                 } catch (IllegalArgumentException e) {
                     Toast.makeText(getApplicationContext(), "All Fields must be filled",
                             Toast.LENGTH_SHORT).show();
