@@ -142,11 +142,11 @@ public class MainActivity extends ActionBarActivity {
 
                 final String username=usernameText.getText().toString();
 
-<<<<<<< HEAD
+
 
                 SearchThread thread=new SearchThread(username);
                 thread.start();
-=======
+
                 Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
                 lIntent.putExtra("username", username);
                 startActivity(lIntent);
@@ -173,7 +173,6 @@ public class MainActivity extends ActionBarActivity {
                 else {
                     Toast.makeText(getApplicationContext(), "Username does not exist, please sign up or enter the correct username", Toast.LENGTH_SHORT).show();
                 }*/
->>>>>>> 2961a6e90e7b32fc2245f922dbacc30f99bc20c9
 
 
             }
@@ -232,7 +231,6 @@ public class MainActivity extends ActionBarActivity {
 
             result=(accountManager.searchAccount(search));
 */
->>>>>>> 2961a6e90e7b32fc2245f922dbacc30f99bc20c9
 
             try {
                 if(result != null) {
@@ -240,7 +238,7 @@ public class MainActivity extends ActionBarActivity {
                     lIntent.putExtra("username", search);
                     startActivity(lIntent);
                 }
-<<<<<<< HEAD
+
 
                 else {
                     MainActivity.this.runOnUiThread(new Runnable() {
