@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * @see Account
  * @author ljuarezr on 10/20/15.
  */
+
 public class Friends{
     //A user's list of friends.
 
@@ -31,6 +32,7 @@ public class Friends{
      * @return int - shows success
      * @throws AlreadyAddedException
      */
+
     public int addFriend(Account newFriend) throws AlreadyAddedException{ //Need to search the server for Account
         //3 Cases
         //Check first if friends already:

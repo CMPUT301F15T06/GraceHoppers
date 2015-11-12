@@ -13,6 +13,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
@@ -42,6 +43,7 @@ public class AccountManager {
         try {
             HttpPost addRequest = new HttpPost(URL + account.getUsername());
             StringEntity stringEntity = new StringEntity(gson.toJson(account));
+
 
             addRequest.setEntity(stringEntity);
             addRequest.setHeader("Accept", "application/json");
@@ -102,13 +104,34 @@ public class AccountManager {
         }catch(Exception e) {e.printStackTrace();}
     }
 
-    /*
-    public Accounts searchAccount(String username) {
-        Accounts result=new Accounts();
-        HttpPost searchRequest = new HttpPost("http://cmput301.softwareprocess.es:8080/cmput301f15t06/account/_search");
-        SimpleSearchCommand command=new SimpleSearchCommand(username);
 
-        String query=gson.toJson(command);
+    public void updateAccount(Account account) {
+        HttpClient httpClient = new DefaultHttpClient();
+
+        try {
+            HttpPut updateRequest = new HttpPut(URL
+                    + account.getUsername());
+
+            StringEntity stringEntity = new StringEntity(gson.toJson(account));
+            updateRequest.setEntity(stringEntity);
+            updateRequest.setHeader("Accept", "application/json");
+            HttpResponse response = httpClient.execute(updateRequest);
+            String status = response.getStatusLine().toString();
+
+            Log.i(TAG, status);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public Accounts searchAccount(String username) {
+        Accounts result = new Accounts();
+        HttpPost searchRequest = new HttpPost("http://cmput301.softwareprocess.es:8080/cmput301f15t06/account/_search");
+        SimpleSearchCommand command = new SimpleSearchCommand(username);
+
+        String query = gson.toJson(command);
         Log.i(TAG, "Json command: " + query);
 
         StringEntity stringEntity = null;
@@ -157,35 +180,10 @@ public class AccountManager {
         }
 
 
-
         //result.notifyObservers();
 
         return result;
-        HttpClient httpClient=new DefaultHttpClient();
-        try {
-            HttpPost searchRequest = new HttpPost("http://cmput301.softwareprocess.es:8080/cmput301f15t06/account/_search");
-            HttpResponse response=httpClient.execute(searchRequest);
+    }
 
-            String status=response.getStatusLine().toString();
-            Log.i(TAG, status);
-
-            BufferedReader rd = new BufferedReader(new InputStreamReader(response
-                    .getEntity().getContent()));
-            StringBuffer buffer=new StringBuffer();
-            String line="";
-            while((line=rd.readLine())!=null) {
-                buffer.append(line);
-            }
-            String json=buffer.toString();
-            Type searchResponseType=new TypeToken<SearchResponse<Account>>() {}.getType();
-            SearchResponse<Account> esResponse=gson.fromJson(json,searchResponseType);
-            Hits<Account> hits=esResponse.getHits();
-            hits.getTotal();
-
-
-        }catch(IOException e) {e.printStackTrace();}
-        //return result;
-
-    }*/
 
 }

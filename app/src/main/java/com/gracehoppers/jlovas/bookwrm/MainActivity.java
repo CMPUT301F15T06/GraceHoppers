@@ -1,8 +1,12 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.accounts.*;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -26,8 +30,7 @@ public class MainActivity extends ActionBarActivity {
     Button signUpButton;
     EditText usernameText;
     SaveLoad saveLoad;
-    AccountManager accountManager;
-    Accounts result;
+    Account result;
 
 
 
@@ -135,35 +138,13 @@ public class MainActivity extends ActionBarActivity {
 
                 //TODO: put the new account into the Gson or whatever we store it with so we can pull it out on further screens!
 
-
+                usernameText = (EditText)findViewById(R.id.usernameText);
                 final String username=usernameText.getText().toString();
 
-                Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
-                lIntent.putExtra("username", username);
-                startActivity(lIntent);
-                //it's all your fault
-                //result=accountManager.searchAccount(username);
 
-                /*for (int i=0;i<result.size();i++) {
-                    Toast.makeText(getApplicationContext(), result.get(i).getUsername(), Toast.LENGTH_SHORT).show();
-                    if(username.equals(result.get(i).getUsername())) {
-                        Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
-                        lIntent.putExtra("username", username);
-                        startActivity(lIntent);
-                    }
-                }*/
 
-                //SearchThread thread=new SearchThread(username);
-                //thread.start();
-                //Toast.makeText(getApplicationContext(), result.getUsername(), Toast.LENGTH_SHORT).show();
-                /*if(gotAccount.getUsername()!=null) {
-                    Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
-                    lIntent.putExtra("username", username);
-                    startActivity(lIntent);
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), "Username does not exist, please sign up or enter the correct username", Toast.LENGTH_SHORT).show();
-                }*/
+                SearchThread thread=new SearchThread(username);
+                thread.start();
 
 
             }
@@ -200,7 +181,7 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-/*
+
     class SearchThread extends Thread {
         private String search;
 
@@ -208,26 +189,34 @@ public class MainActivity extends ActionBarActivity {
             this.search = search;
         }
 
-       // @Override
-     /*   public void run() {
-            result=new Accounts();
-            accountManager=new AccountManager();
+        @Override
+        public void run() {
+            result=new Account();
+            AccountManager accountManager=new AccountManager();
+            result=(accountManager.getAccount(search));
 
-            result=(accountManager.searchAccount(search));
-*/
-
-           /* if(result!=null) {
+            try {
+                if(result != null) {
                     Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
                     lIntent.putExtra("username", search);
                     startActivity(lIntent);
                 }
-            else {
-                Toast.makeText(getApplicationContext(), "Username does not exist, please sign up or enter the correct username", Toast.LENGTH_SHORT).show();
-            }
-*/
+
+
+                else {
+                    MainActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "Username does not exist, please sign up or enter the correct username", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+            }catch(RuntimeException e) {e.printStackTrace();}
+        }
+
             //notifyUpdated();
         //}
 
-
     }
-//}
+}

@@ -39,8 +39,8 @@ public class ProfileScreen extends ActionBarActivity {
     Account account;
     SaveLoad saveload;
     AccountManager accountManager;
-    public ArrayList<View> editList;
-    public ArrayList<View> originalList;
+    ArrayList<View> editList;
+    ArrayList<View> originalList;
 
     /**
      * This is the activity for the mean functionality of answering a question. This
@@ -51,29 +51,18 @@ public class ProfileScreen extends ActionBarActivity {
      * @author Di Zhang
      *
      */
+    private Runnable doUpdateGUIDetails2=new Runnable() {
+        @Override
+        public void run() {
+            Toast.makeText(getApplicationContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
+            Intent sIntent = new Intent(ProfileScreen.this, ProfileScreen.class); //sends user to profile
+            sIntent.putExtra("Username",account.getUsername());
+            startActivity(sIntent);
+        }
+    };
 
     private Runnable doUpdateGUIDetails=new Runnable() {
         public void run() {
-            
-            /*
-            name =(TextView) findViewById(R.id.originalname);
-            editemail = (EditText) findViewById(R.id.editemail);
-            editcity = (EditText) findViewById(R.id.editcity);
-            confirm = (Button) findViewById(R.id.confirm_edit);
-            editList = new ArrayList<View>((Arrays.asList(editemail, editcity, confirm)));
-            set_invisible(editList);
-
-            //name =(TextView) findViewById(R.id.originalname);
-            email =(TextView) findViewById(R.id.originalemail);
-            city = (TextView) findViewById(R.id.originalcity);
-            edit = (Button) findViewById(R.id.editprofile);
-            originalList = new ArrayList<View>((Arrays.asList(city,email,edit)));
-            set_visible(originalList);
-
-            */
-            saveload = new SaveLoad();
-            account = saveload.loadFromFile(getApplicationContext());
-
             name.setText(account.getUsername());
             email.setText(account.getEmail());
             city.setText(account.getCity());
@@ -90,7 +79,7 @@ public class ProfileScreen extends ActionBarActivity {
                 @Override
                 public void onClick(View view) {
                     try {
-                        //Toast.makeText(getApplicationContext(), "Profile test 1", Toast.LENGTH_SHORT).show();
+
                         editemail = (EditText) findViewById(R.id.editemail);
                         editcity = (EditText) findViewById(R.id.editcity);
 
@@ -99,21 +88,10 @@ public class ProfileScreen extends ActionBarActivity {
 
                         account.setEmail(newemail);
                         account.setCity(newcity);
-                        saveload.saveInFile(ProfileScreen.this, account);
-
-                        //accountManager.addAccount(account); //commented this out for my tests; having issues with it for some reason
 
 
-                        Toast.makeText(getApplicationContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
-                       // Intent sIntent = new Intent(ProfileScreen.this, ProfileScreen.class); //sends user to profile
-                       // sIntent.putExtra("Username",account.getUsername());
-                       // startActivity(sIntent);
-
-                        set_invisible(editList);
-                        set_visible(originalList);
-                        email.setText(newemail);
-                        city.setText(newcity);
-
+                        Thread thread=new updateThread(account);
+                        thread.start();
 
                     } catch (IllegalArgumentException e) {
                         Toast.makeText(getApplicationContext(), "All Fields must be filled",
@@ -142,85 +120,21 @@ public class ProfileScreen extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_screen);
 
-        name =(TextView) findViewById(R.id.originalname);
+        //name =(TextView) findViewById(R.id.originalname);
         editemail = (EditText) findViewById(R.id.editemail);
         editcity = (EditText) findViewById(R.id.editcity);
         confirm = (Button) findViewById(R.id.confirm_edit);
         editList = new ArrayList<View>((Arrays.asList(editemail, editcity, confirm)));
         set_invisible(editList);
 
-        //name =(TextView) findViewById(R.id.originalname);
+
+        name =(TextView) findViewById(R.id.originalname);
         email =(TextView) findViewById(R.id.originalemail);
         city = (TextView) findViewById(R.id.originalcity);
         edit = (Button) findViewById(R.id.editprofile);
         originalList = new ArrayList<View>((Arrays.asList(city,email,edit)));
-        set_visible(originalList);
+        //set_visible(originalList);
 
-
-        /*try{
-            account.setCity("Lulala");
-            account.setUsername("hahaha");
-            account.setEmail("wow@cool.ca");
-        }catch(IllegalEmailException e){
-        }catch(TooLongException te){
-        }catch (NoSpacesException ne){
-        }*/
-
-        //editemail = (EditText) findViewById(R.id.editemail);
-        //editcity = (EditText) findViewById(R.id.editcity);
-        //confirm = (Button) findViewById(R.id.confirm_edit);
-        //final ArrayList<View> editList = new ArrayList<View>((Arrays.asList(editemail,editcity,confirm)));
-        //set_invisible(editList);
-
-        /*name =(TextView) findViewById(R.id.originalname);
-        email =(TextView) findViewById(R.id.originalemail);
-        city = (TextView) findViewById(R.id.originalcity);*/
-        //edit = (Button) findViewById(R.id.editprofile);
-        //final ArrayList<View> originalList = new ArrayList<View>((Arrays.asList(name,city,email,edit)));
-
-        /*name.setText(account.getUsername());
-        email.setText(account.getEmail());
-        city.setText(account.getCity());*/
-
-        /*edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                set_visible(editList);
-                set_invisible(originalList);
-            }
-        });*/
-
-        /*confirm.setOnClickListener(new View.OnClickListener()  {
-            @Override
-            public void onClick(View view) {
-
-                try {
-                    newemail = editemail.getText().toString();
-                    newcity = editcity.getText().toString();
-
-                    account.setEmail(newemail);
-                    account.setCity(newcity);
-                    saveload.saveInFile(ProfileScreen.this, account);
-
-
-                    Toast.makeText(getApplicationContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
-                    Intent sIntent = new Intent(ProfileScreen.this, ProfileScreen.class); //sends user to profile
-                    startActivity(sIntent);
-                } catch (IllegalArgumentException e) {
-                    Toast.makeText(getApplicationContext(), "All Fields must be filled",
-                            Toast.LENGTH_SHORT).show();
-                } catch (IllegalEmailException f) {
-                    Toast.makeText(getApplicationContext(), "Must have valid email",
-                            Toast.LENGTH_SHORT).show();
-                } catch (NoSpacesException s) {
-                    Toast.makeText(getApplicationContext(), "Fields cannot contain spaces",
-                            Toast.LENGTH_SHORT).show();
-                } catch (TooLongException w) {
-                    Toast.makeText(getApplicationContext(), "A field is too long",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });*/
         accountManager=new AccountManager();
         Intent intent=getIntent();
         if(intent !=null) {
@@ -275,10 +189,21 @@ public class ProfileScreen extends ActionBarActivity {
 
         @Override
         public void run() {
-//            account=accountManager.getAccount(username);
+            account=accountManager.getAccount(username);
             runOnUiThread(doUpdateGUIDetails);
 
         }
 
+    }
+
+    class updateThread extends Thread {
+        private Account account;
+        public updateThread(Account account) {this.account=account;}
+
+        @Override
+        public void run() {
+            accountManager.updateAccount(account);
+            runOnUiThread(doUpdateGUIDetails2);
+        }
     }
 }
