@@ -6,27 +6,54 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.gracehoppers.jlovas.bookwrm.SignUpActivity">
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/CityeditText"
-        android:width="200dp"
-        android:layout_above="@+id/SignUpbutton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="70dp"
-        android:hint="City" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Sign Up"
-        android:id="@+id/SignUpbutton"
-        android:width="150dp"
-        android:layout_marginBottom="114dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/titleSignUpText"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
-    <EditText
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:stretchColumns="0">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:background="#FFA0D0D8">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/usernameeditText"
+            android:width="200dp"
+            android:layout_above="@+id/emaileditText"
+            android:layout_alignStart="@+id/emaileditText"
+            android:layout_marginBottom="40dp"
+            android:singleLine="true"
+            android:maxLength="70"
+            android:scrollHorizontally="true"
+            android:hint="Username" />
+
+
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:background="#FFA0D0D8">
+
+
+            <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/emaileditText"
@@ -34,16 +61,43 @@
         android:layout_above="@+id/CityeditText"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
+        android:singleLine="true"
+        android:maxLength="70"
+        android:scrollHorizontally="true"
         android:hint="Email" />
 
-    <EditText
+            </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:background="#FFA0D0D8">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/CityeditText"
+                android:width="200dp"
+                android:layout_above="@+id/SignUpbutton"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="70dp"
+                android:singleLine="true"
+                android:maxLength="70"
+                android:scrollHorizontally="true"
+                android:hint="City" />
+
+    </TableRow>
+    </TableLayout>.
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/usernameeditText"
-        android:width="200dp"
-        android:layout_above="@+id/emaileditText"
-        android:layout_alignStart="@+id/emaileditText"
-        android:layout_marginBottom="40dp"
-        android:hint="Username" />
+        android:text="Sign Up"
+        android:id="@+id/SignUpbutton"
+        android:width="150dp"
+        android:layout_marginBottom="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
