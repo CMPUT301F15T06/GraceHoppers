@@ -55,9 +55,24 @@ public class ProfileScreen extends ActionBarActivity {
         @Override
         public void run() {
             Toast.makeText(getApplicationContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
-            Intent sIntent = new Intent(ProfileScreen.this, ProfileScreen.class); //sends user to profile
-            sIntent.putExtra("Username",account.getUsername());
-            startActivity(sIntent);
+            //Intent sIntent = new Intent(ProfileScreen.this, ProfileScreen.class); //sends user to profile
+            //sIntent.putExtra("Username",account.getUsername());
+            //startActivity(sIntent);
+            try {
+                account.setEmail(editemail.getText().toString());
+                account.setCity(editcity.getText().toString());
+            }catch(TooLongException e){
+                Toast.makeText(getApplicationContext(), "A field is too long", Toast.LENGTH_SHORT).show();
+            } catch(IllegalEmailException e){
+                Toast.makeText(getApplicationContext(), "Must be valid email", Toast.LENGTH_SHORT).show();
+            }catch(NoSpacesException e){
+                Toast.makeText(getApplicationContext(), "Email cannot contain spaces", Toast.LENGTH_SHORT).show();
+            }
+
+            set_invisible(editList);
+            email.setText(account.getEmail());
+            city.setText(account.getCity());
+            set_visible(originalList);
         }
     };
 
@@ -121,6 +136,16 @@ public class ProfileScreen extends ActionBarActivity {
         setContentView(R.layout.activity_profile_screen);
 
         //name =(TextView) findViewById(R.id.originalname);
+
+        name =(TextView) findViewById(R.id.originalname);
+        email =(TextView) findViewById(R.id.originalemail);
+        city = (TextView) findViewById(R.id.originalcity);
+        saveload = new SaveLoad();
+       // account=saveload.loadFromFile(getApplicationContext());
+       //  name.setText(account.getUsername());
+       //  email.setText(account.getEmail());
+        // city.setText(account.getCity());
+
         editemail = (EditText) findViewById(R.id.editemail);
         editcity = (EditText) findViewById(R.id.editcity);
         confirm = (Button) findViewById(R.id.confirm_edit);
@@ -128,9 +153,7 @@ public class ProfileScreen extends ActionBarActivity {
         set_invisible(editList);
 
 
-        name =(TextView) findViewById(R.id.originalname);
-        email =(TextView) findViewById(R.id.originalemail);
-        city = (TextView) findViewById(R.id.originalcity);
+
         edit = (Button) findViewById(R.id.editprofile);
         originalList = new ArrayList<View>((Arrays.asList(city,email,edit)));
         //set_visible(originalList);

@@ -105,8 +105,10 @@
 
                 android:layout_gravity="center"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp" />
+                android:layout_toEndOf="@+id/categorytextview"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="-40dp"
+                android:layout_marginTop="-20dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -187,6 +189,35 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="450dp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="&lt;"
+                android:id="@+id/pictureleftbutton"
+                android:layout_alignBottom="@+id/bookImage"
+                android:layout_alignStart="@+id/bookImage"
+                android:layout_marginBottom="-30dp"
+                android:textSize="25dp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=">"
+                android:id="@+id/picturerightbutton"
+                android:layout_alignBottom="@+id/pictureleftbutton"
+                android:layout_alignEnd="@+id/bookImage"
+                android:textSize="25dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="1/1"
+                android:id="@+id/imagetotaltextview"
+                android:gravity="center"
+                android:layout_marginLeft="152dp"
+                android:layout_marginTop="270dp" />
 
 
         </RelativeLayout>
