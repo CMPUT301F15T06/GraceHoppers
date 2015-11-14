@@ -85,4 +85,13 @@
         android:layout_marginTop="28dp"
         android:layout_marginBottom="50dp"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Trade"
+        android:id="@+id/createtradebutton"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/textcity1"
+        android:layout_marginStart="53dp" />
+
 </RelativeLayout>

@@ -98,7 +98,7 @@ public class MainActivity extends ActionBarActivity {
         book1.setAuthor("Joseph Campbell");
         book1.setCategory(3);
         book1.setQuality(4);
-        book1.setIsPrivate(false);
+        book1.setIsPrivate(true);
         book1.setDescription("This book is pretty cool. Maybe too cool.");
         //let these set to quantity default of 1 so i don't have to add extra exception catches for temporary code
 
