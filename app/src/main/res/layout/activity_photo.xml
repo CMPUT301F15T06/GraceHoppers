@@ -14,17 +14,50 @@
         android:adjustViewBounds="true"
         android:id="@+id/bookImage"
         android:src="@drawable/defaultbook"
-        android:maxHeight="320sp"
-        android:maxWidth="320sp"
-        android:layout_alignParentTop="true"
+        android:layout_gravity="center"
+        android:maxHeight="250dp"
+        android:maxWidth="250dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/imagePreviewTitleText"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="&lt;"
+        android:id="@+id/pictureleftbutton"
+        android:layout_marginTop="280dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="-55dp"
+        android:textSize="25dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=">"
+        android:id="@+id/picturerightbutton"
+        android:layout_marginRight="10dp"
+        android:textSize="25dp"
+        android:layout_alignBaseline="@id/pictureleftbutton"
+        android:layout_toEndOf="@+id/imagePreviewTitleText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="1/1"
+        android:id="@+id/imagetotaltextview"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:layout_alignBaseline="@id/pictureleftbutton"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginTop="270dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Image Preview"
+        android:text="Image Previews"
         android:textColor="#FFFFFF"
         android:id="@+id/imagePreviewTitleText"
         android:layout_alignParentTop="true"
@@ -54,5 +87,13 @@
         android:id="@+id/chooseFromGalleryButton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="↺ (Put in right spot later)"
+        android:layout_alignTop="@+id/bookImage"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="56dp" />
 
 </RelativeLayout>

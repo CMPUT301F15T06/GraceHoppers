@@ -4,11 +4,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+
 /**
  * The Book class creates instances of a book which contain the various information
  * about the book the user would like to trade.
  * <p>
- * The user sets the title, author, quantity, quality, category, privacy, photo, and description.
+ * The user sets the title, author, quantity, quality, category, privacy, and description.
  * </p>
  *
  * @author Jillian Lovas
@@ -17,10 +19,6 @@ import android.widget.ImageView;
  */
 public class Book {
 
-    public Book() {
-
-    }
-
     private String title;
     private String author;
     private int quantity;
@@ -28,15 +26,15 @@ public class Book {
     private boolean isPrivate;
     private String description;
     private double quality;
-    Bitmap photo; //will figure out if they change the image stuff later
+    private Photos photoList;
+
 
     /**
      * Constructor or the book creates a book with default values (to be overwritten when user provides information.
      *
      *
-     * @param photo or adding the chosen or default image (may change).
      */
-    public Book(Bitmap photo) {
+    public Book() {
         //no args? just creates a book
         //default values here - may remove these and put into setters
         this.title = "Untitled";
@@ -46,7 +44,7 @@ public class Book {
         this.isPrivate=false; //false= public, true=private
         this.description = "None";
         this.quality = 0; //default 0 for now?
-        this.photo= photo; //insert a default image like some grey image
+        photoList=new Photos();
     }
 
     public String getTitle() {
@@ -227,15 +225,7 @@ public class Book {
             this.quantity = converted;
         }
     }
-/*
-will return to this when understood better
-    public Bitmap getPhoto() {
-        return photo;
-    }
 
-    public void setPhoto(Bitmap photo) {
-    //some sort of protection
-        this.photo = photo;
-    }
-    */
+
+
 }

@@ -153,8 +153,8 @@ public class PhotoActivity extends ActionBarActivity {
             try {
                 Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(
                         getContentResolver(), imageUri);
-                photoToEdit.setImageBitmap(imageBitmap); //thumbnail?
-                String imageurl = getRealPathFromURI(imageUri);
+                photoToEdit.setImageBitmap(imageBitmap); //full image now, not a thumbnail
+                String imageurl = getRealPathFromURI(imageUri); //not sure what this does but it's in the provider's code
             } catch (Exception e) {
                 e.printStackTrace();
             }

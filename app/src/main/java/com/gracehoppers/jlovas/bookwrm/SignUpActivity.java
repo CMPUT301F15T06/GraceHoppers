@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.IOException;
 import java.util.ArrayList;
 /**
  * Activity where the user creates an account.
@@ -105,7 +104,7 @@ public class SignUpActivity extends ActionBarActivity {
 
                     Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
-                    Book book1 = new Book(testImage);
+                    Book book1 = new Book();
                     book1.setTitle("A Cool Guy Book");
                     book1.setAuthor("Joseph Campbell");
                     book1.setCategory(3);
@@ -114,7 +113,7 @@ public class SignUpActivity extends ActionBarActivity {
                     book1.setDescription("This book is pretty cool. Maybe too cool.");
                     //let these set to quantity default of 1 so i don't have to add extra exception catches for temporary code
 
-                    Book book2 = new Book(testImage);
+                    Book book2 = new Book();
                     book2.setTitle("Undertale");
                     book2.setDescription("I'm watching Markiplier play this so I don't need to read it anymore");
                     book2.setAuthor("Not sure");

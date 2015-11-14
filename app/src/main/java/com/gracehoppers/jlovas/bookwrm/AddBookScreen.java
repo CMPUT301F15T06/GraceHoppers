@@ -2,7 +2,6 @@ package com.gracehoppers.jlovas.bookwrm;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -204,7 +203,7 @@ public class AddBookScreen extends ActionBarActivity {
                 //messing around, will tidy up after
                 thePhoto.buildDrawingCache();
                 Bitmap bMap = thePhoto.getDrawingCache();
-                myBook = new Book(bMap);
+                myBook = new Book();
 
                 //a ton of exception catching goes here
                 try{

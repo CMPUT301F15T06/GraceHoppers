@@ -14,8 +14,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 /**
  * Created by jlovas on 10/17/15.****going to come back to this, going to write demoAccount in first
  */
@@ -58,7 +56,7 @@ public class HomeScreenTest extends ActivityInstrumentationTestCase2 {
         //ArrayList<Book> inventory = activity.getInventory();
 
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
-        Book book = new Book(testImage); //has a value at default so im not going to bother giving it any
+        Book book = new Book(); //has a value at default so im not going to bother giving it any
         accountA.getInventory().addBook(book);
 
         final ListView inventoryList = activity.getInventoryList();

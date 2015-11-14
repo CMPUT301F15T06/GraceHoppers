@@ -1,6 +1,5 @@
 package com.gracehoppers.jlovas.bookwrm;
 
-import android.content.ClipData;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.test.ActivityInstrumentationTestCase2;
@@ -31,7 +30,7 @@ public class InventoryTest extends ActivityInstrumentationTestCase2 {
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
         //create book 1
-        Book book1 = new Book(testImage);
+        Book book1 = new Book();
         book1.setTitle("Eragon");
         book1.setAuthor("Christopher Paolini");
 
@@ -47,7 +46,7 @@ public class InventoryTest extends ActivityInstrumentationTestCase2 {
         assertTrue(testAccount.getInventory().hasBook(book1));
 
         //create book 2 - allowing duplications? why not
-        Book book2 = new Book(testImage);
+        Book book2 = new Book();
         book2.setTitle("Tokyo Ghoul");
         book2.setAuthor("Not sure");
 
@@ -118,7 +117,7 @@ public class InventoryTest extends ActivityInstrumentationTestCase2 {
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
         //create book 1
-        Book book1 = new Book(testImage);
+        Book book1 = new Book();
         book1.setTitle("Eragon");
         book1.setAuthor("Christopher Paolini");
 
@@ -131,7 +130,7 @@ public class InventoryTest extends ActivityInstrumentationTestCase2 {
 
 
         //create book 2 - allowing duplications? why not
-        Book book2 = new Book(testImage);
+        Book book2 = new Book();
         book2.setTitle("Eragon");
         book2.setAuthor("Christopher Paolini");
 
@@ -165,7 +164,7 @@ public class InventoryTest extends ActivityInstrumentationTestCase2 {
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
         //create book 1
-        Book book1 = new Book(testImage);
+        Book book1 = new Book();
         book1.setTitle("Eragon");
         book1.setAuthor("Christopher Paolini");
 
@@ -177,7 +176,7 @@ public class InventoryTest extends ActivityInstrumentationTestCase2 {
         book1.setIsPrivate(false);
 
         //create book 2
-        Book book2 = new Book(testImage);
+        Book book2 = new Book();
         book2.setTitle("Tokyo Ghoul");
         book2.setAuthor("Not sure");
 
