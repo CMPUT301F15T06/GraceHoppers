@@ -121,3 +121,7 @@ Jiri Pinkas, https://youtu.be/Hx-8BD_Osdw, 2015-05-11
 Grabbing full-blown images instead of just thumbnails:
 Antrromet, http://stackoverflow.com/questions/10377783/low-picture-image-quality-when-capture-from-camera, Nov 13, 2015
 http://stackoverflow.com/users/451951/antrromet
+
+Envelope Image (various colors):
+Icon made by http://graphberry.com from http://www.flaticon.com
+licensed under http://creativecommons.org/licenses/by/3.0/  Creative Commons BY 3.0 , no changes made to the original image 2015-13-11
