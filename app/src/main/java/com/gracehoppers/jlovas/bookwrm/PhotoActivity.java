@@ -1,5 +1,16 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,6 +19,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 
 /**
  * PhotoActivity allows the user to look at the image listed for their book.
@@ -29,6 +44,11 @@ public class PhotoActivity extends ActionBarActivity {
     Button galleryButton;
     ImageView photoToEdit;
 
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private final static int SELECT_PHOTO = 12345;
+
+    ContentValues values;
+    Uri imageUri;
 
     //for UI testing ---------------------------------------------------
     public ImageView getImage(){ return photoToEdit;};
@@ -42,6 +62,9 @@ public class PhotoActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
+
+        values = new ContentValues();
+        //imageURI = new URI();
 
         okButton = (Button)findViewById(R.id.okAsIsButton);
         takePhotoButton = (Button)findViewById(R.id.takePhotoButton);
@@ -59,16 +82,36 @@ public class PhotoActivity extends ActionBarActivity {
         takePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Wanted to take a photo!", Toast.LENGTH_SHORT).show();
-                finish();
+                //Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                //if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                //    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                //}
+
+
+                //credit to: Antrromet, http://stackoverflow.com/questions/10377783/low-picture-image-quality-when-capture-from-camera, Nov 13, 2015
+                //http://stackoverflow.com/users/451951/antrromet
+                //for help with grabbing the full-sized image from a camera photo
+                values.put(MediaStore.Images.Media.TITLE, "New Picture");
+                values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+                imageUri = getContentResolver().insert(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+
             }
         });
 
         galleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Want to choose from image gallery!", Toast.LENGTH_SHORT).show();
-                finish();
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, SELECT_PHOTO);
+
+
+                //Toast.makeText(getApplicationContext(), "Want to choose from image gallery!", Toast.LENGTH_SHORT).show();
+                //finish();
             }
         });
 
@@ -96,4 +139,44 @@ public class PhotoActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    //function for calling and returning stuff from the camera
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            //Bundle extras = data.getExtras();
+            //Bitmap imageBitmap = (Bitmap) extras.get("data"); //this method grabs a small thumbnail only
+
+
+            //something needs to happen here to rotate the image to the right orientation
+            try {
+                Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(
+                        getContentResolver(), imageUri);
+                photoToEdit.setImageBitmap(imageBitmap); //thumbnail?
+                String imageurl = getRealPathFromURI(imageUri);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+        else if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK){
+            //do stuff with gallery choice!
+        }
+
+    }
+
+    //credit to: Antrromet, http://stackoverflow.com/questions/10377783/low-picture-image-quality-when-capture-from-camera, Nov 13, 2015
+    //http://stackoverflow.com/users/451951/antrromet
+    //for help with grabbing the full-sized image from a camera photo
+    public String getRealPathFromURI(Uri contentUri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(contentUri, proj, null, null, null);
+        int column_index = cursor
+                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+
+
 }

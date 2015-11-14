@@ -142,7 +142,7 @@ public class Account {
                 if(email.contains(" ")){
                     throw new NoSpacesException();
                 } else
-                if(email.length()>20){
+                if(email.length()>30){
                     throw new TooLongException();
                 } else
                 {
