@@ -28,6 +28,7 @@ public class FriendProfileScreen extends ActionBarActivity {
 
     private Activity profileActivity = this;
     private Button unFriendButton;
+    private Button createTradeButton;
     public Button getUnFriendButton(){return unFriendButton;}
 
     TextView name;
@@ -40,7 +41,7 @@ public class FriendProfileScreen extends ActionBarActivity {
     int position;
     private ArrayAdapter<Book> adapter;
     ListView friendInventoryList;
-    private ArrayList<Book> friendInventory;
+    //private ArrayList<Book> friendInventory;
 
     //UI test stuff ---------------------------------------------------------------
     public SaveLoad getSaveLoad(){return saveLoad;}
@@ -78,15 +79,17 @@ public class FriendProfileScreen extends ActionBarActivity {
         city = (TextView) findViewById(R.id.fcity);
         friendInventoryList = (ListView)findViewById(R.id.friendInventoryList);
         unFriendButton = (Button)findViewById(R.id.unFriendButton);
+        createTradeButton = (Button)findViewById(R.id.createtradebutton);
 
         name.setText(myFriend.getUsername());
         email.setText(myFriend.getEmail());
         city.setText(myFriend.getCity());
 
-        friendInventory = myFriend.getInventory().getInventory();
+        //friendInventory = myFriend.getInventory().getInventory();
+        //friendInventory = myFriend.getInventory().getPublic(myFriend.getInventory());
 
         //populate the friend's inventory list with their stuff
-        adapter = new BookListAdapter(getApplicationContext(),R.layout.friend_inventory_list, friendInventory);
+        adapter = new BookListAdapter(getApplicationContext(),R.layout.friend_inventory_list, myFriend.getInventory().getPublic(myFriend.getInventory()));
         friendInventoryList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -126,6 +129,13 @@ public class FriendProfileScreen extends ActionBarActivity {
             }
         });
 
+        createTradeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent turnTrade = new Intent(FriendProfileScreen.this, CreateTradeScreen.class);
+                startActivity(turnTrade);
+            }
+        });
 
     }
 

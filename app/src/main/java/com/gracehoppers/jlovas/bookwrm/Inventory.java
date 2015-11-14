@@ -83,4 +83,26 @@ public class Inventory {
 
         return inventory.get(i);
     }
+
+    /**
+     * return all public items in the inventory in the form of another inventory
+     * @param inventory
+     * @return
+     */
+    public ArrayList<Book> getPublic(Inventory inventory){
+        ArrayList<Book> publicInventory = new ArrayList<Book>();
+        for(int i=0;i<inventory.getSize();i++){
+            try {
+                if (inventory.getBookByIndex(i).isPrivate() == false) { //if the book is public
+                    publicInventory.add(inventory.getBookByIndex(i));
+                }
+            }catch (NegativeNumberException e){
+                e.getStackTrace();
+            }catch(TooLongException e){
+                e.getStackTrace();
+            }
+        }
+        return publicInventory;
+    }
+
 }

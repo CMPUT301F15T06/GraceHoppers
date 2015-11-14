@@ -134,7 +134,7 @@ public class HomeScreen extends Activity {
                 startActivity(turnFriend);
             }
         });
-
+/*
         Button trade = (Button) findViewById(R.id.tradeButton);
         trade.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +143,7 @@ public class HomeScreen extends Activity {
                 startActivity(turnTrade);
             }
         });
-
+*/
         Button tradeHistory = (Button) findViewById(R.id.TradeHistoryButton);
         tradeHistory.setOnClickListener(new View.OnClickListener() {
             @Override
