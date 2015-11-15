@@ -122,6 +122,21 @@ Grabbing full-blown images instead of just thumbnails:
 Antrromet, http://stackoverflow.com/questions/10377783/low-picture-image-quality-when-capture-from-camera, Nov 13, 2015
 http://stackoverflow.com/users/451951/antrromet
 
+Order of scaling an image with decoders:
+Daniel Fekete, http://stackoverflow.com/questions/8417034/how-to-make-bitmap-compress-without-change-the-bitmap-size, Nov 14th, 2015
+http://stackoverflow.com/users/834966/daniel-fekete
+
+Info on using inSampleSize as a means of scaling bytes:
+VicJordan, http://stackoverflow.com/questions/27415478/how-to-compress-bitmap-from-10mb-image-from-camera-to-300kb-beforw-setting-to-im, Nov 14t, 2015
+http://stackoverflow.com/users/631803/vicjordan
+
+Scaling a bitmap, using a bitmap scaler:
+Codepath, https://guides.codepath.com/android/Working-with-the-ImageView#scaling-a-bitmap, Nov 14th, 2015
+
+Scaling an image:
+Chhavi Goel, http://www.c-sharpcorner.com/UploadFile/e14021/re-size-and-compress-image-in-android-studio/, Nov 14th, 2015
+
 Envelope Image (various colors):
 Icon made by http://graphberry.com from http://www.flaticon.com
 licensed under http://creativecommons.org/licenses/by/3.0/  Creative Commons BY 3.0 , no changes made to the original image 2015-13-11
+

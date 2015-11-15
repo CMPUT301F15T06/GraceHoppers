@@ -3,7 +3,6 @@ package com.gracehoppers.jlovas.bookwrm;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.ImageView;
 
 /**
  * Created by jlovas on 10/17/15.

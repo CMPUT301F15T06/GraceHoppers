@@ -2,7 +2,6 @@ package com.gracehoppers.jlovas.bookwrm;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -267,6 +266,9 @@ public class AddBookScreen extends ActionBarActivity {
         }
     });
     } //end of onCreate function
+
+
+
 
 
     /**

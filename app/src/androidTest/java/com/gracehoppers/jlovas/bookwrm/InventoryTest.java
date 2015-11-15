@@ -1,6 +1,5 @@
 package com.gracehoppers.jlovas.bookwrm;
 
-import android.content.ClipData;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.test.ActivityInstrumentationTestCase2;

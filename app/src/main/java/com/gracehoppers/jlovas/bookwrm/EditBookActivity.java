@@ -1,6 +1,7 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -226,8 +227,9 @@ public class EditBookActivity extends ActionBarActivity {
 
     //now, to save all of the user's edits (and check to make sure they are still valid)-----------------------------
 
-
-        tempBook = new Book(); //use the book class' exceptions to ensure changes are valid
+        bookPhoto.buildDrawingCache();
+        Bitmap bMap = bookPhoto.getDrawingCache();
+        tempBook = new Book(bMap); //use the book class' exceptions to ensure changes are valid
 
 
         okButton.setOnClickListener(new View.OnClickListener() {

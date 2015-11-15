@@ -14,8 +14,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 /**
  * Created by jlovas on 10/17/15.****going to come back to this, going to write demoAccount in first
  */
