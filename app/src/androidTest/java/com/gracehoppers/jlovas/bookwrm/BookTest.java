@@ -26,7 +26,7 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
         int testCategory1 = 1;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
-        Book book = new Book();
+        Book book = new Book(testImage);
         book.setTitle("Eragon");
         book.setAuthor("Christopher Paolini");
 
@@ -55,7 +55,7 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
         int testCategory = 1;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
-        Book book = new Book();
+        Book book = new Book(testImage);
 
         book.setAuthor("Christopher Paolini");
         book.setQuantity("1");
@@ -80,7 +80,7 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
         int testCategory = 1;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
-        Book book = new Book();
+        Book book = new Book(testImage);
         book.setTitle("Eragon");
 
 
@@ -109,7 +109,7 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
         int testCategory = 1;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
-        Book book = new Book();
+        Book book = new Book(testImage);
         book.setTitle("Eragon");
         book.setAuthor("Christopher Paolini");
 
@@ -137,7 +137,7 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
         int testCategory = 1;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
-        Book book = new Book();
+        Book book = new Book(testImage);
         book.setTitle("Eragon");
         book.setAuthor("Christopher Paolini");
 
@@ -165,7 +165,7 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
         int testCategory = 7;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
-        Book book = new Book();
+        Book book = new Book(testImage);
         book.setTitle("Eragon");
         book.setAuthor("Christopher Paolini");
 
@@ -196,7 +196,7 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
         int testCategory = 1;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
-        Book book = new Book();
+        Book book = new Book(testImage);
         book.setTitle("Eragon");
         book.setAuthor("Christopher Paolini");
 
@@ -226,7 +226,7 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
         int testCategory = 1;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
-        Book book = new Book();
+        Book book = new Book(testImage);
         book.setTitle("Eragon");
         book.setAuthor("Christopher Paolini");
 
@@ -255,7 +255,7 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
         int testCategory = 1;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
-        Book book = new Book();
+        Book book = new Book(testImage);
         book.setTitle("Eragon");
         book.setAuthor("Christopher Paolini");
 
@@ -280,7 +280,7 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
         int testCategory = 1;
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
-        Book book = new Book();
+        Book book = new Book(testImage);
         book.setTitle("Eragon");
         book.setAuthor("Christopher Paolini");
 

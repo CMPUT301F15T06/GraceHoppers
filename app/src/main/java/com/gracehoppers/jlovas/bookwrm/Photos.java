@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import java.util.ArrayList;
 
 /**
+ * Will be restricted to having 5 photos - no ading your entire life story in pictures! >:0
+ *
  * Created by jlovas on 11/13/15.
  */
 public class Photos {
@@ -32,13 +34,18 @@ public class Photos {
         }
         else if(index >photos.size()) {
             throw new TooLongException();
+        }else if(index >4){
+            throw new TooLongException();
         }
         else
             return photos.get(index);
     }
 
-    public void addPhoto(Bitmap photo) {
+    public void addPhoto(Bitmap photo) throws TooLongException {
         //some sort of protection?
-        photos.add(photo);
+        if(photos.size()==5){
+            throw new TooLongException();
+        }else
+            photos.add(photo);
     }
 }

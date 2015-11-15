@@ -57,6 +57,8 @@ public class CreateTradeScreen extends Activity {
         mySaveLoad = new SaveLoad();
         me = mySaveLoad.loadFromFile(getApplicationContext());
 
+        Toast.makeText(getApplicationContext(), "My inventory has " + me.getInventory().getSize() + " items in it!", Toast.LENGTH_SHORT).show();
+
         pos = getIntent().getIntExtra("aPosition", (int) Double.POSITIVE_INFINITY);
         pos2 = getIntent().getIntExtra("bPosition", (int) Double.POSITIVE_INFINITY);
 

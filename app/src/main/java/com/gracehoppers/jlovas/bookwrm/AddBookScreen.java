@@ -203,7 +203,7 @@ public class AddBookScreen extends ActionBarActivity {
                 //messing around, will tidy up after
                 thePhoto.buildDrawingCache();
                 Bitmap bMap = thePhoto.getDrawingCache();
-                myBook = new Book();
+                myBook = new Book(bMap);
 
                 //a ton of exception catching goes here
                 try{
@@ -266,6 +266,9 @@ public class AddBookScreen extends ActionBarActivity {
         }
     });
     } //end of onCreate function
+
+
+
 
 
     /**
