@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class HomeScreen extends Activity {
     String username;
     Button profile;
     Button friend;
+    ImageView friendRequests;
 
 
     //For UI testing -----------------------------------------
@@ -71,6 +73,7 @@ public class HomeScreen extends Activity {
         //took out the test books that used to be here
 
         addBookButton= (Button)findViewById(R.id.addBookButton);
+
 
         account = saveload.loadFromFile(getApplicationContext());
 
@@ -159,6 +162,14 @@ public class HomeScreen extends Activity {
             public void onClick(View v) {
                 Intent turnCounter = new Intent(HomeScreen.this, ProcessTradeScreen.class);
                 startActivity(turnCounter);
+            }
+        });
+
+        friendRequests= (ImageView)findViewById(R.id.frimageView);
+        friendRequests.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "No current friend requests", Toast.LENGTH_SHORT).show();
             }
         });
 

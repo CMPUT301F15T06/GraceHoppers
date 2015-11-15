@@ -135,3 +135,8 @@ Codepath, https://guides.codepath.com/android/Working-with-the-ImageView#scaling
 
 Scaling an image:
 Chhavi Goel, http://www.c-sharpcorner.com/UploadFile/e14021/re-size-and-compress-image-in-android-studio/, Nov 14th, 2015
+
+Envelope Image (various colors):
+Icon made by http://graphberry.com from http://www.flaticon.com
+licensed under http://creativecommons.org/licenses/by/3.0/  Creative Commons BY 3.0 , no changes made to the original image 2015-13-11
+
