@@ -70,6 +70,26 @@ public class Friends{
         return friends.contains(friend);
     }
 
+    /**
+     * checks to see if the list contains a friend with this username
+     * @param username
+     * @return boolean
+     */
+    public boolean hasFriend(String username){
+        for(int i=0;i<this.getSize();i++){
+            try {
+                if (this.getFriendByIndex(i).getUsername() == username) {
+                    return true;
+                }
+            }catch(NegativeNumberException e){
+
+            }catch(TooLongException e){
+
+            }
+        }
+        return false;
+    }
+
     public Account getFriend(String friendUsername){
         Account friend = null;
         for (Account candidate : friends){

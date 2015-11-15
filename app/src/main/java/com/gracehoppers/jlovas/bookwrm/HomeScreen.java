@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -49,6 +50,8 @@ public class HomeScreen extends Activity {
     Button profile;
     Button friend;
     ImageView friendRequests;
+
+    FriendRequestManager frmanager;
 
 
     //For UI testing -----------------------------------------
@@ -169,7 +172,23 @@ public class HomeScreen extends Activity {
         friendRequests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "No current friend requests", Toast.LENGTH_SHORT).show();
+                //for testing purposes ---------------------------------
+                FriendRequest friendrequest = new FriendRequest();
+
+                try {
+                    friendrequest.makeRequest(account, "shadownater");
+                    //Toast.makeText(getApplicationContext(), friendrequest.getReceiver(), Toast.LENGTH_SHORT).show();
+                }catch(AlreadyAddedException e){
+                    Toast.makeText(getApplicationContext(), "Already friends with this user", Toast.LENGTH_SHORT).show();
+                }
+                //frmanager.addFriendRequest(friendrequest);
+                Thread thread=new AddThread(friendrequest);
+                thread.start();
+                //end line of test code --------------------------------
+                //Toast.makeText(getApplicationContext(), "No current friend requests", Toast.LENGTH_SHORT).show();
+
+                friendRequests.setImageResource(R.drawable.greenenvelope);
+
             }
         });
 
@@ -220,5 +239,76 @@ public class HomeScreen extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    //delete this after testing!! -----------------------------------------------------------------------
+    class AddThread extends Thread {
+        private FriendRequest friendrequest;
+        public AddThread(FriendRequest friendrequest) {
+            this.friendrequest=friendrequest;
+
+        }
+
+        @Override
+        public void run(){
+            frmanager = new FriendRequestManager();
+            frmanager.addFriendRequest(friendrequest);
+
+            //give some time to get updated info
+            try{
+                Thread.sleep(500);
+            } catch(InterruptedException e){e.printStackTrace();}
+
+            runOnUiThread(doFinishAdd);
+
+        }
+    }
+
+
+    class SearchThread extends Thread { //look for friend requests of this account --change it later?
+        private Account search;
+
+        public SearchThread(Account search) {
+            this.search = search;
+        }
+
+        @Override
+        public void run() {
+            FriendRequest result;
+            frmanager=new FriendRequestManager();
+            result=(frmanager.getFriendRequest(search.getUsername()));
+
+            try { //get rid of this part later/change it
+                if(result != null) {
+                    //a friendrequest exists
+                    HomeScreen.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "found a friend request", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+/*
+                else {
+                    //add account
+                    Thread thread=new AddThread(search);
+                    thread.start();
+                }
+*/
+            }catch(RuntimeException e) {e.printStackTrace();}
+        }
+
+    }
+
+
+    private Runnable doFinishAdd=new Runnable() {
+        @Override
+        public void run() {
+            Toast.makeText(getApplicationContext(), "request stored",
+                    Toast.LENGTH_SHORT).show();
+
+            //finish();
+        }
+    };
+    //---------------------------------------------------------------------------------------------------
 
 }
