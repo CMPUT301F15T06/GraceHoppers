@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +51,7 @@ public class ViewBookActivity extends ActionBarActivity {
     RatingBar rating;
     Button deleteButton;
     Button editButton;
+    ImageView bookImage;
     //put photo stuff here
     Account account, myFriend;
     Book tempBook, friendBook;
@@ -91,6 +93,7 @@ public class ViewBookActivity extends ActionBarActivity {
         stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP); //make filled stars yellow
         deleteButton= (Button)findViewById(R.id.deleteBookbutton);
         editButton= (Button)findViewById(R.id.EditBookButton);
+        bookImage = (ImageView)findViewById(R.id.bookImage);
         //----------------------------------------------------------------
 
 
@@ -126,7 +129,19 @@ public class ViewBookActivity extends ActionBarActivity {
             if (tempBook.isPrivate()) {
                 privacy.setText("Private Book");
             } else privacy.setText("Public Book");
+
             //put photo stuff here
+            //attempting to look at photos
+            if(tempBook.getPhotos().getHasImages()) {
+                try {
+                    bookImage.setImageBitmap(tempBook.getPhotos().getPhotoAtIndex(0));
+                } catch (NegativeNumberException e) {
+                    Toast.makeText(getApplicationContext(), "Negative index", Toast.LENGTH_SHORT).show();
+                } catch (TooLongException e) {
+                    Toast.makeText(getApplicationContext(), "Index is too long", Toast.LENGTH_SHORT).show();
+                }
+            }
+
 
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override

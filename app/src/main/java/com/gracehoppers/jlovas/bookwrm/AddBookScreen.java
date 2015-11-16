@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +34,7 @@ public class AddBookScreen extends ActionBarActivity {
     Book myBook;
     int spinValue; //might be a better way to do this, but eh
     String madeComments = "None";
+    Photos myPhotos;
 
     EditText titleText;
     EditText authorText;
@@ -83,6 +85,7 @@ public class AddBookScreen extends ActionBarActivity {
 
         mySaveLoad = new SaveLoad();
         me = mySaveLoad.loadFromFile(getApplicationContext());
+        myPhotos = new Photos();
 
         titleText = (EditText)findViewById(R.id.titleText);
         authorText = (EditText)findViewById(R.id.authorText);
@@ -203,7 +206,7 @@ public class AddBookScreen extends ActionBarActivity {
                 //messing around, will tidy up after
                 thePhoto.buildDrawingCache();
                 Bitmap bMap = thePhoto.getDrawingCache();
-                myBook = new Book(bMap);
+                myBook = new Book();
 
                 //a ton of exception catching goes here
                 try{
@@ -224,6 +227,14 @@ public class AddBookScreen extends ActionBarActivity {
                     }else{
                         myBook.setIsPrivate(false);
                     }
+
+
+                    if(myPhotos.getHasImages()) {
+                        myBook.getPhotos().setPhotoset(myPhotos);
+                        myBook.getPhotos().setHasImages(true);
+                    }
+
+                    Toast.makeText(getApplicationContext(), "hasImages= " + myBook.getPhotos().getHasImages(), Toast.LENGTH_LONG).show();
 
                     me.getInventory().addBook(myBook);
                     books.add(myBook); //For UI testing
@@ -258,9 +269,9 @@ public class AddBookScreen extends ActionBarActivity {
     thePhoto.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(AddBookScreen.this, PhotoActivity.class);
-            intent.putExtra("flag","add");
-            startActivityForResult(intent, 1);
+            Intent pIntent = new Intent(AddBookScreen.this, PhotoActivity.class);
+            pIntent.putExtra("flag","add");
+            startActivityForResult(pIntent, 1000);
 
 
         }
@@ -282,14 +293,20 @@ public class AddBookScreen extends ActionBarActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-            if(requestCode == 0)
+
+        //Log.i("Tag", "Result: " + Integer.toString(requestCode));
+
+            if(requestCode == 0) {
                 if (resultCode == AddCommentsScreen.RESULT_OK) {
-                    // TODO Extract the data returned from the child Activity. -DONE! :D
                     madeComments = data.getStringExtra("COMMENTS");
-                    //Toast.makeText(getApplicationContext(), "Got " + madeComments +" from child.", Toast.LENGTH_SHORT).show();
                 }
-            else{
-                    Toast.makeText(getApplicationContext(), "Photo added", Toast.LENGTH_SHORT).show();
+            }
+            else if(requestCode == 1000){
+
+                    myPhotos = mySaveLoad.loadPhotos(getApplicationContext());
+                    //pull extras from intent, get the object
+                    //myPhotos = data.getExtras().getSerializable("Object");
+                    Toast.makeText(getApplicationContext(), "Photos added: " + myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
                 }
     }
 

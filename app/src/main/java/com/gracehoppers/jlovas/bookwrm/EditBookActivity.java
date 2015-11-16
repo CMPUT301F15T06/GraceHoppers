@@ -229,7 +229,7 @@ public class EditBookActivity extends ActionBarActivity {
 
         bookPhoto.buildDrawingCache();
         Bitmap bMap = bookPhoto.getDrawingCache();
-        tempBook = new Book(bMap); //use the book class' exceptions to ensure changes are valid
+        tempBook = new Book(); //use the book class' exceptions to ensure changes are valid
 
 
         okButton.setOnClickListener(new View.OnClickListener() {

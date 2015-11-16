@@ -30,6 +30,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URI;
 
 /**
@@ -56,6 +57,7 @@ public class PhotoActivity extends ActionBarActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private final static int SELECT_PHOTO = 12345;
     Photos myPhotos;
+    SaveLoad saveLoad;
 
     ContentValues values;
     Uri imageUri;
@@ -77,6 +79,7 @@ public class PhotoActivity extends ActionBarActivity {
         values = new ContentValues();
         myPhotos = new Photos();
         scaler = new BitmapScaler();
+        saveLoad = new SaveLoad();
 
         okButton = (Button)findViewById(R.id.okAsIsButton);
         takePhotoButton = (Button)findViewById(R.id.takePhotoButton);
@@ -86,7 +89,10 @@ public class PhotoActivity extends ActionBarActivity {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Picked ok!", Toast.LENGTH_SHORT).show();
+                Intent result = new Intent();
+                //result.putExtra("Object", myPhotos);
+                setResult(PhotoActivity.RESULT_OK, result);
+                saveLoad.savePhotos(getApplicationContext(), myPhotos);
                 finish();
             }
         });
@@ -183,6 +189,7 @@ public class PhotoActivity extends ActionBarActivity {
 
                 //put into the Photos object
                 myPhotos.addPhoto(changed); //scaled
+                Toast.makeText(getApplicationContext(), "Photos taken: " + myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
                 photoToEdit.setImageBitmap(scaled);
 
 

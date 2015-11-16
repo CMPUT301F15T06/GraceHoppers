@@ -56,7 +56,7 @@ public class HomeScreenTest extends ActivityInstrumentationTestCase2 {
         //ArrayList<Book> inventory = activity.getInventory();
 
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
-        Book book = new Book(testImage); //has a value at default so im not going to bother giving it any
+        Book book = new Book(); //has a value at default so im not going to bother giving it any
         accountA.getInventory().addBook(book);
 
         final ListView inventoryList = activity.getInventoryList();

@@ -19,13 +19,10 @@ import java.util.ArrayList;
  */
 public class Book {
 
-    //put this back because I need to compile, but should not be used!! many nulls! no initialization!
-    //pass the default image to the constructor to intialize the values using:
-    //
-    //Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
-    public Book(){
+    //***please check your book declarations; if there's a problem, it's probably because this was removed!
+    //public Book(){
 
-    }
+    //}
 
     private String title;
     private String author;
@@ -37,11 +34,11 @@ public class Book {
     private Photos photoList;
 
     /**
-     * Constructor or the book creates a book with default values (to be overwritten when user provides information.
-     *
-     *
+     * Constructor for the book creates a book with default values (to be overwritten when user provides information.
+     * ***No longer takes an image as a parameter! Book will no longer hold the default image.
+     *    The xml provides the default image until photos are detected and loaded.
      */
-    public Book(Bitmap photo) {
+    public Book() {
         //no args? just creates a book
         //default values here - may remove these and put into setters
         this.title = "Untitled";
@@ -53,11 +50,6 @@ public class Book {
         this.quality = 0; //default 0 for now?
         //one default photo
         photoList=new Photos();
-        try{
-            photoList.addPhoto(photo);
-        }catch(TooLongException e){
-            //this will never be thrown here lol
-        }
 
     }
 
@@ -240,6 +232,8 @@ public class Book {
         }
     }
 
-
+    public Photos getPhotos(){
+        return photoList;
+    }
 
 }
