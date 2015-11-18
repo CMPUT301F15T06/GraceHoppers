@@ -7,24 +7,16 @@
     tools:context="com.gracehoppers.jlovas.bookwrm.HomeScreen"
     android:id="@+id/icol">
 
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="Add"
-        android:id="@+id/addBookButton"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/profileButton" />
+
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/frimageView"
         android:src="@drawable/blackenvelope"
-        android:layout_toEndOf="@+id/profileButton"
         android:layout_marginBottom="500dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp" />
+        android:layout_marginStart="290dp"
+         />
 
     <TextView
         android:layout_width="wrap_content"
@@ -42,40 +34,82 @@
         android:id="@+id/inventory1"
         android:layout_alignParentStart="true"
         android:smoothScrollbar="true"
-        android:layout_above="@+id/TradeHistoryButton"
-        android:layout_below="@+id/homescreentextview" />
+        android:layout_marginBottom="110dp"
+        android:layout_below="@+id/homescreentextview"
+        android:background="#ffffff" />
+
+
+
+
+
+
+<TableLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="430dp"
+    android:stretchColumns="0,1,2">
+    <TableRow
+        android:layout_width="0dp">
 
     <Button
-        android:layout_width="80dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:text="Friends"
         android:id="@+id/friendsButton"
         android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/TradeHistoryButton" />
+        android:layout_alignEnd="@+id/TradeHistoryButton"
+        android:layout_gravity="top" />
+
 
     <Button
-        android:layout_width="80dp"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Profile"
         android:id="@+id/profileButton"
         android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/addBookButton" />
+        android:layout_toStartOf="@+id/addBookButton"
+        android:layout_gravity="top" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Trade History"
-        android:id="@+id/TradeHistoryButton"
-        android:layout_above="@+id/friendsButton"
-        android:layout_alignParentStart="true" />
+        <Button
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add"
+            android:id="@+id/addBookButton"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/profileButton"
+            android:layout_gravity="top" />
+    </TableRow>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/turnCounter"
-        android:text="COUNTER"
-        android:layout_above="@+id/addBookButton"
-        android:layout_toStartOf="@+id/addBookButton" />
+    <TableRow
+        android:layout_width="0dp">
+        <Button
+
+            style="?android:attr/buttonStyleSmall"
+            android:layout_height="wrap_content"
+            android:text="History"
+            android:id="@+id/TradeHistoryButton"
+            android:layout_above="@+id/friendsButton"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/turnCounter"
+            android:text="COUNTER"
+            android:layout_above="@+id/addBookButton"
+            android:layout_toStartOf="@+id/addBookButton"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/optionsButton"
+            android:text="Options"
+            />
+    </TableRow>
+</TableLayout>
 
 </RelativeLayout>
