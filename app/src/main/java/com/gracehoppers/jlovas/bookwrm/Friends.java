@@ -37,11 +37,12 @@ public class Friends{
         //3 Cases
         //Check first if friends already:
         //1. A & B already friends! Return 1
+        //2. newFriend exists. Expected scenario. Return 2 (Request sent)
+        //3. newFriend does NOT exists. Return 3. (Request not sent)
         if (friends.contains(newFriend)){
             throw new AlreadyAddedException();
             //return 1;
-            //return 2;
-        } else {
+        } else { //Run this if they're not friends yet.
 
             //Search AccountB in the server. If existent, Case 1.
 
@@ -58,7 +59,9 @@ public class Friends{
      * @param friend - the friend account being removed
      */
     public void unFriend(Account friend){
+
         friends.remove(friend);
+
     }
 
     /**
