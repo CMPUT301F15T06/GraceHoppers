@@ -1,5 +1,9 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.content.Context;
+import android.content.Intent;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 /**
@@ -13,9 +17,10 @@ import java.util.ArrayList;
  * @author ljuarezr on 10/20/15.
  */
 
+
+
 public class Friends{
     //A user's list of friends.
-
     private ArrayList<Account> friends = new ArrayList<Account>();
 
     public Friends(){
@@ -33,8 +38,38 @@ public class Friends{
      * @throws AlreadyAddedException
      */
 
-    public int addFriend(Account newFriend) throws AlreadyAddedException{ //Need to search the server for Account
-        //3 Cases
+    public int addFriend(Account newFriend) {
+        //search server for Account
+
+        Account result;
+        AccountManager accountManager=new AccountManager();
+        result=(accountManager.getAccount(newFriend.getUsername()));
+
+        try {
+            if(result == null) {
+                //username does not exist
+                return 3;
+            }
+
+            else {
+                //check if user is added as friend
+                friends=result.getFriends().getFriends();
+                for(int i=0;i<friends.size();i++) {
+                    result=accountManager.getAccount(friends.get(i).getUsername());
+                    if(result.getUsername()==newFriend.getUsername()) {
+                        //user added as friend
+                        return 1;
+
+                    }
+                }
+            }
+        }catch(RuntimeException e) {e.printStackTrace();}
+
+        friends.add(newFriend);
+        return 2;
+    }
+
+  /*      //3 Cases
         //Check first if friends already:
         //1. A & B already friends! Return 1
         //2. newFriend exists. Expected scenario. Return 2 (Request sent)
@@ -52,7 +87,7 @@ public class Friends{
             //3. B does not exist. Cannot add ghost. Return 3
 
         }
-    }
+    }*/
 
     /**
      * removes the friend account from the list
@@ -115,7 +150,6 @@ public class Friends{
 
             return friends.get(i);
     }
-
 
 
 
