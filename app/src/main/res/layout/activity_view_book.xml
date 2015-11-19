@@ -92,6 +92,7 @@
             android:layout_height="match_parent"
             android:weightSum="1"
             android:orientation="vertical"
+            android:id="@+id/rLay"
             android:layout_below="@+id/tableLayout2"
             android:layout_centerHorizontal="true"
             android:paddingBottom="115dp">
@@ -195,9 +196,9 @@
                 android:layout_height="wrap_content"
                 android:text="&lt;"
                 android:id="@+id/pictureleftbutton"
-                android:layout_alignBottom="@+id/bookImage"
-                android:layout_alignStart="@+id/bookImage"
-                android:layout_marginBottom="-30dp"
+                android:layout_marginTop="260dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="-55dp"
                 android:textSize="25dp" />
 
             <Button
@@ -205,8 +206,9 @@
                 android:layout_height="wrap_content"
                 android:text=">"
                 android:id="@+id/picturerightbutton"
-                android:layout_alignBottom="@+id/pictureleftbutton"
-                android:layout_alignEnd="@+id/bookImage"
+                android:layout_alignBaseline="@id/pictureleftbutton"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="240dp"
                 android:textSize="25dp" />
 
             <TextView
@@ -217,7 +219,8 @@
                 android:id="@+id/imagetotaltextview"
                 android:gravity="center"
                 android:layout_marginLeft="152dp"
-                android:layout_marginTop="270dp" />
+                android:layout_marginTop="290dp"
+                android:layout_alignBaseline="@id/pictureleftbutton"/>
 
 
         </RelativeLayout>

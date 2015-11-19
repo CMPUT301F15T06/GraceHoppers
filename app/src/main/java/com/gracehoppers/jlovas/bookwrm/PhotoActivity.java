@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayInputStream;
@@ -52,7 +53,12 @@ public class PhotoActivity extends ActionBarActivity {
     Button takePhotoButton;
     Button galleryButton;
     ImageView photoToEdit;
+    TextView imageTotalText;
+    Button leftButton;
+    Button rightButton;
+
     BitmapScaler scaler;
+
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private final static int SELECT_PHOTO = 12345;
@@ -61,7 +67,7 @@ public class PhotoActivity extends ActionBarActivity {
 
     ContentValues values;
     Uri imageUri;
-    Bitmap scaledBitmap;
+
 
     //for UI testing ---------------------------------------------------
     public ImageView getImage(){ return photoToEdit;};
@@ -85,6 +91,9 @@ public class PhotoActivity extends ActionBarActivity {
         takePhotoButton = (Button)findViewById(R.id.takePhotoButton);
         galleryButton = (Button)findViewById(R.id.chooseFromGalleryButton);
         photoToEdit = (ImageView)findViewById(R.id.bookImage);
+        imageTotalText = (TextView)findViewById(R.id.imagetotaltextview);
+        leftButton = (Button)findViewById(R.id.pictureleftbutton);
+        rightButton = (Button)findViewById(R.id.picturerightbutton);
 
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +137,65 @@ public class PhotoActivity extends ActionBarActivity {
             }
         });
 
-    }
+        leftButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                //moves the photo left
+
+                String tmp = imageTotalText.getText().toString();
+
+                switch(tmp.charAt(0)){
+                    case '2':
+                        imageTotalText.setText("" + 1 + "/" + myPhotos.getPhotos().size() + "");
+                        leftButton.setEnabled(false);
+                        break;
+                    case '3':
+                        imageTotalText.setText("" + 2 +"/" +myPhotos.getPhotos().size() +"");
+                        break;
+                    case '4':
+                        imageTotalText.setText("" + 3 +"/" +myPhotos.getPhotos().size() +"");
+                        break;
+                    case '5':
+                        imageTotalText.setText("" + 4 +"/" +myPhotos.getPhotos().size() +"");
+                        rightButton.setEnabled(true);
+                        break;
+                }
+            }
+        });
+
+        rightButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                //moves the photo right
+
+                String tmp = imageTotalText.getText().toString();
+
+                switch(tmp.charAt(0)){
+                    case '4':
+                        imageTotalText.setText("" + 5 + "/" + myPhotos.getPhotos().size() + "");
+                        rightButton.setEnabled(false);
+                        break;
+                    case '3':
+                        imageTotalText.setText("" + 4 +"/" +myPhotos.getPhotos().size() +"");
+                        break;
+                    case '2':
+                        imageTotalText.setText("" + 3 + "/" + myPhotos.getPhotos().size() + "");
+                        Toast.makeText(getApplicationContext(), "tmp.charAt(0)=" + tmp.charAt(0) + " myPhotos.size=" +myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
+                        if(tmp.charAt(0) == (char)myPhotos.getPhotos().size()) rightButton.setEnabled(false); //broken!!
+                        break;
+                    case '1':
+                        imageTotalText.setText("" + 2 +"/" +myPhotos.getPhotos().size() +"");
+                        if(tmp.charAt(0) == (char)myPhotos.getPhotos().size()) rightButton.setEnabled(false); //broken!!
+                        leftButton.setEnabled(true);
+                        break;
+                }
+
+            }
+        });
+
+
+
+    }//end of onCreate
 
 
     @Override
@@ -162,7 +229,6 @@ public class PhotoActivity extends ActionBarActivity {
             //Bitmap imageBitmap = (Bitmap) extras.get("data"); //this method grabs a small thumbnail only - need?
 
 
-            //something needs to happen here to rotate the image to the right orientation
             try {
                 Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(
                         getContentResolver(), imageUri);
@@ -178,20 +244,32 @@ public class PhotoActivity extends ActionBarActivity {
 
                 Bitmap original = BitmapFactory.decodeFile(imageurl, options);
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                if(original.compress(Bitmap.CompressFormat.PNG, 100, bytes)){
-                    Toast.makeText(getApplicationContext(), "Did it!", Toast.LENGTH_SHORT).show();
-                }
+                original.compress(Bitmap.CompressFormat.PNG, 100, bytes); //very important line: bytes is what you want!!
+
+                myPhotos.addPhoto(bytes.toByteArray());
+
                 Bitmap changed = BitmapFactory.decodeStream(new ByteArrayInputStream(bytes.toByteArray()));
 
-                    Toast.makeText(getApplicationContext(), "Bytes before is: " + imageBitmap.getByteCount() + " Bytes of the image after is: " + changed.getByteCount(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Bytes before is: " + imageBitmap.getByteCount() +
+                     " Bytes of the image after is: " + changed.getByteCount(), Toast.LENGTH_SHORT).show();
 
                 Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
 
                 //put into the Photos object
-                myPhotos.addPhoto(changed); //scaled
+                //myPhotos.addPhoto(changed); //scaled
                 Toast.makeText(getApplicationContext(), "Photos taken: " + myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
                 photoToEdit.setImageBitmap(scaled);
 
+                imageTotalText.setText("" + 1 +"/" +myPhotos.getPhotos().size() +""); //that 1 is gonna be wrong sometimes
+
+                if(myPhotos.getPhotos().size() >1){
+                    rightButton.setEnabled(true);
+                }
+
+                if(myPhotos.getPhotos().size() ==5) {
+                    takePhotoButton.setEnabled(false);
+                    galleryButton.setEnabled(false);
+                }
 
             } catch (Exception e) {
                 //should never happen after UI stuff has been made properly

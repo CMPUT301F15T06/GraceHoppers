@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 
+import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  * Created by jlovas on 11/13/15.
  */
 public class Photos{
-    private ArrayList<Bitmap> photos;
+    private ArrayList<byte[]> photos;
     private boolean hasImages;
 
     public Photos(){
@@ -34,7 +35,7 @@ public class Photos{
      * @throws NegativeNumberException
      * @throws TooLongException
      */
-    public Bitmap getPhotoAtIndex(int index) throws NegativeNumberException, TooLongException {
+    public byte[] getPhotoAtIndex(int index) throws NegativeNumberException, TooLongException {
         if(index <0) {
             throw new NegativeNumberException();
         }
@@ -47,19 +48,21 @@ public class Photos{
             return photos.get(index);
     }
 
-    public void addPhoto(Bitmap photo) throws TooLongException {
+    public void addPhoto(byte[] b) throws TooLongException {
         //protection
         if(photos.size()==5){
             throw new TooLongException();
-        }else
-            photos.add(photo);
+        }else {
+            photos.add(b);
+            setHasImages(true);
+            }
     }
 
     public boolean getHasImages(){
         return hasImages;
     }
 
-    public ArrayList<Bitmap> getPhotos(){
+    public ArrayList<byte[]> getPhotos(){
         return photos;
     }
 

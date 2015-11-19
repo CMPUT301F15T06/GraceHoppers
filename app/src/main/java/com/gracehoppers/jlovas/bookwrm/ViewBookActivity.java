@@ -3,6 +3,8 @@ package com.gracehoppers.jlovas.bookwrm;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
@@ -16,8 +18,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.ByteArrayInputStream;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
@@ -59,6 +64,7 @@ public class ViewBookActivity extends ActionBarActivity {
     int posBook;
     int posFriend;
     private SaveLoad saveload = new SaveLoad();
+    BitmapScaler scaler;
 
     // for UI testing --------------------------------------------------
     public Button getDeleteButton(){return deleteButton;}
@@ -134,7 +140,10 @@ public class ViewBookActivity extends ActionBarActivity {
             //attempting to look at photos
             if(tempBook.getPhotos().getHasImages()) {
                 try {
-                    bookImage.setImageBitmap(tempBook.getPhotos().getPhotoAtIndex(0));
+                    Bitmap changed = BitmapFactory.decodeStream(new ByteArrayInputStream(tempBook.getPhotos().getPhotoAtIndex(0)));
+                    Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                    bookImage.setImageBitmap(scaled);
+                    //come back to this later if you can and adjust how this image pops up
                 } catch (NegativeNumberException e) {
                     Toast.makeText(getApplicationContext(), "Negative index", Toast.LENGTH_SHORT).show();
                 } catch (TooLongException e) {

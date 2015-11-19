@@ -29,7 +29,8 @@
         android:layout_marginTop="280dp"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="-55dp"
-        android:textSize="25dp" />
+        android:textSize="25dp"
+        android:enabled="false" />
 
     <Button
         android:layout_width="wrap_content"
@@ -39,13 +40,14 @@
         android:layout_marginRight="10dp"
         android:textSize="25dp"
         android:layout_alignBaseline="@id/pictureleftbutton"
-        android:layout_toEndOf="@+id/imagePreviewTitleText" />
+        android:layout_toEndOf="@+id/imagePreviewTitleText"
+        android:enabled="false" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="1/1"
+        android:text="-"
         android:id="@+id/imagetotaltextview"
         android:gravity="center"
         android:textColor="#FFFFFF"
@@ -91,9 +93,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="↺ (Put in right spot later)"
+        android:text="↺"
+        android:id="@+id/retakeButton"
         android:layout_alignTop="@+id/bookImage"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="56dp" />
+        android:layout_alignEnd="@+id/bookImage" />
 
 </RelativeLayout>

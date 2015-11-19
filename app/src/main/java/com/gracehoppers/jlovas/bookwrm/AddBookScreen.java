@@ -303,6 +303,7 @@ public class AddBookScreen extends ActionBarActivity {
             }
             else if(requestCode == 1000){
 
+                    //temporary test for if photos are getting here
                     myPhotos = mySaveLoad.loadPhotos(getApplicationContext());
                     //pull extras from intent, get the object
                     //myPhotos = data.getExtras().getSerializable("Object");

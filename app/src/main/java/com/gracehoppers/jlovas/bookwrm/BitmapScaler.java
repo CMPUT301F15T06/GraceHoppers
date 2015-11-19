@@ -11,15 +11,9 @@ import android.graphics.Bitmap;
  */
 public class BitmapScaler {
 
-
-
         // Scale and maintain aspect ratio given a desired width
-
         // BitmapScaler.scaleToFitWidth(bitmap, 100);
-
-        public static Bitmap scaleToFitWidth(Bitmap b, int width)
-
-        {
+        public static Bitmap scaleToFitWidth(Bitmap b, int width){
 
             float factor = width / (float) b.getWidth();
 

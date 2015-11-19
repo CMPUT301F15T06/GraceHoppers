@@ -112,7 +112,7 @@ public class SaveLoad {
         Photos myPhotos=null;
         try {
 
-            FileInputStream fis = context.openFileInput(FILENAME);
+            FileInputStream fis = context.openFileInput(PHOTOFILE);
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
             Gson gson=new Gson();
             //https://sites.google.com/site/gson/gson-user-guide 2015-16-10
