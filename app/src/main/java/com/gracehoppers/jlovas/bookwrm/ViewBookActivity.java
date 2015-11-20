@@ -58,6 +58,9 @@ public class ViewBookActivity extends ActionBarActivity {
     Button editButton;
     ImageView bookImage;
     //put photo stuff here
+    Button leftButton;
+    Button rightButton;
+    TextView imageTotalText;
     Account account, myFriend;
     Book tempBook, friendBook;
     int pos;
@@ -100,9 +103,144 @@ public class ViewBookActivity extends ActionBarActivity {
         deleteButton= (Button)findViewById(R.id.deleteBookbutton);
         editButton= (Button)findViewById(R.id.EditBookButton);
         bookImage = (ImageView)findViewById(R.id.bookImage);
+        leftButton = (Button)findViewById(R.id.pictureleftbutton);
+        rightButton = (Button)findViewById(R.id.picturerightbutton);
+        imageTotalText = (TextView)findViewById(R.id.imagetotaltextview);
         //----------------------------------------------------------------
 
+        leftButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                //moves the photo left
+                //notes: the images are appearing from most recently taken to least recently taken, hence the way I have getAtIndex'd
 
+                String tmp = imageTotalText.getText().toString();
+
+                switch(tmp.charAt(0)){
+                    case '2':
+                        imageTotalText.setText("" + 1 + "/" + tempBook.getPhotos().getPhotos().size() + "");
+                        rightButton.setEnabled(true);
+                        leftButton.setEnabled(false);
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(4), 0, tempBook.getPhotos().getPhotoAtIndex(4).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            bookImage.setImageBitmap(scaled);
+                            break;
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
+                    case '3':
+                        imageTotalText.setText("" + 2 +"/" +tempBook.getPhotos().getPhotos().size() +"");
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(3), 0, tempBook.getPhotos().getPhotoAtIndex(3).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            bookImage.setImageBitmap(scaled);
+                            break;
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
+                    case '4':
+                        imageTotalText.setText("" + 3 +"/" +tempBook.getPhotos().getPhotos().size() +"");
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(2), 0, tempBook.getPhotos().getPhotoAtIndex(2).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            bookImage.setImageBitmap(scaled);
+                            break;
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
+                    case '5':
+                        imageTotalText.setText("" + 4 +"/" +tempBook.getPhotos().getPhotos().size() +"");
+                        rightButton.setEnabled(true);
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(1), 0, tempBook.getPhotos().getPhotoAtIndex(1).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            bookImage.setImageBitmap(scaled);
+                            break;
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
+                }
+            }
+        });
+
+        rightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //moves the photo right
+                //notes: the images are appearing from most recently taken to least recently taken, hence the way I have getAtIndex'd
+
+                String tmp = imageTotalText.getText().toString();
+
+                switch(tmp.charAt(0)){
+                    case '4':
+                        imageTotalText.setText("" + 5 + "/" + tempBook.getPhotos().getPhotos().size() + "");
+                        if(Character.getNumericValue(tmp.charAt(0)+1) == (char)tempBook.getPhotos().getPhotos().size()) rightButton.setEnabled(false);
+                        rightButton.setEnabled(false);
+
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(0), 0, tempBook.getPhotos().getPhotoAtIndex(0).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            bookImage.setImageBitmap(scaled);
+                            break;
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
+
+                    case '3':
+                        imageTotalText.setText("" + 4 +"/" +tempBook.getPhotos().getPhotos().size() +"");
+                        if(Character.getNumericValue(tmp.charAt(0)+1) == (char)tempBook.getPhotos().getPhotos().size()) rightButton.setEnabled(false);
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(1), 0, tempBook.getPhotos().getPhotoAtIndex(1).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            bookImage.setImageBitmap(scaled);
+                            break;
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
+                    case '2':
+                        imageTotalText.setText("" + 3 + "/" + tempBook.getPhotos().getPhotos().size() + "");
+                        if(Character.getNumericValue(tmp.charAt(0)+1) == (char)tempBook.getPhotos().getPhotos().size()) rightButton.setEnabled(false);
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(2), 0, tempBook.getPhotos().getPhotoAtIndex(2).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            bookImage.setImageBitmap(scaled);
+                            break;
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
+                    case '1':
+                        imageTotalText.setText("" + 2 + "/" + tempBook.getPhotos().getPhotos().size() + "");
+                        if(Character.getNumericValue(tmp.charAt(0)+1) == (char)tempBook.getPhotos().getPhotos().size()) rightButton.setEnabled(false);
+                        leftButton.setEnabled(true);
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(3), 0, tempBook.getPhotos().getPhotoAtIndex(3).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            bookImage.setImageBitmap(scaled);
+                            break;
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
+                }
+
+            }
+        });
 
 
 
@@ -143,6 +281,9 @@ public class ViewBookActivity extends ActionBarActivity {
                     Bitmap changed = BitmapFactory.decodeStream(new ByteArrayInputStream(tempBook.getPhotos().getPhotoAtIndex(0)));
                     Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
                     bookImage.setImageBitmap(scaled);
+                    if(tempBook.getPhotos().getPhotos().size() >1)
+                        rightButton.setEnabled(true);
+                    imageTotalText.setText("" + 1 + "/" + tempBook.getPhotos().getPhotos().size() + "");
                     //come back to this later if you can and adjust how this image pops up
                 } catch (NegativeNumberException e) {
                     Toast.makeText(getApplicationContext(), "Negative index", Toast.LENGTH_SHORT).show();

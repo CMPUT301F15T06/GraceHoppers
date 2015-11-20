@@ -141,53 +141,131 @@ public class PhotoActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 //moves the photo left
+                //notes: the images are appearing from most recently taken to least recently taken, hence the way I have getAtIndex'd
 
                 String tmp = imageTotalText.getText().toString();
 
                 switch(tmp.charAt(0)){
                     case '2':
                         imageTotalText.setText("" + 1 + "/" + myPhotos.getPhotos().size() + "");
+                        rightButton.setEnabled(true);
                         leftButton.setEnabled(false);
-                        break;
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(4), 0, myPhotos.getPhotoAtIndex(4).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            photoToEdit.setImageBitmap(scaled);
+                            break;
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
                     case '3':
                         imageTotalText.setText("" + 2 +"/" +myPhotos.getPhotos().size() +"");
-                        break;
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(3), 0, myPhotos.getPhotoAtIndex(3).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            photoToEdit.setImageBitmap(scaled);
+                            break;
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
                     case '4':
                         imageTotalText.setText("" + 3 +"/" +myPhotos.getPhotos().size() +"");
-                        break;
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(2), 0, myPhotos.getPhotoAtIndex(2).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            photoToEdit.setImageBitmap(scaled);
+                            break;
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
                     case '5':
                         imageTotalText.setText("" + 4 +"/" +myPhotos.getPhotos().size() +"");
                         rightButton.setEnabled(true);
-                        break;
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(1), 0, myPhotos.getPhotoAtIndex(1).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            photoToEdit.setImageBitmap(scaled);
+                            break;
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
                 }
             }
         });
 
-        rightButton.setOnClickListener(new View.OnClickListener(){
+        rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //moves the photo right
+                //notes: the images are appearing from most recently taken to least recently taken, hence the way I have getAtIndex'd
 
                 String tmp = imageTotalText.getText().toString();
 
                 switch(tmp.charAt(0)){
                     case '4':
                         imageTotalText.setText("" + 5 + "/" + myPhotos.getPhotos().size() + "");
+                        if(Character.getNumericValue(tmp.charAt(0)+1) == (char)myPhotos.getPhotos().size()) rightButton.setEnabled(false);
                         rightButton.setEnabled(false);
-                        break;
+
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(0), 0, myPhotos.getPhotoAtIndex(0).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            photoToEdit.setImageBitmap(scaled);
+                            break;
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
+
                     case '3':
                         imageTotalText.setText("" + 4 +"/" +myPhotos.getPhotos().size() +"");
-                        break;
+                        if(Character.getNumericValue(tmp.charAt(0)+1) == (char)myPhotos.getPhotos().size()) rightButton.setEnabled(false);
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(1), 0, myPhotos.getPhotoAtIndex(1).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            photoToEdit.setImageBitmap(scaled);
+                            break;
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
                     case '2':
                         imageTotalText.setText("" + 3 + "/" + myPhotos.getPhotos().size() + "");
-                        Toast.makeText(getApplicationContext(), "tmp.charAt(0)=" + tmp.charAt(0) + " myPhotos.size=" +myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
-                        if(tmp.charAt(0) == (char)myPhotos.getPhotos().size()) rightButton.setEnabled(false); //broken!!
-                        break;
+                        if(Character.getNumericValue(tmp.charAt(0)+1) == (char)myPhotos.getPhotos().size()) rightButton.setEnabled(false);
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(2), 0, myPhotos.getPhotoAtIndex(2).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            photoToEdit.setImageBitmap(scaled);
+                            break;
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
                     case '1':
-                        imageTotalText.setText("" + 2 +"/" +myPhotos.getPhotos().size() +"");
-                        if(tmp.charAt(0) == (char)myPhotos.getPhotos().size()) rightButton.setEnabled(false); //broken!!
+                        imageTotalText.setText("" + 2 + "/" + myPhotos.getPhotos().size() + "");
+                        if(Character.getNumericValue(tmp.charAt(0)+1) == (char)myPhotos.getPhotos().size()) rightButton.setEnabled(false);
                         leftButton.setEnabled(true);
-                        break;
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(3), 0, myPhotos.getPhotoAtIndex(3).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            photoToEdit.setImageBitmap(scaled);
+                            break;
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
                 }
 
             }
