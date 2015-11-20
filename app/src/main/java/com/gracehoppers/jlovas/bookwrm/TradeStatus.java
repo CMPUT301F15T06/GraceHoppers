@@ -12,5 +12,5 @@ public enum TradeStatus {
     /**
      * Enumeration where each item describes the state of a trade.
      */
-    INPROCESS, ACCEPTED, DECLINED, COUNTERED;
+    ACCEPTED, DECLINED, COUNTERED;
 }

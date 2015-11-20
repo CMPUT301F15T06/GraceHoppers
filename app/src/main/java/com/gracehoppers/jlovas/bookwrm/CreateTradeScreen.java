@@ -106,7 +106,7 @@ public class CreateTradeScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_trade_screen);
 
-        newTrade.setStatus(TradeStatus.INPROCESS);
+        newTrade.setCompletion(TradeCompletion.CURRENT);
         selectedBorrowerBooks = newTrade.getBorrowerBook();
         borrowerInventoryListView = (ListView)findViewById(R.id.borrowerInventory);
         adapter = new BookListAdapter(this,R.layout.book_inventory_list, selectedBorrowerBooks);
@@ -174,9 +174,11 @@ public class CreateTradeScreen extends Activity {
             @Override
             public void onClick(View view) {
                 me.getTradeHistory().addTrade(newTrade);
-                sendEmail();
+                //sendEmail();  Commenting out to test while the send email is not set up
                 newTrade = new Trade();
                 //add this Trade into Trade History and empty newTrade
+                //maybe toast to show that the trade has been created and go back to home screen
+
             }
         });
 
@@ -217,6 +219,9 @@ public class CreateTradeScreen extends Activity {
 
     /**
      * This method will call the activity to send the email to notify the other user of the trade request.
+     *
+     * Shouldn't this be automatic though? It makes sense to stay on the CreateTradeScreen and just
+     * toast once the email is sent (return from the function)?
      *
      * @throws android.content.ActivityNotFoundException
      */

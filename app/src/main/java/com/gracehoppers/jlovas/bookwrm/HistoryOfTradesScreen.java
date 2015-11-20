@@ -38,9 +38,6 @@ public class HistoryOfTradesScreen extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_of_trades_screen);
 
-        //Link the TradeHistory array with the ListView
-        /* This is a static view, since we can't delete
-           And can't add a trade from the same activity/screen */
 
         saveLoad = new SaveLoad();
 
