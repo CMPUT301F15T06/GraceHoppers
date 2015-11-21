@@ -8,6 +8,8 @@ import android.util.Log;
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Will be restricted to having 5 photos - no ading your entire life story in pictures! >:0
@@ -53,9 +55,21 @@ public class Photos{
         if(photos.size()==5){
             throw new TooLongException();
         }else {
-            photos.add(b);
+            photos.add(0, b);
             setHasImages(true);
             }
+    }
+
+
+
+    public void swapPhotoAtIndex(int index, byte[] b) throws TooLongException, NegativeNumberException{
+        if(index < 0){
+            throw new NegativeNumberException();
+        }else if(index >photos.size()){
+            throw new TooLongException();
+        }else{
+            photos.set(index, b);
+        }
     }
 
     public boolean getHasImages(){
