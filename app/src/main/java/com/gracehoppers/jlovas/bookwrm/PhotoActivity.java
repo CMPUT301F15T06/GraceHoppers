@@ -401,7 +401,7 @@ public class PhotoActivity extends ActionBarActivity {
                 String tmp= imageTotalText.getText().toString();
                 int index = Character.getNumericValue(tmp.charAt(0));
 
-                myPhotos.swapPhotoAtIndex(index, bytes.toByteArray());
+                myPhotos.swapPhotoAtIndex(index-1, bytes.toByteArray());
 
                 Bitmap changed = BitmapFactory.decodeStream(new ByteArrayInputStream(bytes.toByteArray()));
 

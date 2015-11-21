@@ -24,6 +24,9 @@
         android:layout_below="@+id/bookwrmText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="42dp"
+        android:singleLine="true"
+        android:scrollHorizontally="true"
+        android:maxLength="70"
         android:hint="username"
         android:background="#ffffff" />
 

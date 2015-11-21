@@ -3,9 +3,12 @@
     package="com.gracehoppers.jlovas.bookwrm" >
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -89,6 +92,14 @@
         <activity
             android:name=".ProcessTradeScreen"
             android:label="@string/title_activity_process_trade_screen" >
+        </activity>
+        <activity
+            android:name=".OptionsActivity"
+            android:label="@string/title_activity_options" >
+        </activity>
+        <activity
+            android:name=".TutorialActivity"
+            android:label="@string/title_activity_tutorial" >
         </activity>
     </application>
 

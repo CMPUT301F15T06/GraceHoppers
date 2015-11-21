@@ -48,6 +48,7 @@ public class HomeScreen extends Activity {
     String username;
     Button profile;
     Button friend;
+    Button options;
     ImageView friendRequests;
 
 
@@ -170,6 +171,15 @@ public class HomeScreen extends Activity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "No current friend requests", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        options = (Button)findViewById(R.id.optionsButton);
+        options.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeScreen.this, OptionsActivity.class);
+                startActivity(intent);
             }
         });
 
