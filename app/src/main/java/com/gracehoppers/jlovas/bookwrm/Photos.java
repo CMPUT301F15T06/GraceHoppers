@@ -72,6 +72,17 @@ public class Photos{
         }
     }
 
+    public void removePhotoAtIndex(int index) throws NegativeNumberException, TooLongException{
+        if(index <0){
+            throw new NegativeNumberException();
+        }else if(index> photos.size()){
+            throw new TooLongException();
+        }else{
+            //good to go
+            photos.remove(index);
+        }
+    }
+
     public boolean getHasImages(){
         return hasImages;
     }

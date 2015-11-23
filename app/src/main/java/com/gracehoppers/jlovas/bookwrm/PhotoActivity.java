@@ -57,6 +57,7 @@ public class PhotoActivity extends ActionBarActivity {
     Button leftButton;
     Button rightButton;
     Button redoButton;
+    Button deleteButton;
 
     BitmapScaler scaler;
 
@@ -95,9 +96,11 @@ public class PhotoActivity extends ActionBarActivity {
         leftButton = (Button)findViewById(R.id.pictureleftbutton);
         rightButton = (Button)findViewById(R.id.picturerightbutton);
         redoButton = (Button)findViewById(R.id.retakeButton);
+        deleteButton = (Button)findViewById(R.id.xButton);
 
         //redoButton should not be visible initially
         redoButton.setVisibility(View.GONE);
+        deleteButton.setVisibility(View.GONE);
 
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +126,37 @@ public class PhotoActivity extends ActionBarActivity {
                 startActivityForResult(intent, REDO_PHOTO);
             }
         });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //want to delete a photo
+
+                if(myPhotos.getPhotos().size() ==1){
+                    //if only one photo, revert imageview to default
+                    try {
+                        myPhotos.removePhotoAtIndex(0);
+                        photoToEdit.setImageResource(R.drawable.defaultbook);
+
+                        //update ## text
+                        String tmp = imageTotalText.getText().toString();
+                        imageTotalText.setText("-");
+                        leftButton.setEnabled(false);
+                        rightButton.setEnabled(false);
+                    }catch(NegativeNumberException e){
+                        Toast.makeText(getApplicationContext(), "Index negative", Toast.LENGTH_SHORT).show();
+                    }catch(TooLongException e){
+                        Toast.makeText(getApplicationContext(), "Index too long", Toast.LENGTH_SHORT).show();
+                    }
+
+                }else{
+                    //not just one image
+                    Toast.makeText(getApplicationContext(), "Delete else!", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+
 
         takePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -357,7 +391,7 @@ public class PhotoActivity extends ActionBarActivity {
 
                 //put into the Photos object
                 //myPhotos.addPhoto(changed); //scaled
-                Toast.makeText(getApplicationContext(), "Photos taken: " + myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Photos taken1: " + myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
                 photoToEdit.setImageBitmap(scaled);
 
                 imageTotalText.setText("" + 1 +"/" +myPhotos.getPhotos().size() +""); //that 1 is gonna be wrong sometimes
@@ -371,6 +405,7 @@ public class PhotoActivity extends ActionBarActivity {
                 }
 
                 redoButton.setVisibility(View.VISIBLE);
+                deleteButton.setVisibility(View.VISIBLE);
 
             } catch (Exception e) {
                 //should never happen after UI stuff has been made properly
@@ -412,17 +447,18 @@ public class PhotoActivity extends ActionBarActivity {
 
                 //put into the Photos object
                 //myPhotos.addPhoto(changed); //scaled
-                Toast.makeText(getApplicationContext(), "Photos taken: " + myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Photos taken2: " + myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
                 photoToEdit.setImageBitmap(scaled);
 
 
-                if (myPhotos.getPhotos().size() > 1) {
+                if (myPhotos.getPhotos().size() > 1 && index!=myPhotos.getPhotos().size()) {
                     rightButton.setEnabled(true);
                 }
 
 
 
                 redoButton.setVisibility(View.VISIBLE);
+                deleteButton.setVisibility(View.VISIBLE);
                 Toast.makeText(getApplicationContext(), "Redo a picture result found!", Toast.LENGTH_SHORT).show();
 
             } catch (Exception e) {

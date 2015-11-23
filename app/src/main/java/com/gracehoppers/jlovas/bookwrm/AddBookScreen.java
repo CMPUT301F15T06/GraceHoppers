@@ -307,7 +307,7 @@ public class AddBookScreen extends ActionBarActivity {
                     myPhotos = mySaveLoad.loadPhotos(getApplicationContext());
                     //pull extras from intent, get the object
                     //myPhotos = data.getExtras().getSerializable("Object");
-                    Toast.makeText(getApplicationContext(), "Photos added: " + myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Photos added: " + myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
                 }
     }
 
