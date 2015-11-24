@@ -1,10 +1,13 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -16,7 +19,7 @@ import java.util.ArrayList;
  * as well as the past trades and their results. Currently this page is not displaying the information
  * because the trade functionality is not fully implemented, but will be in time.
  *
- * @author Hong Chen, Hong Wang
+ * @author Hong Chen, Hong Wang, ljuarezr
  *
  * @see Trade, TradeHistory
  *
@@ -49,6 +52,16 @@ public class HistoryOfTradesScreen extends ActionBarActivity {
         adapter = new TradeHistoryListAdapter(getApplicationContext(), R.layout.trade_history_list, account.getTradeHistory().tradeHistory);
         historyView.setAdapter(adapter);
 
+        //Need to have the clickOnItem to set a trade as complete.
+        historyView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(HistoryOfTradesScreen.this, ViewBookActivity.class);
+                intent.putExtra("listPosition", position);
+                intent.putExtra("flag", "HistoryOfTradesScreen");
+
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
