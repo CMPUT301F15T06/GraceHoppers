@@ -179,7 +179,7 @@ public class Friends implements Serializable{
     public boolean hasFriend(String username){
         for(int i=0;i<this.getSize();i++){
             try {
-                if (this.getFriendByIndex(i) == username) {
+                if (this.getFriendByIndex(i).equals(username)) {
                     return true;
                 }
             }catch(NegativeNumberException e){
