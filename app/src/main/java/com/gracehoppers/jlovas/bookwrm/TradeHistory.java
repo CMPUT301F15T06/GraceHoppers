@@ -2,6 +2,7 @@ package com.gracehoppers.jlovas.bookwrm;
 /**
  * Created by chen1 on 10/19/15.
  */
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author chen1, ljuarezr
  */
-public class TradeHistory {
+public class TradeHistory implements Serializable{
     ArrayList<Trade> tradeHistory = new ArrayList<Trade>();
 
     public TradeHistory(){

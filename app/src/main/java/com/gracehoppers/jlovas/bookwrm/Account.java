@@ -3,6 +3,7 @@ package com.gracehoppers.jlovas.bookwrm;
 import android.content.Context;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -16,7 +17,7 @@ import java.util.ArrayList;
  *@see Inventory , Friends , TradeHistory
  */
 
-public class Account {
+public class Account implements Serializable {
 
 
     private String username;
@@ -25,6 +26,24 @@ public class Account {
     private TradeHistory tradeHistory; // create trade history
     private Inventory inventory;
     private Friends friends; //create friend list
+   // private static final long serialVersionUID = 2021577107874183656L;
+
+
+   // private byte[] friendlistBytes;
+
+  /*  public void setFriends(Friends friends) {
+        this.friends = friends;
+    }
+
+    public byte[] getFriendlistBytes() {
+        return friendlistBytes;
+    }
+
+    public void setFriendlistBytes(byte[] friendlistBytes) {
+        this.friendlistBytes = friendlistBytes;
+    }
+
+*/
 
     public TradeHistory getTradeHistory() {
         return tradeHistory;

@@ -325,7 +325,7 @@ public class ViewBookActivity extends ActionBarActivity {
             });
         } else { //***********************************************************************************
             //the item is a friend's - do not want to offer edit and delete
-
+/*
             posBook = getIntent().getIntExtra("listPosition", 0);
             posFriend = getIntent().getIntExtra("position2",0);
 
@@ -369,7 +369,7 @@ public class ViewBookActivity extends ActionBarActivity {
 
             ViewGroup parentView2 = (ViewGroup) editButton.getParent();
             parentView.removeView(editButton);
-
+*/ //FIX THE ABOVE!!!!!
             /*
             Button tradeButton = editButton;
 

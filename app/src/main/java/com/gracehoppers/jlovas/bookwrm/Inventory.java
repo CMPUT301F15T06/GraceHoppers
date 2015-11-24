@@ -1,5 +1,6 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -11,7 +12,7 @@ import java.util.Collection;
  *
  * @author Hong Chen
  */
-public class Inventory {
+public class Inventory implements Serializable {
     public Inventory() {
     }
 

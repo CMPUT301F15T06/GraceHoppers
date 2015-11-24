@@ -18,6 +18,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -103,16 +104,43 @@ public class AccountManager {
             Log.i(TAG,status);
         }catch(Exception e) {e.printStackTrace();}
     }
+/*
+    public void updateAccount(Account account) throws IOException {
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost updateRequest = new HttpPost(URL + account.getUsername() + "/_update/");
 
+        String query = 	"{\"script\" : \"ctx._source." + "friends" + "}"; //for updating friends list ONLY :(
+        StringEntity stringentity = new StringEntity(query);
 
-    public void updateAccount(Account account) {
+        updateRequest.setHeader("Accept","application/json");
+        updateRequest.setEntity(stringentity);
+
+        HttpResponse response = httpClient.execute(updateRequest);
+        String status = response.getStatusLine().toString();
+        System.out.println(status);
+
+        String json = getEntityContent(response);
+    }
+*/
+
+    public void updateAccount(Account account) { //called in ProfileScreen!! dont edit it too much
         HttpClient httpClient = new DefaultHttpClient();
 
         try {
-            HttpPut updateRequest = new HttpPut(URL
-                    + account.getUsername());
+            //--trying---------------
+/*
+            BytesUtil bytesutil = new BytesUtil();
+            byte[] friendlistbytes;
+            friendlistbytes=bytesutil.toByteArray(account.getFriends()); //friends is a byte array now
+            account.getFriends().clear();
+            account.setFriendlistBytes(friendlistbytes);
+*/
 
-            StringEntity stringEntity = new StringEntity(gson.toJson(account));
+            //------------------------
+            HttpPut updateRequest = new HttpPut(URL+account.getUsername());
+
+            String acc = gson.toJson(account);
+            StringEntity stringEntity = new StringEntity(acc);
             updateRequest.setEntity(stringEntity);
             updateRequest.setHeader("Accept", "application/json");
             HttpResponse response = httpClient.execute(updateRequest);
@@ -185,5 +213,18 @@ public class AccountManager {
         return result;
     }
 
+    String getEntityContent(HttpResponse response) throws IOException {
+        BufferedReader br = new BufferedReader(
+                new InputStreamReader((response.getEntity().getContent())));
+        String output;
+        System.err.println("Output from Server -> ");
+        String json = "";
+        while ((output = br.readLine()) != null) {
+            System.err.println(output);
+            json += output;
+        }
+        System.err.println("JSON:"+json);
+        return json;
+    }
 
 }
