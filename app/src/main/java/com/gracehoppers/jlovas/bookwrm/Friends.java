@@ -1,6 +1,13 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+
 import java.io.Serializable;
+
+import android.content.Context;
+import android.content.Intent;
+import android.widget.Toast;
+
+
 import java.util.ArrayList;
 
 /**
@@ -14,6 +21,7 @@ import java.util.ArrayList;
  * @author ljuarezr on 10/20/15.
  */
 
+
 public class Friends implements Serializable{
     //A user's list of friends.
 
@@ -22,6 +30,7 @@ public class Friends implements Serializable{
 
 
     private ArrayList<String> friendnames = new ArrayList<String>();
+
 
 
     public Friends(){
@@ -44,15 +53,51 @@ public class Friends implements Serializable{
      * @throws AlreadyAddedException
      */
 
+
  /*   public int addFriend(Account newFriend) throws AlreadyAddedException{ //Need to search the server for Account
         //3 Cases
+
+    public int addFriend(Account newFriend) {
+        //search server for Account
+
+        Account result;
+        AccountManager accountManager=new AccountManager();
+        result=(accountManager.getAccount(newFriend.getUsername()));
+
+        try {
+            if(result == null) {
+                //username does not exist
+                return 3;
+            }
+
+            else {
+                //check if user is added as friend
+                friends=result.getFriends().getFriends();
+                for(int i=0;i<friends.size();i++) {
+                    result=accountManager.getAccount(friends.get(i).getUsername());
+                    if(result.getUsername()==newFriend.getUsername()) {
+                        //user added as friend
+                        return 1;
+
+                    }
+                }
+            }
+        }catch(RuntimeException e) {e.printStackTrace();}
+
+        friends.add(newFriend);
+        return 2;
+    }
+
+  /*      //3 Cases
+
         //Check first if friends already:
         //1. A & B already friends! Return 1
+        //2. newFriend exists. Expected scenario. Return 2 (Request sent)
+        //3. newFriend does NOT exists. Return 3. (Request not sent)
         if (friends.contains(newFriend)){
             throw new AlreadyAddedException();
             //return 1;
-            //return 2;
-        } else {
+        } else { //Run this if they're not friends yet.
 
             //Search AccountB in the server. If existent, Case 1.
 
@@ -77,7 +122,7 @@ public class Friends implements Serializable{
         //3 Cases
         //Check first if friends already:
         //1. A & B already friends! Return 1
-        if (friendnames.contains(newFriend)){
+        if (friendnames.contains(newFriend.getUsername())){
             throw new AlreadyAddedException();
             //return 1;
             //return 2;
@@ -99,15 +144,22 @@ public class Friends implements Serializable{
      * removes the friend account from the list
      * @param username - the friend account being removed
      */
-    public void unFriend(String username){
-        for(int i=0;i<friendnames.size();i++){
-            if(friendnames.get(i).equals(username)){
-               // friends.remove(i);
+
+    public void unFriend(String username) {
+        for (int i = 0; i < friendnames.size(); i++) {
+            if (friendnames.get(i).equals(username)) {
+                // friends.remove(i);
                 friendnames.remove(i);
             }
         }
-
     }
+
+  /*  public void unFriend(Account friend){
+
+        friends.remove(friend);
+
+
+    }*/
 
     /**
      *Checks to see if the list contains the friend account given in the parameter
@@ -210,7 +262,6 @@ public class Friends implements Serializable{
 
             return friendnames.get(i);
     }
-
 
 
 

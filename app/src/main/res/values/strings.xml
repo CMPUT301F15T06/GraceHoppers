@@ -51,6 +51,10 @@
     <string name="title_activity_photo">PhotoActivity</string>
     <string name="title_activity_select_counter_books">SelectCounterBooksActivity</string>
     <string name="title_activity_process_trade_screen">ProcessTradeScreen</string>
+
     <string name="title_activity_view_fr">ViewFRActivity</string>
+    <string name="title_activity_options">OptionsActivity</string>
+    <string name="title_activity_tutorial">TutorialActivity</string>
+
 
 </resources>

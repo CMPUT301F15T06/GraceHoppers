@@ -1,12 +1,15 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -27,6 +30,9 @@ public class SaveLoad {
 
 
     protected static final String FILENAME = "file.sav";
+    protected static final String PHOTOFILE = "photos.sav";
+
+
     public SaveLoad() {
     }
 
@@ -80,5 +86,51 @@ public class SaveLoad {
             }
             return account;
         }
+
+    //adding this for storing images to pass between actvities
+    public void savePhotos(Context context, Photos photoList){
+
+        try {
+            FileOutputStream fos = context.openFileOutput(PHOTOFILE, 0);
+            BufferedWriter out=new BufferedWriter(new OutputStreamWriter(fos));
+            Gson gson=new Gson();
+            gson.toJson(photoList, out);
+            out.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        }
+    }
+
+    //adding this for storing images to pass between actvities
+    public Photos loadPhotos(Context context){
+
+        Photos myPhotos=null;
+        try {
+
+            FileInputStream fis = context.openFileInput(PHOTOFILE);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+            Gson gson=new Gson();
+            //https://sites.google.com/site/gson/gson-user-guide 2015-16-10
+            Type type=new TypeToken<Photos>() {}.getType();
+            myPhotos=gson.fromJson(in,type);
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            //throw new RuntimeException(e);
+            //key=new ArrayList<keyStats>();
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            //throw new RuntimeException(e);
+            e.printStackTrace();
+        }
+        return myPhotos;
+    }
+
     }
 

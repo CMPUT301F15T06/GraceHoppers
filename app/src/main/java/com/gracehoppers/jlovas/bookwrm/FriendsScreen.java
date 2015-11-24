@@ -76,6 +76,7 @@ public class FriendsScreen extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 String newFriend = friendUsername.getText().toString();
+
                 accountmanager = new AccountManager();
                 try {
                     Thread thread = new SearchThread(account.getUsername(), newFriend);
@@ -84,6 +85,11 @@ public class FriendsScreen extends ActionBarActivity {
                     Toast.makeText(getApplicationContext(), "You can't add yourself as a friend, silly!", Toast.LENGTH_SHORT).show();
                 }
 
+
+
+                //SearchThread thread=new SearchThread(newFriend);
+                //thread.start();
+                /*
 
                 //****demoAccount stuff here for finding DemoAccount in the list of Accounts *******
                 //add a better requirement for this if statement later
@@ -120,11 +126,15 @@ public class FriendsScreen extends ActionBarActivity {
 
 
                 //***put this stuff back once server is ready to go
-                /*
-                //How to call the user's friends list.
+
+                //How to call the user's friends list. -account.getFriends()
                 //How to pass the context of the account?
                 //Can NOT implement until server search/get is ready
-                int  addFriendResult = 2; //For testing
+             /*   Friends friends=account.getFriends();
+                AccountManager accountManager=new AccountManager();
+                Account friendAccount=accountManager.getAccount(newFriend);
+                int addFriendResult=friends.addFriend(friendAccount);
+                //int  addFriendResult = 2; //For testing
                 //String newFriend = "usernameX"; //For testing //commented out for now for demoAccount (put back after and also for tests) -JL
                 //int addFriendResult = friendList.add(newFriend);
                 if  (addFriendResult == 1) {
@@ -132,6 +142,7 @@ public class FriendsScreen extends ActionBarActivity {
                 }
                 if (addFriendResult == 2) {
                     Toast.makeText(activity, newFriend + "added as a friend!", Toast.LENGTH_SHORT).show();
+                    //account updates here
                     //FriendsList actually changes here.
                     //friendsAdapter.notifyDataSetChanged();
                     //saveInFile();
@@ -139,8 +150,8 @@ public class FriendsScreen extends ActionBarActivity {
                 if (addFriendResult == 3) {
                     Toast.makeText(activity, newFriend + "is not a Bookwrm user yet!", Toast.LENGTH_SHORT).show();
                 }
-*/
-            }
+
+            */}
 
         });
 
@@ -214,6 +225,62 @@ public class FriendsScreen extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+ /*   class SearchThread extends Thread {
+        private String search;
+
+        public SearchThread(String search) {
+            this.search = search;
+        }
+
+        @Override
+        public void run() {
+            Account result;
+            AccountManager accountManager=new AccountManager();
+            result=(accountManager.getAccount(search));
+
+            try {
+                if(result == null) {
+                    //username does not exist
+                    FriendsScreen.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "Username does not exist", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+                else {
+                    boolean alreadyFriend=false;
+                    //check if user is added as friend
+                    friends=result.getFriends().getFriends();
+                    for(int i=0;i<friends.size();i++) {
+                        result=accountManager.getAccount(friends.get(i).getUsername());
+                        if(result.getUsername()==search) {
+                            //user added as friend
+                            alreadyFriend=true;
+                            FriendsScreen.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "User already a friend", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        }
+                    }
+                    if(alreadyFriend==false) {
+                        //add friend
+
+                        //update account with new friend
+
+                    }
+
+                }
+
+            }catch(RuntimeException e) {e.printStackTrace();}
+        }
+
+    }*/
 
 
 

@@ -9,6 +9,8 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 
     <application
         android:allowBackup="true"
@@ -95,6 +97,14 @@
         <activity
             android:name=".ViewFRActivity"
             android:label="@string/title_activity_view_fr" >
+            </activity>
+        <activity
+            android:name=".OptionsActivity"
+            android:label="@string/title_activity_options" >
+        </activity>
+        <activity
+            android:name=".TutorialActivity"
+            android:label="@string/title_activity_tutorial" >
         </activity>
     </application>
 

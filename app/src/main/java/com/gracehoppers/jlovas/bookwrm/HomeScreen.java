@@ -51,6 +51,7 @@ public class HomeScreen extends Activity {
     String username;
     Button profile;
     Button friend;
+    Button options;
     ImageView friendRequests;
 
     FriendRequestManager frmanager;
@@ -217,6 +218,15 @@ public class HomeScreen extends Activity {
                 }
 
 
+            }
+        });
+
+        options = (Button)findViewById(R.id.optionsButton);
+        options.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeScreen.this, OptionsActivity.class);
+                startActivity(intent);
             }
         });
 

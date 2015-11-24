@@ -28,8 +28,8 @@
         android:id="@+id/pictureleftbutton"
         android:layout_marginTop="280dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginBottom="-55dp"
-        android:textSize="25dp" />
+        android:textSize="25dp"
+        android:enabled="false" />
 
     <Button
         android:layout_width="wrap_content"
@@ -39,13 +39,14 @@
         android:layout_marginRight="10dp"
         android:textSize="25dp"
         android:layout_alignBaseline="@id/pictureleftbutton"
-        android:layout_toEndOf="@+id/imagePreviewTitleText" />
+        android:layout_toEndOf="@+id/imagePreviewTitleText"
+        android:enabled="false" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="1/1"
+        android:text="-"
         android:id="@+id/imagetotaltextview"
         android:gravity="center"
         android:textColor="#FFFFFF"
@@ -65,35 +66,37 @@
         android:textStyle="bold" />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
         android:text="Ok"
         android:id="@+id/okAsIsButton"
-        android:layout_above="@+id/takePhotoButton"
+        android:layout_below="@+id/takePhotoButton"
         android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:text="Take Photo"
         android:id="@+id/takePhotoButton"
-        android:layout_above="@+id/chooseFromGalleryButton"
+        android:layout_below="@+id/pictureleftbutton"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Choose From Gallery"
-        android:id="@+id/chooseFromGalleryButton"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="↺ (Put in right spot later)"
+        android:text="↺"
+        android:id="@+id/retakeButton"
         android:layout_alignTop="@+id/bookImage"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="56dp" />
+        android:layout_alignEnd="@+id/bookImage" />
+
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="x"
+        android:id="@+id/xButton"
+        android:layout_alignTop="@+id/bookImage"
+        android:layout_alignStart="@+id/bookImage" />
 
 </RelativeLayout>

@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayInputStream;
@@ -30,6 +31,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URI;
 
 /**
@@ -49,22 +51,29 @@ import java.net.URI;
 public class PhotoActivity extends ActionBarActivity {
     Button okButton;
     Button takePhotoButton;
-    Button galleryButton;
+
     ImageView photoToEdit;
+    TextView imageTotalText;
+    Button leftButton;
+    Button rightButton;
+    Button redoButton;
+
     BitmapScaler scaler;
 
+
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    private final static int SELECT_PHOTO = 12345;
+    private final static int REDO_PHOTO = 12345;
     Photos myPhotos;
+    SaveLoad saveLoad;
 
     ContentValues values;
     Uri imageUri;
-    Bitmap scaledBitmap;
+    int count=0;
 
     //for UI testing ---------------------------------------------------
     public ImageView getImage(){ return photoToEdit;};
     public Button getOkButton(){return okButton;}
-    public Button getGalleryButton(){ return galleryButton;}
+
     public Button getTakePhotoButton(){return takePhotoButton;}
     // -----------------------------------------------------------------
 
@@ -77,17 +86,41 @@ public class PhotoActivity extends ActionBarActivity {
         values = new ContentValues();
         myPhotos = new Photos();
         scaler = new BitmapScaler();
+        saveLoad = new SaveLoad();
 
         okButton = (Button)findViewById(R.id.okAsIsButton);
         takePhotoButton = (Button)findViewById(R.id.takePhotoButton);
-        galleryButton = (Button)findViewById(R.id.chooseFromGalleryButton);
         photoToEdit = (ImageView)findViewById(R.id.bookImage);
+        imageTotalText = (TextView)findViewById(R.id.imagetotaltextview);
+        leftButton = (Button)findViewById(R.id.pictureleftbutton);
+        rightButton = (Button)findViewById(R.id.picturerightbutton);
+        redoButton = (Button)findViewById(R.id.retakeButton);
+
+        //redoButton should not be visible initially
+        redoButton.setVisibility(View.GONE);
 
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Picked ok!", Toast.LENGTH_SHORT).show();
+                Intent result = new Intent();
+                //result.putExtra("Object", myPhotos);
+                setResult(PhotoActivity.RESULT_OK, result);
+                saveLoad.savePhotos(getApplicationContext(), myPhotos);
                 finish();
+            }
+        });
+
+        redoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //delete the previous picture (ONLY when you actually take one) and replace the previous
+                values.put(MediaStore.Images.Media.TITLE, "New Picture");
+                values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+                imageUri = getContentResolver().insert(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                startActivityForResult(intent, REDO_PHOTO);
             }
         });
 
@@ -109,20 +142,160 @@ public class PhotoActivity extends ActionBarActivity {
             }
         });
 
-        galleryButton.setOnClickListener(new View.OnClickListener() {
+
+        leftButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                photoPickerIntent.setType("image/*");
-                startActivityForResult(photoPickerIntent, SELECT_PHOTO);
+                //moves the photo left
+                //notes: the images are appearing from most recently taken to least recently taken, hence the way I have getAtIndex'd
 
+                String tmp = imageTotalText.getText().toString();
 
-                //Toast.makeText(getApplicationContext(), "Want to choose from image gallery!", Toast.LENGTH_SHORT).show();
-                //finish();
+                switch(tmp.charAt(0)){
+                    case '2':
+                        count--;
+                        imageTotalText.setText("" + 1 + "/" + myPhotos.getPhotos().size() + "");
+                        rightButton.setEnabled(true);
+                        leftButton.setEnabled(false);
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(count), 0, myPhotos.getPhotoAtIndex(count).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            photoToEdit.setImageBitmap(scaled);
+
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case '3':
+                        count--;
+                        imageTotalText.setText("" + 2 +"/" +myPhotos.getPhotos().size() +"");
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(count), 0, myPhotos.getPhotoAtIndex(count).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            photoToEdit.setImageBitmap(scaled);
+
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case '4':
+                        count--;
+                        imageTotalText.setText("" + 3 +"/" +myPhotos.getPhotos().size() +"");
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(count), 0, myPhotos.getPhotoAtIndex(count).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            photoToEdit.setImageBitmap(scaled);
+
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case '5':
+                        count--;
+                        imageTotalText.setText("" + 4 +"/" +myPhotos.getPhotos().size() +"");
+                        rightButton.setEnabled(true);
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(count), 0, myPhotos.getPhotoAtIndex(count).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            photoToEdit.setImageBitmap(scaled);
+
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                }
             }
         });
 
-    }
+        rightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //moves the photo right
+                //notes: the images are appearing from most recently taken to least recently taken, hence the way I have getAtIndex'd
+
+                String tmp = imageTotalText.getText().toString();
+
+                switch(tmp.charAt(0)){
+                    case '4':
+                        count++;
+                        imageTotalText.setText("" + 5 + "/" + myPhotos.getPhotos().size() + "");
+                        if(Character.getNumericValue(tmp.charAt(0)+1) == (char)myPhotos.getPhotos().size()) rightButton.setEnabled(false);
+                        rightButton.setEnabled(false);
+
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(count), 0, myPhotos.getPhotoAtIndex(count).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            photoToEdit.setImageBitmap(scaled);
+
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+
+                    case '3':
+                        count++;
+                        imageTotalText.setText("" + 4 +"/" +myPhotos.getPhotos().size() +"");
+                        if(Character.getNumericValue(tmp.charAt(0)+1) == (char)myPhotos.getPhotos().size()) rightButton.setEnabled(false);
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(count), 0, myPhotos.getPhotoAtIndex(count).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            photoToEdit.setImageBitmap(scaled);
+
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case '2':
+                        count++;
+                        imageTotalText.setText("" + 3 + "/" + myPhotos.getPhotos().size() + "");
+                        if(Character.getNumericValue(tmp.charAt(0)+1) == (char)myPhotos.getPhotos().size()) rightButton.setEnabled(false);
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(count), 0, myPhotos.getPhotoAtIndex(count).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            photoToEdit.setImageBitmap(scaled);
+
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case '1':
+                        count++;
+                        imageTotalText.setText("" + 2 + "/" + myPhotos.getPhotos().size() + "");
+                        if(Character.getNumericValue(tmp.charAt(0)+1) == (char)myPhotos.getPhotos().size()) rightButton.setEnabled(false);
+                        leftButton.setEnabled(true);
+                        try {
+                            Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(count), 0, myPhotos.getPhotoAtIndex(count).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            photoToEdit.setImageBitmap(scaled);
+
+                        }catch(NegativeNumberException e) {
+                            Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                }
+
+            }
+        });
+
+
+
+    }//end of onCreate
 
 
     @Override
@@ -156,7 +329,6 @@ public class PhotoActivity extends ActionBarActivity {
             //Bitmap imageBitmap = (Bitmap) extras.get("data"); //this method grabs a small thumbnail only - need?
 
 
-            //something needs to happen here to rotate the image to the right orientation
             try {
                 Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(
                         getContentResolver(), imageUri);
@@ -172,48 +344,96 @@ public class PhotoActivity extends ActionBarActivity {
 
                 Bitmap original = BitmapFactory.decodeFile(imageurl, options);
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                if(original.compress(Bitmap.CompressFormat.PNG, 100, bytes)){
-                    Toast.makeText(getApplicationContext(), "Did it!", Toast.LENGTH_SHORT).show();
-                }
+                original.compress(Bitmap.CompressFormat.PNG, 100, bytes); //very important line: bytes is what you want!!
+
+                myPhotos.addPhoto(bytes.toByteArray());
+
                 Bitmap changed = BitmapFactory.decodeStream(new ByteArrayInputStream(bytes.toByteArray()));
 
-                    Toast.makeText(getApplicationContext(), "Bytes before is: " + imageBitmap.getByteCount() + " Bytes of the image after is: " + changed.getByteCount(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Bytes before is: " + imageBitmap.getByteCount() +
+                     " Bytes of the image after is: " + changed.getByteCount(), Toast.LENGTH_SHORT).show();
 
                 Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
 
                 //put into the Photos object
-                myPhotos.addPhoto(changed); //scaled
+                //myPhotos.addPhoto(changed); //scaled
+                Toast.makeText(getApplicationContext(), "Photos taken: " + myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
                 photoToEdit.setImageBitmap(scaled);
 
+                imageTotalText.setText("" + 1 +"/" +myPhotos.getPhotos().size() +""); //that 1 is gonna be wrong sometimes
+
+                if(myPhotos.getPhotos().size() >1){
+                    rightButton.setEnabled(true);
+                }
+
+                if(myPhotos.getPhotos().size() ==5) {
+                    takePhotoButton.setEnabled(false);
+                }
+
+                redoButton.setVisibility(View.VISIBLE);
 
             } catch (Exception e) {
                 //should never happen after UI stuff has been made properly
                 e.printStackTrace();
                 Toast.makeText(getApplicationContext(), "Too many photos added, cannot add the photo", Toast.LENGTH_SHORT).show();
             }
+                }else if (requestCode == REDO_PHOTO && resultCode == RESULT_OK) {
+            //delete the previous photo and replace with currently taken one
+
+            try {
+                Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(
+                        getContentResolver(), imageUri);
+                //photoToEdit.setImageBitmap(imageBitmap); //full image now, not a thumbnail
+                String imageurl = getRealPathFromURI(imageUri); //grab's the file path to the image... I think
+
+                //attempting to compress the image size
+                //setting options to squash this beast down
+                BitmapFactory.Options options = new BitmapFactory.Options();
+
+                options.inSampleSize = 8; //test value, needs powers of 2
 
 
+                Bitmap original = BitmapFactory.decodeFile(imageurl, options);
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                original.compress(Bitmap.CompressFormat.PNG, 100, bytes); //very important line: bytes is what you want!!
+
+                //DELETE PREVIOUS PHOTO
+                String tmp= imageTotalText.getText().toString();
+                int index = Character.getNumericValue(tmp.charAt(0));
+
+                myPhotos.swapPhotoAtIndex(index-1, bytes.toByteArray());
+
+                Bitmap changed = BitmapFactory.decodeStream(new ByteArrayInputStream(bytes.toByteArray()));
+
+                Toast.makeText(getApplicationContext(), "Bytes before is: " + imageBitmap.getByteCount() +
+                        " Bytes of the image after is: " + changed.getByteCount(), Toast.LENGTH_SHORT).show();
+
+                Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+
+                //put into the Photos object
+                //myPhotos.addPhoto(changed); //scaled
+                Toast.makeText(getApplicationContext(), "Photos taken: " + myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
+                photoToEdit.setImageBitmap(scaled);
+
+
+                if (myPhotos.getPhotos().size() > 1) {
+                    rightButton.setEnabled(true);
+                }
+
+
+
+                redoButton.setVisibility(View.VISIBLE);
+                Toast.makeText(getApplicationContext(), "Redo a picture result found!", Toast.LENGTH_SHORT).show();
+
+            } catch (Exception e) {
+                //should never happen after UI stuff has been made properly
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext(), "Too many photos added, cannot add the photo", Toast.LENGTH_SHORT).show();
+
+
+            }
 
         }
-        else if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK){
-            //do stuff with gallery choice!
-
-
-            //come back to this: http://stackoverflow.com/questions/30004658/pick-an-image-from-gallery-in-android-studio idk if any good
-            Uri pickedImage = data.getData();
-            // Let's read picked image path using content resolver
-            String[] filePath = { MediaStore.Images.Media.DATA };
-            Cursor cursor = getContentResolver().query(pickedImage, filePath, null, null, null);
-            cursor.moveToFirst();
-            String imagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
-
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
-            //imageView.setImageBitmap(bitmap);
-
-        }
-
     }
 
     //credit to: Antrromet, http://stackoverflow.com/questions/10377783/low-picture-image-quality-when-capture-from-camera, Nov 13, 2015

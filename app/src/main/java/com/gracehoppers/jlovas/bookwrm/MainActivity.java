@@ -25,6 +25,7 @@ public class MainActivity extends ActionBarActivity {
     EditText usernameText;
     SaveLoad saveLoad;
     Account result;
+    //ConnectionCheck connection;
 
 
 
@@ -87,7 +88,7 @@ public class MainActivity extends ActionBarActivity {
 
         Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
 
-        Book book1 = new Book(testImage);
+        Book book1 = new Book();
         book1.setTitle("A Cool Guy Book");
         book1.setAuthor("Joseph Campbell");
         book1.setCategory(3);
@@ -96,7 +97,7 @@ public class MainActivity extends ActionBarActivity {
         book1.setDescription("This book is pretty cool. Maybe too cool.");
         //let these set to quantity default of 1 so i don't have to add extra exception catches for temporary code
 
-        Book book2 = new Book(testImage);
+        Book book2 = new Book();
         book2.setTitle("Undertale");
         book2.setDescription("I'm watching Markiplier play this so I don't need to read it anymore");
         book2.setAuthor("Not sure");
@@ -123,34 +124,37 @@ public class MainActivity extends ActionBarActivity {
         signUpButton = (Button)findViewById(R.id.signUpButton);
         usernameText = (EditText)findViewById(R.id.usernameText);
 
-        logInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //add conditions for this to work here!!
-                //Toast.makeText(getApplicationContext(), "Login not set up quite yet, I go through regardless for testing book purposes! c:", Toast.LENGTH_SHORT).show();
 
 
-                //TODO: put the new account into the Gson or whatever we store it with so we can pull it out on further screens!
+            logInButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //add conditions for this to work here!!
+                    //Toast.makeText(getApplicationContext(), "Login not set up quite yet, I go through regardless for testing book purposes! c:", Toast.LENGTH_SHORT).show();
+                    ConnectionCheck connection=new ConnectionCheck();
 
-                usernameText = (EditText)findViewById(R.id.usernameText);
-                final String username=usernameText.getText().toString();
+                    //TODO: put the new account into the Gson or whatever we store it with so we can pull it out on further screens!
+                    if(connection.checkConnection(MainActivity.this)==true) {
+                        usernameText = (EditText) findViewById(R.id.usernameText);
+                        final String username = usernameText.getText().toString();
 
 
+                        SearchThread thread = new SearchThread(username);
+                        thread.start();
+                    }
 
-                SearchThread thread=new SearchThread(username);
-                thread.start();
 
+                }
+            });
 
-            }
-        });
+            signUpButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent sIntent = new Intent(MainActivity.this, SignUpActivity.class); //change me to where sign up should go!
+                    startActivity(sIntent);
+                }
+            });
 
-        signUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent sIntent = new Intent(MainActivity.this, SignUpActivity.class); //change me to where sign up should go!
-                startActivity(sIntent);
-            }
-        });
 
     }
 
