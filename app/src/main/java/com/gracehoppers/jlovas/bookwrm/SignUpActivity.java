@@ -96,7 +96,7 @@ public class SignUpActivity extends ActionBarActivity {
 
 
                     //****Demo Account part, delete afterwards *************************************
-
+/*
                     Account demoAccount = new Account();
                     demoAccount.setUsername("DemoAccount");
                     demoAccount.setEmail("demo@hotmail.com");
@@ -125,7 +125,7 @@ public class SignUpActivity extends ActionBarActivity {
                     demoAccount.getInventory().addBook(book2);
 
                     account.getAccounts().add(demoAccount);
-                    saveload.saveInFile(SignUpActivity.this, account);
+                    saveload.saveInFile(SignUpActivity.this, account); */
                     //******************************************************************************
 
                 } catch (IllegalArgumentException e) {

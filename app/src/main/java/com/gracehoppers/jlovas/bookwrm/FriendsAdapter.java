@@ -15,15 +15,15 @@ import java.util.ArrayList;
  *
  * @author Patricia Reyes, Jillian Lovas
  */
-public class FriendsAdapter extends ArrayAdapter<Account>{
+public class FriendsAdapter extends ArrayAdapter<String>{
     private Context context;
-    private ArrayList<Account> friendArray;
+    private ArrayList<String> friendArray;
 
     public FriendsAdapter(Context context, int resource,
-                           ArrayList<Account> objects) {
-        super(context, resource, objects);
+                           ArrayList<String> strings) {
+        super(context, resource, strings);
         this.context = context;
-        this.friendArray = objects;
+        this.friendArray = strings;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -34,12 +34,12 @@ public class FriendsAdapter extends ArrayAdapter<Account>{
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.friend_list, null, false);
             TextView textview = (TextView) convertView.findViewById(R.id.friend_id);
-            textview.setText("\nUsername: " + friendArray.get(position).getUsername() + "\nCity: " + friendArray.get(position).getCity());
+            textview.setText("\nUsername: " + friendArray.get(position) );
 
         } else {
 
             TextView textview = (TextView) convertView.findViewById(R.id.friend_id);
-            textview.setText("\nUsername: " + friendArray.get(position).getUsername() + "\nCity: " + friendArray.get(position).getCity());
+            textview.setText("\nUsername: " + friendArray.get(position));
         }
 
         return convertView;

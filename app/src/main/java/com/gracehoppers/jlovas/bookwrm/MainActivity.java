@@ -57,7 +57,7 @@ public class MainActivity extends ActionBarActivity {
         //the data from the previous log in will not be there - this is not an error!
         //if you don't want that happening just delete/comment out this stuff and sign up once, then
         //log in
-        final Account account = new Account();
+   /*     final Account account = new Account();
         try {
             account.setUsername("Jill");
             account.setEmail("jlovas@ualberta.ca");
@@ -68,10 +68,10 @@ public class MainActivity extends ActionBarActivity {
             e.printStackTrace();
         } catch (IllegalEmailException e) {
             e.printStackTrace();
-        }
+        }*/
 
         //****Demo Account part, delete afterwards as well!*************************************
-
+/*
         Account demoAccount = new Account();
         try {
             demoAccount.setUsername("DemoAccount");
@@ -114,7 +114,7 @@ public class MainActivity extends ActionBarActivity {
 
 
 
-        saveLoad.saveInFile(getApplicationContext(), account);
+        saveLoad.saveInFile(getApplicationContext(), account);*/
         //------------------------------------------------------------------------------------------
 
 
@@ -191,6 +191,9 @@ public class MainActivity extends ActionBarActivity {
 
             try {
                 if(result != null) {
+                    saveLoad = new SaveLoad();
+                    saveLoad.saveInFile(getApplicationContext(),result);
+
                     Intent lIntent = new Intent(MainActivity.this, HomeScreen.class);
                     lIntent.putExtra("username", search);
                     startActivity(lIntent);

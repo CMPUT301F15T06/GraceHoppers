@@ -72,6 +72,8 @@ public class FriendRequest {
         return receiver;
     }
 
+
+
     //public void checkForFriendRequests() could be job for the manager
 
 

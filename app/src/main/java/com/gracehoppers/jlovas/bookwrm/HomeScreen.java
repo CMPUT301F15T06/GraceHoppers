@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -90,6 +92,8 @@ public class HomeScreen extends Activity {
         inventoryList.setAdapter(adapter);
         //------------------------------------------
 
+        //test code
+        Toast.makeText(getApplicationContext(), "Friends has " + account.getFriends().getSize() + " people in it!", Toast.LENGTH_SHORT).show();
 
 
         addBookButton.setOnClickListener(new View.OnClickListener() {
@@ -173,21 +177,45 @@ public class HomeScreen extends Activity {
             @Override
             public void onClick(View v) {
                 //for testing purposes ---------------------------------
-                FriendRequest friendrequest = new FriendRequest();
-
+                //FriendRequest friendrequest = new FriendRequest();
+/*
                 try {
-                    friendrequest.makeRequest(account, "shadownater");
+
+                   // Account demoAccount=new Account();
+                    //demoAccount.setUsername("DemoAccount");
+                   // demoAccount.setEmail("demo@gmail.com");
+                    //demoAccount.setCity("demoville");
+
+                    //friendrequest.makeRequest(demoAccount, account.getUsername());
                     //Toast.makeText(getApplicationContext(), friendrequest.getReceiver(), Toast.LENGTH_SHORT).show();
                 }catch(AlreadyAddedException e){
                     Toast.makeText(getApplicationContext(), "Already friends with this user", Toast.LENGTH_SHORT).show();
+                } catch (NoSpacesException e) {
+                    e.printStackTrace();  //remove this
+                } catch (TooLongException e) {
+                    e.printStackTrace(); //remove this
+                } catch (IllegalEmailException e) {
+                    e.printStackTrace(); //remove this
                 }
-                //frmanager.addFriendRequest(friendrequest);
-                Thread thread=new AddThread(friendrequest);
-                thread.start();
+*/
+                //Thread thread=new AddFRThread(friendrequest);
+                //thread.start();
+                //Log.e("Button press","buton pressed");
+                //Thread thread = new SearchFRThread(account.getUsername(),"shadownvvvater");
+                //thread.start();
                 //end line of test code --------------------------------
-                //Toast.makeText(getApplicationContext(), "No current friend requests", Toast.LENGTH_SHORT).show();
 
-                friendRequests.setImageResource(R.drawable.greenenvelope);
+                if(friendRequests.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.greenenvelope).getConstantState())){
+                    //http://stackoverflow.com/questions/9125229/comparing-two-drawables-in-android, user Mejonzhan, 2015-19-11
+                    //if the envelope is green
+                    Intent FRintent = new Intent(HomeScreen.this, ViewFRActivity.class);
+                    startActivity(FRintent);
+                }
+
+                else{
+                    Toast.makeText(getApplicationContext(), "No current friend requests", Toast.LENGTH_SHORT).show();
+                }
+
 
             }
         });
@@ -201,9 +229,12 @@ public class HomeScreen extends Activity {
         super.onStart();
 
         //inventory = account.getInventory().getInventory();
+        //saveload.saveInFile(getApplicationContext(),account);
         adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory()); //second parameter used to be inventory
         inventoryList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+
     }
 
     //onResume() knowledge of using this coems from class presentation of activity lifecycle
@@ -215,6 +246,10 @@ public class HomeScreen extends Activity {
         adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory()); //second parameeter used to be inventory
         inventoryList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        //check if you have any FR
+        Thread thread = new FindFRThread(account.getUsername());
+        thread.start();
     }
 
 
@@ -241,42 +276,39 @@ public class HomeScreen extends Activity {
     }
 
     //delete this after testing!! -----------------------------------------------------------------------
-    class AddThread extends Thread {
-        private FriendRequest friendrequest;
-        public AddThread(FriendRequest friendrequest) {
-            this.friendrequest=friendrequest;
-
-        }
-
-        @Override
-        public void run(){
-            frmanager = new FriendRequestManager();
-            frmanager.addFriendRequest(friendrequest);
-
-            //give some time to get updated info
-            try{
-                Thread.sleep(500);
-            } catch(InterruptedException e){e.printStackTrace();}
-
-            runOnUiThread(doFinishAdd);
-
-        }
-    }
 
 
-    class SearchThread extends Thread { //look for friend requests of this account --change it later?
-        private Account search;
 
-        public SearchThread(Account search) {
-            this.search = search;
+
+    class FindFRThread extends Thread { //find any unanswered FR's for this user
+        private String user1;
+
+
+        public FindFRThread(String u1) {
+            this.user1 = u1;
+
         }
 
         @Override
         public void run() {
-            FriendRequest result;
+            //FriendRequest result;
             frmanager=new FriendRequestManager();
-            result=(frmanager.getFriendRequest(search.getUsername()));
-
+            // Log.e("made it thread","made i 2 thread");
+            //result=(frmanager.getFriendRequest(search.getUsername()));
+           FriendRequests result = new FriendRequests();
+            try {
+                result = frmanager.findFriendRequests(user1);
+            }catch(IOException e){
+                Toast.makeText(getApplicationContext(), "caught an exception :C", Toast.LENGTH_SHORT).show();
+            }
+            if(!result.isEmpty()) {
+                runOnUiThread(ChangeEnvelopeColorG);
+                Log.e("true!!","you have a FR for you");
+            } else {
+                runOnUiThread(ChangeEnvelopeColorB);
+                Log.e("false!!","false");
+            }
+/*
             try { //get rid of this part later/change it
                 if(result != null) {
                     //a friendrequest exists
@@ -287,26 +319,34 @@ public class HomeScreen extends Activity {
                         }
                     });
                 }
-/*
+
                 else {
                     //add account
                     Thread thread=new AddThread(search);
                     thread.start();
                 }
-*/
+
             }catch(RuntimeException e) {e.printStackTrace();}
-        }
+        */}
 
     }
 
 
-    private Runnable doFinishAdd=new Runnable() {
+    private Runnable ChangeEnvelopeColorG=new Runnable() {
         @Override
         public void run() {
-            Toast.makeText(getApplicationContext(), "request stored",
-                    Toast.LENGTH_SHORT).show();
+            //change the envelope green
+            friendRequests.setImageResource(R.drawable.greenenvelope);
 
-            //finish();
+        }
+    };
+
+    private Runnable ChangeEnvelopeColorB=new Runnable() {
+        @Override
+        public void run() {
+            //change the envelope black
+            friendRequests.setImageResource(R.drawable.blackenvelope);
+
         }
     };
     //---------------------------------------------------------------------------------------------------
