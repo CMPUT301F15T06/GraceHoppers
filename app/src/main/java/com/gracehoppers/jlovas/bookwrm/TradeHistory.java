@@ -2,6 +2,7 @@ package com.gracehoppers.jlovas.bookwrm;
 /**
  * Created by chen1 on 10/19/15.
  */
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -9,8 +10,10 @@ import java.util.ArrayList;
  * Current and past trades, as specified in OS 20.
  * Contains methods addTrade and get TradebyIndex
  * @see Trade
+ *
+ * @author chen1, ljuarezr
  */
-public class TradeHistory {
+public class TradeHistory implements Serializable{
     ArrayList<Trade> tradeHistory = new ArrayList<Trade>();
 
     public TradeHistory(){
@@ -22,20 +25,26 @@ public class TradeHistory {
         tradeHistory.add(trade);
     }
 
-    public Trade getTradeByIndex(int i){
-        return tradeHistory.get(i);
-    }
 
     public ArrayList<Trade> getTradeHistory(){
         return tradeHistory;
     }
 
-    /* Not sure yet until trade is written more, how will we call up a trade?
-    public Trade getTradeWithUser(Account username){
-        return ;
+
+    public Trade getTradeByIndex(int i) throws NegativeNumberException, TooLongException{
+        if (i<0){
+            throw new NegativeNumberException();
+        } else if(i>= tradeHistory.size()) { //if requested position exceeds list size
+            throw new TooLongException();
+        } else
+
+            return tradeHistory.get(i);
     }
-    */
+
+
+    //Added only for testing purposes, not a feature.
+    public void clear(){tradeHistory.clear();}
+    public int getSize(){return tradeHistory.size();}
 
     //deleted the delete() method. Don't need one. Not in the requirements.
-    //deleted the clear() method. Don't need one. Not in the requirements.
 }

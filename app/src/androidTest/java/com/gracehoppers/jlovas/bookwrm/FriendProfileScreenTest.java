@@ -26,7 +26,7 @@ public class FriendProfileScreenTest extends ActivityInstrumentationTestCase2{
         setActivityIntent(intent);
         FriendProfileScreen activity = (FriendProfileScreen) getActivity();
 
-        Account friendAccount = activity.getMyFriend();
+     String friendAccount = activity.getMyFriend();
 
         SaveLoad saveLoad = activity.getSaveLoad();
         Account testAccount = saveLoad.loadFromFile(context);
@@ -36,9 +36,9 @@ public class FriendProfileScreenTest extends ActivityInstrumentationTestCase2{
         final TextView friendEmail = activity.getFriendEmail();
 
         //make sure name and such are all the same
-        assertTrue(friendName.getText().toString().equals(friendAccount.getUsername()));
-        assertTrue(friendCity.getText().toString().equals(friendAccount.getCity()));
-        assertTrue(friendEmail.getText().toString().equals(friendAccount.getEmail()));
+      assertTrue(friendName.getText().toString().equals(friendAccount.getUsername()));  //fix meeeee
+      assertTrue(friendCity.getText().toString().equals(friendAccount.getCity()));
+      assertTrue(friendEmail.getText().toString().equals(friendAccount.getEmail()));
 
         //now check the item displayed - is it the friend's item?
 
@@ -81,7 +81,7 @@ public class FriendProfileScreenTest extends ActivityInstrumentationTestCase2{
 
         //assert that the chosen book from the friend is the right book
 
-        assertTrue(bookName.getText().toString().equals(friendAccount.getInventory().getBookByIndex(0).getTitle()));
+      assertTrue(bookName.getText().toString().equals(friendAccount.getInventory().getBookByIndex(0).getTitle()));
         assertTrue(bookAuthor.getText().toString().equals(friendAccount.getInventory().getBookByIndex(0).getAuthor()));
         assertTrue(category.getText().toString().equals(friendAccount.getInventory().getBookByIndex(0).getCategory()));
         assertTrue(quantity.getText().toString().equals(String.valueOf(friendAccount.getInventory().getBookByIndex(0).getQuantity())));
@@ -104,7 +104,7 @@ public class FriendProfileScreenTest extends ActivityInstrumentationTestCase2{
         setActivityIntent(intent);
         FriendProfileScreen activity = (FriendProfileScreen) getActivity();
 
-        Account friendAccount = activity.getMyFriend();
+      //--------------------------FIX MEEEEEEEEEEEEEEEEEE  Account friendAccount = activity.getMyFriend();
 
         SaveLoad saveLoad = activity.getSaveLoad();
         Account testAccount = saveLoad.loadFromFile(context);
@@ -122,7 +122,7 @@ public class FriendProfileScreenTest extends ActivityInstrumentationTestCase2{
 
         //check and see if friend is still your friend
 
-        assertFalse(testAccount.getFriends().hasFriend(friendAccount));
+      assertFalse(testAccount.getFriends().hasFriend(friendAccount));
 
     }
 

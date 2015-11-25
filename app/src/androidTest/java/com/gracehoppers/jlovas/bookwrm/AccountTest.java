@@ -25,61 +25,61 @@ public void testAccountcreation() throws IllegalEmailException, NoSpacesExceptio
     account.setEmail("wow@cool.ca");
 
 //test the setters/getters
-    assertTrue(account.getCity() == "Grande Prairie");
-    assertTrue(account.getUsername()=="123cool");
-    assertTrue(account.getEmail()=="wow@cool.ca");
+    assertTrue(account.getCity().equals("Grande Prairie"));
+    assertTrue(account.getUsername().equals("123cool"));
+    assertTrue(account.getEmail().equals("wow@cool.ca"));
 
     //test the empty field exceptions
     try {
         account.setUsername("");
     }catch(IllegalArgumentException x){
-        assertTrue(account.getUsername() == "123cool");
+        assertTrue(account.getUsername().equals( "123cool"));
     }
 
     try {
         account.setEmail("");
     }catch(IllegalArgumentException x){
-        assertTrue(account.getEmail() == "wow@cool.ca");
+        assertTrue(account.getEmail().equals( "wow@cool.ca"));
     }
 
     try {
         account.setCity("");
     }catch(IllegalArgumentException x){
-        assertTrue(account.getCity() == "Grande Prairie");
+        assertTrue(account.getCity().equals("Grande Prairie"));
     }
 
     //test the email exception and the no spaces in username exception (cities can have spaces, Eg: Grande Prairie)
     try {
         account.setEmail("yahoo.ca");
     }catch(IllegalEmailException e){
-        assertTrue(account.getEmail() == "wow@cool.ca");
+        assertTrue(account.getEmail().equals("wow@cool.ca"));
     }
     try {
         account.setUsername("hello goodbye");
     }catch(NoSpacesException n){
-        assertTrue(account.getUsername()=="123cool");
+        assertTrue(account.getUsername().equals("123cool"));
     }
     try {
         account.setEmail("s p a c e s @ u . ca");
     }catch(NoSpacesException n){
-        assertTrue(account.getEmail()=="wow@cool.ca");
+        assertTrue(account.getEmail().equals("wow@cool.ca"));
     }
 
     //test the length constraints
     try {
         account.setUsername("iWannaBeTheVeryBestLikeNoOneEverWasToCatchThemIsMyRealTestToTrainThemIsMyCausePokemonIWillTravelAcrossTheLandSearching");
     }catch(TooLongException n){
-        assertTrue(account.getUsername()=="123cool");
+        assertTrue(account.getUsername().equals("123cool"));
     }
     try {
         account.setEmail("FarAndWideEachPokemonToUnderstandThePowerThatsInsidePokemonOhItsYouAndMeIKnowItsMyDestiny@ualberta.ca");
     }catch(TooLongException n){
-        assertTrue(account.getEmail()=="wow@cool.ca");
+        assertTrue(account.getEmail().equals("wow@cool.ca"));
     }
     try {
         account.setCity("ohYoureMyBestFriendInAWorldWeMustDefendPokemonAHeartSoTrueOurCourageWillPullUsThroughYouTeachMeAndIllTeachYouPokemon");
     }catch(TooLongException n){
-        assertTrue(account.getCity()=="Grande Prairie");
+        assertTrue(account.getCity().equals("Grande Prairie"));
     }
 
     //test to see that the account creates an empty inventory:

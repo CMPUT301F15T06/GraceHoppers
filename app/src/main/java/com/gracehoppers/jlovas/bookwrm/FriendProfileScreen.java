@@ -35,7 +35,10 @@ public class FriendProfileScreen extends ActionBarActivity {
     TextView email;
     TextView city;
     Account account;
-    Account myFriend;
+    //Account myFriend;
+    String myFriend;
+    AccountManager accountmanager;
+    Account result;
 
     SaveLoad saveLoad;
     int position;
@@ -45,7 +48,7 @@ public class FriendProfileScreen extends ActionBarActivity {
 
     //UI test stuff ---------------------------------------------------------------
     public SaveLoad getSaveLoad(){return saveLoad;}
-    public Account getMyFriend(){return myFriend;}
+    public String getMyFriend(){return myFriend;}
     public TextView getFriendName(){return name;}
     public TextView getFriendEmail(){return email;}
     public TextView getFriendCity(){return city;}
@@ -64,14 +67,21 @@ public class FriendProfileScreen extends ActionBarActivity {
         saveLoad = new SaveLoad();
         account = saveLoad.loadFromFile(FriendProfileScreen.this);
 
+
+
         Log.e("Position", "Position is: "+ position);
 
         try {
             myFriend = account.getFriends().getFriendByIndex(position);
+
+            Thread viewprofilethread = new SearchThread(account.getUsername(), myFriend);
+            viewprofilethread.start();
         }catch(NegativeNumberException e){
             Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
         }catch(TooLongException e) {
             Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
+        }catch(AlreadyAddedException e){
+
         }
 
         name =(TextView) findViewById(R.id.fname);
@@ -81,7 +91,7 @@ public class FriendProfileScreen extends ActionBarActivity {
         unFriendButton = (Button)findViewById(R.id.unFriendButton);
         createTradeButton = (Button)findViewById(R.id.createtradebutton);
 
-        name.setText(myFriend.getUsername());
+     /*   name.setText(result.getUsername());
         email.setText(myFriend.getEmail());
         city.setText(myFriend.getCity());
 
@@ -91,9 +101,9 @@ public class FriendProfileScreen extends ActionBarActivity {
         //populate the friend's inventory list with their stuff
         adapter = new BookListAdapter(getApplicationContext(),R.layout.friend_inventory_list, myFriend.getInventory().getPublic(myFriend.getInventory()));
         friendInventoryList.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();*/
 
-
+/*
         friendInventoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
             public void onItemClick(AdapterView<?> parent, View view, int position2, long id) {
 
@@ -114,18 +124,39 @@ public class FriendProfileScreen extends ActionBarActivity {
                 intent.putExtra("flag", "friendItem");
                 startActivity(intent);
             }
-        });
+        });*/
 
         unFriendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //clicking this button will unfriend the person
 
-                //**NOT ENTIRELY FUNCTIONAL YET *** return to me afterwards and update stuff so it's gone ***
-                account.getFriends().unFriend(myFriend);
-                Toast.makeText(getApplicationContext(), "Friend removed", Toast.LENGTH_SHORT).show();
-                saveLoad.saveInFile(getApplicationContext(), account);
-                finish();
+                if(!(result==null)) {
+                    account.getFriends().unFriend(myFriend);
+                    Toast.makeText(getApplicationContext(), "Unfriended " + result.getUsername(), Toast.LENGTH_SHORT).show();
+                    saveLoad.saveInFile(getApplicationContext(), account); //saves this locally
+
+                    result.getFriends().unFriend(account.getUsername()); //unfriends you on their side
+                    //now update this on the server on both ends:
+
+                    Thread yourthread = new UpdateAThread(account);
+                    yourthread.start();
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    Thread friendthread = new UpdateAThread(result);
+                    friendthread.start();
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    finish();
+                }
             }
         });
 
@@ -160,4 +191,116 @@ public class FriendProfileScreen extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    class SearchThread extends Thread { //look to see if this account is a real account before sending a friend request
+        private String sender;
+        private String receiver;
+        //private int flag;
+
+
+        public SearchThread(String sender, String receiver) throws AlreadyAddedException {
+            if(sender.equals(receiver)){ //dont allow users to friend themselves!!
+                throw new AlreadyAddedException();
+            }
+
+            this.sender= sender;
+            this.receiver=receiver;
+            //this.flag=flag;
+
+        }
+        @Override
+        public void run() {
+            //FriendRequest result;
+            accountmanager=new AccountManager();
+            // Log.e("made it thread","made i 2 thread");
+            //result=(frmanager.getFriendRequest(search.getUsername()));
+            //Accounts result;
+
+            result = accountmanager.getAccount(receiver);
+            Log.e("result", result.toString());
+
+
+            try {
+                if(!(result==null)) {
+                    //an account exists
+                    FriendProfileScreen.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            saveLoad.saveFriendInFile(getApplicationContext(),result); //caches this friend (just one friend...for now?)
+
+
+                            name.setText(result.getUsername());
+                            email.setText(result.getEmail());
+                            city.setText(result.getCity());
+
+                            //friendInventory = myFriend.getInventory().getInventory();
+                            //friendInventory = myFriend.getInventory().getPublic(myFriend.getInventory());
+
+                            //populate the friend's inventory list with their stuff
+                            adapter = new BookListAdapter(getApplicationContext(),R.layout.friend_inventory_list, result.getInventory().getPublic(result.getInventory()));
+                            friendInventoryList.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+
+
+                            friendInventoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
+                                public void onItemClick(AdapterView<?> parent, View view, int position2, long id) {
+
+                                    try {
+                                        Book book = result.getInventory().getBookByIndex(position2);
+                                        //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
+                                    } catch (NegativeNumberException e) {
+                                        //these will only trip if its a bug on our end, not user's fault
+                                        Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
+                                    } catch (TooLongException e) {
+                                        //these will only trip if its a bug on our end, not user's fault
+                                        Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    Intent intent = new Intent(FriendProfileScreen.this, ViewBookActivity.class);
+                                    intent.putExtra("listPosition", position2);
+                                    //intent.putExtra("position2", position);
+                                    intent.putExtra("flag", "friendItem");
+                                    startActivity(intent);
+                                }
+                            });
+
+
+                        }
+                    });
+
+                }
+
+
+                else {
+                    //account searched for does not exist
+                   // runOnUiThread(DoesntExistMsg);
+
+                }
+
+            }catch(RuntimeException e) {e.printStackTrace();}
+        }
+
+    }
+
+
+    class UpdateAThread extends Thread { //for updating each account on the server
+        private Account account;
+
+        public UpdateAThread(Account account) {
+            this.account = account;
+        }
+
+        @Override
+        public void run() {
+
+            AccountManager accountManager = new AccountManager();
+            accountManager.updateAccount(account);
+
+        }
+
+    }
+
+
+
 }

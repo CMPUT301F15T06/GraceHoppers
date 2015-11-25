@@ -140,3 +140,16 @@ Envelope Image (various colors):
 Icon made by http://graphberry.com from http://www.flaticon.com
 licensed under http://creativecommons.org/licenses/by/3.0/  Creative Commons BY 3.0 , no changes made to the original image 2015-13-11
 
+Making a Bool Query
+https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html, 2015-15-11
+
+Making match Queries:
+https://www.elastic.co/guide/en/elasticsearch/guide/current/multi-query-strings.html, 2015-15-11
+
+Writing More Complex Queries:
+https://github.com/rayzhangcl/ESDemo, 2015-15-11
+
+Comparing two Drawables:
+Mejonzhan, http://stackoverflow.com/questions/9125229/comparing-two-drawables-in-android, 2015-19-11
+http://stackoverflow.com/users/1043256/mejonzhan
+

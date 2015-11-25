@@ -35,6 +35,7 @@ public class AddBookScreen extends ActionBarActivity {
     int spinValue; //might be a better way to do this, but eh
     String madeComments = "None";
     Photos myPhotos;
+    Account result; //for testing-remove afterwards
 
     EditText titleText;
     EditText authorText;
@@ -241,6 +242,19 @@ public class AddBookScreen extends ActionBarActivity {
 
                     //save into Gson and end the activity
                     mySaveLoad.saveInFile(getApplicationContext(), me);
+
+                    Thread yourthread = new UpdateAThread(me); //update the server to have this book
+                    yourthread.start();
+
+                    try { //remove this after
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                 //   Thread testthread = new SearchThread(me.getUsername()); //for testing purposes
+                  //  testthread.start();
+
                     Toast.makeText(getApplicationContext(), "Successfully added book to inventory", Toast.LENGTH_SHORT).show();
                     finish();
                 }catch(IllegalArgumentException e){
@@ -335,4 +349,70 @@ public class AddBookScreen extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    class UpdateAThread extends Thread { //for updating account on the server
+        private Account account;
+
+        public UpdateAThread(Account account) {
+            this.account = account;
+        }
+
+        @Override
+        public void run() {
+
+            AccountManager accountManager = new AccountManager();
+            accountManager.updateAccount(account);
+
+        }
+
+    }
+
+    //for testing purposes, remove afterwards: ----------------------------------------------------------------
+ /*   class SearchThread extends Thread { //for getting the account
+        private String search;
+
+        public SearchThread(String search) {
+            this.search = search;
+        }
+
+        @Override
+        public void run() {
+            result = new Account();
+            AccountManager accountManager = new AccountManager();
+            result = (accountManager.getAccount(search));
+
+            try {
+                if (result != null) {
+                    Log.e("found!", "found the account");
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    runOnUiThread(CheckTheBook);
+                } else {
+
+                }
+
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    private Runnable CheckTheBook = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                Book test = result.getInventory().getBookByIndex(0);
+                Toast.makeText(getApplicationContext(), test.getDescription(), Toast.LENGTH_SHORT).show();
+            }catch(TooLongException e){
+
+            }catch(NegativeNumberException e){
+
+            }
+        }
+    };*/
+//-------------------------------------------------------------------------------------------------------------------------------------------------
 }

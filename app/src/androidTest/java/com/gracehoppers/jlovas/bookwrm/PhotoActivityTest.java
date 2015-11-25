@@ -83,20 +83,7 @@ public class PhotoActivityTest extends ActivityInstrumentationTestCase2 {
         assertTrue(image.getDrawable().getConstantState().equals
                 (activity.getResources().getDrawable(R.drawable.defaultbook).getConstantState()));
 
-        //push gallery button
 
-        final Button galleryButton = activity.getGalleryButton();
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                galleryButton.performClick();
-            }
-        });
-        getInstrumentation().waitForIdleSync();
-
-        //do something involving picking an image from gallery - I have no idea how to do this
-
-        //assert image is within size range
 
         //assert that the chosen image is not the default (unless they hit cancel?)
         ImageView newImage = activity.getImage();

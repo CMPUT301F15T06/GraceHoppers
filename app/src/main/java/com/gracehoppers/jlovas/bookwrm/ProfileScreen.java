@@ -3,6 +3,7 @@ package com.gracehoppers.jlovas.bookwrm;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -107,6 +108,7 @@ public class ProfileScreen extends ActionBarActivity {
 
                         Thread thread=new updateThread(account);
                         thread.start();
+                        Log.e("yes", "yeup");
 
                     } catch (IllegalArgumentException e) {
                         Toast.makeText(getApplicationContext(), "All Fields must be filled",
