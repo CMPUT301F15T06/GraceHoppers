@@ -178,6 +178,23 @@ public class CreateTradeScreen extends Activity {
                 newTrade = new Trade();
                 //add this Trade into Trade History and empty newTrade
                 //maybe toast to show that the trade has been created and go back to home screen
+                Intent tradeSubmittedIntent = new Intent(CreateTradeScreen.this, HomeScreen.class);
+                startActivity(tradeSubmittedIntent);
+                finish();
+                //SHow that the trade was submitted (alert dialog)
+                //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
+                AlertDialog submittedDialog = new AlertDialog.Builder(CreateTradeScreen.this).create();
+                submittedDialog.setMessage("");
+                submittedDialog.setCanceledOnTouchOutside(false);
+
+                submittedDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Trade submitted",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                submittedDialog.show();
 
             }
         });
@@ -219,9 +236,14 @@ public class CreateTradeScreen extends Activity {
 
     /**
      * This method will call the activity to send the email to notify the other user of the trade request.
+     * Did some research and it said that making it automated is not as simple as just creating a new
+     * intent to go to the other application
      *
-     * Shouldn't this be automatic though? It makes sense to stay on the CreateTradeScreen and just
-     * toast once the email is sent (return from the function)?
+     * US04.07.01
+     * As an owner, if I accept a trade both parties will be emailed all trade and item information
+     * relevant to the trade, as well owner comments for how to continue on with the trade.
+     *
+     * From the user story, I think this email should be sent after the owner accepts the trade!!
      *
      * @throws android.content.ActivityNotFoundException
      */
@@ -233,13 +255,25 @@ public class CreateTradeScreen extends Activity {
     }
 
     public void sendEmail(){
-        String[] TO = {""};
-        String[] CC = {""};
+        String borrowerUsername = newTrade.getBorrower().getUsername();
+        String borrowerEmail = newTrade.getBorrower().getEmail();
+        String borrowerBook = newTrade.getBorrowerBook().toString();
+
+        String ownerUsername = newTrade.getOwner().getUsername();
+        String ownerEmail = newTrade.getOwner().getEmail();
+        String ownerBook = newTrade.getOwnerBook().getTitle();
+
+        String[] TO = {borrowerEmail};
+        String[] CC = {ownerEmail};
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.setData(Uri.parse("mailto:"));
         emailIntent.setType("text/plain");
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
-        //emailIntent.putExtra(Intent.EXTRA_TEXT, "Borrower: " + newTrade.getBorrower().getUsername() + "Owner: " + newTrade.getOwner().getUsername());
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Bookwrm: New Trade!");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Borrower: " + borrowerUsername + "\n"
+                                                  + "Owner: " + ownerUsername + "\n"
+                                                + "Borrower's Books: " + borrowerBook + "\n"
+                                                 + "Owner's Books: " + ownerBook + "\n"
+        );
         try {
             startActivity(Intent.createChooser(emailIntent, "Send mail..."));
             finish();

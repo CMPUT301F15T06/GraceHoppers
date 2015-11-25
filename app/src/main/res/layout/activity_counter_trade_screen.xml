@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Borrower BookList:"
-        android:id="@+id/borrowerTitle"
+        android:id="@+id/borrowersInfo"
         android:textSize="30dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
@@ -21,7 +21,7 @@
         android:id="@+id/textView"
         android:text=""
         android:textSize="20dp"
-        android:layout_below="@+id/borrowerTitle"/>
+        android:layout_below="@+id/borrowersInfo"/>
 
     <Button
         android:layout_width="150sp"
@@ -40,13 +40,13 @@
         android:textSize="30dp"
         android:layout_below="@+id/bAdd"
         android:layout_marginTop="20dp"
-        android:id="@+id/ownerTitle"/>
+        android:id="@+id/ownersInfo"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Owner Book"
-        android:layout_below="@+id/ownerTitle"
+        android:layout_below="@+id/ownersInfo"
         android:layout_marginTop="20dp"
         android:textSize="20dp"
         android:id="@+id/ownerBook"/>

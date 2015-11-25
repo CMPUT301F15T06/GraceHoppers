@@ -51,7 +51,13 @@ public class ProcessTradeScreen extends ActionBarActivity {
 
         setUp();
         tradeHistory= owner.getTradeHistory();
-        trade= tradeHistory.getTradeByIndex(0);
+        try {
+            trade= tradeHistory.getTradeByIndex(0);
+        } catch (NegativeNumberException e) {
+            Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
+        } catch (TooLongException e) {
+            Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
+        }
         borrower =trade.getBorrower();
 
         bName.setText("Borrower Name:\n" + borrower.getUsername());

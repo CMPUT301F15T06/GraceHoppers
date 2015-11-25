@@ -54,7 +54,13 @@ public class CounterTradeScreen extends ActionBarActivity {
         ownerText =(TextView) findViewById(R.id.ownerBook);
 
         setUp();
-        oldTrade =account1.getTradeHistory().getTradeByIndex(0);
+        try {
+            oldTrade = account1.getTradeHistory().getTradeByIndex(0);
+        } catch (NegativeNumberException e) {
+            Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
+        } catch (TooLongException e) {
+            Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
+        }
         ownerText.setText(oldTrade.getOwnerBook().getTitle());
 
         //initialize counterTrade with items in former declined trade
