@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- *Activity for viewing a trade's borrower and Owner  basic information (username),
+ * Activity for viewing a trade's borrower and Owner  basic information (username),
  * and the books up for trading, along with the comments provided.
  * <p>
  * Contains textViews borrowerUsername, borrowerBook, ownerUsername, ownerBook and comments,
@@ -85,8 +85,7 @@ public class ViewTradeActivity extends ActionBarActivity {
             completeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    trade.setCompletion(TradeCompletion.COMPLETE);
-                    Toast.makeText(getApplicationContext(), "Trade marked as COMPLETE.", Toast.LENGTH_SHORT).show();
+                    complete();
                 }
             });
         }
@@ -114,5 +113,10 @@ public class ViewTradeActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void complete(){
+        trade.setCompletion(TradeCompletion.COMPLETE);
+        Toast.makeText(getApplicationContext(), "Trade marked as COMPLETE.", Toast.LENGTH_SHORT).show();
     }
 }

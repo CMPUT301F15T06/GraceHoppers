@@ -41,6 +41,10 @@ public class TradeHistory implements Serializable{
             return tradeHistory.get(i);
     }
 
+
+    //Added only for testing purposes, not a feature.
+    public void clear(){tradeHistory.clear();}
+    public int getSize(){return tradeHistory.size();}
+
     //deleted the delete() method. Don't need one. Not in the requirements.
-    //deleted the clear() method. Don't need one. Not in the requirements.
 }

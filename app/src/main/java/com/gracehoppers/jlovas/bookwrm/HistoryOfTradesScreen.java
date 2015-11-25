@@ -14,6 +14,8 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import static junit.framework.Assert.assertTrue;
+
 /**
  * The HistoryOfTrades Screen displays the current trades the user has with other users,
  * as well as the past trades and their results. Currently this page is not displaying the information
@@ -52,10 +54,53 @@ public class HistoryOfTradesScreen extends ActionBarActivity {
         adapter = new TradeHistoryListAdapter(getApplicationContext(), R.layout.trade_history_list, account.getTradeHistory().tradeHistory);
         historyView.setAdapter(adapter);
 
+        //For testing purposes. DELETE AFTER
+        //Create a test trade and add it to the list
+        Account B = new Account();
+        try{
+            B.setUsername("B");
+            B.setEmail("xyz@gmail.com");
+            B.setCity("YEG");
+        } catch (NoSpacesException e){
+
+        } catch (TooLongException e){
+
+        } catch (IllegalEmailException e ) {
+
+        }
+
+        //Create two books to make the trade with
+        Book bookA = new Book();
+        bookA.setTitle("BookA");
+        bookA.setAuthor("AuthorA");
+
+        Book bookB = new Book();
+        bookB.setTitle("BookB");
+        bookB.setAuthor("AuthorB");
+        ArrayList<Book> borrowerBookList = new ArrayList<>();
+        borrowerBookList.add(bookB);
+
+        //Set up the trade
+        Trade trade = new Trade();
+        trade.setOwner(account);
+        trade.setBorrower(B);
+        trade.setBorrowerBook(borrowerBookList);
+        trade.setOwnerBook(bookA);
+        trade.setOwnerComment("Test Trade");
+
+
+        //Reset the application to a known state
+        account.getTradeHistory().clear();
+        account.getTradeHistory().addTrade(trade);
+        //confirm that book was added to the TradeHistory
+        assertTrue(account.getTradeHistory().getSize() == 1);
+
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
         //Need to have the clickOnItem to set a trade as complete.
         historyView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(HistoryOfTradesScreen.this, ViewBookActivity.class);
+                Intent intent = new Intent(HistoryOfTradesScreen.this, ViewTradeActivity.class);
                 intent.putExtra("listPosition", position);
                 intent.putExtra("flag", "HistoryOfTradesScreen");
 
