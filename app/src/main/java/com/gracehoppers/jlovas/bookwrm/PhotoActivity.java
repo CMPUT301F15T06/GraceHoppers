@@ -141,8 +141,12 @@ public class PhotoActivity extends ActionBarActivity {
                         //update ## text
                         String tmp = imageTotalText.getText().toString();
                         imageTotalText.setText("-");
+
                         leftButton.setEnabled(false);
                         rightButton.setEnabled(false);
+                        redoButton.setVisibility(View.INVISIBLE);
+                        deleteButton.setVisibility(View.INVISIBLE);
+
                     }catch(NegativeNumberException e){
                         Toast.makeText(getApplicationContext(), "Index negative", Toast.LENGTH_SHORT).show();
                     }catch(TooLongException e){
@@ -151,7 +155,87 @@ public class PhotoActivity extends ActionBarActivity {
 
                 }else{
                     //not just one image
-                    Toast.makeText(getApplicationContext(), "Delete else!", Toast.LENGTH_SHORT).show();
+                    //when someone deletes an image that is not the first one in line, they will be thrown to 1/x of whatever is left
+                    //ex: on picture 3/5 and delete that one, will be put to the place of 1/4 now
+                    String tmp = imageTotalText.getText().toString();
+                    switch(tmp.charAt(0)){
+
+                        //ADD CASE FOR 1/x!!!! Also a bug when you take two pictures, deleting the second one causes an index out of bounds error
+
+
+                        case '2':
+                            try {
+                                myPhotos.removePhotoAtIndex(1);
+                                Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(0), 0, myPhotos.getPhotoAtIndex(0).length);
+                                Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                                photoToEdit.setImageBitmap(scaled);
+
+                                //update the text
+                                imageTotalText.setText("" + 1 + "/" + myPhotos.getPhotos().size() + "");
+
+                                leftButton.setEnabled(false);
+                                redoButton.setVisibility(View.INVISIBLE);
+                                deleteButton.setVisibility(View.INVISIBLE);
+
+                                break;
+                            }catch(NegativeNumberException e){
+                                Toast.makeText(getApplicationContext(), "Negative Index Number", Toast.LENGTH_SHORT).show();
+                            }catch(TooLongException e){
+                                Toast.makeText(getApplicationContext(), "Index too long", Toast.LENGTH_SHORT).show();
+                            }
+
+                        case '3':
+                            try {
+                                myPhotos.removePhotoAtIndex(2);
+                                Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(0), 0, myPhotos.getPhotoAtIndex(0).length);
+                                Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                                photoToEdit.setImageBitmap(scaled);
+
+                                //update the text
+                                imageTotalText.setText("" + 1 + "/" + myPhotos.getPhotos().size() + "");
+                                leftButton.setEnabled(false);
+
+                                break;
+                            }catch(NegativeNumberException e){
+                                Toast.makeText(getApplicationContext(), "Negative Index Number", Toast.LENGTH_SHORT).show();
+                            }catch(TooLongException e){
+                                Toast.makeText(getApplicationContext(), "Index too long", Toast.LENGTH_SHORT).show();
+                            }
+                        case '4':
+                            try {
+                                myPhotos.removePhotoAtIndex(2);
+                                Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(0), 0, myPhotos.getPhotoAtIndex(0).length);
+                                Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                                photoToEdit.setImageBitmap(scaled);
+
+                                //update the text
+                                imageTotalText.setText("" + 1 + "/" + myPhotos.getPhotos().size() + "");
+                                leftButton.setEnabled(false);
+
+                                break;
+                            }catch(NegativeNumberException e){
+                                Toast.makeText(getApplicationContext(), "Negative Index Number", Toast.LENGTH_SHORT).show();
+                            }catch(TooLongException e){
+                                Toast.makeText(getApplicationContext(), "Index too long", Toast.LENGTH_SHORT).show();
+                            }
+                        case '5':
+                            try {
+                                myPhotos.removePhotoAtIndex(3);
+                                Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(0), 0, myPhotos.getPhotoAtIndex(0).length);
+                                Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                                photoToEdit.setImageBitmap(scaled);
+
+                                //update the text
+                                imageTotalText.setText("" + 1 + "/" + myPhotos.getPhotos().size() + "");
+                                leftButton.setEnabled(false);
+
+                                break;
+                            }catch(NegativeNumberException e){
+                                Toast.makeText(getApplicationContext(), "Negative Index Number", Toast.LENGTH_SHORT).show();
+                            }catch(TooLongException e){
+                                Toast.makeText(getApplicationContext(), "Index too long", Toast.LENGTH_SHORT).show();
+                            }
+                    }
 
                 }
             }
