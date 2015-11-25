@@ -325,12 +325,13 @@ public class ViewBookActivity extends ActionBarActivity {
             });
         } else { //***********************************************************************************
             //the item is a friend's - do not want to offer edit and delete
-/*
+
             posBook = getIntent().getIntExtra("listPosition", 0);
-            posFriend = getIntent().getIntExtra("position2",0);
+            //posFriend = getIntent().getIntExtra("position2",0);
 
             account = saveload.loadFromFile(ViewBookActivity.this);
-
+            myFriend = saveload.loadFriendFromFile(getApplicationContext()); //loads the stored friend
+/*
             try {
                 //find the friend by a certain position
                 myFriend = account.getFriends().getFriendByIndex(posFriend); //***BUG if you pick the second item in the list!
@@ -338,7 +339,7 @@ public class ViewBookActivity extends ActionBarActivity {
                 Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
             } catch (TooLongException e) {
                 Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
-            }
+            }*/
 
             try {
                 //find the book by a different position than the friend's position
@@ -356,6 +357,24 @@ public class ViewBookActivity extends ActionBarActivity {
             description.setText(friendBook.getDescription());
             rating.setRating((float) friendBook.getQuality());
 
+            //put photo stuff here
+            //attempting to look at photos
+            if(friendBook.getPhotos().getHasImages()) {
+                try {
+                    Bitmap changed = BitmapFactory.decodeStream(new ByteArrayInputStream(friendBook.getPhotos().getPhotoAtIndex(0)));
+                    Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                    bookImage.setImageBitmap(scaled);
+                    if(friendBook.getPhotos().getPhotos().size() >1)
+                        rightButton.setEnabled(true);
+                    imageTotalText.setText("" + 1 + "/" + friendBook.getPhotos().getPhotos().size() + "");
+                    //come back to this later if you can and adjust how this image pops up
+                } catch (NegativeNumberException e) {
+                    Toast.makeText(getApplicationContext(), "Negative index", Toast.LENGTH_SHORT).show();
+                } catch (TooLongException e) {
+                    Toast.makeText(getApplicationContext(), "Index is too long", Toast.LENGTH_SHORT).show();
+                }
+            }
+
             if (friendBook.isPrivate()) {
                 privacy.setText("Private Book");
             } else privacy.setText("Public Book");
@@ -369,7 +388,7 @@ public class ViewBookActivity extends ActionBarActivity {
 
             ViewGroup parentView2 = (ViewGroup) editButton.getParent();
             parentView.removeView(editButton);
-*/ //FIX THE ABOVE!!!!!
+
             /*
             Button tradeButton = editButton;
 
@@ -458,7 +477,27 @@ public class ViewBookActivity extends ActionBarActivity {
         //Log.e("Got to method", "assertion succeeded");
         saveload.saveInFile(getApplicationContext(), account);
 
+        Thread yourthread = new UpdateAThread(account); //update the server to delete this book
+        yourthread.start();
+
         Toast.makeText(getApplicationContext(),"Book deleted",Toast.LENGTH_SHORT).show();
+
+    }
+
+    class UpdateAThread extends Thread { //for updating account on the server
+        private Account account;
+
+        public UpdateAThread(Account account) {
+            this.account = account;
+        }
+
+        @Override
+        public void run() {
+
+            AccountManager accountManager = new AccountManager();
+            accountManager.updateAccount(account);
+
+        }
 
     }
 

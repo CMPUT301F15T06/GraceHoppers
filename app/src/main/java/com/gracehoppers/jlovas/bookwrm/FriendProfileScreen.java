@@ -48,7 +48,7 @@ public class FriendProfileScreen extends ActionBarActivity {
 
     //UI test stuff ---------------------------------------------------------------
     public SaveLoad getSaveLoad(){return saveLoad;}
-   // public Account getMyFriend(){return myFriend;} :(
+    public String getMyFriend(){return myFriend;}
     public TextView getFriendName(){return name;}
     public TextView getFriendEmail(){return email;}
     public TextView getFriendCity(){return city;}
@@ -66,6 +66,8 @@ public class FriendProfileScreen extends ActionBarActivity {
 
         saveLoad = new SaveLoad();
         account = saveLoad.loadFromFile(FriendProfileScreen.this);
+
+
 
         Log.e("Position", "Position is: "+ position);
 
@@ -224,6 +226,10 @@ public class FriendProfileScreen extends ActionBarActivity {
                     FriendProfileScreen.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+
+                            saveLoad.saveFriendInFile(getApplicationContext(),result); //caches this friend (just one friend...for now?)
+
+
                             name.setText(result.getUsername());
                             email.setText(result.getEmail());
                             city.setText(result.getCity());
@@ -253,7 +259,7 @@ public class FriendProfileScreen extends ActionBarActivity {
 
                                     Intent intent = new Intent(FriendProfileScreen.this, ViewBookActivity.class);
                                     intent.putExtra("listPosition", position2);
-                                    intent.putExtra("position2", position);
+                                    //intent.putExtra("position2", position);
                                     intent.putExtra("flag", "friendItem");
                                     startActivity(intent);
                                 }

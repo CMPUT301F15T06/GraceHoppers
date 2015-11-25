@@ -275,6 +275,10 @@ public class EditBookActivity extends ActionBarActivity {
                     }
                     saveload.saveInFile(getApplicationContext(),tempAccount);
 
+                    Thread yourthread = new UpdateAThread(tempAccount); //update the server to have the edited book
+                    yourthread.start();
+
+
                     Toast.makeText(getApplicationContext(), "Changes saved", Toast.LENGTH_SHORT).show();
                     //credit to Reto Meler for the result method of doing this:
                     //Reto Meler, http://stackoverflow.com/questions/920306/sending-data-back-to-the-main-activity-in-android, Oct 28, 2015
@@ -346,5 +350,22 @@ public class EditBookActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    class UpdateAThread extends Thread { //for updating account on the server
+        private Account account;
+
+        public UpdateAThread(Account account) {
+            this.account = account;
+        }
+
+        @Override
+        public void run() {
+
+            AccountManager accountManager = new AccountManager();
+            accountManager.updateAccount(account);
+
+        }
+
     }
 }

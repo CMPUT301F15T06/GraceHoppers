@@ -32,6 +32,8 @@ public class SaveLoad {
     protected static final String FILENAME = "file.sav";
     protected static final String PHOTOFILE = "photos.sav";
 
+    protected static final String FRIEND = "friend.sav"; //this could go into cache. using it to save one friend's account when you want to view a specific book of theirs
+
 
     public SaveLoad() {
     }
@@ -130,6 +132,58 @@ public class SaveLoad {
             e.printStackTrace();
         }
         return myPhotos;
+    }
+
+    /**
+     * loads a friend account from the SD card using gson.
+     * @param context
+     * @return Account
+     */
+    public Account loadFriendFromFile(Context context) {
+        Account account=null;
+        try {
+
+            FileInputStream fis = context.openFileInput(FRIEND);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+            Gson gson=new Gson();
+            //https://sites.google.com/site/gson/gson-user-guide 2015-16-10
+            Type type=new TypeToken<Account>() {}.getType();
+            account=gson.fromJson(in,type);
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            //throw new RuntimeException(e);
+            //key=new ArrayList<keyStats>();
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            //throw new RuntimeException(e);
+            e.printStackTrace();
+        }
+        return account;
+    }
+
+
+    /**
+     * saves a friend account to the SD card using gson.
+     * @param context
+     * @param account
+     */
+    public void saveFriendInFile(Context context,Account account) {
+        try {
+            FileOutputStream fos = context.openFileOutput(FRIEND, 0);
+            BufferedWriter out=new BufferedWriter(new OutputStreamWriter(fos));
+            Gson gson=new Gson();
+            gson.toJson(account, out);
+            out.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        }
     }
 
     }

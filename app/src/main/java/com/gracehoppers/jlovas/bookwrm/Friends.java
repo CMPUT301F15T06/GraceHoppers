@@ -194,7 +194,7 @@ public class Friends implements Serializable{
     public String getFriend(String friendUsername){  //sorry, this one cant return an Account anymore :(
         String friend = null;
         for (String candidate : friendnames){
-            if (candidate == friendUsername){
+            if (candidate.equals(friendUsername)){
                 friend = candidate;
             }
         }

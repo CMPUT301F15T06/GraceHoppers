@@ -52,13 +52,6 @@ public class FriendRequest {
         }
     }
 
-    /**
-     * answers the friend request by declining it
-     */
-    public void declineFriendRequest(){
-        isAnswered=true;
-        //put some server stuff here
-    }
 
     public boolean isAnswered() {
         return isAnswered;

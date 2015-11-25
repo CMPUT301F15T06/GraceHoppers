@@ -330,7 +330,7 @@ public class ViewBookActivityTest extends ActivityInstrumentationTestCase2 {
         ViewBookActivity activity = (ViewBookActivity)getActivity();
 
         friendAccount.getInventory().addBook(book); //give the friend a book for us to look at
-        assertTrue(account.getFriends().getFriend(friendAccount.getUsername()).getInventory().getSize() == 1);
+       assertTrue(account.getFriends().getFriend(friendAccount.getUsername()).getInventory().getSize() == 1);
         //book has been created and added to friend's inventory
         saveload.saveInFile(this.getInstrumentation().getTargetContext().getApplicationContext(), account);
 

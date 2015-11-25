@@ -94,7 +94,7 @@ public class HomeScreen extends Activity {
         //------------------------------------------
 
         //test code
-        Toast.makeText(getApplicationContext(), "Friends has " + account.getFriends().getSize() + " people in it!", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Friends has " + account.getFriends().getSize() + " people in it!", Toast.LENGTH_SHORT).show();
 
 
         addBookButton.setOnClickListener(new View.OnClickListener() {
@@ -256,6 +256,8 @@ public class HomeScreen extends Activity {
         adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory()); //second parameeter used to be inventory
         inventoryList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        Toast.makeText(getApplicationContext(), "Inventory:  " + account.getInventory().getSize() , Toast.LENGTH_SHORT).show();
 
         //check if you have any FR
         Thread thread = new FindFRThread(account.getUsername());
