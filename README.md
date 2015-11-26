@@ -153,3 +153,7 @@ Comparing two Drawables:
 Mejonzhan, http://stackoverflow.com/questions/9125229/comparing-two-drawables-in-android, 2015-19-11
 http://stackoverflow.com/users/1043256/mejonzhan
 
+Comparing visibilities:
+William, http://stackoverflow.com/questions/3791607/how-can-i-check-if-a-view-is-visible-or-not-in-android, 2015-25-11
+http://stackoverflow.com/users/145025/william
+

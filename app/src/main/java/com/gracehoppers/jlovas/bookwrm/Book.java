@@ -32,6 +32,10 @@ public class Book {
     private String description;
     private double quality;
     private Photos photoList;
+    private UniqueNumber uniquenum;
+
+
+
 
     /**
      * Constructor for the book creates a book with default values (to be overwritten when user provides information.
@@ -51,6 +55,19 @@ public class Book {
         //one default photo
         photoList=new Photos();
 
+
+    }
+
+    public UniqueNumber getUniquenum() {
+        return uniquenum;
+    }
+
+    /**
+     * will be given from the server a unique number to identify the book. No two books have the same number
+     *
+     */
+    public void setUniquenum(UniqueNumber uniquenum) {
+       this.uniquenum=uniquenum;
     }
 
     public String getTitle() {

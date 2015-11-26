@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 /**
  * @author dzhang4 on 10/31/15.
- * @deprecated  until part 5
+ *
  */
 public class AccountManager {
     private static final String URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t06/account/";
@@ -213,18 +213,5 @@ public class AccountManager {
         return result;
     }
 
-    String getEntityContent(HttpResponse response) throws IOException {
-        BufferedReader br = new BufferedReader(
-                new InputStreamReader((response.getEntity().getContent())));
-        String output;
-        System.err.println("Output from Server -> ");
-        String json = "";
-        while ((output = br.readLine()) != null) {
-            System.err.println(output);
-            json += output;
-        }
-        System.err.println("JSON:"+json);
-        return json;
-    }
 
 }
