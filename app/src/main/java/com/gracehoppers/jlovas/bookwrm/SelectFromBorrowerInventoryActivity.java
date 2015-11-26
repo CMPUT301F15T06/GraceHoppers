@@ -3,12 +3,14 @@ package com.gracehoppers.jlovas.bookwrm;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 /**
@@ -22,14 +24,18 @@ import java.util.ArrayList;
 public class SelectFromBorrowerInventoryActivity extends ActionBarActivity {
 
 
-    private Account me;
-    private ListView inventoryList;
-    private SaveLoad mySaveLoad;
+    //Need to get the Friend's inventory from the server!!!
+
+
+private Account friend;
+private ListView inventoryList;
+private SaveLoad saveLoad;
 
 
 
-    private ArrayList<Book> myInventory;
-    private ArrayAdapter<Book> adapter;
+private ArrayList<Book> friendInventory;
+private ArrayAdapter<Book> adapter;
+
 
 
     @Override
@@ -38,10 +44,10 @@ public class SelectFromBorrowerInventoryActivity extends ActionBarActivity {
         setContentView(R.layout.activity_select_from_borrower_inventory);
         inventoryList = (ListView)findViewById(R.id.borrower_Inventory_id);
 
-        mySaveLoad = new SaveLoad();
-        me = mySaveLoad.loadFromFile(getApplicationContext());
-        myInventory = me.getInventory().getInventory();
-        adapter = new BookListAdapter(this,R.layout.book_inventory_list, myInventory);
+        saveLoad = new SaveLoad();
+        friend = saveLoad.loadFriendFromFile(getApplicationContext());
+        friendInventory = friend.getInventory().getInventory();
+        adapter = new BookListAdapter(this,R.layout.friend_inventory_list, friendInventory);
         inventoryList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -49,13 +55,14 @@ public class SelectFromBorrowerInventoryActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 try {
-                    Book book = me.getInventory().getBookByIndex(position);
+                    Book book = friend.getInventory().getBookByIndex(position);
+                    Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
                 } catch (NegativeNumberException e) {
                     e.printStackTrace();
                 } catch (TooLongException e) {
                     e.printStackTrace();
                 }
-                //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
+
 
                 Intent intent = new Intent(SelectFromBorrowerInventoryActivity.this, CreateTradeScreen.class);
                 intent.putExtra("aPosition", position);
@@ -63,6 +70,9 @@ public class SelectFromBorrowerInventoryActivity extends ActionBarActivity {
                 finish();
             }
         });
+
+
+
     }
 
     @Override
