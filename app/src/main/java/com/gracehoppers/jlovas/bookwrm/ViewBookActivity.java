@@ -68,6 +68,7 @@ public class ViewBookActivity extends ActionBarActivity {
     int posFriend;
     private SaveLoad saveload = new SaveLoad();
     BitmapScaler scaler;
+    int count=0;
 
     // for UI testing --------------------------------------------------
     public Button getDeleteButton(){return deleteButton;}
@@ -118,56 +119,72 @@ public class ViewBookActivity extends ActionBarActivity {
 
                 switch(tmp.charAt(0)){
                     case '2':
+                        count--;
                         imageTotalText.setText("" + 1 + "/" + tempBook.getPhotos().getPhotos().size() + "");
                         rightButton.setEnabled(true);
                         leftButton.setEnabled(false);
                         try {
-                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(4), 0, tempBook.getPhotos().getPhotoAtIndex(4).length);
+                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(count), 0, tempBook.getPhotos().getPhotoAtIndex(count).length);
                             Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
                             bookImage.setImageBitmap(scaled);
+
+                            rightButton.setEnabled(true);
                             break;
                         }catch(NegativeNumberException e) {
                             Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
                         }catch(TooLongException e){
                             Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
                         }
+
                     case '3':
+                        count--;
                         imageTotalText.setText("" + 2 +"/" +tempBook.getPhotos().getPhotos().size() +"");
                         try {
-                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(3), 0, tempBook.getPhotos().getPhotoAtIndex(3).length);
+                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(count), 0, tempBook.getPhotos().getPhotoAtIndex(count).length);
                             Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
                             bookImage.setImageBitmap(scaled);
+
+                            rightButton.setEnabled(true);
                             break;
                         }catch(NegativeNumberException e) {
                             Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
                         }catch(TooLongException e){
                             Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
                         }
+
                     case '4':
+                        count--;
                         imageTotalText.setText("" + 3 +"/" +tempBook.getPhotos().getPhotos().size() +"");
                         try {
-                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(2), 0, tempBook.getPhotos().getPhotoAtIndex(2).length);
+                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(count), 0, tempBook.getPhotos().getPhotoAtIndex(count).length);
                             Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
                             bookImage.setImageBitmap(scaled);
+
+                            rightButton.setEnabled(true);
                             break;
                         }catch(NegativeNumberException e) {
                             Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
                         }catch(TooLongException e){
                             Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
                         }
+
                     case '5':
+                        count--;
                         imageTotalText.setText("" + 4 +"/" +tempBook.getPhotos().getPhotos().size() +"");
                         rightButton.setEnabled(true);
                         try {
-                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(1), 0, tempBook.getPhotos().getPhotoAtIndex(1).length);
+                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(count), 0, tempBook.getPhotos().getPhotoAtIndex(count).length);
                             Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
                             bookImage.setImageBitmap(scaled);
+
+                            rightButton.setEnabled(true);
                             break;
                         }catch(NegativeNumberException e) {
                             Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
                         }catch(TooLongException e){
                             Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
                         }
+
                 }
             }
         });
@@ -182,61 +199,69 @@ public class ViewBookActivity extends ActionBarActivity {
 
                 switch(tmp.charAt(0)){
                     case '4':
+                        count++;
                         imageTotalText.setText("" + 5 + "/" + tempBook.getPhotos().getPhotos().size() + "");
                         if(Character.getNumericValue(tmp.charAt(0)+1) == (char)tempBook.getPhotos().getPhotos().size()) rightButton.setEnabled(false);
                         rightButton.setEnabled(false);
 
                         try {
-                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(0), 0, tempBook.getPhotos().getPhotoAtIndex(0).length);
+                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(count), 0, tempBook.getPhotos().getPhotoAtIndex(count).length);
                             Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
                             bookImage.setImageBitmap(scaled);
-                            break;
+
                         }catch(NegativeNumberException e) {
                             Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
                         }catch(TooLongException e){
                             Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
                         }
+                        break;
 
                     case '3':
+                        count++;
                         imageTotalText.setText("" + 4 +"/" +tempBook.getPhotos().getPhotos().size() +"");
                         if(Character.getNumericValue(tmp.charAt(0)+1) == (char)tempBook.getPhotos().getPhotos().size()) rightButton.setEnabled(false);
                         try {
-                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(1), 0, tempBook.getPhotos().getPhotoAtIndex(1).length);
+                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(count), 0, tempBook.getPhotos().getPhotoAtIndex(count).length);
                             Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
                             bookImage.setImageBitmap(scaled);
-                            break;
+
                         }catch(NegativeNumberException e) {
                             Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
                         }catch(TooLongException e){
                             Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
                         }
+                        break;
                     case '2':
+                        count++;
                         imageTotalText.setText("" + 3 + "/" + tempBook.getPhotos().getPhotos().size() + "");
                         if(Character.getNumericValue(tmp.charAt(0)+1) == (char)tempBook.getPhotos().getPhotos().size()) rightButton.setEnabled(false);
                         try {
-                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(2), 0, tempBook.getPhotos().getPhotoAtIndex(2).length);
+                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(count), 0, tempBook.getPhotos().getPhotoAtIndex(count).length);
                             Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
                             bookImage.setImageBitmap(scaled);
-                            break;
+
                         }catch(NegativeNumberException e) {
                             Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
                         }catch(TooLongException e){
                             Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
                         }
+                        break;
                     case '1':
+                        count++;
                         imageTotalText.setText("" + 2 + "/" + tempBook.getPhotos().getPhotos().size() + "");
                         if(Character.getNumericValue(tmp.charAt(0)+1) == (char)tempBook.getPhotos().getPhotos().size()) rightButton.setEnabled(false);
                         leftButton.setEnabled(true);
                         try {
-                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(3), 0, tempBook.getPhotos().getPhotoAtIndex(3).length);
+                            Bitmap changed = BitmapFactory.decodeByteArray(tempBook.getPhotos().getPhotoAtIndex(count), 0, tempBook.getPhotos().getPhotoAtIndex(count).length);
                             Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
                             bookImage.setImageBitmap(scaled);
-                            break;
+
                         }catch(NegativeNumberException e) {
                             Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
                         }catch(TooLongException e){
                             Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
                         }
+                        break;
                 }
 
             }
@@ -343,30 +368,30 @@ public class ViewBookActivity extends ActionBarActivity {
 
             try {
                 //find the book by a different position than the friend's position
-                friendBook = myFriend.getInventory().getBookByIndex(posBook);
+                tempBook = myFriend.getInventory().getBookByIndex(posBook); //used to be friendBook, but causes problems with navigatin pictures when thee is a tempBook and a friendBook
             } catch (NegativeNumberException e) {
                 Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
             } catch (TooLongException e) {
                 Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
             }
 
-            bookTitle.setText(friendBook.getTitle());
-            bookAuthor.setText(friendBook.getAuthor());
-            category.setText(friendBook.getCategory());
-            quantity.setText(friendBook.getQuantity() + "");
-            description.setText(friendBook.getDescription());
-            rating.setRating((float) friendBook.getQuality());
+            bookTitle.setText(tempBook.getTitle());
+            bookAuthor.setText(tempBook.getAuthor());
+            category.setText(tempBook.getCategory());
+            quantity.setText(tempBook.getQuantity() + "");
+            description.setText(tempBook.getDescription());
+            rating.setRating((float) tempBook.getQuality());
 
             //put photo stuff here
             //attempting to look at photos
-            if(friendBook.getPhotos().getHasImages()) {
+            if(tempBook.getPhotos().getHasImages()) {
                 try {
-                    Bitmap changed = BitmapFactory.decodeStream(new ByteArrayInputStream(friendBook.getPhotos().getPhotoAtIndex(0)));
+                    Bitmap changed = BitmapFactory.decodeStream(new ByteArrayInputStream(tempBook.getPhotos().getPhotoAtIndex(0)));
                     Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
                     bookImage.setImageBitmap(scaled);
-                    if(friendBook.getPhotos().getPhotos().size() >1)
+                    if(tempBook.getPhotos().getPhotos().size() >1)
                         rightButton.setEnabled(true);
-                    imageTotalText.setText("" + 1 + "/" + friendBook.getPhotos().getPhotos().size() + "");
+                    imageTotalText.setText("" + 1 + "/" + tempBook.getPhotos().getPhotos().size() + "");
                     //come back to this later if you can and adjust how this image pops up
                 } catch (NegativeNumberException e) {
                     Toast.makeText(getApplicationContext(), "Negative index", Toast.LENGTH_SHORT).show();
@@ -375,7 +400,7 @@ public class ViewBookActivity extends ActionBarActivity {
                 }
             }
 
-            if (friendBook.isPrivate()) {
+            if (tempBook.isPrivate()) {
                 privacy.setText("Private Book");
             } else privacy.setText("Public Book");
             //put photo stuff here

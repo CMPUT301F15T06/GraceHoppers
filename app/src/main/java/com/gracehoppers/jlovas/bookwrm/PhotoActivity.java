@@ -89,6 +89,8 @@ public class PhotoActivity extends ActionBarActivity {
         scaler = new BitmapScaler();
         saveLoad = new SaveLoad();
 
+        saveLoad.savePhotos(getApplicationContext(), myPhotos);
+
         okButton = (Button)findViewById(R.id.okAsIsButton);
         takePhotoButton = (Button)findViewById(R.id.takePhotoButton);
         photoToEdit = (ImageView)findViewById(R.id.bookImage);
@@ -411,7 +413,7 @@ public class PhotoActivity extends ActionBarActivity {
                         }catch(TooLongException e){
                             Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
                         }
-                        
+
                 }
             }
         });
