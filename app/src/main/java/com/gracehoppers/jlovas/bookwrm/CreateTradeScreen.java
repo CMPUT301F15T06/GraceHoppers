@@ -177,7 +177,7 @@ public class CreateTradeScreen extends Activity {
                 //Add trade to TradeHistory, and then clear the newTrade variable
                 //Not sure if we are right by adding to trade history.
                 //Need to get the trade requests started!!
-                
+
                 me.getTradeHistory().addTrade(newTrade);
                 newTrade = new Trade();
                 mySaveLoad.saveInFile(getApplicationContext(), me);
@@ -185,13 +185,8 @@ public class CreateTradeScreen extends Activity {
 
                 //Toast to show that the trade has been created
                 Toast.makeText(getApplicationContext(), "Trade submitted!", Toast.LENGTH_SHORT).show();
-
-                /*
-                //Go back to home screen
-                Intent tradeSubmittedIntent = new Intent(CreateTradeScreen.this, HomeScreen.class);
-                startActivity(tradeSubmittedIntent);
                 finish();
-                */
+
             }
         });
 

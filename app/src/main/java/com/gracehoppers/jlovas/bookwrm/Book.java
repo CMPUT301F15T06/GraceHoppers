@@ -32,6 +32,7 @@ public class Book {
     private String description;
     private double quality;
     private Photos photoList;
+    private boolean isUnavailable;
 
     /**
      * Constructor for the book creates a book with default values (to be overwritten when user provides information.
@@ -52,6 +53,9 @@ public class Book {
         photoList=new Photos();
 
     }
+
+    public void setIsUnavailable(){this.isUnavailable = Boolean.TRUE;}
+    public Boolean isUnavailable(){return isUnavailable;}
 
     public String getTitle() {
         return title;
