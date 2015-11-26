@@ -56,6 +56,7 @@
     <string name="title_activity_options">OptionsActivity</string>
     <string name="title_activity_tutorial">TutorialActivity</string>
     <string name="title_activity_view_trade">ViewTradeActivity</string>
+    <string name="title_activity_top_trader">TopTraderActivity</string>
 
 
 </resources>
