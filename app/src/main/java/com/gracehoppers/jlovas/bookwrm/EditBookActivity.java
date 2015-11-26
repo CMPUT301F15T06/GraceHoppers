@@ -117,6 +117,28 @@ public class EditBookActivity extends ActionBarActivity {
         bookRating.setIsIndicator(false);
 
 
+        bookPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //launch activity on result much like addBookScreen ahh!
+                //except you have to load the photos into it AHHH!
+                Intent pIntent = new Intent(EditBookActivity.this, PhotoActivity.class);
+                pIntent.putExtra("flag", "edit");
+                try {
+                    saveload.savePhotos(getApplicationContext(), tempAccount.getInventory().getBookByIndex(pos).getPhotos());
+                    startActivityForResult(pIntent, 64);
+                } catch (NegativeNumberException e) {
+
+                } catch (TooLongException e) {
+
+                }
+            }
+        });
+        //temp toast code
+        try {
+            Toast.makeText(getApplicationContext(), "tempAccunt.getInv... has " + tempAccount.getInventory().getBookByIndex(pos).getPhotos().getPhotos().size() + "images", Toast.LENGTH_SHORT).show();
+        }catch(NegativeNumberException e){}
+        catch(TooLongException e){}
 
         //makes quantity go down
         minusButton.setOnClickListener(new View.OnClickListener() {
@@ -321,11 +343,15 @@ public class EditBookActivity extends ActionBarActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         //grabs the information on the description if the user edits the description
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 0)
+        if(requestCode == 0) {
             if (resultCode == AddCommentsScreen.RESULT_OK) {
                 description = data.getStringExtra("COMMENTS");
                 //Toast.makeText(getApplicationContext(), "Got " + description +" from child.", Toast.LENGTH_SHORT).show();
             }
+        }else if(requestCode ==64){
+            //returning from photoactivity
+            Toast.makeText(getApplicationContext(), "Returning from editting photos!", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

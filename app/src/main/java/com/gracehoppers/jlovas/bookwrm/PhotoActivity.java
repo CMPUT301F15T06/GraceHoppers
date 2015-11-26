@@ -78,6 +78,26 @@ public class PhotoActivity extends ActionBarActivity {
     public Button getTakePhotoButton(){return takePhotoButton;}
     // -----------------------------------------------------------------
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if (getIntent().getStringExtra("flag").equals("edit")) {
+            //arriving here from edit, load images if any
+
+            myPhotos = saveLoad.loadPhotos(getApplicationContext()); //this is beign overwritten when calling onCreate
+            Toast.makeText(getApplicationContext(),"myPhotos.hasImages ==" + myPhotos.getHasImages(), Toast.LENGTH_SHORT).show();
+            if(myPhotos.getHasImages()){
+                //load the images
+            Toast.makeText(getApplicationContext(), "Loading images!", Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(getApplicationContext(), "Loading doesn't work!", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            saveLoad.savePhotos(getApplicationContext(), myPhotos);
+        }
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +109,7 @@ public class PhotoActivity extends ActionBarActivity {
         scaler = new BitmapScaler();
         saveLoad = new SaveLoad();
 
-        saveLoad.savePhotos(getApplicationContext(), myPhotos);
+        //saveLoad.savePhotos(getApplicationContext(), myPhotos);
 
         okButton = (Button)findViewById(R.id.okAsIsButton);
         takePhotoButton = (Button)findViewById(R.id.takePhotoButton);
@@ -399,7 +419,7 @@ public class PhotoActivity extends ActionBarActivity {
 
                     case '5':
                         count--;
-                        imageTotalText.setText("" + 4 +"/" +myPhotos.getPhotos().size() +"");
+                        imageTotalText.setText("" + 4 + "/" + myPhotos.getPhotos().size() + "");
                         rightButton.setEnabled(true);
                         try {
                             Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(count), 0, myPhotos.getPhotoAtIndex(count).length);
@@ -659,6 +679,7 @@ public class PhotoActivity extends ActionBarActivity {
         cursor.moveToFirst();
         return cursor.getString(column_index);
     }
+
 
 
 
