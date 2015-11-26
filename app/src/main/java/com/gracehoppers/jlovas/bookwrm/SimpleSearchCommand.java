@@ -1,7 +1,7 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 /**
- * @deprecated until part 5
+ *
  * Implementation of search by Textual query.
  * The constructor takes in a string that represents the query.
  * Contains a getter and setter method for the query string.

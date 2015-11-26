@@ -32,6 +32,9 @@ public class Book {
     private String description;
     private double quality;
     private Photos photoList;
+<<<<<<< HEAD
+    private boolean isUnavailable;
+=======
     private UniqueNumber uniquenum;
 
 

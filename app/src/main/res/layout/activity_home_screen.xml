@@ -97,8 +97,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/turnCounter"
-            android:text="COUNTER"
+            android:id="@+id/searchbutton"
+            android:text="SEARCH"
             android:layout_above="@+id/addBookButton"
             android:layout_toStartOf="@+id/addBookButton"
             />

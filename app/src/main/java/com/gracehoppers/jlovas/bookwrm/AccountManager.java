@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 /**
  * @author dzhang4 on 10/31/15.
- * @deprecated  until part 5
+ *
  */
 public class AccountManager {
     private static final String URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t06/account/";
@@ -213,18 +213,42 @@ public class AccountManager {
         return result;
     }
 
-    String getEntityContent(HttpResponse response) throws IOException {
-        BufferedReader br = new BufferedReader(
-                new InputStreamReader((response.getEntity().getContent())));
-        String output;
-        System.err.println("Output from Server -> ");
-        String json = "";
-        while ((output = br.readLine()) != null) {
-            System.err.println(output);
-            json += output;
+
+    public ArrayList<Account> getAccounts(String username) {
+        SearchHit<ArrayList<Account>> sr = null;
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet(URL + username);
+        System.out.print(URL + username);
+
+        HttpResponse response = null;
+
+        try {
+            response = httpClient.execute(httpGet);
+        } catch (ClientProtocolException e1) {
+            throw new RuntimeException(e1);
+        } catch (IOException e1) {
+            throw new RuntimeException(e1);
         }
-        System.err.println("JSON:"+json);
-        return json;
+
+        Type searchHitType = new TypeToken<SearchHit<ArrayList<Account>>>() {
+        }.getType();
+
+        try {
+            sr = gson.fromJson(
+                    new InputStreamReader(response.getEntity().getContent()),
+                    searchHitType);
+        } catch (JsonIOException e) {
+            throw new RuntimeException(e);
+        } catch (JsonSyntaxException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalStateException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return sr.getSource();
     }
+
 
 }
