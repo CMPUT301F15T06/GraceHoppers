@@ -159,9 +159,33 @@ public class PhotoActivity extends ActionBarActivity {
                     //ex: on picture 3/5 and delete that one, will be put to the place of 1/4 now
                     String tmp = imageTotalText.getText().toString();
                     switch(tmp.charAt(0)){
+                        case'1':
+                        try {
+                            myPhotos.removePhotoAtIndex(0);
+                            Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(0), 0, myPhotos.getPhotoAtIndex(0).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            photoToEdit.setImageBitmap(scaled);
 
-                        //ADD CASE FOR 1/x!!!! Also a bug when you take two pictures, deleting the second one causes an index out of bounds error
+                            //update the text
+                            imageTotalText.setText("" + 1 + "/" + myPhotos.getPhotos().size() + "");
 
+                            if(myPhotos.getPhotos().size() ==1){
+                                leftButton.setEnabled(false);
+                                rightButton.setEnabled(false);
+                                redoButton.setVisibility(View.INVISIBLE);
+                                deleteButton.setVisibility(View.INVISIBLE);
+                            }else if(myPhotos.getPhotos().size() >1){
+                                rightButton.setEnabled(true);
+                                takePhotoButton.setEnabled(true);
+                            }
+                            count=0;
+
+                            break;
+                        }catch(NegativeNumberException e){
+                            Toast.makeText(getApplicationContext(), "Negative Index Number", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index too long", Toast.LENGTH_SHORT).show();
+                        }
 
                         case '2':
                             try {
@@ -173,9 +197,19 @@ public class PhotoActivity extends ActionBarActivity {
                                 //update the text
                                 imageTotalText.setText("" + 1 + "/" + myPhotos.getPhotos().size() + "");
 
-                                leftButton.setEnabled(false);
-                                redoButton.setVisibility(View.INVISIBLE);
-                                deleteButton.setVisibility(View.INVISIBLE);
+                                if(myPhotos.getPhotos().size() ==1){
+                                    rightButton.setEnabled(false);
+                                    leftButton.setEnabled(false);
+                                    redoButton.setVisibility(View.INVISIBLE);
+                                    deleteButton.setVisibility(View.INVISIBLE);
+                                }
+                                else if(myPhotos.getPhotos().size() >1){
+                                        rightButton.setEnabled(true);
+                                        leftButton.setEnabled(false);
+                                        takePhotoButton.setEnabled(true);
+                                }
+
+                                count=0;
 
                                 break;
                             }catch(NegativeNumberException e){
@@ -195,6 +229,20 @@ public class PhotoActivity extends ActionBarActivity {
                                 imageTotalText.setText("" + 1 + "/" + myPhotos.getPhotos().size() + "");
                                 leftButton.setEnabled(false);
 
+                                if(myPhotos.getPhotos().size() ==1){
+                                    rightButton.setEnabled(false);
+                                    leftButton.setEnabled(false);
+                                    redoButton.setVisibility(View.INVISIBLE);
+                                    deleteButton.setVisibility(View.INVISIBLE);
+                                }
+                                else if(myPhotos.getPhotos().size() >1){
+                                    rightButton.setEnabled(true);
+                                    leftButton.setEnabled(false);
+                                    takePhotoButton.setEnabled(true);
+                                }
+
+                                count=0;
+
                                 break;
                             }catch(NegativeNumberException e){
                                 Toast.makeText(getApplicationContext(), "Negative Index Number", Toast.LENGTH_SHORT).show();
@@ -212,6 +260,20 @@ public class PhotoActivity extends ActionBarActivity {
                                 imageTotalText.setText("" + 1 + "/" + myPhotos.getPhotos().size() + "");
                                 leftButton.setEnabled(false);
 
+                                if(myPhotos.getPhotos().size() ==1){
+                                    rightButton.setEnabled(false);
+                                    leftButton.setEnabled(false);
+                                    redoButton.setVisibility(View.INVISIBLE);
+                                    deleteButton.setVisibility(View.INVISIBLE);
+                                }
+                                else if(myPhotos.getPhotos().size() >1){
+                                    rightButton.setEnabled(true);
+                                    leftButton.setEnabled(false);
+                                    takePhotoButton.setEnabled(true);
+                                }
+
+                                count=0;
+
                                 break;
                             }catch(NegativeNumberException e){
                                 Toast.makeText(getApplicationContext(), "Negative Index Number", Toast.LENGTH_SHORT).show();
@@ -228,6 +290,19 @@ public class PhotoActivity extends ActionBarActivity {
                                 //update the text
                                 imageTotalText.setText("" + 1 + "/" + myPhotos.getPhotos().size() + "");
                                 leftButton.setEnabled(false);
+
+                                if(myPhotos.getPhotos().size() ==1){
+                                    rightButton.setEnabled(false);
+                                    leftButton.setEnabled(false);
+                                    redoButton.setVisibility(View.INVISIBLE);
+                                    deleteButton.setVisibility(View.INVISIBLE);
+                                }
+                                else if(myPhotos.getPhotos().size() >1){
+                                    rightButton.setEnabled(true);
+                                    leftButton.setEnabled(false);
+                                    takePhotoButton.setEnabled(true);
+                                }
+                                count=0;
 
                                 break;
                             }catch(NegativeNumberException e){
@@ -280,12 +355,14 @@ public class PhotoActivity extends ActionBarActivity {
                             Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
                             photoToEdit.setImageBitmap(scaled);
 
+                            rightButton.setEnabled(true);
+                            break;
                         }catch(NegativeNumberException e) {
                             Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
                         }catch(TooLongException e){
                             Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
                         }
-                        break;
+
                     case '3':
                         count--;
                         imageTotalText.setText("" + 2 +"/" +myPhotos.getPhotos().size() +"");
@@ -294,12 +371,14 @@ public class PhotoActivity extends ActionBarActivity {
                             Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
                             photoToEdit.setImageBitmap(scaled);
 
+                            rightButton.setEnabled(true);
+                            break;
                         }catch(NegativeNumberException e) {
                             Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
                         }catch(TooLongException e){
                             Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
                         }
-                        break;
+
                     case '4':
                         count--;
                         imageTotalText.setText("" + 3 +"/" +myPhotos.getPhotos().size() +"");
@@ -308,12 +387,14 @@ public class PhotoActivity extends ActionBarActivity {
                             Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
                             photoToEdit.setImageBitmap(scaled);
 
+                            rightButton.setEnabled(true);
+                            break;
                         }catch(NegativeNumberException e) {
                             Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
                         }catch(TooLongException e){
                             Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
                         }
-                        break;
+
                     case '5':
                         count--;
                         imageTotalText.setText("" + 4 +"/" +myPhotos.getPhotos().size() +"");
@@ -323,12 +404,14 @@ public class PhotoActivity extends ActionBarActivity {
                             Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
                             photoToEdit.setImageBitmap(scaled);
 
+                            rightButton.setEnabled(true);
+                            break;
                         }catch(NegativeNumberException e) {
                             Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
                         }catch(TooLongException e){
                             Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
                         }
-                        break;
+                        
                 }
             }
         });
@@ -442,6 +525,7 @@ public class PhotoActivity extends ActionBarActivity {
     //function for calling and returning stuff from the camera
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //this one is for taking a brand new picture
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             //Bundle extras = data.getExtras();
             //Bitmap imageBitmap = (Bitmap) extras.get("data"); //this method grabs a small thumbnail only - need?
@@ -478,7 +562,12 @@ public class PhotoActivity extends ActionBarActivity {
                 Toast.makeText(getApplicationContext(), "Photos taken1: " + myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
                 photoToEdit.setImageBitmap(scaled);
 
-                imageTotalText.setText("" + 1 +"/" +myPhotos.getPhotos().size() +""); //that 1 is gonna be wrong sometimes
+                imageTotalText.setText("" + 1 +"/" +myPhotos.getPhotos().size() +"");
+
+                //String tmp = imageTotalText.getText().toString();
+                //if(Character.getNumericValue(tmp.charAt(0)) >1){
+                    leftButton.setEnabled(false);
+                //}
 
                 if(myPhotos.getPhotos().size() >1){
                     rightButton.setEnabled(true);
@@ -490,6 +579,7 @@ public class PhotoActivity extends ActionBarActivity {
 
                 redoButton.setVisibility(View.VISIBLE);
                 deleteButton.setVisibility(View.VISIBLE);
+                count=0;
 
             } catch (Exception e) {
                 //should never happen after UI stuff has been made properly
