@@ -174,7 +174,7 @@ public class CreateTradeScreen extends Activity {
             @Override
             public void onClick(View view) {
                 me.getTradeHistory().addTrade(newTrade);
-                //sendEmail();  Commenting out to test while the send email is not set up
+                sendEmail();
                 newTrade = new Trade();
                 //add this Trade into Trade History and empty newTrade
                 //maybe toast to show that the trade has been created and go back to home screen
