@@ -18,7 +18,8 @@ public class TradeRequest {
     private String sender;
     private String receiver;
     private Trade trade;
-    private TradeStatus status;
+
+    private boolean isAnswered;
 
     public TradeRequest(){
     }
@@ -35,6 +36,7 @@ public class TradeRequest {
         sender = senderAccount.getUsername();
         receiver = receiverAccount;
         trade = newTrade;
+        isAnswered = false;
 
     }
 
@@ -42,7 +44,7 @@ public class TradeRequest {
 
         yourAccount.getTradeHistory().addTrade(newTrade);
         friendAccount.getTradeHistory().addTrade(newTrade);
-        status = TradeStatus.ACCEPTED;
+        isAnswered = false;
     }
 
 
@@ -50,7 +52,7 @@ public class TradeRequest {
 
         yourAccount.getTradeHistory().addTrade(newTrade);
         friendAccount.getTradeHistory().addTrade(newTrade);
-        status = TradeStatus.DECLINED;
+        isAnswered = false;
     }
 
 
@@ -60,6 +62,16 @@ public class TradeRequest {
 
     public String getReceiver() {
         return receiver;
+    }
+
+    public String getOwnerBook(){return trade.getOwnerBook().getUniquenum().toString();}
+
+    public String getBorrowerBook(){
+        String bookstr = "";
+         for (Book book : trade.getBorrowerBook()){
+             bookstr = bookstr + book.getUniquenum().toString();
+         }
+        return bookstr;
     }
 
     //public String getTrade() {return trade.ToString();}

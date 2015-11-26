@@ -175,10 +175,16 @@ public class CreateTradeScreen extends Activity {
             @Override
             public void onClick(View view) {
                 //Add trade to TradeHistory, and then clear the newTrade variable
-                //Not sure if we are right by adding to trade history.
-                //Need to get the trade requests started!!
+                //Once submit is clicked, it'll start a trade request
 
-                me.getTradeHistory().addTrade(newTrade);
+
+
+                TradeRequest request = new TradeRequest();
+                TradeRequestManager manager = new TradeRequestManager();
+
+                request.makeTradeRequest(me, friend.getUsername(), newTrade);
+                manager.addTradeRequest(request);
+
                 newTrade = new Trade();
                 mySaveLoad.saveInFile(getApplicationContext(), me);
                 //Toast.makeText(getApplicationContext(), "Breakpoint, newTrade added to History", Toast.LENGTH_SHORT).show();

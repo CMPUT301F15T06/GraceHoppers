@@ -36,8 +36,6 @@ public class Book {
 
 
 
->>>>>>> 9461699170c3cd88908cb318285b880412ff8ad8
-
     /**
      * Constructor for the book creates a book with default values (to be overwritten when user provides information.
      * ***No longer takes an image as a parameter! Book will no longer hold the default image.
@@ -71,8 +69,6 @@ public class Book {
        this.uniquenum=uniquenum;
     }
 
-    public void setIsUnavailable(){this.isUnavailable = Boolean.TRUE;}
-    public Boolean isUnavailable(){return isUnavailable;}
 
     public String getTitle() {
         return title;
