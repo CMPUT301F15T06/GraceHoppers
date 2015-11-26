@@ -29,7 +29,6 @@ public class ViewTradeActivity extends ActionBarActivity {
     */
 
     int pos;
-    int posTrade;
 
     private SaveLoad saveload = new SaveLoad();
     Account account;
@@ -51,6 +50,7 @@ public class ViewTradeActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_trade);
+        //Toast.makeText(getApplicationContext(), "Breakpoint", Toast.LENGTH_SHORT).show();
 
         completeButton = (Button) findViewById(R.id.completeButton);
 
@@ -60,10 +60,13 @@ public class ViewTradeActivity extends ActionBarActivity {
         ownerUsername = (TextView) findViewById(R.id.ownerUsername);
         ownerBook = (TextView)  findViewById(R.id.ownerBook);
 
+        comments = (TextView) findViewById(R.id.comments);
+
         if (getIntent().getStringExtra("flag").equals("HistoryOfTrades")){
-            pos = getIntent().getIntExtra("intPosition", 0);
+            pos = getIntent().getIntExtra("listPosition", 0);
 
             account = saveload.loadFromFile(ViewTradeActivity.this);
+            Toast.makeText(getApplicationContext(), "Displaying item " + pos, Toast.LENGTH_SHORT).show();
 
             try {
                 trade = account.getTradeHistory().getTradeByIndex(pos);
@@ -88,8 +91,11 @@ public class ViewTradeActivity extends ActionBarActivity {
                     complete();
                 }
             });
-        }
 
+        } else {
+            Toast.makeText(getApplicationContext(), "Else taken", Toast.LENGTH_SHORT).show();
+
+        }
 
     }
 

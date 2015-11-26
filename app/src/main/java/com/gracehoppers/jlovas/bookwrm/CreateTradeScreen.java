@@ -36,7 +36,7 @@ public class CreateTradeScreen extends Activity {
     private ListView borrowerInventoryListView;
     private ListView ownerBookListView;
     private Account me;
-    private Account myFriend;
+    private Account friend;
     private ArrayAdapter<Book> adapter;
     private ArrayAdapter<Book> adapterO;
     private ArrayList<Book> selectedBorrowerBooks;
@@ -56,6 +56,7 @@ public class CreateTradeScreen extends Activity {
 
         mySaveLoad = new SaveLoad();
         me = mySaveLoad.loadFromFile(getApplicationContext());
+        friend = mySaveLoad.loadFriendFromFile(getApplicationContext());
 
         Toast.makeText(getApplicationContext(), "My inventory has " + me.getInventory().getSize() + " items in it!", Toast.LENGTH_SHORT).show();
 
@@ -63,7 +64,7 @@ public class CreateTradeScreen extends Activity {
         pos2 = getIntent().getIntExtra("bPosition", (int) Double.POSITIVE_INFINITY);
 
         try {
-            newTrade.getBorrowerBook().add(me.getInventory().getBookByIndex(pos));
+            newTrade.getBorrowerBook().add(friend.getInventory().getBookByIndex(pos));
         } catch (NegativeNumberException e) {
             e.printStackTrace();
         } catch (TooLongException e) {
@@ -81,7 +82,7 @@ public class CreateTradeScreen extends Activity {
 
         selectedBorrowerBooks = newTrade.getBorrowerBook();
         borrowerInventoryListView = (ListView)findViewById(R.id.borrowerInventory);
-        adapter = new BookListAdapter(this,R.layout.book_inventory_list, selectedBorrowerBooks);
+        adapter = new BookListAdapter(this,R.layout.friend_list, selectedBorrowerBooks);
         borrowerInventoryListView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -109,7 +110,7 @@ public class CreateTradeScreen extends Activity {
         newTrade.setCompletion(TradeCompletion.CURRENT);
         selectedBorrowerBooks = newTrade.getBorrowerBook();
         borrowerInventoryListView = (ListView)findViewById(R.id.borrowerInventory);
-        adapter = new BookListAdapter(this,R.layout.book_inventory_list, selectedBorrowerBooks);
+        adapter = new BookListAdapter(this,R.layout.friend_list, selectedBorrowerBooks);
         borrowerInventoryListView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -173,29 +174,24 @@ public class CreateTradeScreen extends Activity {
         submitTrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Add trade to TradeHistory, and then clear the newTrade variable
+                //Not sure if we are right by adding to trade history.
+                //Need to get the trade requests started!!
+                
                 me.getTradeHistory().addTrade(newTrade);
-                //sendEmail();  Commenting out to test while the send email is not set up
                 newTrade = new Trade();
-                //add this Trade into Trade History and empty newTrade
-                //maybe toast to show that the trade has been created and go back to home screen
+                mySaveLoad.saveInFile(getApplicationContext(), me);
+                //Toast.makeText(getApplicationContext(), "Breakpoint, newTrade added to History", Toast.LENGTH_SHORT).show();
+
+                //Toast to show that the trade has been created
+                Toast.makeText(getApplicationContext(), "Trade submitted!", Toast.LENGTH_SHORT).show();
+
+                /*
+                //Go back to home screen
                 Intent tradeSubmittedIntent = new Intent(CreateTradeScreen.this, HomeScreen.class);
                 startActivity(tradeSubmittedIntent);
                 finish();
-                //SHow that the trade was submitted (alert dialog)
-                //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
-                AlertDialog submittedDialog = new AlertDialog.Builder(CreateTradeScreen.this).create();
-                submittedDialog.setMessage("");
-                submittedDialog.setCanceledOnTouchOutside(false);
-
-                submittedDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Trade submitted",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                submittedDialog.show();
-
+                */
             }
         });
 
@@ -252,34 +248,6 @@ public class CreateTradeScreen extends Activity {
         super.onBackPressed();
         newTrade = new Trade();
         finish();
-    }
-
-    public void sendEmail(){
-        String borrowerUsername = newTrade.getBorrower().getUsername();
-        String borrowerEmail = newTrade.getBorrower().getEmail();
-        String borrowerBook = newTrade.getBorrowerBook().toString();
-
-        String ownerUsername = newTrade.getOwner().getUsername();
-        String ownerEmail = newTrade.getOwner().getEmail();
-        String ownerBook = newTrade.getOwnerBook().getTitle();
-
-        String[] TO = {borrowerEmail};
-        String[] CC = {ownerEmail};
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-        emailIntent.setData(Uri.parse("mailto:"));
-        emailIntent.setType("text/plain");
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Bookwrm: New Trade!");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Borrower: " + borrowerUsername + "\n"
-                                                  + "Owner: " + ownerUsername + "\n"
-                                                + "Borrower's Books: " + borrowerBook + "\n"
-                                                 + "Owner's Books: " + ownerBook + "\n"
-        );
-        try {
-            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-            finish();
-        }catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(CreateTradeScreen.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
-        }
     }
 
 

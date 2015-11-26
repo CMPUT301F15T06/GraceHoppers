@@ -214,4 +214,41 @@ public class AccountManager {
     }
 
 
+    public ArrayList<Account> getAccounts(String username) {
+        SearchHit<ArrayList<Account>> sr = null;
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet(URL + username);
+        System.out.print(URL + username);
+
+        HttpResponse response = null;
+
+        try {
+            response = httpClient.execute(httpGet);
+        } catch (ClientProtocolException e1) {
+            throw new RuntimeException(e1);
+        } catch (IOException e1) {
+            throw new RuntimeException(e1);
+        }
+
+        Type searchHitType = new TypeToken<SearchHit<ArrayList<Account>>>() {
+        }.getType();
+
+        try {
+            sr = gson.fromJson(
+                    new InputStreamReader(response.getEntity().getContent()),
+                    searchHitType);
+        } catch (JsonIOException e) {
+            throw new RuntimeException(e);
+        } catch (JsonSyntaxException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalStateException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return sr.getSource();
+    }
+
+
 }

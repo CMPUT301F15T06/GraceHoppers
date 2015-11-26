@@ -112,6 +112,10 @@
         <activity
             android:name=".SearchFriendInventories"
             android:label="@string/title_activity_search_friend_inventories" >
+            </activity>
+        <activity
+            android:name=".TopTraderActivity"
+            android:label="@string/title_activity_top_trader" >
         </activity>
     </application>
 
