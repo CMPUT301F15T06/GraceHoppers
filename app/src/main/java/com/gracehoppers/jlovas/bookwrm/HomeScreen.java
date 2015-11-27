@@ -85,11 +85,11 @@ public class HomeScreen extends Activity {
 
 
 
-        //inventory = account.getInventory().getInventory();
+
         inventoryList = (ListView)findViewById(R.id.inventory1);
 
         //----for UI--------------------------------
-        adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory()); //second parameter used to be inventory
+        adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory());
         inventoryList.setAdapter(adapter);
         //------------------------------------------
 
@@ -145,16 +145,7 @@ public class HomeScreen extends Activity {
                 startActivity(turnFriend);
             }
         });
-/*
-        Button trade = (Button) findViewById(R.id.tradeButton);
-        trade.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent turnTrade = new Intent(HomeScreen.this, CreateTradeScreen.class);
-                startActivity(turnTrade);
-            }
-        });
-*/
+
         Button tradeHistory = (Button) findViewById(R.id.TradeHistoryButton);
         tradeHistory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,7 +231,7 @@ public class HomeScreen extends Activity {
 
         //inventory = account.getInventory().getInventory();
         //saveload.saveInFile(getApplicationContext(),account);
-        adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory()); //second parameter used to be inventory
+        adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory());
         inventoryList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -253,7 +244,7 @@ public class HomeScreen extends Activity {
         super.onResume();
         account = saveload.loadFromFile(getApplicationContext());
         //inventory = account.getInventory().getInventory();
-        adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory()); //second parameeter used to be inventory
+        adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory());
         inventoryList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
