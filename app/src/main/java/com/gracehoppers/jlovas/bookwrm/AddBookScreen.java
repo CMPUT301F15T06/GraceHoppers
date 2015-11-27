@@ -36,6 +36,8 @@ public class AddBookScreen extends ActionBarActivity {
     String madeComments = "None";
     Photos myPhotos;
     Account result; //for testing-remove afterwards
+    UniqueNumber uninum;
+    UniqueNumberGenerator ung;
 
     EditText titleText;
     EditText authorText;
@@ -214,6 +216,10 @@ public class AddBookScreen extends ActionBarActivity {
                     myBook.setTitle(titleText.getText().toString());
                     myBook.setAuthor(authorText.getText().toString());
                     myBook.setQuantity(quantityText.getText().toString());
+
+                    ung = new UniqueNumberGenerator();
+                    uninum = ung.getUniqueNumber(); //!!!!!   this requires a connection. ung has a thread within its class!
+                    myBook.setUniquenum(uninum);
 
                     //OPTIONAL THINGS
                     //rating doesn't seem to be optional in the UI but it is... will come back to fix that later if I can

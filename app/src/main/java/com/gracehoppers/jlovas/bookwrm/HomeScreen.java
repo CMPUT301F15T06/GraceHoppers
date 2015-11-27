@@ -56,6 +56,9 @@ public class HomeScreen extends Activity {
 
     FriendRequestManager frmanager;
 
+    ImageView tradeRequests;
+    TradeRequestManager trmanager;
+
 
     //For UI testing -----------------------------------------
     public SaveLoad getSaveload(){return saveload;}
@@ -164,12 +167,12 @@ public class HomeScreen extends Activity {
             }
         });
 
-        Button counter = (Button) findViewById(R.id.turnCounter);
-        counter.setOnClickListener(new View.OnClickListener() {
+        Button search = (Button) findViewById(R.id.searchbutton);
+        search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent turnCounter = new Intent(HomeScreen.this, ProcessTradeScreen.class);
-                startActivity(turnCounter);
+                Intent intent = new Intent(HomeScreen.this, SearchFriendInventories.class);
+                startActivity(intent);
             }
         });
 
@@ -221,6 +224,30 @@ public class HomeScreen extends Activity {
             }
         });
 
+
+        tradeRequests= (ImageView)findViewById(R.id.trimageView);
+        tradeRequests.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.e("died in", "traderequests image view clicked");
+
+                if(tradeRequests.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.greenenvelope).getConstantState())){
+                    //http://stackoverflow.com/questions/9125229/comparing-two-drawables-in-android, user Mejonzhan, 2015-19-11
+                    //if the envelope is green
+                    Toast.makeText(getApplicationContext(), "Breakpoint", Toast.LENGTH_SHORT).show();
+                    Intent tradeIntent = new Intent(HomeScreen.this, ViewTradeRequest.class);
+                    startActivity(tradeIntent);
+                }
+
+                else{
+                    Toast.makeText(getApplicationContext(), "No current trade requests", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
+
         options = (Button)findViewById(R.id.optionsButton);
         options.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,6 +289,10 @@ public class HomeScreen extends Activity {
         //check if you have any FR
         Thread thread = new FindFRThread(account.getUsername());
         thread.start();
+
+        //check if you have any TR
+        Thread thread2 = new FindTRThread(account.getUsername());
+        thread2.start();
     }
 
 
@@ -358,6 +389,60 @@ public class HomeScreen extends Activity {
         public void run() {
             //change the envelope black
             friendRequests.setImageResource(R.drawable.blackenvelope);
+
+        }
+    };
+    //---------------------------------------------------------------------------------------------------
+
+
+
+    class FindTRThread extends Thread { //find any unanswered TR's for this user
+        private String user1;
+
+
+        public FindTRThread(String u1) {
+            this.user1 = u1;
+
+        }
+
+        @Override
+        public void run() {
+            //tradeRequest result;
+            trmanager=new TradeRequestManager();
+            // Log.e("made it thread","made i 2 thread");
+            //result=(frmanager.getFriendRequest(search.getUsername()));
+            TradeRequests result = new TradeRequests();
+            try {
+                result = trmanager.findTradeRequests(user1);
+            }catch(IOException e){
+                Toast.makeText(getApplicationContext(), "caught an exception :C", Toast.LENGTH_SHORT).show();
+            }
+            if(!result.isEmpty()) {
+                runOnUiThread(ChangeEnvelopeColorGreen);
+                Log.e("true!!","you have a TR for you");
+            } else {
+                runOnUiThread(ChangeEnvelopeColorBlack);
+                Log.e("false!!","false");
+            }
+        }
+
+    }
+
+
+    private Runnable ChangeEnvelopeColorGreen=new Runnable() {
+        @Override
+        public void run() {
+            //change the envelope green
+            tradeRequests.setImageResource(R.drawable.greenenvelope);
+
+        }
+    };
+
+    private Runnable ChangeEnvelopeColorBlack=new Runnable() {
+        @Override
+        public void run() {
+            //change the envelope black
+            tradeRequests.setImageResource(R.drawable.blackenvelope);
 
         }
     };

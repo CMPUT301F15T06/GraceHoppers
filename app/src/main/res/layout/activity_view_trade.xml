@@ -23,7 +23,8 @@
         android:id="@+id/frameLayout2"
         android:layout_marginBottom="23dp"
         android:layout_above="@+id/completeButton"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:background="#afdaff">
 
         <TextView
             android:layout_width="wrap_content"
@@ -52,7 +53,7 @@
         android:text="Mark As \n Complete"
         android:id="@+id/completeButton"
         android:clickable="false"
-        android:background="#8eff8b"
+        android:background="#b562b65e"
         android:layout_gravity="right"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
@@ -63,7 +64,8 @@
         android:layout_alignParentStart="true"
         android:id="@+id/frameLayout"
         android:layout_above="@+id/textView5"
-        android:layout_below="@+id/tradeTitle">
+        android:layout_below="@+id/tradeTitle"
+        android:background="#ffd5ef">
 
         <TextView
             android:layout_width="wrap_content"
@@ -102,7 +104,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Separation Line"
         android:id="@+id/textView5"
         android:layout_above="@+id/frameLayout2"
         android:layout_alignParentEnd="true"
@@ -114,7 +115,8 @@
         android:id="@+id/separationLine"
         android:layout_above="@+id/frameLayout2"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/frameLayout">
+        android:layout_below="@+id/frameLayout"
+        android:background="#cfc7ff">
 
         <TextView
             style="@style/Base.TextAppearance.AppCompat"

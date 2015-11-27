@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -36,7 +38,7 @@ public class CreateTradeScreen extends Activity {
     private ListView borrowerInventoryListView;
     private ListView ownerBookListView;
     private Account me;
-    private Account myFriend;
+    private Account friend;
     private ArrayAdapter<Book> adapter;
     private ArrayAdapter<Book> adapterO;
     private ArrayList<Book> selectedBorrowerBooks;
@@ -56,14 +58,15 @@ public class CreateTradeScreen extends Activity {
 
         mySaveLoad = new SaveLoad();
         me = mySaveLoad.loadFromFile(getApplicationContext());
+        friend = mySaveLoad.loadFriendFromFile(getApplicationContext());
 
-        Toast.makeText(getApplicationContext(), "My inventory has " + me.getInventory().getSize() + " items in it!", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "My inventory has " + me.getInventory().getSize() + " items in it!", Toast.LENGTH_SHORT).show();
 
         pos = getIntent().getIntExtra("aPosition", (int) Double.POSITIVE_INFINITY);
         pos2 = getIntent().getIntExtra("bPosition", (int) Double.POSITIVE_INFINITY);
 
         try {
-            newTrade.getBorrowerBook().add(me.getInventory().getBookByIndex(pos));
+            newTrade.getBorrowerBook().add(friend.getInventory().getBookByIndex(pos));
         } catch (NegativeNumberException e) {
             e.printStackTrace();
         } catch (TooLongException e) {
@@ -81,7 +84,7 @@ public class CreateTradeScreen extends Activity {
 
         selectedBorrowerBooks = newTrade.getBorrowerBook();
         borrowerInventoryListView = (ListView)findViewById(R.id.borrowerInventory);
-        adapter = new BookListAdapter(this,R.layout.book_inventory_list, selectedBorrowerBooks);
+        adapter = new BookListAdapter(this,R.layout.friend_list, selectedBorrowerBooks);
         borrowerInventoryListView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -109,7 +112,7 @@ public class CreateTradeScreen extends Activity {
         newTrade.setCompletion(TradeCompletion.CURRENT);
         selectedBorrowerBooks = newTrade.getBorrowerBook();
         borrowerInventoryListView = (ListView)findViewById(R.id.borrowerInventory);
-        adapter = new BookListAdapter(this,R.layout.book_inventory_list, selectedBorrowerBooks);
+        adapter = new BookListAdapter(this,R.layout.friend_list, selectedBorrowerBooks);
         borrowerInventoryListView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -173,28 +176,22 @@ public class CreateTradeScreen extends Activity {
         submitTrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                me.getTradeHistory().addTrade(newTrade);
-                //sendEmail();  Commenting out to test while the send email is not set up
+                //Add trade to TradeHistory, and then clear the newTrade variable
+                //Once submit is clicked, it'll start a trade request
+
+                TradeRequest request = new TradeRequest();
+                request.makeTradeRequest(me, friend.getUsername(), newTrade);
+                //check if you have any tR
+                Thread thread = new AddTRThread(request);
+                thread.start();
+
                 newTrade = new Trade();
-                //add this Trade into Trade History and empty newTrade
-                //maybe toast to show that the trade has been created and go back to home screen
-                Intent tradeSubmittedIntent = new Intent(CreateTradeScreen.this, HomeScreen.class);
-                startActivity(tradeSubmittedIntent);
+                mySaveLoad.saveInFile(getApplicationContext(), me);
+                //Toast.makeText(getApplicationContext(), "Breakpoint, newTrade added to History", Toast.LENGTH_SHORT).show();
+
+                //Toast to show that the trade has been created
+                Toast.makeText(getApplicationContext(), "Trade submitted!", Toast.LENGTH_SHORT).show();
                 finish();
-                //SHow that the trade was submitted (alert dialog)
-                //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
-                AlertDialog submittedDialog = new AlertDialog.Builder(CreateTradeScreen.this).create();
-                submittedDialog.setMessage("");
-                submittedDialog.setCanceledOnTouchOutside(false);
-
-                submittedDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Trade submitted",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                submittedDialog.show();
 
             }
         });
@@ -254,34 +251,29 @@ public class CreateTradeScreen extends Activity {
         finish();
     }
 
-    public void sendEmail(){
-        String borrowerUsername = newTrade.getBorrower().getUsername();
-        String borrowerEmail = newTrade.getBorrower().getEmail();
-        String borrowerBook = newTrade.getBorrowerBook().toString();
+    class AddTRThread extends Thread { //look for friend requests between x and y
+        private TradeRequest request;
+        private TradeRequestManager manager;
 
-        String ownerUsername = newTrade.getOwner().getUsername();
-        String ownerEmail = newTrade.getOwner().getEmail();
-        String ownerBook = newTrade.getOwnerBook().getTitle();
+        public AddTRThread(TradeRequest request) {
+            this.request = request;
 
-        String[] TO = {borrowerEmail};
-        String[] CC = {ownerEmail};
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-        emailIntent.setData(Uri.parse("mailto:"));
-        emailIntent.setType("text/plain");
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Bookwrm: New Trade!");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Borrower: " + borrowerUsername + "\n"
-                                                  + "Owner: " + ownerUsername + "\n"
-                                                + "Borrower's Books: " + borrowerBook + "\n"
-                                                 + "Owner's Books: " + ownerBook + "\n"
-        );
-        try {
-            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-            finish();
-        }catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(CreateTradeScreen.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
         }
+
+        @Override
+        public void run() {
+            //FriendRequest result;
+            manager = new TradeRequestManager();
+            // Log.e("made it thread","made i 2 thread");
+
+            try {
+                manager.addTradeRequest(request);
+            } catch (Exception e){
+                Log.e("Exception", "Caught exception adding");
+            }
+
+        }
+
     }
-
-
 
 }
