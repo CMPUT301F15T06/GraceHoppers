@@ -2,6 +2,8 @@ package com.gracehoppers.jlovas.bookwrm;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,9 +36,10 @@ public class ViewTradeRequest extends ActionBarActivity {
     SaveLoad saveload;
     Account account;
     AlertDialog SingleInfo;
-    String sender;
+    String tradeId;
     Account result;
     TradeRequest tradeRequest;
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,11 @@ public class ViewTradeRequest extends ActionBarActivity {
 
         TRlist.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                sender = (String) adapter.getItem(position).getSender();
+                tradeId = (String) adapter.getItem(position).getSender();
+                Intent intent = new Intent(context, ProcessTradeScreen.class);
+                intent.putExtra(ProcessTradeScreen.tradeId, tradeId);
+
+                startActivity(intent);
                 //openDialog(sender);
                 //Instead of opening Dialog, it should go to the proceedTrade Screen!!
 

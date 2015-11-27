@@ -15,6 +15,8 @@ import java.util.ArrayList;
  */
 public class ProcessTradeScreenTest extends ActivityInstrumentationTestCase2 {
 
+    //this test includes user case for: accept a trade and decline a trade;
+
     public ProcessTradeScreenTest() {
         super(ProcessTradeScreen.class);
     }
@@ -97,6 +99,15 @@ public class ProcessTradeScreenTest extends ActivityInstrumentationTestCase2 {
         getInstrumentation().removeMonitor(receiverActivityMonitor);
 
     }
+
+    public void testAcceptInServer(){
+
+    }
+
+    public void testDeclineInServer(){
+
+    }
+
 
     public void testDecline() {
         ProcessTradeScreen activity = (ProcessTradeScreen) getActivity();

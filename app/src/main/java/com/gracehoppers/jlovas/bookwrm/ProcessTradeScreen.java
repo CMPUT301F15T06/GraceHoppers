@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +39,9 @@ public class ProcessTradeScreen extends ActionBarActivity {
     TextView bBook;
     TextView oBook;
 
+    public static String tradeId = "Trade ID";
+    private ProcessTradeManager processTradeManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +52,8 @@ public class ProcessTradeScreen extends ActionBarActivity {
         oBook = (TextView)findViewById(R.id.oBook);
         accept =(Button)findViewById(R.id.accept);
         decline = (Button)findViewById(R.id.decline);
+
+        Toast.makeText(getApplicationContext(), tradeId, Toast.LENGTH_SHORT).show();
 
         setUp();
         tradeHistory= owner.getTradeHistory();
@@ -86,7 +92,10 @@ public class ProcessTradeScreen extends ActionBarActivity {
                 dialog.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        send_email();
+                        //send_email();
+                        email();
+                        Toast toast = Toast.makeText(ProcessTradeScreen.this, "successfully send email", Toast.LENGTH_LONG);
+                        toast.show();
                     }
                 });
 
@@ -104,7 +113,7 @@ public class ProcessTradeScreen extends ActionBarActivity {
                 trade.setDeclined(Boolean.TRUE);
                 Toast toast = Toast.makeText(ProcessTradeScreen.this, "Create a counter trade", Toast.LENGTH_LONG);
                 toast.show();
-                /*
+
                 //pop a dialog to promote owner to continue trade by sending email
                 dialog1 = new AlertDialog.Builder(ProcessTradeScreen.this);
                 dialog1.setMessage("Create a counter trade?");
@@ -122,7 +131,7 @@ public class ProcessTradeScreen extends ActionBarActivity {
 
                 dialog1.create();
                 dialog1.show();
-                  */
+
                 Intent turnCounter = new Intent(ProcessTradeScreen.this, CounterTradeScreen.class);
                 startActivity(turnCounter);
                 finish();
@@ -130,6 +139,40 @@ public class ProcessTradeScreen extends ActionBarActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //processTradeManager = new ProcessTradeManager("");
+        Intent intent = getIntent();
+
+        if (intent != null) {
+            Bundle extras = intent.getExtras();
+
+            if (extras != null) {
+                int movieId = extras.getInt(tradeId);
+
+                //Thread thread = new GetThread(tradeId);
+                //thread.start();
+            }
+        }
+    }
+
+    public void email(){
+        try {
+
+            GMailSender sender = new GMailSender("naichaer05@gmail.com", "wxwh0505");
+
+            sender.sendMail("This is Subject",
+                    "This is Body",
+                    "naichaer05@gmail.com",
+                    "hong8@ualberta.ca");
+        } catch (Exception e) {
+            Log.e("SendMail", e.getMessage(), e);
+        }
+
     }
 
     public void setUp(){
@@ -166,6 +209,7 @@ public class ProcessTradeScreen extends ActionBarActivity {
 
     }
 
+    /*
     public void send_email(){
         String email = trade.getBorrower().getEmail();
         String subject = "Trade accepted by owner!";
@@ -190,6 +234,7 @@ public class ProcessTradeScreen extends ActionBarActivity {
             Toast.makeText(ProcessTradeScreen.this, "No email client found", Toast.LENGTH_SHORT).show();
         }
     }
+    */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
