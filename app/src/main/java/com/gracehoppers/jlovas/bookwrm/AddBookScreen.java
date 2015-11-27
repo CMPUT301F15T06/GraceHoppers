@@ -283,6 +283,7 @@ public class AddBookScreen extends ActionBarActivity {
     thePhoto.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            mySaveLoad.savePhotos(getApplicationContext(), myPhotos);
             Intent pIntent = new Intent(AddBookScreen.this, PhotoActivity.class);
             pIntent.putExtra("flag","add");
             startActivityForResult(pIntent, 1000);
@@ -308,7 +309,7 @@ public class AddBookScreen extends ActionBarActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
 
-        //Log.i("Tag", "Result: " + Integer.toString(requestCode));
+        //Log.i("Tag", "RequestCode: " + Integer.toString(requestCode) + "ResultCode" + Integer.toString(resultCode));
 
             if(requestCode == 0) {
                 if (resultCode == AddCommentsScreen.RESULT_OK) {
@@ -316,13 +317,19 @@ public class AddBookScreen extends ActionBarActivity {
                 }
             }
             else if(requestCode == 1000){
-
-                    //temporary test for if photos are getting here
+                if(resultCode == -1) {
+                    //load photos into this book's Photos object
                     myPhotos = mySaveLoad.loadPhotos(getApplicationContext());
-                    //pull extras from intent, get the object
-                    //myPhotos = data.getExtras().getSerializable("Object");
-                    //Toast.makeText(getApplicationContext(), "Photos added: " + myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
+                }else{
+                    //hit the back button
+                    Toast.makeText(getApplicationContext(), "Clearing photos because you hit back", Toast.LENGTH_SHORT).show();
+                    myPhotos =mySaveLoad.loadPhotos(getApplicationContext());
+                    myPhotos.getPhotos().clear();
+                    mySaveLoad.savePhotos(getApplicationContext(), myPhotos);
                 }
+
+
+            }
     }
 
 

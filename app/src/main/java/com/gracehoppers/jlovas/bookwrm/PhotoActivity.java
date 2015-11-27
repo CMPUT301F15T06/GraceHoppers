@@ -79,21 +79,43 @@ public class PhotoActivity extends ActionBarActivity {
     // -----------------------------------------------------------------
 
     @Override
-    protected void onResume(){
+    protected void onResume(){ //onResume
         super.onResume();
         if (getIntent().getStringExtra("flag").equals("edit")) {
             //arriving here from edit, load images if any
 
-            myPhotos = saveLoad.loadPhotos(getApplicationContext()); //this is beign overwritten when calling onCreate
+            //myPhotos = saveLoad.loadPhotos(getApplicationContext()); //this is beign overwritten when calling onCreate
             Toast.makeText(getApplicationContext(),"myPhotos.hasImages ==" + myPhotos.getHasImages(), Toast.LENGTH_SHORT).show();
             if(myPhotos.getHasImages()){
                 //load the images
-            Toast.makeText(getApplicationContext(), "Loading images!", Toast.LENGTH_SHORT).show();
+                try {
+                    Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(0), 0, myPhotos.getPhotoAtIndex(0).length);
+                    Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                    photoToEdit.setImageBitmap(scaled);
+
+                    redoButton.setVisibility(View.VISIBLE);
+                    deleteButton.setVisibility(View.VISIBLE);
+
+                    if(myPhotos.getPhotos().size() >1) {
+                        rightButton.setEnabled(true);
+                    }
+
+                    if(myPhotos.getPhotos().size() == 5){
+                        takePhotoButton.setEnabled(false);
+                    }
+
+                    imageTotalText.setText("" + 1 + "/" + myPhotos.getPhotos().size());
+
+                }catch(NegativeNumberException e){
+                    Toast.makeText(getApplicationContext(), "Negative Index", Toast.LENGTH_SHORT).show();
+                }catch(TooLongException e){
+                    Toast.makeText(getApplicationContext(), "Index too long", Toast.LENGTH_SHORT).show();
+                }
+
             }else {
-                Toast.makeText(getApplicationContext(), "Loading doesn't work!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "HasImages = false!", Toast.LENGTH_SHORT).show();
             }
-        }else{
-            saveLoad.savePhotos(getApplicationContext(), myPhotos);
+            //this else is for addBookScreen's entrance to this page
         }
 
 
@@ -109,7 +131,7 @@ public class PhotoActivity extends ActionBarActivity {
         scaler = new BitmapScaler();
         saveLoad = new SaveLoad();
 
-        //saveLoad.savePhotos(getApplicationContext(), myPhotos);
+        myPhotos = saveLoad.loadPhotos(getApplicationContext());
 
         okButton = (Button)findViewById(R.id.okAsIsButton);
         takePhotoButton = (Button)findViewById(R.id.takePhotoButton);
@@ -127,6 +149,12 @@ public class PhotoActivity extends ActionBarActivity {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if(myPhotos.getPhotos().size() >0){ //NEW
+                    myPhotos.setHasImages(true); //NEW
+                }else{
+                    myPhotos.setHasImages(false);
+                }
                 Intent result = new Intent();
                 //result.putExtra("Object", myPhotos);
                 setResult(PhotoActivity.RESULT_OK, result);
@@ -520,30 +548,6 @@ public class PhotoActivity extends ActionBarActivity {
 
     }//end of onCreate
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_photo, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
     //function for calling and returning stuff from the camera
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -603,6 +607,8 @@ public class PhotoActivity extends ActionBarActivity {
                 deleteButton.setVisibility(View.VISIBLE);
                 count=0;
 
+                myPhotos.setHasImages(true); //NEW
+
             } catch (Exception e) {
                 //should never happen after UI stuff has been made properly
                 e.printStackTrace();
@@ -650,8 +656,6 @@ public class PhotoActivity extends ActionBarActivity {
                 if (myPhotos.getPhotos().size() > 1 && index!=myPhotos.getPhotos().size()) {
                     rightButton.setEnabled(true);
                 }
-
-
 
                 redoButton.setVisibility(View.VISIBLE);
                 deleteButton.setVisibility(View.VISIBLE);

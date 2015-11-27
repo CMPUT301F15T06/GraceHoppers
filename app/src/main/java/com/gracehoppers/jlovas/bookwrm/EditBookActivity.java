@@ -55,6 +55,7 @@ public class EditBookActivity extends ActionBarActivity {
     SaveLoad saveload;
     Account tempAccount;
     int pos;
+    Photos editPhotos;
 
     // for UI testing-------------------------------------------
     public EditText getBookTitle(){return bookTitle;}
@@ -78,7 +79,7 @@ public class EditBookActivity extends ActionBarActivity {
         //load the account
         saveload = new SaveLoad();
         tempAccount = saveload.loadFromFile(EditBookActivity.this);
-
+        editPhotos = new Photos();
 
         //set the UI parts---------------------------------
         bookDescText= (TextView)findViewById(R.id.descriptionText);
@@ -134,11 +135,7 @@ public class EditBookActivity extends ActionBarActivity {
                 }
             }
         });
-        //temp toast code
-        try {
-            Toast.makeText(getApplicationContext(), "tempAccunt.getInv... has " + tempAccount.getInventory().getBookByIndex(pos).getPhotos().getPhotos().size() + "images", Toast.LENGTH_SHORT).show();
-        }catch(NegativeNumberException e){}
-        catch(TooLongException e){}
+
 
         //makes quantity go down
         minusButton.setOnClickListener(new View.OnClickListener() {
@@ -289,6 +286,11 @@ public class EditBookActivity extends ActionBarActivity {
                     tempAccount.getInventory().getBookByIndex(pos).setCategory(spinValue);
                     tempAccount.getInventory().getBookByIndex(pos).setDescription(description);
 
+                    if(editPhotos.getHasImages()) {
+                        tempAccount.getInventory().getBookByIndex(pos).getPhotos().setPhotoset(editPhotos);
+                        tempAccount.getInventory().getBookByIndex(pos).getPhotos().setHasImages(true);
+                    }
+
                     if(privateCheckBox.isChecked()){
 
                         tempAccount.getInventory().getBookByIndex(pos).setIsPrivate(true);
@@ -350,7 +352,12 @@ public class EditBookActivity extends ActionBarActivity {
             }
         }else if(requestCode ==64){
             //returning from photoactivity
-            Toast.makeText(getApplicationContext(), "Returning from editting photos!", Toast.LENGTH_SHORT).show();
+
+                editPhotos = saveload.loadPhotos(getApplicationContext());
+                Toast.makeText(getApplicationContext(), "Returning from editting photos!", Toast.LENGTH_SHORT).show();
+
+        }else{
+            //the user just hit back, so clear?
         }
     }
 
