@@ -204,66 +204,79 @@ public class AddBookScreen extends ActionBarActivity {
             @Override
             public void onClick(View view) {
 
-                //messing around, will tidy up after
-                thePhoto.buildDrawingCache();
-                Bitmap bMap = thePhoto.getDrawingCache();
-                myBook = new Book();
+                ConnectionCheck connection=new ConnectionCheck();
 
-                //a ton of exception catching goes here
-                try{
-                    myBook.setTitle(titleText.getText().toString());
-                    myBook.setAuthor(authorText.getText().toString());
-                    myBook.setQuantity(quantityText.getText().toString());
+                //TODO: put the new account into the Gson or whatever we store it with so we can pull it out on further screens!
 
-                    //OPTIONAL THINGS
-                    //rating doesn't seem to be optional in the UI but it is... will come back to fix that later if I can
-                    myBook.setQuality(stars.getRating());
-                    myBook.setCategory(spinValue);
-                    myBook.setDescription(madeComments);
+                    //messing around, will tidy up after
+                    thePhoto.buildDrawingCache();
+                    Bitmap bMap = thePhoto.getDrawingCache();
+                    myBook = new Book();
 
-                    //set private/public
-                    if(privateCheckBox.isChecked()){
-                        //set as private in Book
-                        myBook.setIsPrivate(true);
-                    }else{
-                        myBook.setIsPrivate(false);
+                    //a ton of exception catching goes here
+                    try {
+                        myBook.setTitle(titleText.getText().toString());
+                        myBook.setAuthor(authorText.getText().toString());
+                        myBook.setQuantity(quantityText.getText().toString());
+
+                        //OPTIONAL THINGS
+                        //rating doesn't seem to be optional in the UI but it is... will come back to fix that later if I can
+                        myBook.setQuality(stars.getRating());
+                        myBook.setCategory(spinValue);
+                        myBook.setDescription(madeComments);
+
+                        //set private/public
+                        if (privateCheckBox.isChecked()) {
+                            //set as private in Book
+                            myBook.setIsPrivate(true);
+                        } else {
+                            myBook.setIsPrivate(false);
+                        }
+
+
+                        if (myPhotos.getHasImages()) {
+                            myBook.getPhotos().setPhotoset(myPhotos);
+                            myBook.getPhotos().setHasImages(true);
+                        }
+
+                        Toast.makeText(getApplicationContext(), "hasImages= " + myBook.getPhotos().getHasImages(), Toast.LENGTH_LONG).show();
+
+                        me.getInventory().addBook(myBook);
+                        books.add(myBook); //For UI testing
+
+                        //save into Gson and end the activity
+                        mySaveLoad.saveInFile(getApplicationContext(), me);
+
+                        if(connection.checkConnection(AddBookScreen.this)==true) {
+                            Thread yourthread = new UpdateAThread(me); //update the server to have this book
+                            yourthread.start();
+
+                            try { //remove this after
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            Toast.makeText(getApplicationContext(), "Successfully added book to inventory", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(), "No network connection. Will add to inventory once connection is established.", Toast.LENGTH_SHORT).show();
+                            //save new book info
+                            //push to server once connection is restored
+                        }
+                        //   Thread testthread = new SearchThread(me.getUsername()); //for testing purposes
+                        //  testthread.start();
+
+
+                    } catch (IllegalArgumentException e) {
+                        //titleText.setText("NO TITLE"); //test to see what we can do
+                        Toast.makeText(getApplicationContext(), "Fields cannot be blank", Toast.LENGTH_SHORT).show();
+                        //**should add something here maybe to emphasize what fields meant maaaaaybe, but would have to be all
+                    } catch (NegativeNumberException d) {
+                        Toast.makeText(getApplicationContext(), "Invalid quantity type. Quantity must be positive", Toast.LENGTH_SHORT).show();
                     }
 
-
-                    if(myPhotos.getHasImages()) {
-                        myBook.getPhotos().setPhotoset(myPhotos);
-                        myBook.getPhotos().setHasImages(true);
-                    }
-
-                    Toast.makeText(getApplicationContext(), "hasImages= " + myBook.getPhotos().getHasImages(), Toast.LENGTH_LONG).show();
-
-                    me.getInventory().addBook(myBook);
-                    books.add(myBook); //For UI testing
-
-                    //save into Gson and end the activity
-                    mySaveLoad.saveInFile(getApplicationContext(), me);
-
-                    Thread yourthread = new UpdateAThread(me); //update the server to have this book
-                    yourthread.start();
-
-                    try { //remove this after
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                 //   Thread testthread = new SearchThread(me.getUsername()); //for testing purposes
-                  //  testthread.start();
-
-                    Toast.makeText(getApplicationContext(), "Successfully added book to inventory", Toast.LENGTH_SHORT).show();
-                    finish();
-                }catch(IllegalArgumentException e){
-                    //titleText.setText("NO TITLE"); //test to see what we can do
-                    Toast.makeText(getApplicationContext(), "Fields cannot be blank", Toast.LENGTH_SHORT).show();
-                    //**should add something here maybe to emphasize what fields meant maaaaaybe, but would have to be all
-                }catch(NegativeNumberException d) {
-                    Toast.makeText(getApplicationContext(), "Invalid quantity type. Quantity must be positive", Toast.LENGTH_SHORT).show();
-                }
 
             }
         });

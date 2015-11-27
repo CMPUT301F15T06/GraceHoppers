@@ -142,6 +142,9 @@ public class MainActivity extends ActionBarActivity {
                         SearchThread thread = new SearchThread(username);
                         thread.start();
                     }
+                    else{
+                        //search cache for username
+                    }
 
 
                 }
