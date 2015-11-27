@@ -106,14 +106,14 @@
             android:label="@string/title_activity_tutorial" >
         </activity>
         <activity
-            android:name=".ViewTradeRequest"
-            android:label="@string/title_activity_view_tr" >
-        </activity>
-        <activity
             android:name=".ViewTradeActivity"
             android:label="@string/title_activity_view_trade" >
         </activity>
         <activity
+<<<<<<< HEAD
+            android:name=".ViewTradeRequest"
+            android:label="@string/title_activity_view_trade_request" >
+=======
             android:name=".SearchFriendInventories"
             android:label="@string/title_activity_search_friend_inventories" >
             </activity>

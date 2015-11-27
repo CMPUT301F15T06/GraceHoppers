@@ -32,9 +32,14 @@ public class Book {
     private String description;
     private double quality;
     private Photos photoList;
+<<<<<<< HEAD
+    private boolean isUnavailable;
+=======
     private UniqueNumber uniquenum;
 
 
+
+>>>>>>> 9461699170c3cd88908cb318285b880412ff8ad8
 
     /**
      * Constructor for the book creates a book with default values (to be overwritten when user provides information.
@@ -69,6 +74,8 @@ public class Book {
        this.uniquenum=uniquenum;
     }
 
+    public void setIsUnavailable(){this.isUnavailable = Boolean.TRUE;}
+    public Boolean isUnavailable(){return isUnavailable;}
 
     public String getTitle() {
         return title;

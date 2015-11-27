@@ -55,6 +55,7 @@ public class EditBookActivity extends ActionBarActivity {
     SaveLoad saveload;
     Account tempAccount;
     int pos;
+    Photos editPhotos;
 
     // for UI testing-------------------------------------------
     public EditText getBookTitle(){return bookTitle;}
@@ -78,7 +79,7 @@ public class EditBookActivity extends ActionBarActivity {
         //load the account
         saveload = new SaveLoad();
         tempAccount = saveload.loadFromFile(EditBookActivity.this);
-
+        editPhotos = new Photos();
 
         //set the UI parts---------------------------------
         bookDescText= (TextView)findViewById(R.id.descriptionText);
@@ -116,6 +117,24 @@ public class EditBookActivity extends ActionBarActivity {
         bookRating.setRating((float) quality);
         bookRating.setIsIndicator(false);
 
+
+        bookPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //launch activity on result much like addBookScreen ahh!
+                //except you have to load the photos into it AHHH!
+                Intent pIntent = new Intent(EditBookActivity.this, PhotoActivity.class);
+                pIntent.putExtra("flag", "edit");
+                try {
+                    saveload.savePhotos(getApplicationContext(), tempAccount.getInventory().getBookByIndex(pos).getPhotos());
+                    startActivityForResult(pIntent, 64);
+                } catch (NegativeNumberException e) {
+
+                } catch (TooLongException e) {
+
+                }
+            }
+        });
 
 
         //makes quantity go down
@@ -267,6 +286,11 @@ public class EditBookActivity extends ActionBarActivity {
                     tempAccount.getInventory().getBookByIndex(pos).setCategory(spinValue);
                     tempAccount.getInventory().getBookByIndex(pos).setDescription(description);
 
+                    if(editPhotos.getHasImages()) {
+                        tempAccount.getInventory().getBookByIndex(pos).getPhotos().setPhotoset(editPhotos);
+                        tempAccount.getInventory().getBookByIndex(pos).getPhotos().setHasImages(true);
+                    }
+
                     if(privateCheckBox.isChecked()){
 
                         tempAccount.getInventory().getBookByIndex(pos).setIsPrivate(true);
@@ -321,11 +345,20 @@ public class EditBookActivity extends ActionBarActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         //grabs the information on the description if the user edits the description
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 0)
+        if(requestCode == 0) {
             if (resultCode == AddCommentsScreen.RESULT_OK) {
                 description = data.getStringExtra("COMMENTS");
                 //Toast.makeText(getApplicationContext(), "Got " + description +" from child.", Toast.LENGTH_SHORT).show();
             }
+        }else if(requestCode ==64){
+            //returning from photoactivity
+
+                editPhotos = saveload.loadPhotos(getApplicationContext());
+                Toast.makeText(getApplicationContext(), "Returning from editting photos!", Toast.LENGTH_SHORT).show();
+
+        }else{
+            //the user just hit back, so clear?
+        }
     }
 
 

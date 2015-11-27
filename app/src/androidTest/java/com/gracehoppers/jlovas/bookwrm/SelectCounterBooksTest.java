@@ -17,6 +17,10 @@ public class SelectCounterBooksTest extends ActivityInstrumentationTestCase2 {
 
     }
 
+    public void testSelected(){
+
+    }
+
     public void testReturn(){
         SelectCounterBooksActivity activity = (SelectCounterBooksActivity) getActivity();
 
