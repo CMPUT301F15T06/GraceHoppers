@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -58,7 +60,7 @@ public class CreateTradeScreen extends Activity {
         me = mySaveLoad.loadFromFile(getApplicationContext());
         friend = mySaveLoad.loadFriendFromFile(getApplicationContext());
 
-        Toast.makeText(getApplicationContext(), "My inventory has " + me.getInventory().getSize() + " items in it!", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "My inventory has " + me.getInventory().getSize() + " items in it!", Toast.LENGTH_SHORT).show();
 
         pos = getIntent().getIntExtra("aPosition", (int) Double.POSITIVE_INFINITY);
         pos2 = getIntent().getIntExtra("bPosition", (int) Double.POSITIVE_INFINITY);
@@ -177,13 +179,11 @@ public class CreateTradeScreen extends Activity {
                 //Add trade to TradeHistory, and then clear the newTrade variable
                 //Once submit is clicked, it'll start a trade request
 
-
-
                 TradeRequest request = new TradeRequest();
-                TradeRequestManager manager = new TradeRequestManager();
-
                 request.makeTradeRequest(me, friend.getUsername(), newTrade);
-                manager.addTradeRequest(request);
+                //check if you have any tR
+                Thread thread = new AddTRThread(request);
+                thread.start();
 
                 newTrade = new Trade();
                 mySaveLoad.saveInFile(getApplicationContext(), me);
@@ -251,6 +251,29 @@ public class CreateTradeScreen extends Activity {
         finish();
     }
 
+    class AddTRThread extends Thread { //look for friend requests between x and y
+        private TradeRequest request;
+        private TradeRequestManager manager;
 
+        public AddTRThread(TradeRequest request) {
+            this.request = request;
+
+        }
+
+        @Override
+        public void run() {
+            //FriendRequest result;
+            manager = new TradeRequestManager();
+            // Log.e("made it thread","made i 2 thread");
+
+            try {
+                manager.addTradeRequest(request);
+            } catch (Exception e){
+                Log.e("Exception", "Caught exception adding");
+            }
+
+        }
+
+    }
 
 }

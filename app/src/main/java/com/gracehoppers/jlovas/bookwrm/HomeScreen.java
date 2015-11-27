@@ -230,11 +230,14 @@ public class HomeScreen extends Activity {
             @Override
             public void onClick(View v) {
 
+                Log.e("died in", "traderequests image view clicked");
+
                 if(tradeRequests.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.greenenvelope).getConstantState())){
                     //http://stackoverflow.com/questions/9125229/comparing-two-drawables-in-android, user Mejonzhan, 2015-19-11
                     //if the envelope is green
-                    Intent TRintent = new Intent(HomeScreen.this, ViewTradeRequest.class);
-                    startActivity(TRintent);
+                    Toast.makeText(getApplicationContext(), "Breakpoint", Toast.LENGTH_SHORT).show();
+                    Intent tradeIntent = new Intent(HomeScreen.this, ViewTradeRequest.class);
+                    startActivity(tradeIntent);
                 }
 
                 else{
@@ -393,7 +396,7 @@ public class HomeScreen extends Activity {
 
 
 
-    class FindTRThread extends Thread { //find any unanswered FR's for this user
+    class FindTRThread extends Thread { //find any unanswered TR's for this user
         private String user1;
 
 
