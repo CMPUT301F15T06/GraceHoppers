@@ -219,6 +219,7 @@ public class ProfileScreen extends ActionBarActivity {
 
         }
 
+
     }
 
     class updateThread extends Thread {

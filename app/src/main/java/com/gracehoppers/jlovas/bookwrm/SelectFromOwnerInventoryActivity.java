@@ -22,7 +22,6 @@ import java.util.ArrayList;
 
 public class SelectFromOwnerInventoryActivity extends ActionBarActivity {
 
-
     private Account me;
 
     public ListView getMyInventory() {

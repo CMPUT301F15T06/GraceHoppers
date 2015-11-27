@@ -153,7 +153,7 @@ public class MainActivity extends ActionBarActivity {
             signUpButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent sIntent = new Intent(MainActivity.this, SignUpActivity.class); //change me to where sign up should go!
+                    Intent sIntent = new Intent(MainActivity.this, SignUpActivity.class);
                     startActivity(sIntent);
                 }
             });
