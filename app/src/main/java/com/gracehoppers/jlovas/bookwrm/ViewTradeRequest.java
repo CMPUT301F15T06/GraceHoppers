@@ -2,6 +2,7 @@ package com.gracehoppers.jlovas.bookwrm;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,6 +51,10 @@ public class ViewTradeRequest extends ActionBarActivity {
                 sender = (String) adapter.getItem(position).getSender();
                 //openDialog(sender);
                 //Instead of opening Dialog, it should go to the proceedTrade Screen!!
+                Intent intent = new Intent(ViewTradeRequest.this, ProcessTradeScreen.class);
+                intent.putExtra("listPosition", position);
+                intent.putExtra("flag", "ViewTR");
+                startActivity(intent);
 
                 /*ProceedTrade should do
                  - Response(Accept/Decline/Counter) (just change Status)

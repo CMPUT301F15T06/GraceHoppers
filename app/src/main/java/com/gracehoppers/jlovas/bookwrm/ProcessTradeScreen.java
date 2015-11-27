@@ -43,8 +43,10 @@ public class ProcessTradeScreen extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_process_trade_screen);
 
-        bName = (TextView)findViewById(R.id.bName);
-        bBook = (TextView)findViewById(R.id.bBook);
+        //SET UP THE FALGS && GET THE TRADE FROM TRADEREQUESTS
+
+            bName = (TextView)findViewById(R.id.bName);
+            bBook = (TextView)findViewById(R.id.bBook);
         oBook = (TextView)findViewById(R.id.oBook);
         accept =(Button)findViewById(R.id.accept);
         decline = (Button)findViewById(R.id.decline);
