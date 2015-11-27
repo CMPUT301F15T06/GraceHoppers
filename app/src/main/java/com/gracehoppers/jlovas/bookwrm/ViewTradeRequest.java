@@ -57,6 +57,11 @@ public class ViewTradeRequest extends ActionBarActivity {
                 startActivity(intent);
                 //openDialog(sender);
                 //Instead of opening Dialog, it should go to the proceedTrade Screen!!
+                /*
+                Intent intent = new Intent(ViewTradeRequest.this, ProcessTradeScreen.class);
+                intent.putExtra("listPosition", position);
+                intent.putExtra("flag", "ViewTR");
+                startActivity(intent);*/
 
                 /*ProceedTrade should do
                  - Response(Accept/Decline/Counter) (just change Status)
