@@ -64,15 +64,16 @@ public class TradeRequest {
         return receiver;
     }
 
-    public String getOwnerBook(){return trade.getOwnerBook().getUniquenum().toString();}
+    public String getOwnerBook(){
+        int number = trade.getOwnerBook().getUniquenum().getNumber();
+        return toString().valueOf(number);}
 
     public String getBorrowerBook(){
         String bookstr = "";
          for (Book book : trade.getBorrowerBook()){
-             bookstr = bookstr + book.getUniquenum().toString();
+             bookstr = bookstr + toString().valueOf(book.getUniquenum().getNumber()) ;
          }
         return bookstr;
     }
 
-    //public String getTrade() {return trade.ToString();}
 }

@@ -1,6 +1,7 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
@@ -49,7 +50,11 @@ public class TradeRequestManager {
 
         HttpClient httpClient = new DefaultHttpClient();
         try {
-            Log.e("trade request sender: ", traderequest.getSender());
+            Log.e("TR sender: ", traderequest.getSender());
+            Log.e("TR receiver: ", traderequest.getReceiver());
+            Log.e("TR ownerBook: ", traderequest.getOwnerBook());
+            Log.e("TR borrowerBook: ", traderequest.getBorrowerBook());
+
             HttpPost addRequest = new HttpPost(URL + traderequest.getSender() + "-"+traderequest.getReceiver()
                                                 + "-"+traderequest.getOwnerBook() + "-"+traderequest.getBorrowerBook());
             StringEntity stringEntity = new StringEntity(gson.toJson(traderequest));
@@ -277,7 +282,7 @@ public class TradeRequestManager {
             HttpResponse response=httpClient.execute(delete);
             String status=response.getStatusLine().toString();
             Log.i(TAG,status);
-            Log.e("deleted","FR deleted");
+            Log.e("deleted","TR deleted");
         }catch(Exception e) {e.printStackTrace();}
     }
 }
