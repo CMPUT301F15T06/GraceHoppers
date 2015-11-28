@@ -104,39 +104,11 @@ public class AccountManager {
             Log.i(TAG,status);
         }catch(Exception e) {e.printStackTrace();}
     }
-/*
-    public void updateAccount(Account account) throws IOException {
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpPost updateRequest = new HttpPost(URL + account.getUsername() + "/_update/");
-
-        String query = 	"{\"script\" : \"ctx._source." + "friends" + "}"; //for updating friends list ONLY :(
-        StringEntity stringentity = new StringEntity(query);
-
-        updateRequest.setHeader("Accept","application/json");
-        updateRequest.setEntity(stringentity);
-
-        HttpResponse response = httpClient.execute(updateRequest);
-        String status = response.getStatusLine().toString();
-        System.out.println(status);
-
-        String json = getEntityContent(response);
-    }
-*/
 
     public void updateAccount(Account account) { //called in ProfileScreen!! dont edit it too much
         HttpClient httpClient = new DefaultHttpClient();
 
         try {
-            //--trying---------------
-/*
-            BytesUtil bytesutil = new BytesUtil();
-            byte[] friendlistbytes;
-            friendlistbytes=bytesutil.toByteArray(account.getFriends()); //friends is a byte array now
-            account.getFriends().clear();
-            account.setFriendlistBytes(friendlistbytes);
-*/
-
-            //------------------------
             HttpPut updateRequest = new HttpPut(URL+account.getUsername());
 
             String acc = gson.toJson(account);

@@ -53,6 +53,7 @@ public class HomeScreen extends Activity {
     Button friend;
     Button options;
     ImageView friendRequests;
+    PhotoDownloads pD;
 
     FriendRequestManager frmanager;
 
@@ -75,6 +76,8 @@ public class HomeScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
+        pD = (PhotoDownloads)getApplicationContext();
+
         Intent i=getIntent();
         Bundle Username=i.getExtras();
         username=Username.getString("username");
@@ -88,11 +91,11 @@ public class HomeScreen extends Activity {
 
 
 
-        //inventory = account.getInventory().getInventory();
+
         inventoryList = (ListView)findViewById(R.id.inventory1);
 
         //----for UI--------------------------------
-        adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory()); //second parameter used to be inventory
+        adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory());
         inventoryList.setAdapter(adapter);
         //------------------------------------------
 
@@ -148,16 +151,7 @@ public class HomeScreen extends Activity {
                 startActivity(turnFriend);
             }
         });
-/*
-        Button trade = (Button) findViewById(R.id.tradeButton);
-        trade.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent turnTrade = new Intent(HomeScreen.this, CreateTradeScreen.class);
-                startActivity(turnTrade);
-            }
-        });
-*/
+
         Button tradeHistory = (Button) findViewById(R.id.TradeHistoryButton);
         tradeHistory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -264,10 +258,10 @@ public class HomeScreen extends Activity {
     @Override
     protected void onStart(){
         super.onStart();
-
+        Toast.makeText(getApplicationContext(), "Enabled is: " + pD.getEnabled(), Toast.LENGTH_SHORT).show();
         //inventory = account.getInventory().getInventory();
         //saveload.saveInFile(getApplicationContext(),account);
-        adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory()); //second parameter used to be inventory
+        adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory());
         inventoryList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -280,7 +274,7 @@ public class HomeScreen extends Activity {
         super.onResume();
         account = saveload.loadFromFile(getApplicationContext());
         //inventory = account.getInventory().getInventory();
-        adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory()); //second parameeter used to be inventory
+        adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory());
         inventoryList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -296,27 +290,11 @@ public class HomeScreen extends Activity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home_screen, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
-        return super.onOptionsItemSelected(item);
-    }
+
+
 
     //delete this after testing!! -----------------------------------------------------------------------
 
