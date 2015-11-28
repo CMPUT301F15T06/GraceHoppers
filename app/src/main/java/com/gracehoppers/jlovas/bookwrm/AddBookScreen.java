@@ -249,27 +249,24 @@ public class AddBookScreen extends ActionBarActivity {
                     //save into Gson and end the activity
                     mySaveLoad.saveInFile(getApplicationContext(), me);
 
-                    ConnectionCheck connection = new ConnectionCheck();
-                    if (connection.checkConnection(AddBookScreen.this) == true) {
-                        Thread yourthread = new UpdateAThread(me); //update the server to have this book
-                        yourthread.start();
 
-                        try { //remove this after
-                            Thread.sleep(500);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    else{
-                        Toast.makeText(getApplicationContext(), "No Network Connection, Please try again later",
-                                Toast.LENGTH_SHORT).show();
-                    }
+                    Thread yourthread = new UpdateAThread(me); //update the server to have this book
+                    yourthread.start();
+
+
+                    //Toast.makeText(getApplicationContext(), "Successfully added book to inventory", Toast.LENGTH_SHORT).show();
+                    //finish();
+
+
+                    Toast.makeText(getApplicationContext(), "No Network Connection, will add once connection is established",
+                            Toast.LENGTH_SHORT).show();
+
+
 
                     //   Thread testthread = new SearchThread(me.getUsername()); //for testing purposes
                     //  testthread.start();
 
-                    Toast.makeText(getApplicationContext(), "Successfully added book to inventory", Toast.LENGTH_SHORT).show();
-                    finish();
+
                 }catch(IllegalArgumentException e){
                     //titleText.setText("NO TITLE"); //test to see what we can do
                     Toast.makeText(getApplicationContext(), "Fields cannot be blank", Toast.LENGTH_SHORT).show();
@@ -375,6 +372,9 @@ public class AddBookScreen extends ActionBarActivity {
 
             AccountManager accountManager = new AccountManager();
             accountManager.updateAccount(account);
+
+            Toast.makeText(getApplicationContext(), "Successfully added book to inventory", Toast.LENGTH_SHORT).show();
+            finish();
 
         }
 

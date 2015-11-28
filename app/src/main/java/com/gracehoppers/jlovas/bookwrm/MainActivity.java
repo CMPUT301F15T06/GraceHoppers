@@ -143,7 +143,8 @@ public class MainActivity extends ActionBarActivity {
                         thread.start();
                     }
                     else{
-                        //search cache for username
+                        Toast.makeText(getApplicationContext(), "No Network Connection, Please try again later",
+                                Toast.LENGTH_SHORT).show();
                     }
 
 
