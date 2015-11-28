@@ -258,8 +258,8 @@ public class AddBookScreen extends ActionBarActivity {
                         e.printStackTrace();
                     }
 
-                 //   Thread testthread = new SearchThread(me.getUsername()); //for testing purposes
-                  //  testthread.start();
+                    //   Thread testthread = new SearchThread(me.getUsername()); //for testing purposes
+                    //  testthread.start();
 
                     Toast.makeText(getApplicationContext(), "Successfully added book to inventory", Toast.LENGTH_SHORT).show();
                     finish();
@@ -285,18 +285,18 @@ public class AddBookScreen extends ActionBarActivity {
             }
         });
 
-    //to add a photo
-    thePhoto.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            mySaveLoad.savePhotos(getApplicationContext(), myPhotos);
-            Intent pIntent = new Intent(AddBookScreen.this, PhotoActivity.class);
-            pIntent.putExtra("flag","add");
-            startActivityForResult(pIntent, 1000);
+        //to add a photo
+        thePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mySaveLoad.savePhotos(getApplicationContext(), myPhotos);
+                Intent pIntent = new Intent(AddBookScreen.this, PhotoActivity.class);
+                pIntent.putExtra("flag","add");
+                startActivityForResult(pIntent, 1000);
 
 
-        }
-    });
+            }
+        });
     } //end of onCreate function
 
 
@@ -317,25 +317,25 @@ public class AddBookScreen extends ActionBarActivity {
 
         //Log.i("Tag", "RequestCode: " + Integer.toString(requestCode) + "ResultCode" + Integer.toString(resultCode));
 
-            if(requestCode == 0) {
-                if (resultCode == AddCommentsScreen.RESULT_OK) {
-                    madeComments = data.getStringExtra("COMMENTS");
-                }
+        if(requestCode == 0) {
+            if (resultCode == AddCommentsScreen.RESULT_OK) {
+                madeComments = data.getStringExtra("COMMENTS");
             }
-            else if(requestCode == 1000){
-                if(resultCode == -1) {
-                    //load photos into this book's Photos object
-                    myPhotos = mySaveLoad.loadPhotos(getApplicationContext());
-                }else{
-                    //hit the back button
-                    Toast.makeText(getApplicationContext(), "Clearing photos because you hit back", Toast.LENGTH_SHORT).show();
-                    myPhotos =mySaveLoad.loadPhotos(getApplicationContext());
-                    myPhotos.getPhotos().clear();
-                    mySaveLoad.savePhotos(getApplicationContext(), myPhotos);
-                }
+        }
+        else if(requestCode == 1000){
+            if(resultCode == -1) {
+                //load photos into this book's Photos object
+                myPhotos = mySaveLoad.loadPhotos(getApplicationContext());
+            }else{
+                //hit the back button
+                Toast.makeText(getApplicationContext(), "Clearing photos because you hit back", Toast.LENGTH_SHORT).show();
+                myPhotos =mySaveLoad.loadPhotos(getApplicationContext());
+                myPhotos.getPhotos().clear();
+                mySaveLoad.savePhotos(getApplicationContext(), myPhotos);
+            }
 
 
-            }
+        }
     }
 
 
@@ -359,17 +359,14 @@ public class AddBookScreen extends ActionBarActivity {
     //for testing purposes, remove afterwards: ----------------------------------------------------------------
  /*   class SearchThread extends Thread { //for getting the account
         private String search;
-
         public SearchThread(String search) {
             this.search = search;
         }
-
         @Override
         public void run() {
             result = new Account();
             AccountManager accountManager = new AccountManager();
             result = (accountManager.getAccount(search));
-
             try {
                 if (result != null) {
                     Log.e("found!", "found the account");
@@ -380,16 +377,12 @@ public class AddBookScreen extends ActionBarActivity {
                     }
                     runOnUiThread(CheckTheBook);
                 } else {
-
                 }
-
             } catch (RuntimeException e) {
                 e.printStackTrace();
             }
         }
-
     }
-
     private Runnable CheckTheBook = new Runnable() {
         @Override
         public void run() {
@@ -397,9 +390,7 @@ public class AddBookScreen extends ActionBarActivity {
                 Book test = result.getInventory().getBookByIndex(0);
                 Toast.makeText(getApplicationContext(), test.getDescription(), Toast.LENGTH_SHORT).show();
             }catch(TooLongException e){
-
             }catch(NegativeNumberException e){
-
             }
         }
     };*/

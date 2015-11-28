@@ -73,6 +73,10 @@ public class MainActivity extends ActionBarActivity {
                         SearchThread thread = new SearchThread(username);
                         thread.start();
                     }
+                    else{
+                        Toast.makeText(getApplicationContext(), "No Network Connection, Please try again later",
+                                Toast.LENGTH_SHORT).show();
+                    }
 
 
                 }
