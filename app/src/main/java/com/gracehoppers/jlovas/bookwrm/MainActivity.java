@@ -129,8 +129,6 @@ public class MainActivity extends ActionBarActivity {
             logInButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //add conditions for this to work here!!
-                    //Toast.makeText(getApplicationContext(), "Login not set up quite yet, I go through regardless for testing book purposes! c:", Toast.LENGTH_SHORT).show();
                     ConnectionCheck connection=new ConnectionCheck();
 
                     //TODO: put the new account into the Gson or whatever we store it with so we can pull it out on further screens!
@@ -138,10 +136,13 @@ public class MainActivity extends ActionBarActivity {
                         usernameText = (EditText) findViewById(R.id.usernameText);
                         final String username = usernameText.getText().toString();
 
-
-                        SearchThread thread = new SearchThread(username);
-                        thread.start();
-                    }
+                            try {
+                                SearchThread thread = new SearchThread(username);
+                                thread.start();
+                            }catch(BlankFieldException e){
+                                Toast.makeText(getApplicationContext(),"Please enter a valid username", Toast.LENGTH_SHORT).show();
+                            }
+                        }
 
 
                 }
@@ -183,8 +184,9 @@ public class MainActivity extends ActionBarActivity {
     class SearchThread extends Thread {
         private String search;
 
-        public SearchThread(String search) {
-            this.search = search;
+        public SearchThread(String search) throws BlankFieldException {
+            if(search.equals("")) throw new BlankFieldException();
+            else this.search = search;
         }
 
         @Override

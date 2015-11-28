@@ -1,5 +1,6 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -36,7 +37,9 @@ public class SearchFriendInventories extends ActionBarActivity {
     private ArrayAdapter<Book> adapter;
     String search;
     int spinValue;
-    Category category;
+    Account owner;
+    int bookposition;
+    Book selectedBook;
 
     //1: get all friend accounts on create (using nested queries has been disabled so the inefficient way is the only way)
     //2: get all of their PUBLIC books into one list on create
@@ -138,20 +141,43 @@ public class SearchFriendInventories extends ActionBarActivity {
                 @Override
                 public void onClick(View view) {
 
-                    if(categorySelect.getVisibility()==view.VISIBLE){
+                    if (categorySelect.getVisibility() == view.VISIBLE) {
                         //do a search by category
-                       // category = getCategory();
                         doCategorySearch();
                         showBooks();
                     }
 
-                    if(categorySelect.getVisibility()==view.INVISIBLE){
+                    if (categorySelect.getVisibility() == view.INVISIBLE) {
                         //do a search title by textual query
                         search = userQuery.getText().toString();
                         doTextualQuery(search);
                         showBooks();
 
                     }
+
+
+                }
+            });
+
+            searchedBooksList.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    try {
+                        Intent intent = new Intent(SearchFriendInventories.this, ViewBookActivity.class);
+                        owner = getOwner(position); //get the owner account to pass to the next intent
+                        selectedBook = searchresult.getBookByIndex(position); //get the book
+                        bookposition = getActualIndex(selectedBook, owner); //get the actual position in the account to pass to the next intent
+                        Toast.makeText(getApplicationContext(), "" + owner.getUsername(), Toast.LENGTH_SHORT).show();
+                        saveload.saveFriendInFile(getApplicationContext(),owner);
+                        intent.putExtra("listPosition", bookposition);
+                         intent.putExtra("flag", "Search");
+                         startActivity(intent);
+                    }catch(NegativeNumberException e){
+
+                    }catch(TooLongException e){
+
+                    }
+
 
 
 
@@ -277,46 +303,6 @@ public class SearchFriendInventories extends ActionBarActivity {
 
     }
 
- /*   public Category getCategory(){ //match the spinner with its corresponding category type
-        switch (spinValue) {
-            case 0:
-                return Category.NONE;
-
-            case 1:
-                return  Category.HARDBACK;
-
-            case 2:
-                return Category.PAPERBACK;
-
-            case 3:
-                return Category.AUDIOBOOK;
-
-            case 4:
-                return Category.COMIC;
-
-            case 5:
-                return Category.TEXTBOOK;
-
-            case 6:
-                return Category.PICTURE;
-
-            case 7:
-                return Category.BRAILLE;
-
-            case 8:
-                return Category.REFERENCE;
-
-            case 9:
-                return Category.RECIPE;
-
-            case 10:
-                return Category.DIY;
-
-            default:
-                return Category.NONE;
-
-        }
-    }*/
 
 public void doCategorySearch(){
     //searches all public books by given category
@@ -336,6 +322,59 @@ public void doCategorySearch(){
     }
 
 }
+
+   public Account getOwner(int position){
+        //get the account that owns this book
+       Book tmpB;
+       int tmpnum;
+       Account tmpA;
+       Book tempBook;
+       try {
+          tmpB=searchresult.getBookByIndex(position);
+           tmpnum=tmpB.getUniquenum().getNumber();
+
+
+           for(int i=0;i<friendlist.size();i++){ //cycle through each friend
+               tmpA = friendlist.get(i);
+               for(int j=0;j<tmpA.getInventory().getSize();j++){ //cycle through each book, looking for a match
+                   tempBook = tmpA.getInventory().getBookByIndex(j);
+                   if(tmpnum==tempBook.getUniquenum().getNumber()){
+                       return friendlist.get(i); //return the owner of the book
+                   }
+
+               }
+
+           }
+
+
+       }catch(NegativeNumberException e){
+
+       }catch(TooLongException e){
+
+       }
+
+       return null;
+
+    }
+
+    public int getActualIndex(Book b, Account a){
+//find the position of this book in the account's inventory
+        int uninum = b.getUniquenum().getNumber();
+        try {
+            for (int i = 0; i < a.getInventory().getSize(); i++) {
+
+                if (a.getInventory().getBookByIndex(i).getUniquenum().getNumber() == uninum) {
+                    return i;
+                }
+
+            }
+        }catch(NegativeNumberException e){
+
+        }catch(TooLongException e){
+
+        }
+        return 0; //wouldnt be called
+    }
 
 
 }

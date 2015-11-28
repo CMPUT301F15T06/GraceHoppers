@@ -57,13 +57,13 @@ public class Account implements Serializable {
     //****For DemoAccount use, delete after server works********************************************
     //for storing a list of existing accounts
 
-    private ArrayList<Account> totalAccounts = new ArrayList<Account>();
+   // private ArrayList<Account> totalAccounts = new ArrayList<Account>();
 
-    public ArrayList<Account> getAccounts(){
-        return totalAccounts;
-    }
+   // public ArrayList<Account> getAccounts(){
+    //    return totalAccounts;
+   // }
 
-      public boolean isInAccounts(String username){
+    /*  public boolean isInAccounts(String username){
         for(int i=0; i < totalAccounts.size(); i++){
             if(totalAccounts.get(i).getUsername().equals(username)) {
                 return true;
@@ -74,7 +74,7 @@ public class Account implements Serializable {
 
     public Account searchAccountsByUsername(String username) throws DoesNotExistException, BlankFieldException, AlreadyAddedException{
         //need to protect string inputs
-        /*
+
         if(username.equals("")) throw new BlankFieldException();
         if(totalAccounts.size() ==0) throw new DoesNotExistException();
         if(totalAccounts.size() ==1) return totalAccounts.get(0);
@@ -85,9 +85,9 @@ public class Account implements Serializable {
         }
         //did not find it
         throw new DoesNotExistException();
-*/
+
         return totalAccounts.get(0);
-    }
+    }*/
 
     //**********************************************************************************************
 

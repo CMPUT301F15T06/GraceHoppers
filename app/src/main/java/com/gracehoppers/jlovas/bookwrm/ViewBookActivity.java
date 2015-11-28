@@ -348,7 +348,66 @@ public class ViewBookActivity extends ActionBarActivity {
 
                 }
             });
-        } else { //***********************************************************************************
+
+        }  else if (getIntent().getStringExtra("flag").equals("Search")) {
+        //********************************************************************************************************
+            //the item is being viewed from a searched query, offer the option to trade here
+            posBook = getIntent().getIntExtra("listPosition", 0);
+
+            account = saveload.loadFromFile(ViewBookActivity.this);
+            myFriend = saveload.loadFriendFromFile(getApplicationContext()); //loads the stored friend
+
+            try {
+                //find the book by a different position than the friend's position
+                tempBook = myFriend.getInventory().getBookByIndex(posBook); //used to be friendBook, but causes problems with navigatin pictures when thee is a tempBook and a friendBook
+            } catch (NegativeNumberException e) {
+                Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
+            } catch (TooLongException e) {
+                Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
+            }
+
+            bookTitle.setText(tempBook.getTitle());
+            bookAuthor.setText(tempBook.getAuthor());
+            category.setText(tempBook.getCategory());
+            quantity.setText(tempBook.getQuantity() + "");
+            description.setText(tempBook.getDescription());
+            rating.setRating((float) tempBook.getQuality());
+
+            //put photo stuff here
+            //attempting to look at photos
+            if(tempBook.getPhotos().getHasImages()) {
+                try {
+                    Bitmap changed = BitmapFactory.decodeStream(new ByteArrayInputStream(tempBook.getPhotos().getPhotoAtIndex(0)));
+                    Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                    bookImage.setImageBitmap(scaled);
+                    if(tempBook.getPhotos().getPhotos().size() >1)
+                        rightButton.setEnabled(true);
+                    imageTotalText.setText("" + 1 + "/" + tempBook.getPhotos().getPhotos().size() + "");
+                    //come back to this later if you can and adjust how this image pops up
+                } catch (NegativeNumberException e) {
+                    Toast.makeText(getApplicationContext(), "Negative index", Toast.LENGTH_SHORT).show();
+                } catch (TooLongException e) {
+                    Toast.makeText(getApplicationContext(), "Index is too long", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            if (tempBook.isPrivate()) {
+                privacy.setText("Private Book");
+            } else privacy.setText("Public Book");
+
+        //repurpose the edit and delete button into the clone and trade buttons
+            deleteButton.setText("Clone");
+            editButton.setText("Trade");
+
+
+
+
+
+
+
+        }
+
+        else { //***********************************************************************************
             //the item is a friend's - do not want to offer edit and delete
 
             posBook = getIntent().getIntExtra("listPosition", 0);
