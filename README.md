@@ -160,3 +160,7 @@ http://stackoverflow.com/users/145025/william
 Global variables in AS:
 Sooniln, http://stackoverflow.com/questions/708012/how-to-declare-global-variables-in-android, Nov 2015
 http://stackoverflow.com/users/79595/sooniln
+
+Thread.join():
+Gray, http://stackoverflow.com/questions/15956231/what-does-this-thread-join-code-mean, 2015-26-11
+http://stackoverflow.com/users/179850/gray

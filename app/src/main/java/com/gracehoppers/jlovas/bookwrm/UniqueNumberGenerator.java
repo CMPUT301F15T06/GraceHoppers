@@ -9,7 +9,8 @@ import android.util.Log;
 public class UniqueNumberGenerator extends Thread {
 
     //private int number;
-    UniqueNumber uniquenum;
+    private UniqueNumber uniquenum;
+    private NumberManager numbermanager;
 
     public UniqueNumberGenerator() {
 
@@ -39,7 +40,7 @@ public class UniqueNumberGenerator extends Thread {
     @Override
     public void run() {
 
-        NumberManager numbermanager = new NumberManager();
+        numbermanager = new NumberManager();
         uniquenum=numbermanager.getNumber();
 
         try {
