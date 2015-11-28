@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name="com.gracehoppers.jlovas.bookwrm.PhotoDownloads"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -120,7 +121,6 @@
         <activity
             android:name=".TopTraderActivity"
             android:label="@string/title_activity_top_trader" >
->>>>>>> 9461699170c3cd88908cb318285b880412ff8ad8
         </activity>
     </application>
 
