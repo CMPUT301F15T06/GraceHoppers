@@ -8,14 +8,13 @@ import java.util.ArrayList;
 public class TopTraderTrackManager {
 
     private ArrayList allTraders = new ArrayList();
-    ArrayList rankedTraders = new ArrayList();
 
     public void setTrader(String username, int score){
         allTraders.add(username);
         allTraders.add(score);
     }
 
-    public ArrayList<ArrayList> calculateScores(Accounts allAccounts){
+    public ArrayList calculateScores(Accounts allAccounts){
         Account account;
         int score = 0;
         for (int i = 0; i < allAccounts.size(); i++){
