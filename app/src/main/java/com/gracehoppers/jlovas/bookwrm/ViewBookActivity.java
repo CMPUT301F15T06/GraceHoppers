@@ -61,15 +61,18 @@ public class ViewBookActivity extends ActionBarActivity {
     Button leftButton;
     Button rightButton;
     TextView imageTotalText;
-    Account account, myFriend;
-    Book tempBook, friendBook;
+    Account account, myFriend, fetchPhotos, cloner;
+    Book tempBook, cloneBook;
     int pos;
     int posBook;
     int posFriend;
     private SaveLoad saveload = new SaveLoad();
     BitmapScaler scaler;
     int count=0;
-    Account fetchPhotos;
+
+    UniqueNumberGenerator ung;
+    UniqueNumber uninum;
+
 
     PhotoDownloads pD;
 
@@ -294,6 +297,23 @@ public class ViewBookActivity extends ActionBarActivity {
             }
         });
 
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //ask the user if they're sure they want to delete this book
+                if(deleteButton.getText().toString().equals("Delete")) {
+                    openDialog();
+                }else{
+                    CloneThread thread = new CloneThread();
+                    thread.start();
+
+
+                    Toast.makeText(getApplicationContext(), "Cloned book now added to user inventory", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
     }
 
     @Override
@@ -343,13 +363,7 @@ public class ViewBookActivity extends ActionBarActivity {
             }
 
 
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //ask the user if they're sure they want to delete this book
-                    openDialog();
-                }
-            });
+
 
 
             editButton.setOnClickListener(new View.OnClickListener() {
@@ -441,12 +455,16 @@ public class ViewBookActivity extends ActionBarActivity {
 
 
 
-            //remove the delete button, edit button changes to trade button
-            ViewGroup parentView = (ViewGroup) deleteButton.getParent();
-            parentView.removeView(deleteButton);
+            //repurpose delete button
+            //ViewGroup parentView = (ViewGroup) deleteButton.getParent();
+            //parentView.removeView(deleteButton);
+
+            deleteButton.setText("Clone");
 
             ViewGroup parentView2 = (ViewGroup) editButton.getParent();
-            parentView.removeView(editButton);
+            parentView2.removeView(editButton);
+
+
 
             /*
             Button tradeButton = editButton;
@@ -523,6 +541,12 @@ public class ViewBookActivity extends ActionBarActivity {
 
     }
 
+    /**
+     * This thread will update the account on the server
+     *
+     * @see Thread
+     * @author nlovas
+     */
     class UpdateAThread extends Thread { //for updating account on the server
         private Account account;
 
@@ -540,27 +564,68 @@ public class ViewBookActivity extends ActionBarActivity {
 
     }
 
-    class PhotoThread extends Thread {
-        private String a;
+    /**
+     * This thread will copy the book to the server and update your inventory to include it.
+     *
+     * @see Thread
+     * @author jlovas
+     */
+    class CloneThread extends Thread {
 
-        public PhotoThread(String a){
-            fetchPhotos = new Account();
-            this.a = a;
+
+        public CloneThread() {
+
         }
 
         @Override
-        public void run(){
+        public void run() {
 
-            AccountManager accountManager = new AccountManager();
-            fetchPhotos = accountManager.getAccount(a);
-            int u;
+            cloneBook = tempBook;
 
-            if(fetchPhotos !=null) {
-                try {
-                    u = tempBook.getUniquenum().getNumber();
+            //copy over everything except the unique number
+            ViewBookActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ung = new UniqueNumberGenerator();
+                    uninum = ung.getUniqueNumber(); //!!!!!   this requires a connection. ung has a thread within its class!
+                    cloneBook.setUniquenum(uninum);
+                    account.getInventory().addBook(cloneBook);
+                    saveload.saveInFile(getApplicationContext(), account);
+                    UpdateAThread thread = new UpdateAThread(account);
+                    thread.start();
+                }
+            });
+        }
+    }
 
-                    for(int i=0; i < fetchPhotos.getInventory().getSize(); i++){
-                        if(u == fetchPhotos.getInventory().getBookByIndex(i).getUniquenum().getNumber()){
+        /**
+        * * This thread will fetch the photos requested by the user to display.
+        *
+        * @see Thread
+        * @author jlovas
+        */
+            class PhotoThread extends Thread {
+            private String a;
+
+                public PhotoThread(String a){
+
+                    fetchPhotos = new Account();
+                    this.a = a;
+                }
+
+                @Override
+                public void run(){
+
+                AccountManager accountManager = new AccountManager();
+                fetchPhotos = accountManager.getAccount(a);
+                int u;
+
+                if(fetchPhotos !=null) {
+                    try {
+                        u = tempBook.getUniquenum().getNumber();
+
+                        for(int i=0; i < fetchPhotos.getInventory().getSize(); i++){
+                            if(u == fetchPhotos.getInventory().getBookByIndex(i).getUniquenum().getNumber()){
 
                             //congrats! youve found the right book
                             //now need to set the photos to the imageview, update stuff

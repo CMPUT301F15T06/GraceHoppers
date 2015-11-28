@@ -16,8 +16,8 @@ import android.widget.Toast;
  *
  * The first screen the user sees when running the app.
  * Gives the user the option to either sign up or sign in with a username.
- *@see Account
- * @author jlovas
+ * @see Account
+ * @author jlovas, Linda, nlovas
  */
 public class MainActivity extends ActionBarActivity {
     Button logInButton;
@@ -26,8 +26,6 @@ public class MainActivity extends ActionBarActivity {
     SaveLoad saveLoad;
     Account result;
     //ConnectionCheck connection;
-
-
 
     //for UI testing:-------------------------------------------
     public Button getSignUpButton(){
@@ -51,73 +49,6 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         saveLoad = new SaveLoad();
-
-        //----------------Delete me when login server stuff is working -----------------------------
-
-        //please be aware that because this makes a new account every time you log in (tempoarily),
-        //the data from the previous log in will not be there - this is not an error!
-        //if you don't want that happening just delete/comment out this stuff and sign up once, then
-        //log in
-   /*     final Account account = new Account();
-        try {
-            account.setUsername("Jill");
-            account.setEmail("jlovas@ualberta.ca");
-            account.setCity("GP");
-        } catch (NoSpacesException e) {
-            e.printStackTrace();
-        } catch (TooLongException e) {
-            e.printStackTrace();
-        } catch (IllegalEmailException e) {
-            e.printStackTrace();
-        }*/
-
-        //****Demo Account part, delete afterwards as well!*************************************
-/*
-        Account demoAccount = new Account();
-        try {
-            demoAccount.setUsername("DemoAccount");
-            demoAccount.setEmail("demo@hotmail.com");
-            demoAccount.setCity("Demoville");
-        }catch(NoSpacesException e){
-
-        }catch(TooLongException e){
-
-        }catch(IllegalEmailException e){
-
-        }
-
-        Bitmap testImage = BitmapFactory.decodeFile("defaultbook.png");
-
-        Book book1 = new Book();
-        book1.setTitle("A Cool Guy Book");
-        book1.setAuthor("Joseph Campbell");
-        book1.setCategory(3);
-        book1.setQuality(4);
-        book1.setIsPrivate(true);
-        book1.setDescription("This book is pretty cool. Maybe too cool.");
-        //let these set to quantity default of 1 so i don't have to add extra exception catches for temporary code
-
-        Book book2 = new Book();
-        book2.setTitle("Undertale");
-        book2.setDescription("I'm watching Markiplier play this so I don't need to read it anymore");
-        book2.setAuthor("Not sure");
-        book2.setCategory(0);
-        book2.setQuality(5);
-        //let these set to quantity default of 1 so i don't have to add extra exception catches for temporary code
-
-        demoAccount.getInventory().addBook(book1);
-        demoAccount.getInventory().addBook(book2);
-
-        account.getAccounts().add(demoAccount);
-        //******************************************************************************
-
-
-
-
-
-        saveLoad.saveInFile(getApplicationContext(), account);*/
-        //------------------------------------------------------------------------------------------
-
 
 
         logInButton = (Button)findViewById(R.id.logInButton);
@@ -156,28 +87,6 @@ public class MainActivity extends ActionBarActivity {
             });
 
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     class SearchThread extends Thread {
