@@ -104,39 +104,11 @@ public class AccountManager {
             Log.i(TAG,status);
         }catch(Exception e) {e.printStackTrace();}
     }
-/*
-    public void updateAccount(Account account) throws IOException {
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpPost updateRequest = new HttpPost(URL + account.getUsername() + "/_update/");
-
-        String query = 	"{\"script\" : \"ctx._source." + "friends" + "}"; //for updating friends list ONLY :(
-        StringEntity stringentity = new StringEntity(query);
-
-        updateRequest.setHeader("Accept","application/json");
-        updateRequest.setEntity(stringentity);
-
-        HttpResponse response = httpClient.execute(updateRequest);
-        String status = response.getStatusLine().toString();
-        System.out.println(status);
-
-        String json = getEntityContent(response);
-    }
-*/
 
     public void updateAccount(Account account) { //called in ProfileScreen!! dont edit it too much
         HttpClient httpClient = new DefaultHttpClient();
 
         try {
-            //--trying---------------
-/*
-            BytesUtil bytesutil = new BytesUtil();
-            byte[] friendlistbytes;
-            friendlistbytes=bytesutil.toByteArray(account.getFriends()); //friends is a byte array now
-            account.getFriends().clear();
-            account.setFriendlistBytes(friendlistbytes);
-*/
-
-            //------------------------
             HttpPut updateRequest = new HttpPut(URL+account.getUsername());
 
             String acc = gson.toJson(account);
@@ -214,29 +186,44 @@ public class AccountManager {
     }
 
 
-    public ArrayList<Account> getAccounts(String username) {
-        SearchHit<ArrayList<Account>> sr = null;
+    public Accounts allAcounts() {
+        Accounts result = new Accounts();
+        HttpPost searchRequest = new HttpPost("http://cmput301.softwareprocess.es:8080/cmput301f15t06/account/_search");
+        //SimpleSearchCommand command = new SimpleSearchCommand(username);
+
+        //String query = gson.toJson(command);
+        //Log.i(TAG, "Json command: " + query);
+
+        //StringEntity stringEntity = null;
+        //try {
+        //    stringEntity = new StringEntity(query);
+        //} catch (UnsupportedEncodingException e) {
+        //    throw new RuntimeException(e);
+        //}
+
+        searchRequest.setHeader("Accept", "application/json");
+        //searchRequest.setEntity(stringEntity);
+
         HttpClient httpClient = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet(URL + username);
-        System.out.print(URL + username);
 
         HttpResponse response = null;
-
         try {
-            response = httpClient.execute(httpGet);
-        } catch (ClientProtocolException e1) {
-            throw new RuntimeException(e1);
-        } catch (IOException e1) {
-            throw new RuntimeException(e1);
+            response = httpClient.execute(searchRequest);
+        } catch (ClientProtocolException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
-        Type searchHitType = new TypeToken<SearchHit<ArrayList<Account>>>() {
+        Type searchResponseType = new TypeToken<SearchResponse<Account>>() {
         }.getType();
 
+        SearchResponse<Account> esResponse;
+
         try {
-            sr = gson.fromJson(
+            esResponse = gson.fromJson(
                     new InputStreamReader(response.getEntity().getContent()),
-                    searchHitType);
+                    searchResponseType);
         } catch (JsonIOException e) {
             throw new RuntimeException(e);
         } catch (JsonSyntaxException e) {
@@ -247,8 +234,15 @@ public class AccountManager {
             throw new RuntimeException(e);
         }
 
-        return sr.getSource();
-    }
 
+        for (SearchHit<Account> hit : esResponse.getHits().getHits()) {
+            result.add(hit.getSource());
+        }
+
+
+        //result.notifyObservers();
+
+        return result;
+    }
 
 }

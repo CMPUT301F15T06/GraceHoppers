@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -13,7 +14,11 @@ import java.util.Collection;
 public class TopTraderActivity extends Activity {
 
     private AccountManager accountManager=new AccountManager();
-    Account allAccounts;
+    private Accounts all = new Accounts();
+    private TopTraderTrackManager topTraderTrackManager = new TopTraderTrackManager();
+    private ArrayList allTraders = new ArrayList();
+    private TextView topTraders;
+    private String result = "Top Traders:\n";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +26,7 @@ public class TopTraderActivity extends Activity {
         setContentView(R.layout.activity_top_trader);
         SearchThread thread=new SearchThread();
         thread.start();
+        topTraders = (TextView) findViewById(R.id.topTraders);
 
     }
 
@@ -53,18 +59,25 @@ public class TopTraderActivity extends Activity {
 
         @Override
         public void run() {
-            ArrayList<Account> result = null;
             accountManager=new AccountManager();
-            ArrayList<Account> all = new ArrayList<Account>();
-            result = accountManager.getAccounts("_search?pretty=true&q=*:*");
+            all = accountManager.allAcounts();
+            allTraders = topTraderTrackManager.calculateScores(all);
+
+            int i = 0;
+            while (i < allTraders.size()){
+                result = result + allTraders.get(i) + "\n";
+                i = i + 1 ;
+            }
 
             try {
-                if(result != null) {
+                if(!allTraders.isEmpty()) {
                     //username exists
                     TopTraderActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getApplicationContext(), "Username exists, please choose a new username", Toast.LENGTH_SHORT).show();
+
+                            topTraders.setText(result);
+
                         }
                     });
                 }

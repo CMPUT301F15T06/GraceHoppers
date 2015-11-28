@@ -249,24 +249,20 @@ public class AddBookScreen extends ActionBarActivity {
                     //save into Gson and end the activity
                     mySaveLoad.saveInFile(getApplicationContext(), me);
 
-
                     Thread yourthread = new UpdateAThread(me); //update the server to have this book
                     yourthread.start();
 
-
-                    //Toast.makeText(getApplicationContext(), "Successfully added book to inventory", Toast.LENGTH_SHORT).show();
-                    //finish();
-
-
-                    Toast.makeText(getApplicationContext(), "No Network Connection, will add once connection is established",
-                            Toast.LENGTH_SHORT).show();
-
-
+                    try { //remove this after
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 
                     //   Thread testthread = new SearchThread(me.getUsername()); //for testing purposes
                     //  testthread.start();
 
-
+                    Toast.makeText(getApplicationContext(), "Successfully added book to inventory", Toast.LENGTH_SHORT).show();
+                    finish();
                 }catch(IllegalArgumentException e){
                     //titleText.setText("NO TITLE"); //test to see what we can do
                     Toast.makeText(getApplicationContext(), "Fields cannot be blank", Toast.LENGTH_SHORT).show();
@@ -293,6 +289,7 @@ public class AddBookScreen extends ActionBarActivity {
         thePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mySaveLoad.savePhotos(getApplicationContext(), myPhotos);
                 Intent pIntent = new Intent(AddBookScreen.this, PhotoActivity.class);
                 pIntent.putExtra("flag","add");
                 startActivityForResult(pIntent, 1000);
@@ -318,7 +315,7 @@ public class AddBookScreen extends ActionBarActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
 
-        //Log.i("Tag", "Result: " + Integer.toString(requestCode));
+        //Log.i("Tag", "RequestCode: " + Integer.toString(requestCode) + "ResultCode" + Integer.toString(resultCode));
 
         if(requestCode == 0) {
             if (resultCode == AddCommentsScreen.RESULT_OK) {
@@ -326,39 +323,21 @@ public class AddBookScreen extends ActionBarActivity {
             }
         }
         else if(requestCode == 1000){
+            if(resultCode == -1) {
+                //load photos into this book's Photos object
+                myPhotos = mySaveLoad.loadPhotos(getApplicationContext());
+            }else{
+                //hit the back button
+                Toast.makeText(getApplicationContext(), "Clearing photos because you hit back", Toast.LENGTH_SHORT).show();
+                myPhotos =mySaveLoad.loadPhotos(getApplicationContext());
+                myPhotos.getPhotos().clear();
+                mySaveLoad.savePhotos(getApplicationContext(), myPhotos);
+            }
 
-            //temporary test for if photos are getting here
-            myPhotos = mySaveLoad.loadPhotos(getApplicationContext());
-            //pull extras from intent, get the object
-            //myPhotos = data.getExtras().getSerializable("Object");
-            Toast.makeText(getApplicationContext(), "Photos added: " + myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
+
         }
     }
 
-
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add_book_screen, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     class UpdateAThread extends Thread { //for updating account on the server
         private Account account;
@@ -372,9 +351,6 @@ public class AddBookScreen extends ActionBarActivity {
 
             AccountManager accountManager = new AccountManager();
             accountManager.updateAccount(account);
-
-            Toast.makeText(getApplicationContext(), "Successfully added book to inventory", Toast.LENGTH_SHORT).show();
-            finish();
 
         }
 

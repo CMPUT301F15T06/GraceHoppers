@@ -29,6 +29,7 @@ public class SelectCounterBooksActivity extends ActionBarActivity {
     private Account account1 = new Account();
     private Account account2 = new Account();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +60,8 @@ public class SelectCounterBooksActivity extends ActionBarActivity {
         });
 
     }
+
+
 
     public void setUp(){
         try{

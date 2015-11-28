@@ -29,6 +29,7 @@ public class Account implements Serializable {
    // private static final long serialVersionUID = 2021577107874183656L;
 
 
+
    // private byte[] friendlistBytes;
 
   /*  public void setFriends(Friends friends) {

@@ -57,6 +57,7 @@ public class PhotoActivity extends ActionBarActivity {
     Button leftButton;
     Button rightButton;
     Button redoButton;
+    Button deleteButton;
 
     BitmapScaler scaler;
 
@@ -77,6 +78,48 @@ public class PhotoActivity extends ActionBarActivity {
     public Button getTakePhotoButton(){return takePhotoButton;}
     // -----------------------------------------------------------------
 
+    @Override
+    protected void onResume(){ //onResume
+        super.onResume();
+        if (getIntent().getStringExtra("flag").equals("edit")) {
+            //arriving here from edit, load images if any
+
+            //myPhotos = saveLoad.loadPhotos(getApplicationContext()); //this is beign overwritten when calling onCreate
+            Toast.makeText(getApplicationContext(),"myPhotos.hasImages ==" + myPhotos.getHasImages(), Toast.LENGTH_SHORT).show();
+            if(myPhotos.getHasImages()){
+                //load the images
+                try {
+                    Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(0), 0, myPhotos.getPhotoAtIndex(0).length);
+                    Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                    photoToEdit.setImageBitmap(scaled);
+
+                    redoButton.setVisibility(View.VISIBLE);
+                    deleteButton.setVisibility(View.VISIBLE);
+
+                    if(myPhotos.getPhotos().size() >1) {
+                        rightButton.setEnabled(true);
+                    }
+
+                    if(myPhotos.getPhotos().size() == 5){
+                        takePhotoButton.setEnabled(false);
+                    }
+
+                    imageTotalText.setText("" + 1 + "/" + myPhotos.getPhotos().size());
+
+                }catch(NegativeNumberException e){
+                    Toast.makeText(getApplicationContext(), "Negative Index", Toast.LENGTH_SHORT).show();
+                }catch(TooLongException e){
+                    Toast.makeText(getApplicationContext(), "Index too long", Toast.LENGTH_SHORT).show();
+                }
+
+            }else {
+                Toast.makeText(getApplicationContext(), "HasImages = false!", Toast.LENGTH_SHORT).show();
+            }
+            //this else is for addBookScreen's entrance to this page
+        }
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +131,8 @@ public class PhotoActivity extends ActionBarActivity {
         scaler = new BitmapScaler();
         saveLoad = new SaveLoad();
 
+        myPhotos = saveLoad.loadPhotos(getApplicationContext());
+
         okButton = (Button)findViewById(R.id.okAsIsButton);
         takePhotoButton = (Button)findViewById(R.id.takePhotoButton);
         photoToEdit = (ImageView)findViewById(R.id.bookImage);
@@ -95,13 +140,21 @@ public class PhotoActivity extends ActionBarActivity {
         leftButton = (Button)findViewById(R.id.pictureleftbutton);
         rightButton = (Button)findViewById(R.id.picturerightbutton);
         redoButton = (Button)findViewById(R.id.retakeButton);
+        deleteButton = (Button)findViewById(R.id.xButton);
 
         //redoButton should not be visible initially
         redoButton.setVisibility(View.GONE);
+        deleteButton.setVisibility(View.GONE);
 
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if(myPhotos.getPhotos().size() >0){ //NEW
+                    myPhotos.setHasImages(true); //NEW
+                }else{
+                    myPhotos.setHasImages(false);
+                }
                 Intent result = new Intent();
                 //result.putExtra("Object", myPhotos);
                 setResult(PhotoActivity.RESULT_OK, result);
@@ -123,6 +176,196 @@ public class PhotoActivity extends ActionBarActivity {
                 startActivityForResult(intent, REDO_PHOTO);
             }
         });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //want to delete a photo
+
+                if(myPhotos.getPhotos().size() ==1){
+                    //if only one photo, revert imageview to default
+                    try {
+                        myPhotos.removePhotoAtIndex(0);
+                        photoToEdit.setImageResource(R.drawable.defaultbook);
+
+                        //update ## text
+                        String tmp = imageTotalText.getText().toString();
+                        imageTotalText.setText("-");
+
+                        leftButton.setEnabled(false);
+                        rightButton.setEnabled(false);
+                        redoButton.setVisibility(View.INVISIBLE);
+                        deleteButton.setVisibility(View.INVISIBLE);
+
+                    }catch(NegativeNumberException e){
+                        Toast.makeText(getApplicationContext(), "Index negative", Toast.LENGTH_SHORT).show();
+                    }catch(TooLongException e){
+                        Toast.makeText(getApplicationContext(), "Index too long", Toast.LENGTH_SHORT).show();
+                    }
+
+                }else{
+                    //not just one image
+                    //when someone deletes an image that is not the first one in line, they will be thrown to 1/x of whatever is left
+                    //ex: on picture 3/5 and delete that one, will be put to the place of 1/4 now
+                    String tmp = imageTotalText.getText().toString();
+                    switch(tmp.charAt(0)){
+                        case'1':
+                        try {
+                            myPhotos.removePhotoAtIndex(0);
+                            Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(0), 0, myPhotos.getPhotoAtIndex(0).length);
+                            Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                            photoToEdit.setImageBitmap(scaled);
+
+                            //update the text
+                            imageTotalText.setText("" + 1 + "/" + myPhotos.getPhotos().size() + "");
+
+                            if(myPhotos.getPhotos().size() ==1){
+                                leftButton.setEnabled(false);
+                                rightButton.setEnabled(false);
+                                redoButton.setVisibility(View.INVISIBLE);
+                                deleteButton.setVisibility(View.INVISIBLE);
+                            }else if(myPhotos.getPhotos().size() >1){
+                                rightButton.setEnabled(true);
+                                takePhotoButton.setEnabled(true);
+                            }
+                            count=0;
+
+                            break;
+                        }catch(NegativeNumberException e){
+                            Toast.makeText(getApplicationContext(), "Negative Index Number", Toast.LENGTH_SHORT).show();
+                        }catch(TooLongException e){
+                            Toast.makeText(getApplicationContext(), "Index too long", Toast.LENGTH_SHORT).show();
+                        }
+
+                        case '2':
+                            try {
+                                myPhotos.removePhotoAtIndex(1);
+                                Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(0), 0, myPhotos.getPhotoAtIndex(0).length);
+                                Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                                photoToEdit.setImageBitmap(scaled);
+
+                                //update the text
+                                imageTotalText.setText("" + 1 + "/" + myPhotos.getPhotos().size() + "");
+
+                                if(myPhotos.getPhotos().size() ==1){
+                                    rightButton.setEnabled(false);
+                                    leftButton.setEnabled(false);
+                                    redoButton.setVisibility(View.INVISIBLE);
+                                    deleteButton.setVisibility(View.INVISIBLE);
+                                }
+                                else if(myPhotos.getPhotos().size() >1){
+                                        rightButton.setEnabled(true);
+                                        leftButton.setEnabled(false);
+                                        takePhotoButton.setEnabled(true);
+                                }
+
+                                count=0;
+
+                                break;
+                            }catch(NegativeNumberException e){
+                                Toast.makeText(getApplicationContext(), "Negative Index Number", Toast.LENGTH_SHORT).show();
+                            }catch(TooLongException e){
+                                Toast.makeText(getApplicationContext(), "Index too long", Toast.LENGTH_SHORT).show();
+                            }
+
+                        case '3':
+                            try {
+                                myPhotos.removePhotoAtIndex(2);
+                                Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(0), 0, myPhotos.getPhotoAtIndex(0).length);
+                                Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                                photoToEdit.setImageBitmap(scaled);
+
+                                //update the text
+                                imageTotalText.setText("" + 1 + "/" + myPhotos.getPhotos().size() + "");
+                                leftButton.setEnabled(false);
+
+                                if(myPhotos.getPhotos().size() ==1){
+                                    rightButton.setEnabled(false);
+                                    leftButton.setEnabled(false);
+                                    redoButton.setVisibility(View.INVISIBLE);
+                                    deleteButton.setVisibility(View.INVISIBLE);
+                                }
+                                else if(myPhotos.getPhotos().size() >1){
+                                    rightButton.setEnabled(true);
+                                    leftButton.setEnabled(false);
+                                    takePhotoButton.setEnabled(true);
+                                }
+
+                                count=0;
+
+                                break;
+                            }catch(NegativeNumberException e){
+                                Toast.makeText(getApplicationContext(), "Negative Index Number", Toast.LENGTH_SHORT).show();
+                            }catch(TooLongException e){
+                                Toast.makeText(getApplicationContext(), "Index too long", Toast.LENGTH_SHORT).show();
+                            }
+                        case '4':
+                            try {
+                                myPhotos.removePhotoAtIndex(2);
+                                Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(0), 0, myPhotos.getPhotoAtIndex(0).length);
+                                Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                                photoToEdit.setImageBitmap(scaled);
+
+                                //update the text
+                                imageTotalText.setText("" + 1 + "/" + myPhotos.getPhotos().size() + "");
+                                leftButton.setEnabled(false);
+
+                                if(myPhotos.getPhotos().size() ==1){
+                                    rightButton.setEnabled(false);
+                                    leftButton.setEnabled(false);
+                                    redoButton.setVisibility(View.INVISIBLE);
+                                    deleteButton.setVisibility(View.INVISIBLE);
+                                }
+                                else if(myPhotos.getPhotos().size() >1){
+                                    rightButton.setEnabled(true);
+                                    leftButton.setEnabled(false);
+                                    takePhotoButton.setEnabled(true);
+                                }
+
+                                count=0;
+
+                                break;
+                            }catch(NegativeNumberException e){
+                                Toast.makeText(getApplicationContext(), "Negative Index Number", Toast.LENGTH_SHORT).show();
+                            }catch(TooLongException e){
+                                Toast.makeText(getApplicationContext(), "Index too long", Toast.LENGTH_SHORT).show();
+                            }
+                        case '5':
+                            try {
+                                myPhotos.removePhotoAtIndex(3);
+                                Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(0), 0, myPhotos.getPhotoAtIndex(0).length);
+                                Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                                photoToEdit.setImageBitmap(scaled);
+
+                                //update the text
+                                imageTotalText.setText("" + 1 + "/" + myPhotos.getPhotos().size() + "");
+                                leftButton.setEnabled(false);
+
+                                if(myPhotos.getPhotos().size() ==1){
+                                    rightButton.setEnabled(false);
+                                    leftButton.setEnabled(false);
+                                    redoButton.setVisibility(View.INVISIBLE);
+                                    deleteButton.setVisibility(View.INVISIBLE);
+                                }
+                                else if(myPhotos.getPhotos().size() >1){
+                                    rightButton.setEnabled(true);
+                                    leftButton.setEnabled(false);
+                                    takePhotoButton.setEnabled(true);
+                                }
+                                count=0;
+
+                                break;
+                            }catch(NegativeNumberException e){
+                                Toast.makeText(getApplicationContext(), "Negative Index Number", Toast.LENGTH_SHORT).show();
+                            }catch(TooLongException e){
+                                Toast.makeText(getApplicationContext(), "Index too long", Toast.LENGTH_SHORT).show();
+                            }
+                    }
+
+                }
+            }
+        });
+
 
         takePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,12 +405,14 @@ public class PhotoActivity extends ActionBarActivity {
                             Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
                             photoToEdit.setImageBitmap(scaled);
 
+                            rightButton.setEnabled(true);
+                            break;
                         }catch(NegativeNumberException e) {
                             Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
                         }catch(TooLongException e){
                             Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
                         }
-                        break;
+
                     case '3':
                         count--;
                         imageTotalText.setText("" + 2 +"/" +myPhotos.getPhotos().size() +"");
@@ -176,12 +421,14 @@ public class PhotoActivity extends ActionBarActivity {
                             Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
                             photoToEdit.setImageBitmap(scaled);
 
+                            rightButton.setEnabled(true);
+                            break;
                         }catch(NegativeNumberException e) {
                             Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
                         }catch(TooLongException e){
                             Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
                         }
-                        break;
+
                     case '4':
                         count--;
                         imageTotalText.setText("" + 3 +"/" +myPhotos.getPhotos().size() +"");
@@ -190,27 +437,31 @@ public class PhotoActivity extends ActionBarActivity {
                             Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
                             photoToEdit.setImageBitmap(scaled);
 
+                            rightButton.setEnabled(true);
+                            break;
                         }catch(NegativeNumberException e) {
                             Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
                         }catch(TooLongException e){
                             Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
                         }
-                        break;
+
                     case '5':
                         count--;
-                        imageTotalText.setText("" + 4 +"/" +myPhotos.getPhotos().size() +"");
+                        imageTotalText.setText("" + 4 + "/" + myPhotos.getPhotos().size() + "");
                         rightButton.setEnabled(true);
                         try {
                             Bitmap changed = BitmapFactory.decodeByteArray(myPhotos.getPhotoAtIndex(count), 0, myPhotos.getPhotoAtIndex(count).length);
                             Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
                             photoToEdit.setImageBitmap(scaled);
 
+                            rightButton.setEnabled(true);
+                            break;
                         }catch(NegativeNumberException e) {
                             Toast.makeText(getApplicationContext(), "Negative index number exception", Toast.LENGTH_SHORT).show();
                         }catch(TooLongException e){
                             Toast.makeText(getApplicationContext(), "Index number too long", Toast.LENGTH_SHORT).show();
                         }
-                        break;
+
                 }
             }
         });
@@ -297,33 +548,10 @@ public class PhotoActivity extends ActionBarActivity {
 
     }//end of onCreate
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_photo, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
     //function for calling and returning stuff from the camera
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //this one is for taking a brand new picture
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             //Bundle extras = data.getExtras();
             //Bitmap imageBitmap = (Bitmap) extras.get("data"); //this method grabs a small thumbnail only - need?
@@ -357,10 +585,15 @@ public class PhotoActivity extends ActionBarActivity {
 
                 //put into the Photos object
                 //myPhotos.addPhoto(changed); //scaled
-                Toast.makeText(getApplicationContext(), "Photos taken: " + myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Photos taken1: " + myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
                 photoToEdit.setImageBitmap(scaled);
 
-                imageTotalText.setText("" + 1 +"/" +myPhotos.getPhotos().size() +""); //that 1 is gonna be wrong sometimes
+                imageTotalText.setText("" + 1 +"/" +myPhotos.getPhotos().size() +"");
+
+                //String tmp = imageTotalText.getText().toString();
+                //if(Character.getNumericValue(tmp.charAt(0)) >1){
+                    leftButton.setEnabled(false);
+                //}
 
                 if(myPhotos.getPhotos().size() >1){
                     rightButton.setEnabled(true);
@@ -371,6 +604,10 @@ public class PhotoActivity extends ActionBarActivity {
                 }
 
                 redoButton.setVisibility(View.VISIBLE);
+                deleteButton.setVisibility(View.VISIBLE);
+                count=0;
+
+                myPhotos.setHasImages(true); //NEW
 
             } catch (Exception e) {
                 //should never happen after UI stuff has been made properly
@@ -412,17 +649,16 @@ public class PhotoActivity extends ActionBarActivity {
 
                 //put into the Photos object
                 //myPhotos.addPhoto(changed); //scaled
-                Toast.makeText(getApplicationContext(), "Photos taken: " + myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Photos taken2: " + myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
                 photoToEdit.setImageBitmap(scaled);
 
 
-                if (myPhotos.getPhotos().size() > 1) {
+                if (myPhotos.getPhotos().size() > 1 && index!=myPhotos.getPhotos().size()) {
                     rightButton.setEnabled(true);
                 }
 
-
-
                 redoButton.setVisibility(View.VISIBLE);
+                deleteButton.setVisibility(View.VISIBLE);
                 Toast.makeText(getApplicationContext(), "Redo a picture result found!", Toast.LENGTH_SHORT).show();
 
             } catch (Exception e) {
@@ -447,6 +683,7 @@ public class PhotoActivity extends ActionBarActivity {
         cursor.moveToFirst();
         return cursor.getString(column_index);
     }
+
 
 
 

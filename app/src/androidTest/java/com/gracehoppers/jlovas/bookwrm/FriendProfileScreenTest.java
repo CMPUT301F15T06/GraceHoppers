@@ -15,7 +15,7 @@ import android.widget.TextView;
 public class FriendProfileScreenTest extends ActivityInstrumentationTestCase2{
 
     public FriendProfileScreenTest(){super(FriendProfileScreen.class);}
-
+/*
     //test the display of the friend's information
     public void testDisplayFriendInfo() throws AlreadyAddedException, TooLongException, NegativeNumberException{
 
@@ -125,5 +125,5 @@ public class FriendProfileScreenTest extends ActivityInstrumentationTestCase2{
       assertFalse(testAccount.getFriends().hasFriend(friendAccount));
 
     }
-
+*/
 }

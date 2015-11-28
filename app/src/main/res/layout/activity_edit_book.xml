@@ -263,7 +263,8 @@
         android:layout_marginTop="35dp"
         android:layout_alignEnd="@+id/quantityTable"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:clickable="true" />
 
     <Button
         android:layout_width="170dp"
