@@ -11,12 +11,15 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 /**
+ * OptionsActivity is for setting the photo downloads as enabled/disabled.
+ * The help guide for the app can also be found here.
+ *
  * @author jlovas
  */
 public class OptionsActivity extends ActionBarActivity {
     CheckBox checkBox;
     Button tutorialButton;
-
+    PhotoDownloads pD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,8 @@ public class OptionsActivity extends ActionBarActivity {
 
         checkBox = (CheckBox)findViewById(R.id.pDcheckbox);
         tutorialButton = (Button)findViewById(R.id.tutButton);
+
+        pD = (PhotoDownloads)getApplicationContext();
 
         //tutorial button to launch tutorialActivity
         tutorialButton.setOnClickListener(new View.OnClickListener() {
@@ -35,16 +40,23 @@ public class OptionsActivity extends ActionBarActivity {
                 }
         });
 
+        if(pD.getEnabled()) {
+            checkBox.setChecked(true);
+        }else{
+            checkBox.setChecked(false);
+        }
 
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //when checkbox is unchecked, we are disabling photo downloads
                 if(!checkBox.isChecked()){
+                    pD.setEnabled(false);
                     Toast.makeText(getApplicationContext(), "Photo downloads are now disabled", Toast.LENGTH_SHORT).show();
                 }
 
                 else if(checkBox.isChecked()){
+                    pD.setEnabled(true);
                     Toast.makeText(getApplicationContext(), "Photo downloads are now enabled", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -52,25 +64,4 @@ public class OptionsActivity extends ActionBarActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_options, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

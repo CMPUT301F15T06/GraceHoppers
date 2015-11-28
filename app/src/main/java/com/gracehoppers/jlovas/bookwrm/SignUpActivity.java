@@ -75,27 +75,24 @@ public class SignUpActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 //upon button press, try to create a new account based on whats in the textviews
+                ConnectionCheck connection = new ConnectionCheck();
+
+                if (connection.checkConnection(SignUpActivity.this) == true) {
+                    try {
+                        Account account = new Account();
+                        account.setUsername(username.getText().toString());
+                        account.setEmail(email.getText().toString());
+                        account.setCity(city.getText().toString());
+                        //saveload.saveInFile(SignUpActivity.this, account); //moving this line down for demoAccount for now
 
 
+                        accounts.add(account); //for UI testing
 
-                try {
-                    Account account = new Account();
-                    account.setUsername(username.getText().toString());
-                    account.setEmail(email.getText().toString());
-                    account.setCity(city.getText().toString());
-                    //saveload.saveInFile(SignUpActivity.this, account); //moving this line down for demoAccount for now
+                        SearchThread thread = new SearchThread(account);
+                        thread.start();
 
 
-                    accounts.add(account); //for UI testing
-
-                    SearchThread thread=new SearchThread(account);
-                    thread.start();
-
-
-
-
-
-                    //****Demo Account part, delete afterwards *************************************
+                        //****Demo Account part, delete afterwards *************************************
 /*
                     Account demoAccount = new Account();
                     demoAccount.setUsername("DemoAccount");
@@ -126,22 +123,27 @@ public class SignUpActivity extends ActionBarActivity {
 
                     account.getAccounts().add(demoAccount);
                     saveload.saveInFile(SignUpActivity.this, account); */
-                    //******************************************************************************
+                        //******************************************************************************
 
-                } catch (IllegalArgumentException e) {
-                    Toast.makeText(getApplicationContext(), "All Fields must be filled",
-                            Toast.LENGTH_SHORT).show();
-                } catch (IllegalEmailException f) {
-                    Toast.makeText(getApplicationContext(), "Must have valid email",
-                            Toast.LENGTH_SHORT).show();
-                } catch (NoSpacesException s) {
-                    Toast.makeText(getApplicationContext(), "Fields cannot contain spaces",
-                            Toast.LENGTH_SHORT).show();
-                } catch (TooLongException w) {
-                    Toast.makeText(getApplicationContext(), "A field is too long",
-                            Toast.LENGTH_SHORT).show();
+                    } catch (IllegalArgumentException e) {
+                        Toast.makeText(getApplicationContext(), "All Fields must be filled",
+                                Toast.LENGTH_SHORT).show();
+                    } catch (IllegalEmailException f) {
+                        Toast.makeText(getApplicationContext(), "Must have valid email",
+                                Toast.LENGTH_SHORT).show();
+                    } catch (NoSpacesException s) {
+                        Toast.makeText(getApplicationContext(), "Fields cannot contain spaces",
+                                Toast.LENGTH_SHORT).show();
+                    } catch (TooLongException w) {
+                        Toast.makeText(getApplicationContext(), "A field is too long",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
 
+                else{
+                    Toast.makeText(getApplicationContext(), "No Network Connection, Please try again later",
+                            Toast.LENGTH_SHORT).show();
+                }
                 }
 
 

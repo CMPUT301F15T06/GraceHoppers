@@ -85,7 +85,7 @@
         android:fadeScrollbars="false"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/tableLayout2"
-        android:layout_above="@+id/EditBookButton">
+        android:layout_above="@+id/deleteBookbutton">
 
         <RelativeLayout
             android:layout_width="match_parent"
