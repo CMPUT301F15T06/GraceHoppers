@@ -429,23 +429,33 @@ public class ViewBookActivity extends ActionBarActivity {
             description.setText(tempBook.getDescription());
             rating.setRating((float) tempBook.getQuality());
 
-            //put photo stuff here
-            //attempting to look at photos
-            if(tempBook.getPhotos().getHasImages()) {
-                try {
-                    Bitmap changed = BitmapFactory.decodeStream(new ByteArrayInputStream(tempBook.getPhotos().getPhotoAtIndex(0)));
-                    Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
-                    bookImage.setImageBitmap(scaled);
-                    if(tempBook.getPhotos().getPhotos().size() >1)
-                        rightButton.setEnabled(true);
-                    imageTotalText.setText("" + 1 + "/" + tempBook.getPhotos().getPhotos().size() + "");
-                    //come back to this later if you can and adjust how this image pops up
-                } catch (NegativeNumberException e) {
-                    Toast.makeText(getApplicationContext(), "Negative index", Toast.LENGTH_SHORT).show();
-                } catch (TooLongException e) {
-                    Toast.makeText(getApplicationContext(), "Index is too long", Toast.LENGTH_SHORT).show();
-                }
+
+            //photo part - check with global on whether or not to show it and adjust as appropriate
+            if(pD.getEnabled()){ //make sure you don't show disabled
+                if (tempBook.getPhotos().getHasImages()) {
+                    try {
+                        bookImage.setEnabled(false);
+                        Bitmap changed = BitmapFactory.decodeStream(new ByteArrayInputStream(tempBook.getPhotos().getPhotoAtIndex(0)));
+                        Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                        bookImage.setImageBitmap(scaled);
+                        if (tempBook.getPhotos().getPhotos().size() > 1)
+                            rightButton.setEnabled(true);
+                        imageTotalText.setText("" + 1 + "/" + tempBook.getPhotos().getPhotos().size() + "");
+
+                        //come back to this later if you can and adjust how this image pops up
+                    } catch (NegativeNumberException e) {
+                        Toast.makeText(getApplicationContext(), "Negative index", Toast.LENGTH_SHORT).show();
+                    } catch (TooLongException e) {
+                        Toast.makeText(getApplicationContext(), "Index is too long", Toast.LENGTH_SHORT).show();
+                    }
+                }disabledPhotoTitleText.setVisibility(View.INVISIBLE);
+
+            }//end of global variable
+            else{
+                Toast.makeText(getApplicationContext(), "Disabled photos", Toast.LENGTH_SHORT).show();
+                bookImage.setEnabled(true);
             }
+
 
             if (tempBook.isPrivate()) {
                 privacy.setText("Private Book");
