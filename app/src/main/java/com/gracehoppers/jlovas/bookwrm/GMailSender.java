@@ -1,7 +1,9 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 /**
- * Created by hong8 on 11/25/15.
+ * This class generates an email to send to the user about their trade.
+ *
+ * @author hong8 on 11/25/15.
  */
 import javax.activation.DataHandler;
 import javax.activation.DataSource;

@@ -4,7 +4,9 @@ import android.app.Application;
 import android.content.Context;
 
 /**
- * Created by dzhang4 on 11/18/15.
+ * This class provides the application context.
+ *
+ * @author dzhang4 on 11/18/15.
  */
 public class ContextProvider extends Application {
     private static Context context;

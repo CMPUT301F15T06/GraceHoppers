@@ -15,6 +15,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/frimageView"
         android:src="@drawable/blackenvelope"
+        android:adjustViewBounds="true"
+        android:maxHeight="35dp"
+        android:maxWidth="35dp"
         android:layout_marginBottom="500dp"
         android:layout_marginStart="290dp" />
 
@@ -58,10 +61,12 @@
         android:id="@+id/friendsButton"
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/TradeHistoryButton"
-        android:layout_gravity="top" />
+        android:layout_gravity="top"
+        android:background="@drawable/yellow_gradient"/>
 
 
     <Button
+        android:background="@drawable/yellow_gradient"
         android:layout_weight="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -72,6 +77,7 @@
         android:layout_gravity="top" />
 
         <Button
+            android:background="@drawable/yellow_gradient"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -86,8 +92,7 @@
     <TableRow
         android:layout_width="0dp">
         <Button
-
-            style="?android:attr/buttonStyleSmall"
+            android:background="@drawable/yellow_gradient"
             android:layout_height="wrap_content"
             android:text="History"
             android:id="@+id/TradeHistoryButton"
@@ -95,6 +100,7 @@
             android:layout_alignParentStart="true" />
 
         <Button
+            android:background="@drawable/yellow_gradient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/searchbutton"
@@ -104,6 +110,7 @@
             />
 
         <Button
+            android:background="@drawable/yellow_gradient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/optionsButton"
@@ -117,9 +124,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/trimageView"
         android:src="@drawable/blackenvelope"
-        android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/homescreentextview"
-        android:layout_marginEnd="49dp"
-        android:layout_above="@+id/inventory1" />
+        android:layout_marginEnd="90dp"
+        android:adjustViewBounds="true"
+        android:maxHeight="35dp"
+        android:maxWidth="35dp" />
 
 </RelativeLayout>

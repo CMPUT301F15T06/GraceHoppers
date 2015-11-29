@@ -1,7 +1,9 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 /**
- * Created by hong8 on 11/27/15.
+ * Keeps track of the processed trades on the server
+ *
+ * @author hong8 on 11/27/15.
  */
 public class ProcessTradeManager {
 }

@@ -22,6 +22,7 @@
         android:layout_centerHorizontal="true" />
 
     <Button
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="&lt;"
@@ -32,6 +33,7 @@
         android:enabled="false" />
 
     <Button
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=">"
@@ -66,24 +68,29 @@
         android:textStyle="bold" />
 
     <Button
+        android:background="@drawable/red_gradient"
         android:layout_width="250dp"
         android:layout_height="60dp"
         android:text="Ok"
         android:id="@+id/okAsIsButton"
         android:layout_below="@+id/takePhotoButton"
+        android:layout_marginTop="5dp"
         android:layout_centerHorizontal="true" />
 
     <Button
+        android:background="@drawable/yellow_gradient"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="75dp"
         android:text="Take Photo"
         android:id="@+id/takePhotoButton"
         android:layout_below="@+id/pictureleftbutton"
+        android:layout_marginTop="5dp"
         android:layout_centerHorizontal="true" />
 
 
 
     <Button
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="↺"
@@ -92,6 +99,7 @@
         android:layout_alignEnd="@+id/bookImage" />
 
     <Button
+
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:text="x"

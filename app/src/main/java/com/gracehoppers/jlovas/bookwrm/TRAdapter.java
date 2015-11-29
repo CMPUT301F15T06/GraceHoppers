@@ -10,7 +10,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by ljuarezr on 11/27/15.
+ * Manages trade requests between users.
+ *
+ * @see FRAdapter
  * @author ljuarezr (based on nlovas' FRAdapater)
  *
  *

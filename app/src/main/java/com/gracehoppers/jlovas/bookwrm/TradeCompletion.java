@@ -1,8 +1,6 @@
 package com.gracehoppers.jlovas.bookwrm;
 
-/**
- * Created by ljuarezr on 11/18/15.
- */
+
 /**
  * This class is an enum for the trade completion (current/complete)
  *

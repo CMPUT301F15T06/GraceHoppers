@@ -1,8 +1,6 @@
 package com.gracehoppers.jlovas.bookwrm;
 
-/**
- * Created by ljuarezr on 11/25/15.
- */
+
 
 /**
  * Holds individual Trade request by sender, receiver and Status
