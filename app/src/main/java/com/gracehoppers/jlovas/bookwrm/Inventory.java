@@ -106,4 +106,46 @@ public class Inventory implements Serializable {
         return publicInventory;
     }
 
+    /**
+     * gets a book that matches a given unique number
+     * @param uninum
+     * @return Book
+     */
+    public Book getBookByUniqueNumber(int uninum){
+
+        try {
+            for (int i = 0; i < this.getSize(); i++) {
+                if (this.getBookByIndex(i).getUniquenum().getNumber() == uninum) {
+                    return this.getBookByIndex(i);
+                }
+            }
+        }catch(NegativeNumberException e){
+
+        }catch(TooLongException e){
+
+        }
+        return null; //wouldnt happen
+    }
+
+    /**
+     * gets the position of a book from its uniquenumber
+     * @param uninum
+     * @return int
+     */
+    public int getRealPosition(int uninum){
+        //get the position from the total list so that createtrade activity doesnt need to be refactored
+        try {
+            for (int i = 0; i < this.getSize(); i++) {
+                if (this.getBookByIndex(i).getUniquenum().getNumber() == uninum) {
+                    return i;
+                }
+            }
+        }catch(NegativeNumberException e){
+
+        }catch(TooLongException e){
+
+        }
+        return 0; //wouldnt happen
+    }
+
 }

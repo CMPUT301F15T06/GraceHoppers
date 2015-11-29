@@ -64,7 +64,7 @@ public class CreateTradeScreen extends Activity {
 
         pos = getIntent().getIntExtra("aPosition", (int) Double.POSITIVE_INFINITY);
         pos2 = getIntent().getIntExtra("bPosition", (int) Double.POSITIVE_INFINITY);
-        Toast.makeText(getApplicationContext(), "aposition: "+pos+"friend: "+friend.getUsername(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "aposition: "+pos+"friend: "+friend.getUsername(), Toast.LENGTH_SHORT).show();
 
         try {
             newTrade.getBorrowerBook().add(friend.getInventory().getBookByIndex(pos));
@@ -167,9 +167,9 @@ public class CreateTradeScreen extends Activity {
                 @Override
                 public void onClick(View view) {
                     Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, SelectFromBorrowerInventoryActivity.class);
-                    if(getIntent().getStringExtra("flag").equals("search")){ //prevents the app from crashing from no flag extra
-                        borrowerAddIntent.putExtra("flag", "search");
-                    } else borrowerAddIntent.putExtra("flag","friend");
+                  //  if(getIntent().getStringExtra("flag").equals("search")){ //prevents the app from crashing from no flag extra
+                  //      borrowerAddIntent.putExtra("flag", "search");
+                  //  } else borrowerAddIntent.putExtra("flag","friend");
                     startActivity(borrowerAddIntent);
                     finish();
                 }
@@ -180,9 +180,9 @@ public class CreateTradeScreen extends Activity {
                 @Override
                 public void onClick(View view) {
                     Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, SelectFromOwnerInventoryActivity.class);
-                    if(getIntent().getStringExtra("flag").equals("search")){ //prevents the app from crashing from no flag extra
-                        borrowerAddIntent.putExtra("flag","search");
-                    } else borrowerAddIntent.putExtra("flag","friend");
+                   // if(getIntent().getStringExtra("flag").equals("search")){ //prevents the app from crashing from no flag extra
+                   //     borrowerAddIntent.putExtra("flag","search");
+                   // } else borrowerAddIntent.putExtra("flag","friend");
                     startActivity(borrowerAddIntent);
                     finish();
 
@@ -222,13 +222,13 @@ public class CreateTradeScreen extends Activity {
                 }
             });
 
-        if(getIntent().getStringExtra("flag").equals("search")){
+        //if(getIntent().getStringExtra("flag").equals("search")){
             //user has navigated here from the search activity
-            Toast.makeText(getApplicationContext(), friend.getUsername()+"", Toast.LENGTH_SHORT).show();
+       //     Toast.makeText(getApplicationContext(), friend.getUsername()+"", Toast.LENGTH_SHORT).show();
 
 
 
-        }
+       // }
 
     }
 

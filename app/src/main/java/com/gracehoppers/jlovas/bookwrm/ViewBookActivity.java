@@ -476,7 +476,8 @@ public class ViewBookActivity extends ActionBarActivity {
         else { //***********************************************************************************
             //the item is a friend's - do not want to offer edit and delete
 
-            posBook = getIntent().getIntExtra("listPosition", 0);
+            posBook = getIntent().getIntExtra("uninum", 0);
+            Toast.makeText(getApplicationContext(), "pos: "+posBook, Toast.LENGTH_SHORT).show();
 
             if(pD.getEnabled()){
                 bookImage.setLongClickable(false);
@@ -494,14 +495,15 @@ public class ViewBookActivity extends ActionBarActivity {
                 Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
             }*/
 
-            try {
+            //try {
                 //find the book by a different position than the friend's position
-                tempBook = myFriend.getInventory().getBookByIndex(posBook); //used to be friendBook, but causes problems with navigatin pictures when thee is a tempBook and a friendBook
-            } catch (NegativeNumberException e) {
-                Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
-            } catch (TooLongException e) {
-                Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
-            }
+               // tempBook = myFriend.getInventory().getBookByIndex(posBook); //used to be friendBook, but causes problems with navigatin pictures when thee is a tempBook and a friendBook
+                tempBook = myFriend.getInventory().getBookByUniqueNumber(posBook);
+           // } catch (NegativeNumberException e) {
+            //    Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
+            //} catch (TooLongException e) {
+             //   Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
+           // }
 
             bookTitle.setText(tempBook.getTitle());
             bookAuthor.setText(tempBook.getAuthor());
