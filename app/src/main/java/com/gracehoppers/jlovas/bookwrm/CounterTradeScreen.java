@@ -1,8 +1,10 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,15 +26,16 @@ import java.util.ArrayList;
  *
  * @see Trade, TradeHistory
  */
-public class CounterTradeScreen extends ActionBarActivity {
+public class CounterTradeScreen extends Activity{
 
     Trade oldTrade = new Trade();
-    private Trade counterTrade = new Trade();
+    private static Trade counterTrade = new Trade();
     private ArrayAdapter<Book> adapter;
+    private ArrayAdapter<Book> adapter1;
     //private ListView bInventory;
     private Account account1=new Account(); //borrower
     Account account2=new Account(); //owner
-    private TextView text;
+    private ListView text;
     TextView ownerText;
     private String bookTitle="";
     Button add;
@@ -40,7 +43,7 @@ public class CounterTradeScreen extends ActionBarActivity {
     Button cancel;
     int pos;
     int pos1;
-    private ArrayList<Book> borrowerBook = new ArrayList<Book>();
+    private static ArrayList<Book> borrowerBook = new ArrayList<Book>();
 
     SaveLoad saveLoad;
     Account account = new Account();
@@ -51,55 +54,50 @@ public class CounterTradeScreen extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_counter_trade_screen);
 
+        add = (Button) findViewById(R.id.bAdd);
+        submit = (Button) findViewById(R.id.submitCounter);
+        cancel = (Button) findViewById(R.id.cancelCounter);
+        //bInventory = (ListView)findViewById(R.id.bInventory);
+        text = (ListView) findViewById(R.id.textView);
+        ownerText =(TextView) findViewById(R.id.ownerBook);
+
         saveLoad = new SaveLoad();
         account = saveLoad.loadFromFile(getApplicationContext());
+
         pos = getIntent().getIntExtra("listPosition", 0);
         pos1 = getIntent().getIntExtra("BookPosition", (int) Double.POSITIVE_INFINITY);
 
 
+        //pos1 = getIntent().getIntExtra("BookPosition", (int) Double.POSITIVE_INFINITY);
+        //pos1 = getIntent().getIntExtra("BookPosition",0);
+        //Toast.makeText(getApplicationContext(), "pos Oncreate "+pos1, Toast.LENGTH_SHORT).show();
+
         try{
             oldTrade = account.getTradeHistory().getTradeByIndex(pos);
-            borrowerBook.add(oldTrade.getBorrower().getInventory().getBookByIndex(pos));
             counterTrade = oldTrade;
+
+            if(pos1<=oldTrade.getBorrower().getInventory().getSize()){
+                borrowerBook.add(oldTrade.getBorrower().getInventory().getBookByIndex(pos1));
+            }
+
             counterTrade.setBorrowerBook(borrowerBook);
+            //counterTrade.setBorrowerBook(borrowerBook);
         }catch(NegativeNumberException e){
 
         }catch(TooLongException te){
             Toast.makeText(getApplicationContext(), "Too long", Toast.LENGTH_SHORT).show();
         }
 
+        adapter = new BookListAdapter(this,R.layout.book_inventory_list,borrowerBook );
+        text.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
-        Toast.makeText(getApplicationContext(), counterTrade.getOwner().getUsername(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), counterTrade.getOwner().getUsername(), Toast.LENGTH_SHORT).show();
 
-        add = (Button) findViewById(R.id.bAdd);
-        submit = (Button) findViewById(R.id.submitCounter);
-        cancel = (Button) findViewById(R.id.cancelCounter);
-        //bInventory = (ListView)findViewById(R.id.bInventory);
-        text = (TextView) findViewById(R.id.textView);
-        ownerText =(TextView) findViewById(R.id.ownerBook);
-
-        //setUp();
-        /*
-        try {
-            oldTrade = account1.getTradeHistory().getTradeByIndex(0);
-        } catch (NegativeNumberException e) {
-            Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
-        } catch (TooLongException e) {
-            Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
-        }
-        */
         ownerText.setText(oldTrade.getOwnerBook().getTitle());
 
         //initialize counterTrade with items in former declined trade
         counterTrade.setOwnerBook(oldTrade.getOwnerBook());
-
-
-        String bookTitles ="";
-
-        for(Book b: counterTrade.getBorrowerBook()){
-            bookTitles= bookTitles + b.getTitle() +"\n";
-        }
-        text.setText(bookTitles);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,9 +120,25 @@ public class CounterTradeScreen extends ActionBarActivity {
                 //Intent submitAll = new Intent(CounterTradeScreen.this,HomeScreen.class);
                 //startActivity(submitAll);
 
-                Toast toast = Toast.makeText(CounterTradeScreen.this, "Haven't implement, will do saving trade into account's history", Toast.LENGTH_SHORT);
+                TradeRequest request = new TradeRequest();
+                request.makeTradeRequest(oldTrade.getBorrower(), oldTrade.getOwner().getUsername(), counterTrade);
+                //check if you have any tR
+                Thread thread = new AddTRThread(request);
+                thread.start();
+
+                borrowerBook=new ArrayList<Book>();
+                counterTrade = new Trade();
+                saveLoad.saveInFile(getApplicationContext(), account);
+                //Toast.makeText(getApplicationContext(), "Breakpoint, newTrade added to History", Toast.LENGTH_SHORT).show();
+
+                //Toast to show that the trade has been created
+                //Toast.makeText(getApplicationContext(), "Trade submitted!", Toast.LENGTH_SHORT).show();
+                //finish();
+                Toast toast = Toast.makeText(CounterTradeScreen.this, "Counter Trade successfully created", Toast.LENGTH_SHORT);
                 toast.show();
-                finish();
+                Intent intent = new Intent(CounterTradeScreen.this, HomeScreen.class);
+                startActivity(intent);
+
             }
         });
 
@@ -133,11 +147,15 @@ public class CounterTradeScreen extends ActionBarActivity {
             public void onClick(View view) {
                 //Intent cancelAll = new Intent(CounterTradeScreen.this, ProcessTradeScreen.class);
                 //startActivity(cancelAll);
+                /*
                 if(text.getText().toString()==""){
                     //Toast toast = Toast.makeText(CounterTradeScreen.this, "Borrower BookList already empty", Toast.LENGTH_SHORT);
                     //toast.show();
                 }
-                text.setText("");
+                text.setText("");*/
+                borrowerBook = new ArrayList<Book>();
+                counterTrade = new Trade();
+                finish();
 
             }
         });
@@ -175,30 +193,90 @@ public class CounterTradeScreen extends ActionBarActivity {
         account1.setTradeHistory(tradeHistory);
     }
 
-    /*
-    protected void onStart(){
-        super.onStart();
+    public void onBackPressed(){
+        super.onBackPressed();
+        borrowerBook = new ArrayList<Book>();
+        counterTrade = new Trade();
+        finish();
+    }
 
-        //set view adapter for selected borrower book list with stored data
-        ArrayList<Book> selectedBooks = counterTrade.getBorrowerBook();
+    class AddTRThread extends Thread { //look for friend requests between x and y
+        private TradeRequest request;
+        private TradeRequestManager manager;
 
-        if (! selectedBooks.isEmpty()){
-            adapter = new BookListAdapter(this,R.layout.book_inventory_list,selectedBooks);
-            bInventory.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
+        public AddTRThread(TradeRequest request) {
+            this.request = request;
         }
 
-        <ListView
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:id="@+id/bInventory"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentStart="true"
-        android:background="#fffbf4" />
+        @Override
+        public void run() {
+            //FriendRequest result;
+            manager = new TradeRequestManager();
+
+            try {
+                manager.addTradeRequest(request);
+            } catch (Exception e){
+                Log.e("Exception", "Caught exception adding");
+            }
+
+        }
 
     }
-    */
+    protected void onStart(){
+        super.onStart();
+        //pos1 = getIntent().getIntExtra("BookPosition", (int) Double.POSITIVE_INFINITY);
+        //pos1 = getIntent().getIntExtra("BookPosition",0);
+        //Toast.makeText(getApplicationContext(), "pos"+pos1, Toast.LENGTH_SHORT).show();
+
+/*
+        try{
+            oldTrade = account.getTradeHistory().getTradeByIndex(pos);
+            if(pos1<=oldTrade.getBorrower().getInventory().getSize()){
+                borrowerBook.add(oldTrade.getBorrower().getInventory().getBookByIndex(pos1));
+            }
+            counterTrade = oldTrade;
+            counterTrade.setBorrowerBook(borrowerBook);
+        }catch(NegativeNumberException e){
+
+        }catch(TooLongException te){
+            Toast.makeText(getApplicationContext(), "Too long", Toast.LENGTH_SHORT).show();
+        }*/
+        pos = getIntent().getIntExtra("listPosition", 0);
+        pos1 = getIntent().getIntExtra("BookPosition", (int) Double.POSITIVE_INFINITY);
+
+
+        //pos1 = getIntent().getIntExtra("BookPosition", (int) Double.POSITIVE_INFINITY);
+        //pos1 = getIntent().getIntExtra("BookPosition",0);
+        Toast.makeText(getApplicationContext(), "pos Oncreate "+pos1, Toast.LENGTH_SHORT).show();
+/*
+        try{
+            oldTrade = account.getTradeHistory().getTradeByIndex(pos);
+            counterTrade = oldTrade;
+
+            if(pos1<=oldTrade.getBorrower().getInventory().getSize()){
+                borrowerBook.add(oldTrade.getBorrower().getInventory().getBookByIndex(pos1));
+            }
+
+            counterTrade.setBorrowerBook(borrowerBook);
+            //counterTrade.setBorrowerBook(borrowerBook);
+        }catch(NegativeNumberException e){
+
+        }catch(TooLongException te){
+            Toast.makeText(getApplicationContext(), "Too long", Toast.LENGTH_SHORT).show();
+        }
+
+        adapter = new BookListAdapter(this,R.layout.book_inventory_list,borrowerBook );
+        text.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+        //Toast.makeText(getApplicationContext(), counterTrade.getOwner().getUsername(), Toast.LENGTH_SHORT).show();
+
+        ownerText.setText(oldTrade.getOwnerBook().getTitle());
+
+        //initialize counterTrade with items in former declined trade
+        counterTrade.setOwnerBook(oldTrade.getOwnerBook());*/
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
