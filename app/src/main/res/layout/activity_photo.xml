@@ -99,4 +99,14 @@
         android:layout_alignTop="@+id/bookImage"
         android:layout_alignStart="@+id/bookImage" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Up to 5\nPhotos\nMay Be Taken"
+        android:id="@+id/fivePhotoTitleText"
+        android:layout_marginTop="120dp"
+        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
