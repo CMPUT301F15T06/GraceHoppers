@@ -60,6 +60,9 @@ public class SelectFromOwnerInventoryActivity extends ActionBarActivity {
                 //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(SelectFromOwnerInventoryActivity.this, CreateTradeScreen.class);
+                if(getIntent().getStringExtra("flag").equals("search")){ //prevents the app from crashing from no flag extra
+                    intent.putExtra("flag","search");
+                } else intent.putExtra("flag","friend");
                 intent.putExtra("bPosition", position);
                 startActivity(intent);
                 finish();

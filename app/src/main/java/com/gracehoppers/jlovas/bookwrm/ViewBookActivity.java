@@ -301,14 +301,46 @@ public class ViewBookActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 //ask the user if they're sure they want to delete this book
-                if(deleteButton.getText().toString().equals("Delete")) {
+                if (deleteButton.getText().toString().equals("Delete")) {
                     openDialog();
-                }else{
+                } else {
                     CloneThread thread = new CloneThread();
                     thread.start();
 
 
                     Toast.makeText(getApplicationContext(), "Cloned book now added to user inventory", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(editButton.getText().equals("Edit")) {
+                    Intent intent = new Intent(ViewBookActivity.this, EditBookActivity.class);
+
+
+                    //pass the book info by intent
+                    intent.putExtra("bookTitle", tempBook.getTitle());
+                    intent.putExtra("bookAuthor", tempBook.getAuthor());
+                    intent.putExtra("bookQuantity", tempBook.getQuantity());
+                    intent.putExtra("bookQuality", tempBook.getQuality());
+                    intent.putExtra("bookCategory", tempBook.getCategoryNumber());
+                    intent.putExtra("bookPrivacy", tempBook.isPrivate());
+                    intent.putExtra("bookDesc", tempBook.getDescription());
+                    intent.putExtra("bookPosition", pos);
+                    //put photo stuff here...if it cant be passed by intent, pass the inventory index position and use gson instead of using the above!
+                    startActivity(intent);
+                }
+
+                else{//youre visiting from the search screen, so you will want to trade
+                    Intent intent = new Intent(ViewBookActivity.this, CreateTradeScreen.class);
+                    intent.putExtra("flag","search");
+                    pos=getIntent().getIntExtra("listPosition",0);
+                    intent.putExtra("aPosition",pos);
+                    startActivity(intent);
                 }
 
             }
@@ -366,27 +398,7 @@ public class ViewBookActivity extends ActionBarActivity {
 
 
 
-            editButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(ViewBookActivity.this, EditBookActivity.class);
 
-
-                    //pass the book info by intent
-                    intent.putExtra("bookTitle", tempBook.getTitle());
-                    intent.putExtra("bookAuthor", tempBook.getAuthor());
-                    intent.putExtra("bookQuantity", tempBook.getQuantity());
-                    intent.putExtra("bookQuality", tempBook.getQuality());
-                    intent.putExtra("bookCategory", tempBook.getCategoryNumber());
-                    intent.putExtra("bookPrivacy", tempBook.isPrivate());
-                    intent.putExtra("bookDesc", tempBook.getDescription());
-                    intent.putExtra("bookPosition", pos);
-                    //put photo stuff here...if it cant be passed by intent, pass the inventory index position and use gson instead of using the above!
-                    startActivity(intent);
-
-
-                }
-            });
 
         }  else if (getIntent().getStringExtra("flag").equals("Search")) {
         //********************************************************************************************************

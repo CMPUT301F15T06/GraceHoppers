@@ -65,6 +65,9 @@ private ArrayAdapter<Book> adapter;
 
 
                 Intent intent = new Intent(SelectFromBorrowerInventoryActivity.this, CreateTradeScreen.class);
+                if(getIntent().getStringExtra("flag").equals("search")){ //prevents the app from crashing from no flag extra
+                    intent.putExtra("flag","search");
+                } else intent.putExtra("flag","friend");
                 intent.putExtra("aPosition", position);
                 startActivity(intent);
                 finish();

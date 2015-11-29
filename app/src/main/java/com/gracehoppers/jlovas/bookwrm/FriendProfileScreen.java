@@ -164,6 +164,7 @@ public class FriendProfileScreen extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent turnTrade = new Intent(FriendProfileScreen.this, CreateTradeScreen.class);
+                turnTrade.putExtra("flag","friend");
                 startActivity(turnTrade);
             }
         });

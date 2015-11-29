@@ -167,9 +167,9 @@ public class SearchFriendInventories extends ActionBarActivity {
                         owner = getOwner(position); //get the owner account to pass to the next intent
                         selectedBook = searchresult.getBookByIndex(position); //get the book
                         bookposition = getActualIndex(selectedBook, owner); //get the actual position in the account to pass to the next intent
-                        Toast.makeText(getApplicationContext(), "" + owner.getUsername(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "" + bookposition, Toast.LENGTH_SHORT).show();
                         saveload.saveFriendInFile(getApplicationContext(),owner);
-                        intent.putExtra("listPosition", bookposition);
+                         intent.putExtra("listPosition", bookposition);
                          intent.putExtra("flag", "Search");
                          startActivity(intent);
                     }catch(NegativeNumberException e){
