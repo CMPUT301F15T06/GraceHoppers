@@ -35,6 +35,8 @@ private SaveLoad saveLoad;
 
 private ArrayList<Book> friendInventory;
 private ArrayAdapter<Book> adapter;
+    int pos;
+    Book selectedBook;
 
 
 
@@ -46,14 +48,15 @@ private ArrayAdapter<Book> adapter;
 
         saveLoad = new SaveLoad();
         friend = saveLoad.loadFriendFromFile(getApplicationContext());
-        friendInventory = friend.getInventory().getInventory();
+        //totalInventory = friend.getInventory();
+        friendInventory = friend.getInventory().getPublic(friend.getInventory()); //friend inventory is the PUBLIC inventory
         adapter = new BookListAdapter(this,R.layout.friend_inventory_list, friendInventory);
         inventoryList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
         inventoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+/*
                 try {
                     Book book = friend.getInventory().getBookByIndex(position);
                     Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
@@ -61,11 +64,19 @@ private ArrayAdapter<Book> adapter;
                     e.printStackTrace();
                 } catch (TooLongException e) {
                     e.printStackTrace();
-                }
+                }*/
 
 
                 Intent intent = new Intent(SelectFromBorrowerInventoryActivity.this, CreateTradeScreen.class);
-                intent.putExtra("aPosition", position);
+//                if(getIntent().getStringExtra("flag").equals("search")){ //prevents the app from crashing from no flag extra
+           //         intent.putExtra("flag","search");
+          //      } else intent.putExtra("flag","friend");
+
+                selectedBook=friendInventory.get(position);
+                pos=friend.getInventory().getRealPosition(selectedBook.getUniquenum().getNumber());
+
+
+                intent.putExtra("aPosition", pos);
                 startActivity(intent);
                 finish();
             }
@@ -108,4 +119,6 @@ private ArrayAdapter<Book> adapter;
     public ListView getMyInventory() {
         return inventoryList;
     }
+
+
 }

@@ -44,7 +44,7 @@ public class FriendProfileScreen extends ActionBarActivity {
     int position;
     private ArrayAdapter<Book> adapter;
     ListView friendInventoryList;
-    //private ArrayList<Book> friendInventory;
+
 
     //UI test stuff ---------------------------------------------------------------
     public SaveLoad getSaveLoad(){return saveLoad;}
@@ -164,6 +164,7 @@ public class FriendProfileScreen extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent turnTrade = new Intent(FriendProfileScreen.this, CreateTradeScreen.class);
+                turnTrade.putExtra("flag", "friend");
                 startActivity(turnTrade);
             }
         });
@@ -258,7 +259,9 @@ public class FriendProfileScreen extends ActionBarActivity {
                                     }
 
                                     Intent intent = new Intent(FriendProfileScreen.this, ViewBookActivity.class);
-                                    intent.putExtra("listPosition", position2);
+                                    //intent.putExtra("listPosition", position2);
+                                    intent.putExtra("uninum",result.getInventory().getPublic(result.getInventory()).get(position2).getUniquenum().getNumber()); //pass the unique number to identify the book
+                                    //Toast.makeText(getApplicationContext(), ""+result.getInventory().getPublic(result.getInventory()).get(position2).getUniquenum().getNumber(), Toast.LENGTH_SHORT).show();
                                     //intent.putExtra("position2", position);
                                     intent.putExtra("flag", "friendItem");
                                     startActivity(intent);
