@@ -32,6 +32,7 @@ public class ProcessTradeScreen extends Activity {
 
     public Trade trade1 = new Trade();
     private Account account1 = new Account();
+    private Account account2 = new Account();
     Button accept;
     Button decline;
     public AlertDialog.Builder dialog;
@@ -107,6 +108,7 @@ public class ProcessTradeScreen extends Activity {
 
                 //pop a dialog to promote owner to continue trade by sending email
 
+
                 dialog = new AlertDialog.Builder(ProcessTradeScreen.this);
 
                 dialog.setMessage("Continue the trade by sending email to borrower?");
@@ -127,6 +129,15 @@ public class ProcessTradeScreen extends Activity {
                 dialog.create();
                 dialog.show();
 
+
+
+                Thread thread = new AcceptThread(account.getUsername());
+                thread.start();
+
+                //pop a dialog to promote owner to continue trade by sending email
+/*
+
+*/
             }
         });
 
@@ -258,18 +269,25 @@ public class ProcessTradeScreen extends Activity {
             tradeRequest = traderequests.get(position);
             trade = tradeRequest.getTrade();
             trade.setAccepted(Boolean.TRUE);
+            trade.setStatus(TradeStatus.ACCEPTED);
 
             //
             account1 = accountManager.getAccount(trade.getOwner().getUsername());
+            account2 = accountManager.getAccount(trade.getBorrower().getUsername());
 
-            //tradeRequest.acceptTradeRequest(trade.getBorrower(), trade.getOwner(), trade);
-
-            //tradeHistory = account1.getTradeHistory();
+            tradeRequest.acceptTradeRequest(trade.getBorrower(), trade.getOwner(), trade);
+            /*
+            tradeHistory = account1.getTradeHistory();
             tradeHistory.addTrade(trade);
-
             account1.setTradeHistory(tradeHistory);
+
+            tradeHistory = account2.getTradeHistory();
+            tradeHistory.addTrade(trade);
+            account2.setTradeHistory(tradeHistory);
+            */
             accountManager.updateAccount(account1);
-/*
+            accountManager.updateAccount(account2);
+
             try{
                 trade1 = account1.getTradeHistory().getTradeByIndex(5);
             }catch(NegativeNumberException e){
@@ -277,11 +295,11 @@ public class ProcessTradeScreen extends Activity {
             }catch(TooLongException te){
 
             }
-*/
+
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(ProcessTradeScreen.this,"borrower: "+trade.getBorrower().getUsername(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProcessTradeScreen.this, "borrower: " + trade.getBorrower().getUsername(), Toast.LENGTH_SHORT).show();
                 }
             });
 
