@@ -31,7 +31,7 @@ public class Trade {
     private TradeStatus status;
     private Account owner;
     private Account borrower;
-    private Book ownerBook= new Book();  //can be 1
+    private Book ownerBook = new Book();  //can be 1
     private ArrayList<Book> borrowerBook = new ArrayList<Book>(); //can be 0 or more
     private String ownerComment;
 

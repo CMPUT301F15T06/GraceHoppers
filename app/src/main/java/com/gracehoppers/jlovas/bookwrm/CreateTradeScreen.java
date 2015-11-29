@@ -41,7 +41,7 @@ public class CreateTradeScreen extends Activity {
     private Account friend;
     private ArrayAdapter<Book> adapter;
     private ArrayAdapter<Book> adapterO;
-    private ArrayList<Book> selectedBorrowerBooks;
+    private ArrayList<Book> selectedBorrowerBooks  = new ArrayList<Book>();
     private ArrayList<Book> selectedOwnerBook = new ArrayList<Book>();
     private static Trade newTrade = new Trade();
     private SaveLoad mySaveLoad;
@@ -92,7 +92,7 @@ public class CreateTradeScreen extends Activity {
         adapter.notifyDataSetChanged();
 
         if (selectedOwnerBook.isEmpty()){
-            if (newTrade.getOwnerBook().getTitle() != null) {
+            if (newTrade.getOwnerBook().getTitle() != "Untitled") {
                 selectedOwnerBook.add((newTrade.getOwnerBook()));
             }
         }else {
@@ -130,7 +130,7 @@ public class CreateTradeScreen extends Activity {
 
 
             if (selectedOwnerBook.isEmpty()) {
-                if (newTrade.getOwnerBook().getTitle() != null) {
+                if (newTrade.getOwnerBook().getTitle() != "Untitled") {
                     selectedOwnerBook.add((newTrade.getOwnerBook()));
                 }
             } else {
@@ -143,22 +143,30 @@ public class CreateTradeScreen extends Activity {
 
 
             borrowerInventoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                     Book book = selectedBorrowerBooks.get(position);
 
                     //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
-                    AlertDialog alertDialog = new AlertDialog.Builder(CreateTradeScreen.this).create();
-                    alertDialog.setMessage("");
-                    alertDialog.setCanceledOnTouchOutside(false);
-
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancel",
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CreateTradeScreen.this);
+                    builder.setTitle("Title");
+                    builder.setItems(new CharSequence[]
+                                    {"Delete", "Cancel"},
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
+                                    // The 'which' argument contains the index position
+                                    // of the selected item
+                                    switch (which) {
+                                        case 0:
+                                            selectedBorrowerBooks.remove(position);
+                                            ownerBookListView.setAdapter(adapterO);
+                                            adapter.notifyDataSetChanged();
+                                        case 1:
+                                            dialog.cancel();
+
+                                    }
                                 }
                             });
-
-                    alertDialog.show();
+                    builder.create().show();
 
                 }
             });
