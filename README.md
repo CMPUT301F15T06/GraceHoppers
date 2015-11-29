@@ -164,3 +164,7 @@ http://stackoverflow.com/users/79595/sooniln
 Thread.join():
 Gray, http://stackoverflow.com/questions/15956231/what-does-this-thread-join-code-mean, 2015-26-11
 http://stackoverflow.com/users/179850/gray
+
+Curl and ElasticSearch
+University of Alberta, https://eclass.srv.ualberta.ca/pluginfile.php/2350865/mod_resource/content/1/JSON-HTTP-contd.pdf, 2015-28-11
+
