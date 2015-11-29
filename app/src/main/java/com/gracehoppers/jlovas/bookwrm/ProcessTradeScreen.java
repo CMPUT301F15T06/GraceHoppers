@@ -262,6 +262,7 @@ public class ProcessTradeScreen extends ActionBarActivity {
             tradeRequest = traderequests.get(position);
             trade = tradeRequest.getTrade();
             trade.setAccepted(Boolean.TRUE);
+            trade.setStatus(TradeStatus.ACCEPTED);
 
             //
             account1 = accountManager.getAccount(trade.getOwner().getUsername());
@@ -295,8 +296,8 @@ public class ProcessTradeScreen extends ActionBarActivity {
                 }
             });
 
-            //trmanager.deleteTR(tradeRequest);
-            //saveLoad.saveInFile(getApplicationContext(), account);
+            trmanager.deleteTR(tradeRequest);
+            saveLoad.saveInFile(getApplicationContext(), account);
 
         }
     }
