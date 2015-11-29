@@ -223,6 +223,18 @@
                 android:layout_alignBaseline="@id/pictureleftbutton"
                 android:layout_centerHorizontal="true"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Photos Disabled\nPress &amp; Hold\nTo Download\nPotential\nPhotos"
+                android:id="@+id/disabledPhotoTitleText"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_alignEnd="@+id/quantitynumtextview"
+                android:layout_marginTop="90dp"
+                android:gravity="center_horizontal" />
+
 
         </RelativeLayout>
     </ScrollView>
