@@ -39,12 +39,27 @@ public class CounterTradeScreen extends ActionBarActivity {
     Button submit;
     Button cancel;
 
+    SaveLoad saveLoad;
+    Account account = new Account();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_counter_trade_screen);
+
+        saveLoad = new SaveLoad();
+        account = saveLoad.loadFromFile(getApplicationContext());
+
+        try{
+            oldTrade = account.getTradeHistory().getTradeByIndex(0);
+        }catch(NegativeNumberException e){
+
+        }catch(TooLongException te){
+
+        }
+
+        Toast.makeText(getApplicationContext(), oldTrade.getOwner().getUsername(), Toast.LENGTH_SHORT).show();
 
         add = (Button) findViewById(R.id.bAdd);
         submit = (Button) findViewById(R.id.submitCounter);

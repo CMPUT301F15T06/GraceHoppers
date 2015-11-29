@@ -26,8 +26,9 @@ public class SelectCounterBooksActivity extends ActionBarActivity {
     private ArrayAdapter<Book> adapter;
     private ArrayList<Book> bookList=new ArrayList<Book>();
 
-    private Account account1 = new Account();
-    private Account account2 = new Account();
+    private Account account = new Account();
+
+    SaveLoad saveLoad;
 
 
     @Override
@@ -35,9 +36,13 @@ public class SelectCounterBooksActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_counter_books);
 
-        setUp();
+        saveLoad = new SaveLoad();
+        account = saveLoad.loadFromFile(getApplicationContext());
+
+        //setUp();
 
         counterList = (ListView) findViewById(R.id.selectCounterList);
+
 
         //set listView to borrower's inventory
         bookList= counterTrade.getBorrower().getInventory().getInventory();
@@ -62,7 +67,7 @@ public class SelectCounterBooksActivity extends ActionBarActivity {
     }
 
 
-
+/*
     public void setUp(){
         try{
             account1.setCity("Lulala");
@@ -98,7 +103,7 @@ public class SelectCounterBooksActivity extends ActionBarActivity {
         tradeHistory.addTrade(counterTrade);
         account1.setTradeHistory(tradeHistory);
     }
-
+*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

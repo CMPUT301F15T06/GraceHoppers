@@ -17,9 +17,14 @@ public class TradeRequest {
     //sender and receiver are usernames
     private String sender;
     private String receiver;
-    private Trade trade;
 
+    private Trade trade;
     private boolean isAnswered;
+
+
+    public Trade getTrade() {
+        return trade;
+    }
 
     public TradeRequest(){
     }
@@ -44,7 +49,7 @@ public class TradeRequest {
 
         yourAccount.getTradeHistory().addTrade(newTrade);
         friendAccount.getTradeHistory().addTrade(newTrade);
-        isAnswered = false;
+        isAnswered = true;
     }
 
 
@@ -52,7 +57,7 @@ public class TradeRequest {
 
         yourAccount.getTradeHistory().addTrade(newTrade);
         friendAccount.getTradeHistory().addTrade(newTrade);
-        isAnswered = false;
+        isAnswered = true;
     }
 
 

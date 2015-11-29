@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -25,12 +26,11 @@ import java.util.ArrayList;
  */
 public class ProcessTradeScreen extends ActionBarActivity {
 
-
-    private Account owner ;
-    private Account borrower;
-    public Trade trade;
+    public Trade trade; //= new Trade();
     public TradeHistory tradeHistory = new TradeHistory();
 
+    public Trade trade1 = new Trade();
+    private Account account1 = new Account();
     Button accept;
     Button decline;
     public AlertDialog.Builder dialog;
@@ -39,8 +39,17 @@ public class ProcessTradeScreen extends ActionBarActivity {
     TextView bBook;
     TextView oBook;
 
-    public static String tradeId = "Trade ID";
-    private ProcessTradeManager processTradeManager;
+    private Account account;
+    SaveLoad saveLoad;
+    TradeRequests traderequests;// = new TradeRequests();
+    TradeRequestManager trmanager;// = new TradeRequestManager();
+    TradeRequest tradeRequest;//= new TradeRequest();
+    int position;
+    AccountManager accountManager = new AccountManager();
+
+
+    //public static String tradeId = "Trade ID";
+    //private ProcessTradeManager processTradeManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,14 +58,23 @@ public class ProcessTradeScreen extends ActionBarActivity {
 
         //SET UP THE FALGS && GET THE TRADE FROM TRADEREQUESTS
 
-            bName = (TextView)findViewById(R.id.bName);
-            bBook = (TextView)findViewById(R.id.bBook);
+        bName = (TextView)findViewById(R.id.bName);
+        bBook = (TextView)findViewById(R.id.bBook);
         oBook = (TextView)findViewById(R.id.oBook);
         accept =(Button)findViewById(R.id.accept);
         decline = (Button)findViewById(R.id.decline);
 
-        Toast.makeText(getApplicationContext(), tradeId, Toast.LENGTH_SHORT).show();
+        position = getIntent().getIntExtra("position", 0);
 
+        saveLoad = new SaveLoad();
+        account = saveLoad.loadFromFile(getApplicationContext());
+
+        //Toast.makeText(getApplicationContext(), Toast.LENGTH_SHORT).show();
+
+        Thread thread = new FindTRThread(account.getUsername());
+        thread.start();
+
+        /*
         setUp();
         tradeHistory= owner.getTradeHistory();
         try {
@@ -77,15 +95,17 @@ public class ProcessTradeScreen extends ActionBarActivity {
             bookTitles= bookTitles + b.getTitle() +"\n";
         }
         bBook.setText("Borrower Books:\n" + bookTitles );
-
+*/
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //set status of trade to accepted
-                trade.setAccepted(Boolean.TRUE);
+                //trade.setAccepted(Boolean.TRUE);
+                Thread thread = new AcceptThread(account.getUsername());
+                thread.start();
 
                 //pop a dialog to promote owner to continue trade by sending email
-
+/*
                 dialog = new AlertDialog.Builder(ProcessTradeScreen.this);
 
                 dialog.setMessage("Continue the trade by sending email to borrower?");
@@ -95,7 +115,7 @@ public class ProcessTradeScreen extends ActionBarActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //send_email();
-                        email();
+                        //email();
                         Toast toast = Toast.makeText(ProcessTradeScreen.this, "successfully send email", Toast.LENGTH_LONG);
                         toast.show();
                     }
@@ -105,7 +125,7 @@ public class ProcessTradeScreen extends ActionBarActivity {
 
                 dialog.create();
                 dialog.show();
-
+*/
             }
         });
 
@@ -113,8 +133,8 @@ public class ProcessTradeScreen extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 trade.setDeclined(Boolean.TRUE);
-                Toast toast = Toast.makeText(ProcessTradeScreen.this, "Create a counter trade", Toast.LENGTH_LONG);
-                toast.show();
+
+
 
                 //pop a dialog to promote owner to continue trade by sending email
                 dialog1 = new AlertDialog.Builder(ProcessTradeScreen.this);
@@ -135,31 +155,145 @@ public class ProcessTradeScreen extends ActionBarActivity {
                 dialog1.show();
 
                 Intent turnCounter = new Intent(ProcessTradeScreen.this, CounterTradeScreen.class);
+                //Toast toast = Toast.makeText(ProcessTradeScreen.this, trade.getOwnerBook().getTitle(), Toast.LENGTH_LONG);
+                //toast.show();
+                //turnCounter.putExtra("declineOwnerBook",trade.getOwnerBook().getTitle());
+                //turnCounter.putExtra("declineBorrower",trade.getOwnerBook().getTitle());
                 startActivity(turnCounter);
-                finish();
-
 
             }
         });
+    }
+
+
+    class FindTRThread extends Thread { //look for friend requests between x and y
+        private String user1;
+
+        public FindTRThread(String u1) {
+            this.user1 = u1;
+
+        }
+
+        @Override
+        public void run() {
+            traderequests = new TradeRequests();
+            trmanager = new TradeRequestManager();
+            tradeRequest= new TradeRequest();
+            trade = new Trade();
+            try {
+                traderequests = trmanager.findTradeRequests(user1);
+            } catch (IOException e) {
+                Toast.makeText(getApplicationContext(), "caught an exception :C", Toast.LENGTH_SHORT).show();
+            }
+            tradeRequest = traderequests.get(position);
+
+            trade = tradeRequest.getTrade();
+            //trade.setAccepted(Boolean.FALSE);
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    //Toast.makeText(getApplicationContext(),"trade"+tradeRequest.getTrade().getBorrower().getUsername(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),"trade"+trade.getOwner().getUsername(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),"trade"+trade.getBorrower().getUsername(), Toast.LENGTH_SHORT).show();
+
+                    bName.setText("Borrower Name:\n" + trade.getBorrower().getUsername());
+
+                    oBook.setText("Owner Book:\n"+trade.getOwnerBook().getTitle());
+
+                    String bookTitles ="";
+
+                    for(Book b: trade.getBorrowerBook()){
+                        bookTitles= bookTitles + b.getTitle() +"\n";
+                    }
+                    bBook.setText("Borrower Books:\n" + bookTitles);
+                }
+            });
+        }
+    }
+/*
+    class AcceptThread extends Thread { //look for friend requests between x and y
+        private String user1;
+
+        public AcceptThread(String u1) {
+            this.user1 = u1;
+        }
+
+        @Override
+        public void run() {
+
+            try {
+                traderequests = trmanager.findTradeRequests(user1);
+            } catch (IOException e) {
+                Toast.makeText(getApplicationContext(), "caught an exception :C", Toast.LENGTH_SHORT).show();
+            }
+
+            tradeRequest = traderequests.get(position);
+            trade = tradeRequest.getTrade();
+            trade.setAccepted(Boolean.TRUE);
+
+            tradeRequest.acceptTradeRequest(trade.getBorrower(), trade.getOwner(), trade);
+
+        }
+    }
+*/
+
+    class AcceptThread extends Thread { //look for friend requests between x and y
+        private String user1;
+
+        public AcceptThread(String u1) {
+            this.user1 = u1;
+        }
+
+        @Override
+        public void run() {
+
+            try {
+                traderequests = trmanager.findTradeRequests(user1);
+            } catch (IOException e) {
+                Toast.makeText(getApplicationContext(), "caught an exception :C", Toast.LENGTH_SHORT).show();
+            }
+
+            tradeRequest = traderequests.get(position);
+            trade = tradeRequest.getTrade();
+            trade.setAccepted(Boolean.TRUE);
+
+            //
+            account1 = accountManager.getAccount(trade.getOwner().getUsername());
+
+            //tradeRequest.acceptTradeRequest(trade.getBorrower(), trade.getOwner(), trade);
+
+            tradeHistory = account1.getTradeHistory();
+            tradeHistory.addTrade(trade);
+
+            account1.setTradeHistory(tradeHistory);
+            accountManager.updateAccount(account1);
+
+            try{
+                trade1 = account1.getTradeHistory().getTradeByIndex(0);
+            }catch(NegativeNumberException e){
+
+            }catch(TooLongException te){
+
+            }
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(ProcessTradeScreen.this,""+tradeHistory.getSize(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            //();
+
+            //trmanager.deleteTR(tradeRequest);
+
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        //processTradeManager = new ProcessTradeManager("");
-        Intent intent = getIntent();
-
-        if (intent != null) {
-            Bundle extras = intent.getExtras();
-
-            if (extras != null) {
-                int movieId = extras.getInt(tradeId);
-
-                //Thread thread = new GetThread(tradeId);
-                //thread.start();
-            }
-        }
     }
 
     public void email(){
@@ -176,8 +310,8 @@ public class ProcessTradeScreen extends ActionBarActivity {
         }
 
     }
-
-    public void setUp(){
+/*
+    public void setUp() {
         owner = new Account();
         borrower = new Account();
         try{

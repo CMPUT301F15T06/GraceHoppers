@@ -55,6 +55,7 @@ public class HistoryOfTradesScreen extends ActionBarActivity {
         adapter = new TradeHistoryListAdapter(getApplicationContext(), R.layout.trade_history_list, account.getTradeHistory().tradeHistory);
         historyView.setAdapter(adapter);
 
+
         //For testing purposes. DELETE AFTER
         //Create a test trade and add it to the list
         Account B = new Account();

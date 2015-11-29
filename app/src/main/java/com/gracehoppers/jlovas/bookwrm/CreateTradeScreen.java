@@ -67,6 +67,8 @@ public class CreateTradeScreen extends Activity {
 
         try {
             newTrade.getBorrowerBook().add(friend.getInventory().getBookByIndex(pos));
+            newTrade.setOwner(friend);
+            newTrade.setBorrower(me);
         } catch (NegativeNumberException e) {
             e.printStackTrace();
         } catch (TooLongException e) {

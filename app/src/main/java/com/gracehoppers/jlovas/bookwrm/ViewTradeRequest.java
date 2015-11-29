@@ -50,10 +50,10 @@ public class ViewTradeRequest extends ActionBarActivity {
 
         TRlist.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                tradeId = (String) adapter.getItem(position).getSender();
+                //tradeId = (String) adapter.getItem(position).getSender();
                 Intent intent = new Intent(context, ProcessTradeScreen.class);
-                intent.putExtra(ProcessTradeScreen.tradeId, tradeId);
-
+                //intent.putExtra(ProcessTradeScreen.tradeId, tradeId);
+                intent.putExtra("position", position);
                 startActivity(intent);
                 //openDialog(sender);
                 //Instead of opening Dialog, it should go to the proceedTrade Screen!!

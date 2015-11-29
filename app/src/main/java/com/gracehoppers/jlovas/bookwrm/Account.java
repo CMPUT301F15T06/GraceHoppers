@@ -23,8 +23,8 @@ public class Account implements Serializable {
     private String username;
     private String city;
     private String email;
-    private TradeHistory tradeHistory; // create trade history
-    private Inventory inventory;
+    private TradeHistory tradeHistory= new TradeHistory(); // create trade history
+    private Inventory inventory;//=new Inventory();
     private Friends friends; //create friend list
    // private static final long serialVersionUID = 2021577107874183656L;
 
@@ -180,6 +180,7 @@ public class Account implements Serializable {
 
 
     public Inventory getInventory() {
+
         return inventory;
     }
 
