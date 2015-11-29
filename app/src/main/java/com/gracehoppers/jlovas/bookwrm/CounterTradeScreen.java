@@ -38,6 +38,9 @@ public class CounterTradeScreen extends ActionBarActivity {
     Button add;
     Button submit;
     Button cancel;
+    int pos;
+    int pos1;
+    private ArrayList<Book> borrowerBook = new ArrayList<Book>();
 
     SaveLoad saveLoad;
     Account account = new Account();
@@ -50,16 +53,23 @@ public class CounterTradeScreen extends ActionBarActivity {
 
         saveLoad = new SaveLoad();
         account = saveLoad.loadFromFile(getApplicationContext());
+        pos = getIntent().getIntExtra("listPosition", 0);
+        pos1 = getIntent().getIntExtra("BookPosition", (int) Double.POSITIVE_INFINITY);
+
 
         try{
-            oldTrade = account.getTradeHistory().getTradeByIndex(0);
+            oldTrade = account.getTradeHistory().getTradeByIndex(pos);
+            borrowerBook.add(oldTrade.getBorrower().getInventory().getBookByIndex(pos));
+            counterTrade = oldTrade;
+            counterTrade.setBorrowerBook(borrowerBook);
         }catch(NegativeNumberException e){
 
         }catch(TooLongException te){
-
+            Toast.makeText(getApplicationContext(), "Too long", Toast.LENGTH_SHORT).show();
         }
 
-        Toast.makeText(getApplicationContext(), oldTrade.getOwner().getUsername(), Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(getApplicationContext(), counterTrade.getOwner().getUsername(), Toast.LENGTH_SHORT).show();
 
         add = (Button) findViewById(R.id.bAdd);
         submit = (Button) findViewById(R.id.submitCounter);
@@ -68,7 +78,8 @@ public class CounterTradeScreen extends ActionBarActivity {
         text = (TextView) findViewById(R.id.textView);
         ownerText =(TextView) findViewById(R.id.ownerBook);
 
-        setUp();
+        //setUp();
+        /*
         try {
             oldTrade = account1.getTradeHistory().getTradeByIndex(0);
         } catch (NegativeNumberException e) {
@@ -76,16 +87,25 @@ public class CounterTradeScreen extends ActionBarActivity {
         } catch (TooLongException e) {
             Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
         }
+        */
         ownerText.setText(oldTrade.getOwnerBook().getTitle());
 
         //initialize counterTrade with items in former declined trade
-        Book oBook = oldTrade.getOwnerBook();
-        counterTrade.setOwnerBook(oBook);
+        counterTrade.setOwnerBook(oldTrade.getOwnerBook());
+
+
+        String bookTitles ="";
+
+        for(Book b: counterTrade.getBorrowerBook()){
+            bookTitles= bookTitles + b.getTitle() +"\n";
+        }
+        text.setText(bookTitles);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent addBook = new Intent(CounterTradeScreen.this, SelectCounterBooksActivity.class);
+                addBook.putExtra("listPosition", pos);
                 startActivity(addBook);
 
             }
@@ -122,10 +142,10 @@ public class CounterTradeScreen extends ActionBarActivity {
             }
         });
 
-        Intent intent = getIntent();
-        bookTitle = intent.getStringExtra("BookName");
+        //Intent intent = getIntent();
+        //bookTitle = intent.getStringExtra("BookName");
 
-        text.setText(bookTitle);
+        //text.setText(bookTitle);
 
     }
     //temporary function until fully functioning

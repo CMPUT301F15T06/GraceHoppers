@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/frameLayout2"
         android:layout_marginBottom="23dp"
-        android:layout_above="@+id/completeButton"
+        android:layout_above="@+id/counter"
         android:layout_alignParentStart="true"
         android:background="#afdaff">
 
@@ -46,12 +46,31 @@
             android:layout_marginTop="23dp"
             android:text="Comments on the trade " />
     </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/frameLayout3"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@+id/counter"
+        android:layout_alignParentStart="true"
+        android:background="#6289ff">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Status"
+            android:id="@+id/status"
+            style="@style/Base.TextAppearance.AppCompat"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+    </FrameLayout>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mark As \n Complete"
-        android:id="@+id/completeButton"
+        android:text="Compose Counter Trade"
+        android:id="@+id/counter"
         android:clickable="false"
         android:background="#b562b65e"
         android:layout_gravity="right"
@@ -60,7 +79,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:id="@+id/frameLayout"
         android:layout_above="@+id/textView5"

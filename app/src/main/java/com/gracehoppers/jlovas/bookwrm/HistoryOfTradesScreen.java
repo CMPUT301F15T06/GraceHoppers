@@ -55,7 +55,7 @@ public class HistoryOfTradesScreen extends ActionBarActivity {
         adapter = new TradeHistoryListAdapter(getApplicationContext(), R.layout.trade_history_list, account.getTradeHistory().tradeHistory);
         historyView.setAdapter(adapter);
 
-
+/*
         //For testing purposes. DELETE AFTER
         //Create a test trade and add it to the list
         Account B = new Account();
@@ -111,11 +111,12 @@ public class HistoryOfTradesScreen extends ActionBarActivity {
         assertTrue(account.getTradeHistory().getSize() == 2);
 
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
+*/
         //Need to have the clickOnItem to set a trade as complete.
         historyView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(HistoryOfTradesScreen.this, ViewTradeActivity.class);
+                //Intent intent = new Intent(HistoryOfTradesScreen.this, CounterTradeScreen.class);
                 intent.putExtra("listPosition", position);
                 intent.putExtra("flag", "HistoryOfTradesScreen");
                 Toast.makeText(getApplicationContext(), "CLicked on item " + position, Toast.LENGTH_SHORT).show();
