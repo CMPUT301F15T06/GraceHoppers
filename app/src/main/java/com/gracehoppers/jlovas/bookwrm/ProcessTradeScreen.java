@@ -263,29 +263,29 @@ public class ProcessTradeScreen extends ActionBarActivity {
 
             //tradeRequest.acceptTradeRequest(trade.getBorrower(), trade.getOwner(), trade);
 
-            tradeHistory = account1.getTradeHistory();
+            //tradeHistory = account1.getTradeHistory();
             tradeHistory.addTrade(trade);
 
             account1.setTradeHistory(tradeHistory);
             accountManager.updateAccount(account1);
-
+/*
             try{
-                trade1 = account1.getTradeHistory().getTradeByIndex(0);
+                trade1 = account1.getTradeHistory().getTradeByIndex(5);
             }catch(NegativeNumberException e){
 
             }catch(TooLongException te){
 
             }
-
+*/
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(ProcessTradeScreen.this,""+tradeHistory.getSize(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProcessTradeScreen.this,"borrower: "+trade.getBorrower().getUsername(), Toast.LENGTH_SHORT).show();
                 }
             });
-            //();
 
-            //trmanager.deleteTR(tradeRequest);
+            trmanager.deleteTR(tradeRequest);
+            saveLoad.saveInFile(getApplicationContext(), account);
 
         }
     }

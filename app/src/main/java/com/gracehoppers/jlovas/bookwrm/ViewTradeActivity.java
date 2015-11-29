@@ -1,5 +1,6 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -33,7 +34,7 @@ public class ViewTradeActivity extends ActionBarActivity {
     private SaveLoad saveload = new SaveLoad();
     Account account;
 
-    Button completeButton;
+    Button counter;
 
     private TextView borrowerUsername;
     private TextView borrowerBook;
@@ -42,6 +43,7 @@ public class ViewTradeActivity extends ActionBarActivity {
     private TextView ownerBook;
 
     private TextView comments;
+    private TextView status;
 
     private Trade trade;
 
@@ -52,7 +54,7 @@ public class ViewTradeActivity extends ActionBarActivity {
         setContentView(R.layout.activity_view_trade);
         //Toast.makeText(getApplicationContext(), "Breakpoint", Toast.LENGTH_SHORT).show();
 
-        completeButton = (Button) findViewById(R.id.completeButton);
+        counter = (Button) findViewById(R.id.counter);
 
         borrowerUsername = (TextView) findViewById(R.id.borrowerUsername);
         borrowerBook = (TextView)  findViewById(R.id.borrowerBook);
@@ -62,7 +64,10 @@ public class ViewTradeActivity extends ActionBarActivity {
 
         comments = (TextView) findViewById(R.id.comments);
 
+        status = (TextView)findViewById(R.id.status);
+/*
         if (getIntent().getStringExtra("flag").equals("HistoryOfTrades")){
+        */
             pos = getIntent().getIntExtra("listPosition", 0);
 
             account = saveload.loadFromFile(ViewTradeActivity.this);
@@ -77,26 +82,40 @@ public class ViewTradeActivity extends ActionBarActivity {
             }
 
             //Display the trade information through the TextViews
-            borrowerUsername.setText(trade.getBorrower().getUsername());
-            borrowerBook.setText(trade.getBorrowerBook().toString());
+            borrowerUsername.setText("Borrower:  "+ trade.getBorrower().getUsername());
+            String bookTitles ="";
 
-            ownerUsername.setText(trade.getOwner().getUsername());
-            ownerBook.setText(trade.getOwnerBook().getTitle());
+            for(Book b: trade.getBorrowerBook()){
+                bookTitles= bookTitles + b.getTitle() +"\n";
+            }
+
+            borrowerBook.setText("Borrower Books:  " + bookTitles);
+
+            ownerUsername.setText("Owner:  "+ trade.getOwner().getUsername());
+            ownerBook.setText("Owner Book:  "+ trade.getOwnerBook().getTitle());
 
             comments.setText(trade.getOwnerComment());
 
-            completeButton.setOnClickListener(new View.OnClickListener() {
+            counter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    complete();
+                    Intent intent = new Intent(ViewTradeActivity.this, CounterTradeScreen.class);
+                    intent.putExtra("listPosition", pos);
+                    startActivity(intent);
                 }
             });
 
+            if(trade.getAccepted() ){
+                status.setText("Status: Accepted");
+            }else if(trade.getDeclined()){
+                status.setText("Status: Declined");
+            }
+/*
         } else {
             Toast.makeText(getApplicationContext(), "Else taken", Toast.LENGTH_SHORT).show();
 
         }
-
+*/
     }
 
     @Override

@@ -22,13 +22,14 @@ import java.util.ArrayList;
 public class SelectCounterBooksActivity extends ActionBarActivity {
 
     ListView counterList;
-    private Trade counterTrade = new Trade();
+    private Trade trade = new Trade();
     private ArrayAdapter<Book> adapter;
     private ArrayList<Book> bookList=new ArrayList<Book>();
 
     private Account account = new Account();
 
     SaveLoad saveLoad;
+    int pos;
 
 
     @Override
@@ -38,6 +39,15 @@ public class SelectCounterBooksActivity extends ActionBarActivity {
 
         saveLoad = new SaveLoad();
         account = saveLoad.loadFromFile(getApplicationContext());
+        pos = getIntent().getIntExtra("listPosition", 0);
+
+        try{
+            trade = account.getTradeHistory().getTradeByIndex(pos);
+        }catch(NegativeNumberException e){
+
+        }catch(TooLongException te){
+            Toast.makeText(getApplicationContext(), "Too long", Toast.LENGTH_SHORT).show();
+        }
 
         //setUp();
 
@@ -45,7 +55,7 @@ public class SelectCounterBooksActivity extends ActionBarActivity {
 
 
         //set listView to borrower's inventory
-        bookList= counterTrade.getBorrower().getInventory().getInventory();
+        bookList= trade.getBorrower().getInventory().getInventory();
         adapter = new BookListAdapter(this, R.layout.book_inventory_list,bookList);
         counterList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -55,12 +65,17 @@ public class SelectCounterBooksActivity extends ActionBarActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-                Book aBook = bookList.get(pos);
-                counterTrade.getBorrowerBook().add(aBook);
+                //Book aBook = bookList.get(pos);
+                //.getBorrowerBook().add(aBook);
 
                 Intent intent = new Intent(SelectCounterBooksActivity.this, CounterTradeScreen.class);
-                intent.putExtra("BookName",aBook.getTitle());
+
+                Book aBook = bookList.get(pos);
+                pos=trade.getBorrower().getInventory().getRealPosition(aBook.getUniquenum().getNumber());
+
+                intent.putExtra("BookPosition", pos);
                 startActivity(intent);
+                finish();
             }
         });
 
