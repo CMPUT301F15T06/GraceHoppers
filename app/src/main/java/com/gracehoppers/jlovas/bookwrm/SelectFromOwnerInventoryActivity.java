@@ -30,8 +30,10 @@ public class SelectFromOwnerInventoryActivity extends ActionBarActivity {
 
     private ListView inventoryList;
     private SaveLoad mySaveLoad;
-    private ArrayList<Book> myInventory;
+    private ArrayList<Book> myInventory; //need public books only.
     private ArrayAdapter<Book> adapter;
+    int pos;
+    Book selectedBook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,25 +44,34 @@ public class SelectFromOwnerInventoryActivity extends ActionBarActivity {
 
         mySaveLoad = new SaveLoad();
         me = mySaveLoad.loadFromFile(getApplicationContext());
-        myInventory = me.getInventory().getInventory();
+        myInventory = me.getInventory().getPublic(me.getInventory());
         adapter = new BookListAdapter(this,R.layout.book_inventory_list, myInventory);
         inventoryList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
         inventoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+/*
                 try {
                     Book book = me.getInventory().getBookByIndex(position);
                 } catch (NegativeNumberException e) {
                     e.printStackTrace();
                 } catch (TooLongException e) {
                     e.printStackTrace();
-                }
+                }*/
                 //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(SelectFromOwnerInventoryActivity.this, CreateTradeScreen.class);
-                intent.putExtra("bPosition", position);
+             //   if(getIntent().getStringExtra("flag").equals("search")){ //prevents the app from crashing from no flag extra
+             //       intent.putExtra("flag","search");
+             //   } else intent.putExtra("flag","friend");
+
+
+                selectedBook=myInventory.get(position);
+                pos=me.getInventory().getRealPosition(selectedBook.getUniquenum().getNumber());
+
+
+                intent.putExtra("bPosition", pos);
                 startActivity(intent);
                 finish();
             }

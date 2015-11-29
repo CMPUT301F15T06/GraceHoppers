@@ -1,7 +1,9 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 /**
- * Created by nlovas on 11/25/15.
+ * Holds the unique number for each book (each book has a unique number).
+ *
+ * @author Nicole Lovas
  */
 public class UniqueNumber {
 

@@ -168,3 +168,8 @@ http://stackoverflow.com/users/179850/gray
 Curl and ElasticSearch
 University of Alberta, https://eclass.srv.ualberta.ca/pluginfile.php/2350865/mod_resource/content/1/JSON-HTTP-contd.pdf, 2015-28-11
 
+Gradients for buttons:
+Dibbus.com, http://www.dibbus.com/2011/02/gradient-buttons-for-android/, Nov 28th, 2015
+
+Books (on Log in screen):
+Book vector designed by Freepik, http://www.freepik.com/free-vector/colorful-books-illustration_760069.htm#term=books&page=1&position=32, Nov 28th, 2015

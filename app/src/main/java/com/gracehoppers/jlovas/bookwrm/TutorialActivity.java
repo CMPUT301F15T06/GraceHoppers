@@ -5,6 +5,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+/**
+ * This activity displays buttons for the tutorial to be displayed.
+ *
+ * @author Jillian Lovas
+ */
 public class TutorialActivity extends ActionBarActivity {
 
     @Override

@@ -58,6 +58,7 @@ public class PhotoActivity extends ActionBarActivity {
     Button rightButton;
     Button redoButton;
     Button deleteButton;
+    TextView fivePhotoTitleText;
 
     BitmapScaler scaler;
 
@@ -81,10 +82,10 @@ public class PhotoActivity extends ActionBarActivity {
     @Override
     protected void onResume(){ //onResume
         super.onResume();
+
         if (getIntent().getStringExtra("flag").equals("edit")) {
             //arriving here from edit, load images if any
 
-            //myPhotos = saveLoad.loadPhotos(getApplicationContext()); //this is beign overwritten when calling onCreate
             Toast.makeText(getApplicationContext(),"myPhotos.hasImages ==" + myPhotos.getHasImages(), Toast.LENGTH_SHORT).show();
             if(myPhotos.getHasImages()){
                 //load the images
@@ -96,7 +97,7 @@ public class PhotoActivity extends ActionBarActivity {
                     redoButton.setVisibility(View.VISIBLE);
                     deleteButton.setVisibility(View.VISIBLE);
 
-                    if(myPhotos.getPhotos().size() >1) {
+                    if(myPhotos.getPhotos().size() > 1) {
                         rightButton.setEnabled(true);
                     }
 
@@ -105,6 +106,7 @@ public class PhotoActivity extends ActionBarActivity {
                     }
 
                     imageTotalText.setText("" + 1 + "/" + myPhotos.getPhotos().size());
+                    fivePhotoTitleText.setVisibility(View.INVISIBLE);
 
                 }catch(NegativeNumberException e){
                     Toast.makeText(getApplicationContext(), "Negative Index", Toast.LENGTH_SHORT).show();
@@ -113,7 +115,7 @@ public class PhotoActivity extends ActionBarActivity {
                 }
 
             }else {
-                Toast.makeText(getApplicationContext(), "HasImages = false!", Toast.LENGTH_SHORT).show();
+                fivePhotoTitleText.setVisibility(View.VISIBLE);
             }
             //this else is for addBookScreen's entrance to this page
         }
@@ -141,6 +143,7 @@ public class PhotoActivity extends ActionBarActivity {
         rightButton = (Button)findViewById(R.id.picturerightbutton);
         redoButton = (Button)findViewById(R.id.retakeButton);
         deleteButton = (Button)findViewById(R.id.xButton);
+        fivePhotoTitleText = (TextView)findViewById(R.id.fivePhotoTitleText);
 
         //redoButton should not be visible initially
         redoButton.setVisibility(View.GONE);
@@ -152,6 +155,7 @@ public class PhotoActivity extends ActionBarActivity {
 
                 if(myPhotos.getPhotos().size() >0){ //NEW
                     myPhotos.setHasImages(true); //NEW
+                    fivePhotoTitleText.setVisibility(View.INVISIBLE);
                 }else{
                     myPhotos.setHasImages(false);
                 }
@@ -196,6 +200,7 @@ public class PhotoActivity extends ActionBarActivity {
                         rightButton.setEnabled(false);
                         redoButton.setVisibility(View.INVISIBLE);
                         deleteButton.setVisibility(View.INVISIBLE);
+                        fivePhotoTitleText.setVisibility(View.VISIBLE);
 
                     }catch(NegativeNumberException e){
                         Toast.makeText(getApplicationContext(), "Index negative", Toast.LENGTH_SHORT).show();
@@ -605,6 +610,7 @@ public class PhotoActivity extends ActionBarActivity {
 
                 redoButton.setVisibility(View.VISIBLE);
                 deleteButton.setVisibility(View.VISIBLE);
+                fivePhotoTitleText.setVisibility(View.INVISIBLE);
                 count=0;
 
                 myPhotos.setHasImages(true); //NEW
@@ -684,34 +690,5 @@ public class PhotoActivity extends ActionBarActivity {
         return cursor.getString(column_index);
     }
 
-
-
-
-    ////////////use this?????
-    // Decodes image and scales it to reduce memory consumption
-    public Bitmap decodeMyFile(File f) {
-        try {
-            // Decode image size
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(new FileInputStream(f), null, o);
-
-            // The new size we want to scale to
-            final int REQUIRED_SIZE=70;
-
-            // Find the correct scale value. It should be the power of 2.
-            int scale = 1;
-            while(o.outWidth / scale / 2 >= REQUIRED_SIZE &&
-                    o.outHeight / scale / 2 >= REQUIRED_SIZE) {
-                scale *= 2;
-            }
-
-            // Decode with inSampleSize
-            BitmapFactory.Options o2 = new BitmapFactory.Options();
-            o2.inSampleSize = scale;
-            return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
-        } catch (FileNotFoundException e) {}
-        return null;
-    }
 }
 

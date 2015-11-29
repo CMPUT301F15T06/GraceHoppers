@@ -12,24 +12,25 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Bookwrm"
         android:id="@+id/bookwrmText"
-        android:layout_alignParentTop="true"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="72dp"
-        android:textSize="40sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="-5dp" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:id="@+id/usernameText"
-        android:layout_below="@+id/bookwrmText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp"
         android:singleLine="true"
         android:scrollHorizontally="true"
         android:maxLength="70"
         android:hint="username"
-        android:background="#ffffff" />
+        android:background="#ffffff"
+        android:textSize="18sp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal" />
 
     <Button
         android:layout_width="200dp"
@@ -37,7 +38,8 @@
         android:text="Log In"
         android:id="@+id/logInButton"
         android:onClick="mainClick"
-        android:layout_marginTop="87dp"
+        android:background="@drawable/red_gradient"
+        android:layout_marginTop="30dp"
         android:layout_below="@+id/usernameText"
         android:layout_centerHorizontal="true" />
 
@@ -47,6 +49,20 @@
         android:text="Sign Up"
         android:id="@+id/signUpButton"
         android:onClick="mainClick"
+        android:background="@drawable/yellow_gradient"
         android:layout_below="@+id/logInButton"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:id="@+id/imageView"
+        android:src="@drawable/booksexported"
+        android:maxHeight="160sp"
+        android:maxWidth="160sp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="5dp" />
 </RelativeLayout>

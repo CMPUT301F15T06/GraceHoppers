@@ -68,6 +68,7 @@ public class ViewBookActivity extends ActionBarActivity {
     int posFriend;
     private SaveLoad saveload = new SaveLoad();
     BitmapScaler scaler;
+    TextView disabledPhotoTitleText;
     int count=0;
 
     UniqueNumberGenerator ung;
@@ -117,6 +118,7 @@ public class ViewBookActivity extends ActionBarActivity {
         leftButton = (Button)findViewById(R.id.pictureleftbutton);
         rightButton = (Button)findViewById(R.id.picturerightbutton);
         imageTotalText = (TextView)findViewById(R.id.imagetotaltextview);
+        disabledPhotoTitleText = (TextView)findViewById(R.id.disabledPhotoTitleText);
         //----------------------------------------------------------------
 
         leftButton.setOnClickListener(new View.OnClickListener(){
@@ -301,14 +303,46 @@ public class ViewBookActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 //ask the user if they're sure they want to delete this book
-                if(deleteButton.getText().toString().equals("Delete")) {
+                if (deleteButton.getText().toString().equals("Delete")) {
                     openDialog();
-                }else{
+                } else {
                     CloneThread thread = new CloneThread();
                     thread.start();
 
 
                     Toast.makeText(getApplicationContext(), "Cloned book now added to user inventory", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(editButton.getText().equals("Edit")) {
+                    Intent intent = new Intent(ViewBookActivity.this, EditBookActivity.class);
+
+
+                    //pass the book info by intent
+                    intent.putExtra("bookTitle", tempBook.getTitle());
+                    intent.putExtra("bookAuthor", tempBook.getAuthor());
+                    intent.putExtra("bookQuantity", tempBook.getQuantity());
+                    intent.putExtra("bookQuality", tempBook.getQuality());
+                    intent.putExtra("bookCategory", tempBook.getCategoryNumber());
+                    intent.putExtra("bookPrivacy", tempBook.isPrivate());
+                    intent.putExtra("bookDesc", tempBook.getDescription());
+                    intent.putExtra("bookPosition", pos);
+                    //put photo stuff here...if it cant be passed by intent, pass the inventory index position and use gson instead of using the above!
+                    startActivity(intent);
+                }
+
+                else{//youre visiting from the search screen, so you will want to trade
+                    Intent intent = new Intent(ViewBookActivity.this, CreateTradeScreen.class);
+                    intent.putExtra("flag","search");
+                    pos=getIntent().getIntExtra("listPosition",0);
+                    intent.putExtra("aPosition",pos);
+                    startActivity(intent);
                 }
 
             }
@@ -322,6 +356,8 @@ public class ViewBookActivity extends ActionBarActivity {
         if (getIntent().getStringExtra("flag").equals("Homescreen")) {
             pos = getIntent().getIntExtra("listPosition", 0);
 
+            disabledPhotoTitleText.setVisibility(View.INVISIBLE);
+            bookImage.setLongClickable(false);
 
             account = saveload.loadFromFile(ViewBookActivity.this);
 
@@ -354,6 +390,7 @@ public class ViewBookActivity extends ActionBarActivity {
                     if(tempBook.getPhotos().getPhotos().size() >1)
                         rightButton.setEnabled(true);
                     imageTotalText.setText("" + 1 + "/" + tempBook.getPhotos().getPhotos().size() + "");
+                    disabledPhotoTitleText.setVisibility(View.INVISIBLE);
                     //come back to this later if you can and adjust how this image pops up
                 } catch (NegativeNumberException e) {
                     Toast.makeText(getApplicationContext(), "Negative index", Toast.LENGTH_SHORT).show();
@@ -366,27 +403,7 @@ public class ViewBookActivity extends ActionBarActivity {
 
 
 
-            editButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(ViewBookActivity.this, EditBookActivity.class);
 
-
-                    //pass the book info by intent
-                    intent.putExtra("bookTitle", tempBook.getTitle());
-                    intent.putExtra("bookAuthor", tempBook.getAuthor());
-                    intent.putExtra("bookQuantity", tempBook.getQuantity());
-                    intent.putExtra("bookQuality", tempBook.getQuality());
-                    intent.putExtra("bookCategory", tempBook.getCategoryNumber());
-                    intent.putExtra("bookPrivacy", tempBook.isPrivate());
-                    intent.putExtra("bookDesc", tempBook.getDescription());
-                    intent.putExtra("bookPosition", pos);
-                    //put photo stuff here...if it cant be passed by intent, pass the inventory index position and use gson instead of using the above!
-                    startActivity(intent);
-
-
-                }
-            });
 
         }  else if (getIntent().getStringExtra("flag").equals("Search")) {
         //********************************************************************************************************
@@ -395,74 +412,6 @@ public class ViewBookActivity extends ActionBarActivity {
 
             account = saveload.loadFromFile(ViewBookActivity.this);
             myFriend = saveload.loadFriendFromFile(getApplicationContext()); //loads the stored friend
-
-            try {
-                //find the book by a different position than the friend's position
-                tempBook = myFriend.getInventory().getBookByIndex(posBook); //used to be friendBook, but causes problems with navigatin pictures when thee is a tempBook and a friendBook
-            } catch (NegativeNumberException e) {
-                Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
-            } catch (TooLongException e) {
-                Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
-            }
-
-            bookTitle.setText(tempBook.getTitle());
-            bookAuthor.setText(tempBook.getAuthor());
-            category.setText(tempBook.getCategory());
-            quantity.setText(tempBook.getQuantity() + "");
-            description.setText(tempBook.getDescription());
-            rating.setRating((float) tempBook.getQuality());
-
-            //put photo stuff here
-            //attempting to look at photos
-            if(tempBook.getPhotos().getHasImages()) {
-                try {
-                    Bitmap changed = BitmapFactory.decodeStream(new ByteArrayInputStream(tempBook.getPhotos().getPhotoAtIndex(0)));
-                    Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
-                    bookImage.setImageBitmap(scaled);
-                    if(tempBook.getPhotos().getPhotos().size() >1)
-                        rightButton.setEnabled(true);
-                    imageTotalText.setText("" + 1 + "/" + tempBook.getPhotos().getPhotos().size() + "");
-                    //come back to this later if you can and adjust how this image pops up
-                } catch (NegativeNumberException e) {
-                    Toast.makeText(getApplicationContext(), "Negative index", Toast.LENGTH_SHORT).show();
-                } catch (TooLongException e) {
-                    Toast.makeText(getApplicationContext(), "Index is too long", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            if (tempBook.isPrivate()) {
-                privacy.setText("Private Book");
-            } else privacy.setText("Public Book");
-
-        //repurpose the edit and delete button into the clone and trade buttons
-            deleteButton.setText("Clone");
-            editButton.setText("Trade");
-
-
-
-
-
-
-
-        }
-
-        else { //***********************************************************************************
-            //the item is a friend's - do not want to offer edit and delete
-
-            posBook = getIntent().getIntExtra("listPosition", 0);
-            //posFriend = getIntent().getIntExtra("position2",0);
-
-            account = saveload.loadFromFile(ViewBookActivity.this);
-            myFriend = saveload.loadFriendFromFile(getApplicationContext()); //loads the stored friend
-/*
-            try {
-                //find the friend by a certain position
-                myFriend = account.getFriends().getFriendByIndex(posFriend); //***BUG if you pick the second item in the list!
-            } catch (NegativeNumberException e) {
-                Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
-            } catch (TooLongException e) {
-                Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
-            }*/
 
             try {
                 //find the book by a different position than the friend's position
@@ -492,13 +441,14 @@ public class ViewBookActivity extends ActionBarActivity {
                         if (tempBook.getPhotos().getPhotos().size() > 1)
                             rightButton.setEnabled(true);
                         imageTotalText.setText("" + 1 + "/" + tempBook.getPhotos().getPhotos().size() + "");
+
                         //come back to this later if you can and adjust how this image pops up
                     } catch (NegativeNumberException e) {
                         Toast.makeText(getApplicationContext(), "Negative index", Toast.LENGTH_SHORT).show();
                     } catch (TooLongException e) {
                         Toast.makeText(getApplicationContext(), "Index is too long", Toast.LENGTH_SHORT).show();
                     }
-                }
+                }disabledPhotoTitleText.setVisibility(View.INVISIBLE);
 
             }//end of global variable
             else{
@@ -511,8 +461,88 @@ public class ViewBookActivity extends ActionBarActivity {
                 privacy.setText("Private Book");
             } else privacy.setText("Public Book");
 
+        //repurpose the edit and delete button into the clone and trade buttons
+            deleteButton.setText("Clone");
+            editButton.setText("Trade");
 
 
+
+
+
+
+
+        }
+
+        else { //***********************************************************************************
+            //the item is a friend's - do not want to offer edit and delete
+
+            posBook = getIntent().getIntExtra("uninum", 0);
+            Toast.makeText(getApplicationContext(), "pos: "+posBook, Toast.LENGTH_SHORT).show();
+
+            if(pD.getEnabled()){
+                bookImage.setLongClickable(false);
+            }
+
+            account = saveload.loadFromFile(ViewBookActivity.this);
+            myFriend = saveload.loadFriendFromFile(getApplicationContext()); //loads the stored friend
+/*
+            try {
+                //find the friend by a certain position
+                myFriend = account.getFriends().getFriendByIndex(posFriend); //***BUG if you pick the second item in the list!
+            } catch (NegativeNumberException e) {
+                Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
+            } catch (TooLongException e) {
+                Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
+            }*/
+
+            //try {
+                //find the book by a different position than the friend's position
+               // tempBook = myFriend.getInventory().getBookByIndex(posBook); //used to be friendBook, but causes problems with navigatin pictures when thee is a tempBook and a friendBook
+                tempBook = myFriend.getInventory().getBookByUniqueNumber(posBook);
+           // } catch (NegativeNumberException e) {
+            //    Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
+            //} catch (TooLongException e) {
+             //   Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
+           // }
+
+            bookTitle.setText(tempBook.getTitle());
+            bookAuthor.setText(tempBook.getAuthor());
+            category.setText(tempBook.getCategory());
+            quantity.setText(tempBook.getQuantity() + "");
+            description.setText(tempBook.getDescription());
+            rating.setRating((float) tempBook.getQuality());
+
+
+            //photo part - check with global on whether or not to show it and adjust as appropriate
+            if(pD.getEnabled()){ //make sure you don't show disabled
+                if (tempBook.getPhotos().getHasImages()) {
+                    try {
+                        bookImage.setEnabled(false);
+                        Bitmap changed = BitmapFactory.decodeStream(new ByteArrayInputStream(tempBook.getPhotos().getPhotoAtIndex(0)));
+                        Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
+                        bookImage.setImageBitmap(scaled);
+                        if (tempBook.getPhotos().getPhotos().size() > 1)
+                            rightButton.setEnabled(true);
+                        imageTotalText.setText("" + 1 + "/" + tempBook.getPhotos().getPhotos().size() + "");
+
+                        //come back to this later if you can and adjust how this image pops up
+                    } catch (NegativeNumberException e) {
+                        Toast.makeText(getApplicationContext(), "Negative index", Toast.LENGTH_SHORT).show();
+                    } catch (TooLongException e) {
+                        Toast.makeText(getApplicationContext(), "Index is too long", Toast.LENGTH_SHORT).show();
+                    }
+                }disabledPhotoTitleText.setVisibility(View.INVISIBLE);
+
+            }//end of global variable
+            else{
+                Toast.makeText(getApplicationContext(), "Disabled photos", Toast.LENGTH_SHORT).show();
+                bookImage.setEnabled(true);
+            }
+
+
+            if (tempBook.isPrivate()) {
+                privacy.setText("Private Book");
+            } else privacy.setText("Public Book");
 
             //repurpose delete button
             //ViewGroup parentView = (ViewGroup) deleteButton.getParent();
@@ -522,36 +552,6 @@ public class ViewBookActivity extends ActionBarActivity {
 
             ViewGroup parentView2 = (ViewGroup) editButton.getParent();
             parentView2.removeView(editButton);
-
-
-
-            /*
-            Button tradeButton = editButton;
-
-            tradeButton.setText("Trade");
-
-            tradeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(ViewBookActivity.this, CreateTradeScreen.class);
-
-                    /*
-                    //pass the book info by intent
-                    intent.putExtra("bookTitle", tempBook.getTitle());
-                    intent.putExtra("bookAuthor", tempBook.getAuthor());
-                    intent.putExtra("bookQuantity", tempBook.getQuantity());
-                    intent.putExtra("bookQuality", tempBook.getQuality());
-                    intent.putExtra("bookCategory", tempBook.getCategoryNumber());
-                    intent.putExtra("bookPrivacy", tempBook.isPrivate());
-                    intent.putExtra("bookDesc", tempBook.getDescription());
-                    intent.putExtra("bookPosition", pos);
-                    //put photo stuff here...if it cant be passed by intent, pass the inventory index position and use gson instead of using the above!
-
-                    startActivity(intent);
-
-                }
-            });
-    */
         }
     }
 
@@ -700,6 +700,7 @@ public class ViewBookActivity extends ActionBarActivity {
                                         if (tempBook.getPhotos().getPhotos().size() > 1)
                                             rightButton.setEnabled(true);
                                         imageTotalText.setText("" + 1 + "/" + tempBook.getPhotos().getPhotos().size() + "");
+                                        disabledPhotoTitleText.setVisibility(View.INVISIBLE);
                                         //come back to this later if you can and adjust how this image pops up
                                     } catch (NegativeNumberException e) {
                                         Toast.makeText(getApplicationContext(), "Negative index", Toast.LENGTH_SHORT).show();

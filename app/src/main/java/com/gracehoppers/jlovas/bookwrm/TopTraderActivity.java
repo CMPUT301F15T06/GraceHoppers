@@ -11,6 +11,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * An activity for displaying the top traders using the app.
+ *
+ *
+ * @author Hong Chen
+ */
 public class TopTraderActivity extends Activity {
 
     private AccountManager accountManager=new AccountManager();
