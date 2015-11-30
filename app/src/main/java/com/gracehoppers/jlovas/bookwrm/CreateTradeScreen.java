@@ -52,6 +52,8 @@ public class CreateTradeScreen extends Activity {
     private int pos;
     private int pos2;
     ConnectionCheck connection;
+    Boolean submission = false;
+    Boolean cancellation = false;
 
     @Override
     protected void onStart(){
@@ -224,6 +226,7 @@ public class CreateTradeScreen extends Activity {
             submitTrade.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    submission = true;
                     //Add trade to TradeHistory, and then clear the newTrade variable
                     //Once submit is clicked, it'll start a trade request
                     if (!newTrade.getOwnerBook().getTitle().equals("Untitled")) {
@@ -269,6 +272,7 @@ public class CreateTradeScreen extends Activity {
             cancelTrade.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    cancellation = true;
                     newTrade = new Trade();
                     finish();
                 }

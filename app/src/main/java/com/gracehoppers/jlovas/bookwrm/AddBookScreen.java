@@ -245,7 +245,7 @@ public class AddBookScreen extends ActionBarActivity {
                         myBook.getPhotos().setHasImages(true);
                     }
 
-                    Toast.makeText(getApplicationContext(), "hasImages= " + myBook.getPhotos().getHasImages(), Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getApplicationContext(), "hasImages= " + myBook.getPhotos().getHasImages(), Toast.LENGTH_LONG).show();
 
                     me.getInventory().addBook(myBook);
                     books.add(myBook); //For UI testing
@@ -333,7 +333,7 @@ public class AddBookScreen extends ActionBarActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
 
-        //Log.i("Tag", "RequestCode: " + Integer.toString(requestCode) + "ResultCode" + Integer.toString(resultCode));
+        Log.i("Tag", "RequestCode: " + Integer.toString(requestCode) + "ResultCode" + Integer.toString(resultCode));
 
         if(requestCode == 0) {
             if (resultCode == AddCommentsScreen.RESULT_OK) {
