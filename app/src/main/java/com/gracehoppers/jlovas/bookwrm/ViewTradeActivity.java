@@ -126,6 +126,8 @@ public class ViewTradeActivity extends ActionBarActivity {
             ownerUsername.setText("Owner:  "+ trade.getOwner().getUsername());
             ownerBook.setText("Owner Book:  "+ trade.getOwnerBook().getTitle());
 
+            Toast.makeText(getApplicationContext(),trade.getOwnerComment(), Toast.LENGTH_SHORT).show();
+
             comments.setText(trade.getOwnerComment());
 
             counter.setOnClickListener(new View.OnClickListener() {

@@ -56,18 +56,10 @@
             android:id="@+id/decline"
             android:layout_toRightOf="@+id/accept"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="150dp"
             />
 
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="Back"
-            android:id="@+id/processBack"
-            android:layout_toRightOf="@+id/decline"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            />
+
 
     </RelativeLayout>
 
