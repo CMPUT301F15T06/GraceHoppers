@@ -645,14 +645,14 @@ public class PhotoActivity extends ActionBarActivity {
 
                 Bitmap changed = BitmapFactory.decodeStream(new ByteArrayInputStream(bytes.toByteArray()));
 
-                Toast.makeText(getApplicationContext(), "Bytes before is: " + imageBitmap.getByteCount() +
-                        " Bytes of the image after is: " + changed.getByteCount(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Bytes before is: " + imageBitmap.getByteCount() +
+                //        " Bytes of the image after is: " + changed.getByteCount(), Toast.LENGTH_SHORT).show();
 
                 Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
 
                 //put into the Photos object
                 //myPhotos.addPhoto(changed); //scaled
-                Toast.makeText(getApplicationContext(), "Photos taken2: " + myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Photos taken2: " + myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
                 photoToEdit.setImageBitmap(scaled);
 
 
@@ -662,7 +662,7 @@ public class PhotoActivity extends ActionBarActivity {
 
                 redoButton.setVisibility(View.VISIBLE);
                 deleteButton.setVisibility(View.VISIBLE);
-                Toast.makeText(getApplicationContext(), "Redo a picture result found!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Redo a picture result found!", Toast.LENGTH_SHORT).show();
 
             } catch (Exception e) {
                 //should never happen after UI stuff has been made properly
