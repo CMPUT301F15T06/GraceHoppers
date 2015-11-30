@@ -4,10 +4,12 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/gradient"
     tools:context="com.gracehoppers.jlovas.bookwrm.SelectFromBorrowerInventoryActivity">
 
     <ListView
         android:layout_width="wrap_content"
+        android:background="#FFFFFF"
         android:layout_height="wrap_content"
         android:id="@+id/borrower_Inventory_id"
         android:layout_alignParentStart="true"
@@ -20,5 +22,6 @@
         android:text="Select from your friend&apos;s Inventory:"
         android:id="@+id/textView3"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textStyle="bold" />
 </RelativeLayout>
