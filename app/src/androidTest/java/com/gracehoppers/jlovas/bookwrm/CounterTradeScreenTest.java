@@ -58,6 +58,7 @@ public class CounterTradeScreenTest extends ActivityInstrumentationTestCase2{
         trade = owner.getTradeHistory().getTradeByIndex(position);
 
         assertEquals(trade.getOwnerBook().getTitle(), ownerText.getText().toString());
+
         assertEquals(activity.counterTrade.getOwnerBook().getTitle(), trade.getOwnerBook().getTitle());
 
     }

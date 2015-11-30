@@ -24,7 +24,6 @@ public class ProcessTradeScreenTest extends ActivityInstrumentationTestCase2 {
     public ArrayList<Book> bBooks = new ArrayList<Book>();
     public Trade trade = new Trade();
     public Trade trade1 = new Trade();
-    public Trade trade2 = new Trade();
     public TradeHistory tradeHistory = new TradeHistory();
     SaveLoad saveLoad = new SaveLoad();
     int pos= 0;
@@ -60,7 +59,6 @@ public class ProcessTradeScreenTest extends ActivityInstrumentationTestCase2 {
     }
 
 
-
     //test "trade is accepted in server"
     public void testAcceptWithServer() throws Exception {
         ProcessTradeScreen activity = (ProcessTradeScreen) getActivity();
@@ -81,6 +79,7 @@ public class ProcessTradeScreenTest extends ActivityInstrumentationTestCase2 {
 
         assertFalse(activity.trade.getAccepted());
 
+
         //Set up ActivityMonitor
         Instrumentation.ActivityMonitor receiverActivityMonitor = getInstrumentation().addMonitor(CounterTradeScreen.class.getName(), null, false);
 
@@ -96,6 +95,8 @@ public class ProcessTradeScreenTest extends ActivityInstrumentationTestCase2 {
         assertTrue(activity.trade.getAccepted());
 
         getInstrumentation().removeMonitor(receiverActivityMonitor);
+
+        //trmanager.deleteTR(tradeRequest);
 
     }
 
@@ -142,7 +143,7 @@ public class ProcessTradeScreenTest extends ActivityInstrumentationTestCase2 {
         ProcessTradeScreen activity = (ProcessTradeScreen) getActivity();
         final Button decline = activity.decline;
 
-        trade2 = new Trade();
+        Trade trade2 = new Trade();
 
         trade2.setDeclined(false);
         activity.trade = trade2;
