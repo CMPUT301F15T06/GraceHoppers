@@ -5,10 +5,42 @@ import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 
+import java.util.ArrayList;
+
 /**
  * Created by chen1 on 11/5/15.
  */
 public class CreateTradeScreenTest extends ActivityInstrumentationTestCase2 {
+
+    public Account owner = new Account();
+    public Account borrower = new Account();
+    public Book book1 = new Book();
+    public Book book2 = new Book();
+    public ArrayList<Book> bBooks = new ArrayList<Book>();
+    public Trade trade = new Trade();
+    SaveLoad saveLoad = new SaveLoad();
+    int pos= 0;
+    private TradeRequests traderequests =new TradeRequests();
+    private TradeRequestManager trmanager = new TradeRequestManager();
+    private TradeRequest tradeRequest = new TradeRequest();
+
+    protected void setUp() throws Exception {
+        super.setUp();
+
+        setActivityInitialTouchMode(true);
+
+        try {
+            borrower.setUsername("borrower");
+            owner.setUsername("owner");
+        } catch (TooLongException te) {
+        } catch (NoSpacesException ne) {
+        }
+        book1.setTitle("BookA");
+        book2.setTitle("BookB");
+        bBooks.add(book2);
+        trade.setBorrowerBook(bBooks);
+        trade.setOwnerBook(book1);
+    }
 
     public CreateTradeScreenTest(){
         super(CreateTradeScreen.class);
@@ -87,6 +119,65 @@ public class CreateTradeScreenTest extends ActivityInstrumentationTestCase2 {
         receiverActivity.finish();
     }
 
+    public void testSubmit(){
+        CreateTradeScreen activity = (CreateTradeScreen) getActivity();
 
+        final Button submit = activity.submitTrade;
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                submit.performClick();
+            }
+        });
+
+        getInstrumentation().waitForIdleSync();
+
+        //check the submission is successfully performed
+        assertTrue(activity.submission);
+
+    }
+
+
+    public void testCancel(){
+        CreateTradeScreen activity = (CreateTradeScreen) getActivity();
+
+        final Button cancel = activity.cancelTrade;
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                cancel.performClick();
+            }
+        });
+
+        getInstrumentation().waitForIdleSync();
+
+        //check the cancellation is successfully performed
+        assertTrue(activity.cancellation);
+
+    }
+/*
+    public void testSubmitFailWhenNoOwnerBook() throws Exception {
+        CreateTradeScreen activity = (CreateTradeScreen) getActivity();
+        final Button submit = activity.submitTrade;
+        setUp();
+
+        owner = saveLoad.loadFromFile(activity.getApplicationContext());
+
+        traderequests = trmanager.findTradeRequests(owner.getUsername());
+
+        trade = tradeRequest.getTrade();
+
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                submit.performClick();
+
+            }
+        });
+
+        getInstrumentation().waitForIdleSync();
+        assertNull(trade);
+
+    }
+*/
 
 }
