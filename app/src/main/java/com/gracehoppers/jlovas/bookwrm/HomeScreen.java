@@ -74,7 +74,8 @@ public class HomeScreen extends Activity {
     public Button getProfileButton(){return profile;}
     public Button getFriendButton(){return friend;}
     //-------------------------------------------------------
-
+    public Account getAccount(){ return account;}
+    //-------------------------------------------------------
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

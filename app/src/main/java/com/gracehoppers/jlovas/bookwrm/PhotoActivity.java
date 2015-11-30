@@ -86,7 +86,7 @@ public class PhotoActivity extends ActionBarActivity {
         if (getIntent().getStringExtra("flag").equals("edit")) {
             //arriving here from edit, load images if any
 
-            Toast.makeText(getApplicationContext(),"myPhotos.hasImages ==" + myPhotos.getHasImages(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(),"myPhotos.hasImages ==" + myPhotos.getHasImages(), Toast.LENGTH_SHORT).show();
             if(myPhotos.getHasImages()){
                 //load the images
                 try {
@@ -587,7 +587,7 @@ public class PhotoActivity extends ActionBarActivity {
 
                 //put into the Photos object
                 //myPhotos.addPhoto(changed); //scaled
-                Toast.makeText(getApplicationContext(), "Photos taken1: " + myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Photos taken1: " + myPhotos.getPhotos().size(), Toast.LENGTH_SHORT).show();
                 photoToEdit.setImageBitmap(scaled);
 
                 imageTotalText.setText("" + 1 +"/" +myPhotos.getPhotos().size() +"");
