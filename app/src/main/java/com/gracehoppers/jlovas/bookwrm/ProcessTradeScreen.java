@@ -139,17 +139,12 @@ public class ProcessTradeScreen extends Activity {
                 dialog.setNegativeButton("Submit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //send_email();
-<<<<<<< HEAD
-                        //email();
+                        
                         comments = input.getText().toString();
-
+                        
                         Toast toast = Toast.makeText(ProcessTradeScreen.this, comments, Toast.LENGTH_LONG);
-=======
-                        email();
-                        Toast toast = Toast.makeText(ProcessTradeScreen.this, "successfully send email", Toast.LENGTH_LONG);
->>>>>>> 869207a7a41e713a115bc0f9174f86f141ab5d58
                         toast.show();
+                    
                     }
                 });
 
@@ -157,13 +152,8 @@ public class ProcessTradeScreen extends Activity {
                 dialog.create();
                 dialog.show();
 
-<<<<<<< HEAD
+
                 Thread thread = new AcceptThread(account.getUsername(),comments,true);
-=======
-
-
-                Thread thread = new AcceptThread(account.getUsername());
->>>>>>> 869207a7a41e713a115bc0f9174f86f141ab5d58
                 thread.start();
 
 
@@ -284,15 +274,6 @@ public class ProcessTradeScreen extends Activity {
                 trade.setDeclined(Boolean.TRUE);
             }
 
-<<<<<<< HEAD
-=======
-            tradeRequest = traderequests.get(position);
-            trade = tradeRequest.getTrade();
-            trade.setAccepted(Boolean.TRUE);
-            trade.setStatus(TradeStatus.ACCEPTED);
-
-            //
->>>>>>> 869207a7a41e713a115bc0f9174f86f141ab5d58
             account1 = accountManager.getAccount(trade.getOwner().getUsername());
             account2 = accountManager.getAccount(trade.getBorrower().getUsername());
             //tradeRequest.acceptTradeRequest(trade.getBorrower(), trade.getOwner(), trade);
