@@ -20,15 +20,17 @@ public class TopTraderTrackManager {
         for (int i = 0; i < allAccounts.size(); i++){
             score = 0;
             account = allAccounts.get(i);
-            for (int i2 = 0; i2 < account.getTradeHistory().getSize(); i2 ++){
+
+            int i2 = 0;
+            while (i2 < account.getTradeHistory().getSize()){
                 if (account.getTradeHistory() != null){
                     try {
-                        if (account.getTradeHistory().getTradeHistory().get(i2).getStatus().toString() == "ACCEPTED" || account.getTradeHistory().getTradeHistory().get(i2).getCompletion().toString() == "CURRENT" || account.getTradeHistory().getTradeHistory().get(i2).getCompletion().toString() == "COMPLETE") {
+                        if (!(account.getTradeHistory().getTradeHistory().get(i2).getDeclined())) {
                             score++;
                         }
                     }catch (RuntimeException e){}
-
                 }
+            i2 ++;
             }
 
             setTrader(account.getUsername(),score);
