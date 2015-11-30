@@ -31,8 +31,10 @@ public class UseCase10 extends ActivityInstrumentationTestCase2 {
         ViewBookActivity activity = (ViewBookActivity)getActivity();
 
         //first need a book and account
-        //SaveLoad saveLoad = new SaveLoad();
-        //Account accountA = saveLoad.loadFromFile(context); //test and see who you end up on if you get to this
+        SaveLoad saveLoad = new SaveLoad();
+        Account accountA = saveLoad.loadFromFile(context); //requires the server and data in order to run
+
+        //server has gone down, can no longer work on project :c
 
         //1. The user clicks the button on a friend's item
         //2. If yes, the system creates a new item in the user's inventory that is the same as the friend's item.
