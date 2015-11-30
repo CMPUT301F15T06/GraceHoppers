@@ -25,6 +25,7 @@ public class MainActivity extends ActionBarActivity {
     EditText usernameText;
     SaveLoad saveLoad;
     Account result;
+
     //ConnectionCheck connection;
 
     //for UI testing:-------------------------------------------
@@ -139,4 +140,6 @@ public class MainActivity extends ActionBarActivity {
         //}
 
     }
+
+
 }

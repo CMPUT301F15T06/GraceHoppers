@@ -22,7 +22,7 @@ public class TopTraderTrackManager {
             account = allAccounts.get(i);
             for (int i2 = 0; i2 < account.getTradeHistory().getSize(); i2 ++){
                 if (account.getTradeHistory() != null){
-                    if(account.getTradeHistory().getTradeHistory().get(i2).getStatus().toString() == "ACCEPTED"){
+                    if(account.getTradeHistory().getTradeHistory().get(i2).getStatus().toString() == "ACCEPTED" || account.getTradeHistory().getTradeHistory().get(i2).getCompletion().toString() == "CURRENT" ||account.getTradeHistory().getTradeHistory().get(i2).getCompletion().toString() == "COMPLETE"){
                         score ++;
                     }
 

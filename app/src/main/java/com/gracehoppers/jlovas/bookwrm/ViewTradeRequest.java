@@ -1,5 +1,6 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -27,7 +28,7 @@ import java.io.IOException;
  */
 
 
-public class ViewTradeRequest extends ActionBarActivity {
+public class ViewTradeRequest extends Activity {
 
     private ArrayAdapter<TradeRequest> adapter;
     private ListView TRlist;

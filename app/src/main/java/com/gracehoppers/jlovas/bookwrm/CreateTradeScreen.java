@@ -62,14 +62,36 @@ public class CreateTradeScreen extends Activity {
 
         //Toast.makeText(getApplicationContext(), "My inventory has " + me.getInventory().getSize() + " items in it!", Toast.LENGTH_SHORT).show();
 
+        newTrade.setOwner(friend);
+        newTrade.setBorrower(me);
+
         pos = getIntent().getIntExtra("aPosition", (int) Double.POSITIVE_INFINITY);
         pos2 = getIntent().getIntExtra("bPosition", (int) Double.POSITIVE_INFINITY);
         //Toast.makeText(getApplicationContext(), "aposition: "+pos+"friend: "+friend.getUsername(), Toast.LENGTH_SHORT).show();
 
         try {
-            newTrade.getBorrowerBook().add(friend.getInventory().getBookByIndex(pos));
-            newTrade.setOwner(friend);
-            newTrade.setBorrower(me);
+            Book thisBook = friend.getInventory().getBookByIndex(pos);
+
+            boolean exist = false;
+
+            int i = 0;
+            String all = "";
+            while(i < newTrade.getBorrowerBook().size()){
+                if (thisBook.getTitle().toString().equals(newTrade.getBorrowerBook().get(i).getTitle())){
+                    exist = true;
+                }
+                i++;
+            }
+
+            if (exist) {
+                Toast.makeText(CreateTradeScreen.this,"Already added this book",Toast.LENGTH_SHORT).show();
+            }
+
+            if (!exist) {
+                newTrade.getBorrowerBook().add(thisBook);
+            }
+
+
         } catch (NegativeNumberException e) {
             e.printStackTrace();
         } catch (TooLongException e) {
@@ -77,13 +99,12 @@ public class CreateTradeScreen extends Activity {
         }
 
         try {
-            newTrade.setOwnerBook(me.getInventory().getBookByIndex(pos2));
+                newTrade.setOwnerBook(me.getInventory().getBookByIndex(pos2));
         } catch (NegativeNumberException e) {
             e.printStackTrace();
         } catch (TooLongException e) {
             e.printStackTrace();
         }
-
 
         selectedBorrowerBooks = newTrade.getBorrowerBook();
         borrowerInventoryListView = (ListView)findViewById(R.id.borrowerInventory);
@@ -120,7 +141,6 @@ public class CreateTradeScreen extends Activity {
 
 
 
-
             newTrade.setCompletion(TradeCompletion.CURRENT);
             selectedBorrowerBooks = newTrade.getBorrowerBook();
             borrowerInventoryListView = (ListView) findViewById(R.id.borrowerInventory);
@@ -148,7 +168,7 @@ public class CreateTradeScreen extends Activity {
 
                     //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
                     AlertDialog.Builder builder = new AlertDialog.Builder(CreateTradeScreen.this);
-                    builder.setTitle("Title");
+                    builder.setTitle("");
                     builder.setItems(new CharSequence[]
                                     {"Delete", "Cancel"},
                             new DialogInterface.OnClickListener() {

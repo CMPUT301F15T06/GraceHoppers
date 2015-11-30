@@ -1,7 +1,6 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,7 +8,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * An activity for displaying the top traders using the app.
@@ -25,6 +23,9 @@ public class TopTraderActivity extends Activity {
     private ArrayList allTraders = new ArrayList();
     private TextView topTraders;
     private String result = "Top Traders:\n";
+    private UsernameManager usernameManager;
+    private ArrayList<String> userNames;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,10 @@ public class TopTraderActivity extends Activity {
         SearchThread thread=new SearchThread();
         thread.start();
         topTraders = (TextView) findViewById(R.id.topTraders);
+        FThread fThread= new FThread();
+        fThread.start();
+
+
 
     }
 
@@ -93,6 +98,21 @@ public class TopTraderActivity extends Activity {
                 }
 
             }catch(RuntimeException e) {e.printStackTrace();}
+        }
+
+    }
+
+    class FThread extends Thread {
+
+        public FThread() {
+        }
+
+        @Override
+        public void run() {
+            usernameManager=new UsernameManager();
+            UserNameHolder userNameHolder= new UserNameHolder();
+            userNameHolder.addUser("aa");
+            usernameManager.updateUserNames(userNameHolder);
         }
 
     }

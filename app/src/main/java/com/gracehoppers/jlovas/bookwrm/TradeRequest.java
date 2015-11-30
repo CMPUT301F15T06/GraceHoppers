@@ -19,6 +19,9 @@ public class TradeRequest {
     private Trade trade;
     private boolean isAnswered;
 
+    public TradeHistory tradeHistory;
+
+
 
     public Trade getTrade() {
         return trade;
@@ -44,9 +47,22 @@ public class TradeRequest {
     }
 
     public void acceptTradeRequest(Account yourAccount, Account friendAccount, Trade newTrade) {
+        AccountManager manager = new AccountManager();
 
+        tradeHistory= yourAccount.getTradeHistory();
+        tradeHistory.addTrade(newTrade);
+        yourAccount.setTradeHistory(tradeHistory);
+        manager.updateAccount(yourAccount);
+
+
+        tradeHistory=friendAccount.getTradeHistory();
+        tradeHistory.addTrade(newTrade);
+        friendAccount.setTradeHistory(tradeHistory);
+        manager.updateAccount(friendAccount);
+
+        /*
         yourAccount.getTradeHistory().addTrade(newTrade);
-        friendAccount.getTradeHistory().addTrade(newTrade);
+        friendAccount.getTradeHistory().addTrade(newTrade);*/
         isAnswered = true;
     }
 
