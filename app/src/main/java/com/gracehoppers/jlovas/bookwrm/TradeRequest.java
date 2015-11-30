@@ -20,7 +20,7 @@ public class TradeRequest {
     private boolean isAnswered;
 
     public TradeHistory tradeHistory;
-
+    private boolean needUpdate;
 
 
     public Trade getTrade() {
@@ -28,6 +28,7 @@ public class TradeRequest {
     }
 
     public TradeRequest(){
+        needUpdate=false;
     }
     /**
      * creates a friend request between two users
@@ -47,13 +48,19 @@ public class TradeRequest {
     }
 
     public void acceptTradeRequest(Account yourAccount, Account friendAccount, Trade newTrade) {
+        AccountManager manager = new AccountManager();
+
         tradeHistory= yourAccount.getTradeHistory();
         tradeHistory.addTrade(newTrade);
         yourAccount.setTradeHistory(tradeHistory);
+        manager.updateAccount(yourAccount);
+
 
         tradeHistory=friendAccount.getTradeHistory();
         tradeHistory.addTrade(newTrade);
         friendAccount.setTradeHistory(tradeHistory);
+        manager.updateAccount(friendAccount);
+
         /*
         yourAccount.getTradeHistory().addTrade(newTrade);
         friendAccount.getTradeHistory().addTrade(newTrade);*/
@@ -87,6 +94,14 @@ public class TradeRequest {
              bookstr = bookstr + toString().valueOf(book.getUniquenum().getNumber()) ;
          }
         return bookstr;
+    }
+
+    public void setNeedUpdate(boolean update) {
+        needUpdate=update;
+    }
+
+    public boolean getNeedUpdate(){
+        return needUpdate;
     }
 
 }

@@ -54,12 +54,17 @@ public class SignUpActivity extends ActionBarActivity {
     private Runnable doFinishAdd=new Runnable() {
         @Override
         public void run() {
+            usernameupdateThread uuThread= new usernameupdateThread();
+            uuThread.start();
+
             Toast.makeText(getApplicationContext(), "Account created",
                     Toast.LENGTH_SHORT).show();
 
             finish();
         }
     };
+    private UsernameManager usernameManager;
+    private UserNameHolder userNameHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +75,9 @@ public class SignUpActivity extends ActionBarActivity {
         email = (EditText)findViewById(R.id.emaileditText);
         city = (EditText)findViewById(R.id.CityeditText);
         signupButton = (Button)findViewById(R.id.SignUpbutton);
+
+        usernameThread uThread= new usernameThread();
+        uThread.start();
 
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,6 +196,7 @@ public class SignUpActivity extends ActionBarActivity {
             runOnUiThread(doFinishAdd);
             Intent sIntent = new Intent(SignUpActivity.this, HomeScreen.class); //sends user to profile
             sIntent.putExtra("username", account.getUsername());
+            userNameHolder.addUser(account.getUsername());
             startActivity(sIntent);
         }
     }
@@ -223,6 +232,34 @@ public class SignUpActivity extends ActionBarActivity {
                 }
 
             }catch(RuntimeException e) {e.printStackTrace();}
+        }
+
+    }
+
+
+    class usernameThread extends Thread {
+
+        public usernameThread() {
+        }
+
+        @Override
+        public void run() {
+            usernameManager=new UsernameManager();
+            userNameHolder = usernameManager.getUserNameHolder();
+        }
+
+    }
+
+
+    class usernameupdateThread extends Thread {
+
+        public usernameupdateThread() {
+        }
+
+        @Override
+        public void run() {
+            usernameManager=new UsernameManager();
+            usernameManager.updateUserNames(userNameHolder);
         }
 
     }

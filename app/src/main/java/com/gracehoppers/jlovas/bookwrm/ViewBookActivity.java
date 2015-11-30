@@ -292,7 +292,7 @@ public class ViewBookActivity extends ActionBarActivity {
                     Toast.makeText(getApplicationContext(), "Fetching photos", Toast.LENGTH_SHORT).show();
                     return true;
                 } else {
-                    Toast.makeText(getApplicationContext(), "No images for this image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "No photos for this image", Toast.LENGTH_SHORT).show();
                     return true;
                 }
 
@@ -477,7 +477,7 @@ public class ViewBookActivity extends ActionBarActivity {
             //the item is a friend's - do not want to offer edit and delete
 
             posBook = getIntent().getIntExtra("uninum", 0);
-            Toast.makeText(getApplicationContext(), "pos: "+posBook, Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getApplicationContext(), "pos: "+posBook, Toast.LENGTH_SHORT).show();
 
             if(pD.getEnabled()){
                 bookImage.setLongClickable(false);

@@ -39,6 +39,7 @@ public class FriendsScreen extends ActionBarActivity {
     private AccountManager accountmanager;
     private FriendRequest friendrequest;
     private FriendRequestManager friendrequestmanager;
+    ConnectionCheck connection;
 
     //------------------------------------------------------------
     //For UI testing
@@ -77,12 +78,17 @@ public class FriendsScreen extends ActionBarActivity {
             public void onClick(View view) {
                 String newFriend = friendUsername.getText().toString();
 
-                accountmanager = new AccountManager();
-                try {
-                    Thread thread = new SearchThread(account.getUsername(), newFriend);
-                    thread.start();
-                }catch(AlreadyAddedException e){
-                    Toast.makeText(getApplicationContext(), "You can't add yourself as a friend, silly!", Toast.LENGTH_SHORT).show();
+                if(connection.checkConnection(FriendsScreen.this)) {
+                    accountmanager = new AccountManager();
+                    try {
+                        Thread thread = new SearchThread(account.getUsername(), newFriend);
+                        thread.start();
+                    } catch (AlreadyAddedException e) {
+                        Toast.makeText(getApplicationContext(), "You can't add yourself as a friend, silly!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "No Connection", Toast.LENGTH_SHORT).show();
                 }
 
 

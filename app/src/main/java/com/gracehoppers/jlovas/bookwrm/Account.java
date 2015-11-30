@@ -26,6 +26,8 @@ public class Account implements Serializable {
     private TradeHistory tradeHistory= new TradeHistory(); // create trade history
     private Inventory inventory;
     private Friends friends; //create friend list
+    private boolean needUpdate;
+
 
 
     public TradeHistory getTradeHistory() {
@@ -45,6 +47,8 @@ public class Account implements Serializable {
         inventory = new Inventory();
         friends = new Friends();
         tradeHistory = new TradeHistory();
+        needUpdate=false;
+
 
     }
 
@@ -130,4 +134,7 @@ public class Account implements Serializable {
     public void setInventory(Inventory anInventory){
         inventory = anInventory;
     }
+
+    public void setNeedUpdate(boolean update) {needUpdate=update;}
+    public boolean getNeedUpdate() {return needUpdate;}
 }
