@@ -49,7 +49,7 @@ public class ProcessTradeScreenTest extends ActivityInstrumentationTestCase2 {
         trade.setBorrowerBook(bBooks);
         trade.setOwnerBook(book1);
     }
-
+/*
     public void testAccept() throws Exception {
         ProcessTradeScreen activity = (ProcessTradeScreen) getActivity();
         final Button accept = activity.accept;

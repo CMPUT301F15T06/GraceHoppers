@@ -25,7 +25,7 @@ public class CreateTradeScreenTest extends ActivityInstrumentationTestCase2 {
 
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor receiverActivityMonitor =
-                getInstrumentation().addMonitor(SelectFromBorrowerInventoryActivity.class.getName(),
+                getInstrumentation().addMonitor(SelectFromOwnerInventoryActivity.class.getName(),
                         null, false);
 
         final Button borrowerAdd = activity.borrowerAdd;
@@ -33,6 +33,40 @@ public class CreateTradeScreenTest extends ActivityInstrumentationTestCase2 {
             @Override
             public void run() {
                 borrowerAdd.performClick();
+            }
+        });
+
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        final SelectFromOwnerInventoryActivity receiverActivity = (SelectFromOwnerInventoryActivity)
+                receiverActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", receiverActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, receiverActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                SelectFromOwnerInventoryActivity.class, receiverActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(receiverActivityMonitor);
+
+        receiverActivity.finish();
+    }
+
+    public void testSelect(){
+        CreateTradeScreen activity = (CreateTradeScreen) getActivity();
+
+        //Set up ActivityMonitor
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor receiverActivityMonitor =
+                getInstrumentation().addMonitor(SelectFromBorrowerInventoryActivity.class.getName(),
+                        null, false);
+
+        final Button ownerSelect = activity.ownerSelect;
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ownerSelect.performClick();
             }
         });
 
@@ -53,38 +87,6 @@ public class CreateTradeScreenTest extends ActivityInstrumentationTestCase2 {
         receiverActivity.finish();
     }
 
-    public void testSelect(){
-        CreateTradeScreen activity = (CreateTradeScreen) getActivity();
 
-        //Set up ActivityMonitor
-        // Set up an ActivityMonitor
-        Instrumentation.ActivityMonitor receiverActivityMonitor =
-                getInstrumentation().addMonitor(SelectFromOwnerInventoryActivity.class.getName(),
-                        null, false);
-
-        final Button ownerSelect = activity.ownerSelect;
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ownerSelect.performClick();
-            }
-        });
-
-        getInstrumentation().waitForIdleSync();
-
-        // Validate that ReceiverActivity is started
-        final SelectFromOwnerInventoryActivity receiverActivity = (SelectFromOwnerInventoryActivity)
-                receiverActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("ReceiverActivity is null", receiverActivity);
-        assertEquals("Monitor for ReceiverActivity has not been called",
-                1, receiverActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type",
-                SelectFromOwnerInventoryActivity.class, receiverActivity.getClass());
-
-        // Remove the ActivityMonitor
-        getInstrumentation().removeMonitor(receiverActivityMonitor);
-
-        receiverActivity.finish();
-    }
 
 }
