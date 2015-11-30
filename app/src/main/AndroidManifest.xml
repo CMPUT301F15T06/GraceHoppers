@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="com.gracehoppers.jlovas.bookwrm.PhotoDownloads"
+        android:name=".PhotoDownloads"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -117,10 +117,18 @@
         <activity
             android:name=".SearchFriendInventories"
             android:label="@string/title_activity_search_friend_inventories" >
-            </activity>
+        </activity>
         <activity
             android:name=".TopTraderActivity"
             android:label="@string/title_activity_top_trader" >
+        </activity>
+        <activity
+            android:name=".TutPictureActivity"
+            android:label="@string/title_activity_tut_picture" >
+        </activity>
+        <activity
+            android:name=".TutActivity"
+            android:label="@string/title_activity_tut" >
         </activity>
     </application>
 

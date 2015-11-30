@@ -1,5 +1,6 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
  *
  * @author Hong Wang
  */
-public class ProcessTradeScreen extends ActionBarActivity {
+public class ProcessTradeScreen extends Activity {
 
     public Trade trade; //= new Trade();
     public TradeHistory tradeHistory = new TradeHistory();
@@ -77,8 +78,8 @@ public class ProcessTradeScreen extends ActionBarActivity {
 
         //Toast.makeText(getApplicationContext(), Toast.LENGTH_SHORT).show();
 
-        Thread thread = new FindTRThread(account.getUsername());
-        thread.start();
+        //Thread thread = new FindTRThread(account.getUsername());
+        //thread.start();
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +117,11 @@ public class ProcessTradeScreen extends ActionBarActivity {
             public void onClick(View v) {
                 //set status of trade to accepted
                 //trade.setAccepted(Boolean.TRUE);
+                //Thread thread = new AcceptThread(account.getUsername());
+                //thread.start();
+
+                //pop a dialog to promote owner to continue trade by sending email
+
 
                 dialog = new AlertDialog.Builder(ProcessTradeScreen.this);
                 final EditText input = new EditText(ProcessTradeScreen.this);
@@ -134,10 +140,15 @@ public class ProcessTradeScreen extends ActionBarActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //send_email();
+<<<<<<< HEAD
                         //email();
                         comments = input.getText().toString();
 
                         Toast toast = Toast.makeText(ProcessTradeScreen.this, comments, Toast.LENGTH_LONG);
+=======
+                        email();
+                        Toast toast = Toast.makeText(ProcessTradeScreen.this, "successfully send email", Toast.LENGTH_LONG);
+>>>>>>> 869207a7a41e713a115bc0f9174f86f141ab5d58
                         toast.show();
                     }
                 });
@@ -146,7 +157,13 @@ public class ProcessTradeScreen extends ActionBarActivity {
                 dialog.create();
                 dialog.show();
 
+<<<<<<< HEAD
                 Thread thread = new AcceptThread(account.getUsername(),comments,true);
+=======
+
+
+                Thread thread = new AcceptThread(account.getUsername());
+>>>>>>> 869207a7a41e713a115bc0f9174f86f141ab5d58
                 thread.start();
 
 
@@ -267,6 +284,15 @@ public class ProcessTradeScreen extends ActionBarActivity {
                 trade.setDeclined(Boolean.TRUE);
             }
 
+<<<<<<< HEAD
+=======
+            tradeRequest = traderequests.get(position);
+            trade = tradeRequest.getTrade();
+            trade.setAccepted(Boolean.TRUE);
+            trade.setStatus(TradeStatus.ACCEPTED);
+
+            //
+>>>>>>> 869207a7a41e713a115bc0f9174f86f141ab5d58
             account1 = accountManager.getAccount(trade.getOwner().getUsername());
             account2 = accountManager.getAccount(trade.getBorrower().getUsername());
             //tradeRequest.acceptTradeRequest(trade.getBorrower(), trade.getOwner(), trade);

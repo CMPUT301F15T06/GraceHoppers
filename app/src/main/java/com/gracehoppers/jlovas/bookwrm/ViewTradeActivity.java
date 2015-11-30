@@ -3,12 +3,17 @@ package com.gracehoppers.jlovas.bookwrm;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+
+import static junit.framework.Assert.assertTrue;
 
 /**
  * Activity for viewing a trade's borrower and Owner  basic information (username),
@@ -35,6 +40,7 @@ public class ViewTradeActivity extends ActionBarActivity {
     Account account;
 
     Button counter;
+    Button complete;
 
     private TextView borrowerUsername;
     private TextView borrowerBook;
@@ -55,6 +61,7 @@ public class ViewTradeActivity extends ActionBarActivity {
         //Toast.makeText(getApplicationContext(), "Breakpoint", Toast.LENGTH_SHORT).show();
 
         counter = (Button) findViewById(R.id.counter);
+        complete = (Button) findViewById(R.id.completeButton);
 
         borrowerUsername = (TextView) findViewById(R.id.borrowerUsername);
         borrowerBook = (TextView)  findViewById(R.id.borrowerBook);
@@ -65,9 +72,29 @@ public class ViewTradeActivity extends ActionBarActivity {
         comments = (TextView) findViewById(R.id.comments);
 
         status = (TextView)findViewById(R.id.status);
-/*
+
+        account = saveload.loadFriendFromFile(getApplicationContext());
+        //For testing purposes. DELETE AFTER
+        //Create a test trade and add it to the list
+        Account B = new Account();
+        try{
+            B.setUsername("B");
+            B.setEmail("xyz@gmail.com");
+            B.setCity("YEG");
+        } catch (NoSpacesException e){
+
+        } catch (TooLongException e){
+
+        } catch (IllegalEmailException e ) {
+
+        }
+
+
+        Log.e("HistoryOfTrades size: ", String.valueOf(account.getTradeHistory().getSize()));
+
+
         if (getIntent().getStringExtra("flag").equals("HistoryOfTrades")){
-        */
+
             pos = getIntent().getIntExtra("listPosition", 0);
 
             account = saveload.loadFromFile(ViewTradeActivity.this);
@@ -79,6 +106,11 @@ public class ViewTradeActivity extends ActionBarActivity {
                 Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
             } catch (TooLongException e){
                 Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
+            }
+
+            //If the trade is already completed, make the complete Button invisible
+            if (trade.getCompletion().equals("COMPLETE")){
+                complete.setVisibility(View.INVISIBLE);
             }
 
             //Display the trade information through the TextViews
@@ -110,12 +142,12 @@ public class ViewTradeActivity extends ActionBarActivity {
             }else if(trade.getDeclined()){
                 status.setText("Status: Declined");
             }
-/*
+
         } else {
             Toast.makeText(getApplicationContext(), "Else taken", Toast.LENGTH_SHORT).show();
 
         }
-*/
+
     }
 
     @Override
@@ -141,7 +173,10 @@ public class ViewTradeActivity extends ActionBarActivity {
     }
 
     public void complete(){
+        //mark the trade as complete
         trade.setCompletion(TradeCompletion.COMPLETE);
+        //make the button invisible
+        complete.setVisibility(View.INVISIBLE);
         Toast.makeText(getApplicationContext(), "Trade marked as COMPLETE.", Toast.LENGTH_SHORT).show();
     }
 }

@@ -69,7 +69,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Compose Counter Trade"
+        android:text="Compose \n Counter Trade"
         android:id="@+id/counter"
         android:clickable="false"
         android:background="#b562b65e"
@@ -169,5 +169,13 @@
             android:layout_below="@+id/borrowerUsername"
             android:layout_alignParentStart="true" />
     </FrameLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mark as \n Complete"
+        android:id="@+id/completeButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
