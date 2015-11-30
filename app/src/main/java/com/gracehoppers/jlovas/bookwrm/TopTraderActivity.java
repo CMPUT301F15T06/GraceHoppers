@@ -24,19 +24,18 @@ public class TopTraderActivity extends Activity {
     private TextView topTraders;
     private String result = "Top Traders:\n";
     private UsernameManager usernameManager;
-    private ArrayList<String> userNames;
-
+    private UserNameHolder userNameHolder;
+    private Accounts allAccounts = new Accounts();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_trader);
-        SearchThread thread=new SearchThread();
-        thread.start();
-        topTraders = (TextView) findViewById(R.id.topTraders);
-        FThread fThread= new FThread();
-        fThread.start();
 
+        topTraders = (TextView) findViewById(R.id.topTraders);
+
+        usernameThread uThread= new usernameThread();
+        uThread.start();
 
 
     }
@@ -63,21 +62,33 @@ public class TopTraderActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    class SearchThread extends Thread {
 
-        public SearchThread() {
+
+    class usernameThread extends Thread {
+
+        public usernameThread() {
         }
 
         @Override
         public void run() {
-            accountManager=new AccountManager();
-            all = accountManager.allAcounts();
-            allTraders = topTraderTrackManager.calculateScores(all);
-
+            usernameManager=new UsernameManager();
+            userNameHolder = usernameManager.getUserNameHolder();
+            Account thisAccount;
             int i = 0;
-            while (i < allTraders.size()){
-                result = result + allTraders.get(i) + "\n";
-                i = i + 1 ;
+            while(i<userNameHolder.getUsernames().size()) {
+                thisAccount = accountManager.getAccount(userNameHolder.getUsernames().get(i).toString());
+                if (thisAccount != null) {
+                    allAccounts.add(thisAccount);
+                }
+                i++;
+            }
+
+            allTraders = topTraderTrackManager.calculateScores((Accounts) allAccounts);
+
+            int i5 = 0;
+            while (i5 < allTraders.size()){
+                result = result + allTraders.get(i5) + "\n";
+                i5 = i5 + 1 ;
             }
 
             try {
@@ -86,7 +97,6 @@ public class TopTraderActivity extends Activity {
                     TopTraderActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-
                             topTraders.setText(result);
 
                         }
@@ -98,21 +108,6 @@ public class TopTraderActivity extends Activity {
                 }
 
             }catch(RuntimeException e) {e.printStackTrace();}
-        }
-
-    }
-
-    class FThread extends Thread {
-
-        public FThread() {
-        }
-
-        @Override
-        public void run() {
-            usernameManager=new UsernameManager();
-            UserNameHolder userNameHolder= new UserNameHolder();
-            userNameHolder.addUser("aa");
-            usernameManager.updateUserNames(userNameHolder);
         }
 
     }
