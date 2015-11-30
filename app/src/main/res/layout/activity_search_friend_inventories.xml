@@ -4,6 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/gradient"
     tools:context="com.gracehoppers.jlovas.bookwrm.SearchFriendInventories">
 
     <EditText
@@ -22,7 +23,8 @@
         android:id="@+id/searchbutton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="51dp" />
+        android:layout_marginBottom="51dp"
+        android:background="@drawable/yellow_gradient"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -31,7 +33,8 @@
         android:text="Search Friends&apos; Books"
         android:id="@+id/searchtitletextview"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold" />
 
     <ListView
         android:layout_width="wrap_content"
@@ -39,7 +42,8 @@
         android:id="@+id/listView"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/searchtitletextview"
-        android:layout_above="@+id/queryText" />
+        android:layout_above="@+id/queryText"
+        android:background="#ffffff"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -49,7 +53,8 @@
         android:id="@+id/switchbutton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:textSize="12dp" />
+        android:textSize="12dp"
+        android:background="@drawable/yellow_gradient"/>
 
     <Spinner
         android:layout_width="wrap_content"
