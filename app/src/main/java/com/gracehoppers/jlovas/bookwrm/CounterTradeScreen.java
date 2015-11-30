@@ -1,6 +1,8 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -77,7 +79,22 @@ public class CounterTradeScreen extends Activity{
             counterTrade = oldTrade;
 
             if(pos1<=oldTrade.getBorrower().getInventory().getSize()){
-                borrowerBook.add(oldTrade.getBorrower().getInventory().getBookByIndex(pos1));
+                int i = 0;
+                boolean exist = false;
+                Book thisBook;
+                while (i<borrowerBook.size()) {
+                    thisBook = borrowerBook.get(i);
+                    if (thisBook.getTitle().equals(oldTrade.getBorrower().getInventory().getBookByIndex(pos1).getTitle())) {
+                        exist = true;
+                    }
+                    i++;
+                }
+
+                if (!exist) {
+                    borrowerBook.add(oldTrade.getBorrower().getInventory().getBookByIndex(pos1));
+                }else{
+                    Toast.makeText(CounterTradeScreen.this,"You already chose this book",Toast.LENGTH_SHORT).show();
+                }
             }
 
             counterTrade.setBorrowerBook(borrowerBook);
@@ -91,6 +108,37 @@ public class CounterTradeScreen extends Activity{
         adapter = new BookListAdapter(this,R.layout.book_inventory_list,borrowerBook );
         text.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+
+        text.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                Book book = borrowerBook.get(position);
+
+                //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(CounterTradeScreen.this);
+                builder.setTitle("");
+                builder.setItems(new CharSequence[]
+                                {"Delete", "Cancel"},
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // The 'which' argument contains the index position
+                                // of the selected item
+                                switch (which) {
+                                    case 0:
+                                        borrowerBook.remove(position);
+                                        text.setAdapter(adapter);
+                                        adapter.notifyDataSetChanged();
+                                    case 1:
+                                        dialog.cancel();
+
+                                }
+                            }
+                        });
+                builder.create().show();
+
+            }
+        });
+
 
         //Toast.makeText(getApplicationContext(), counterTrade.getOwner().getUsername(), Toast.LENGTH_SHORT).show();
 

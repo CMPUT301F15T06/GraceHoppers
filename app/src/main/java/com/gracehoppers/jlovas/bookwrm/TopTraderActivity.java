@@ -33,6 +33,7 @@ public class TopTraderActivity extends Activity {
         setContentView(R.layout.activity_top_trader);
 
         topTraders = (TextView) findViewById(R.id.topTraders);
+        topTraders.setText("LOADING...");
 
         usernameThread uThread= new usernameThread();
         uThread.start();
