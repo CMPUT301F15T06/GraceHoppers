@@ -30,6 +30,7 @@ public class SaveLoad {
 
 
     protected static final String FILENAME = "file.sav";
+    protected static final String TRADEFILE="trade.sav";
     protected static final String PHOTOFILE = "photos.sav";
 
     protected static final String FRIEND = "friend.sav"; //this could go into cache. using it to save one friend's account when you want to view a specific book of theirs
@@ -59,6 +60,47 @@ public class SaveLoad {
                 throw new RuntimeException(e);
             }
         }
+
+        public void saveTrade(Context context,TradeRequest request) {
+            try {
+                FileOutputStream fos = context.openFileOutput(TRADEFILE, 0);
+                BufferedWriter out=new BufferedWriter(new OutputStreamWriter(fos));
+                Gson gson=new Gson();
+                gson.toJson(request, out);
+                out.flush();
+                fos.close();
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                throw new RuntimeException(e);
+            }
+        }
+
+    public TradeRequest loadTrade(Context context) {
+        TradeRequest request=null;
+        try {
+
+            FileInputStream fis = context.openFileInput(TRADEFILE);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+            Gson gson=new Gson();
+            //https://sites.google.com/site/gson/gson-user-guide 2015-16-10
+            Type type=new TypeToken<TradeRequest>() {}.getType();
+            request=gson.fromJson(in,type);
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            //throw new RuntimeException(e);
+            //key=new ArrayList<keyStats>();
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            //throw new RuntimeException(e);
+            e.printStackTrace();
+        }
+        return request;
+    }
 
     /**
      * loads an account from the SD card using gson.

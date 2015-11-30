@@ -61,6 +61,8 @@ public class HomeScreen extends Activity {
 
     ImageView tradeRequests;
     TradeRequestManager trmanager;
+    TradeRequest tradeRequest;
+    private static Trade newTrade = new Trade();
 
 
     //For UI testing -----------------------------------------
@@ -90,8 +92,7 @@ public class HomeScreen extends Activity {
 
 
         account = saveload.loadFromFile(getApplicationContext());
-
-
+        //tradeRequest=saveload.loadTrade(getApplicationContext());
 
         //check connection
         if(connectionCheck.checkConnection(HomeScreen.this) && account.getNeedUpdate()) {
@@ -116,10 +117,16 @@ public class HomeScreen extends Activity {
             }catch(TooLongException e){
 
             }
-
-
         }
 
+        /*if(connectionCheck.checkConnection(HomeScreen.this) && tradeRequest.getNeedUpdate()){
+            Thread thread = new AddTRThread(tradeRequest);
+            thread.start();
+
+            //newTrade = new Trade();
+            tradeRequest.setNeedUpdate(false);
+        }
+*/
 
         inventoryList = (ListView)findViewById(R.id.inventory1);
 
@@ -564,6 +571,31 @@ public class HomeScreen extends Activity {
 
         }
     };
+
+    class AddTRThread extends Thread { //look for friend requests between x and y
+        private TradeRequest request;
+        private TradeRequestManager manager;
+
+        public AddTRThread(TradeRequest request) {
+            this.request = request;
+
+        }
+
+        @Override
+        public void run() {
+            //FriendRequest result;
+            manager = new TradeRequestManager();
+            // Log.e("made it thread","made i 2 thread");
+
+            try {
+                manager.addTradeRequest(request);
+            } catch (Exception e){
+                Log.e("Exception", "Caught exception adding");
+            }
+
+        }
+
+    }
     //---------------------------------------------------------------------------------------------------
 
 }

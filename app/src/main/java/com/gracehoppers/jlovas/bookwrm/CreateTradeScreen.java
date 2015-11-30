@@ -51,6 +51,7 @@ public class CreateTradeScreen extends Activity {
     Button cancelTrade;
     private int pos;
     private int pos2;
+    ConnectionCheck connection;
 
     @Override
     protected void onStart(){
@@ -228,17 +229,28 @@ public class CreateTradeScreen extends Activity {
                     if (!newTrade.getOwnerBook().getTitle().equals("Untitled")) {
                         TradeRequest request = new TradeRequest();
                         request.makeTradeRequest(me, friend.getUsername(), newTrade);
-                        //check if you have any tR
-                        Thread thread = new AddTRThread(request);
-                        thread.start();
 
-                        newTrade = new Trade();
+                        if(connection.checkConnection(CreateTradeScreen.this)) {
+                            //check if you have any tR
+                            Thread thread = new AddTRThread(request);
+                            thread.start();
+
+                            newTrade = new Trade();
+
+                            //Toast to show that the trade has been created
+                            Toast.makeText(getApplicationContext(), "Trade submitted!", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            request.setNeedUpdate(true);
+                        }
+
                         mySaveLoad.saveInFile(getApplicationContext(), me);
-                        //Toast.makeText(getApplicationContext(), "Breakpoint, newTrade added to History", Toast.LENGTH_SHORT).show();
+                        mySaveLoad.saveTrade(getApplicationContext(),request);
 
-                        //Toast to show that the trade has been created
-                        Toast.makeText(getApplicationContext(), "Trade submitted!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Breakpoint, newTrade added to History", Toast.LENGTH_SHORT).show();
                         finish();
+
+
                     }else{
                         Toast.makeText(CreateTradeScreen.this,"Must Choose one from Owner's Inventory",Toast.LENGTH_SHORT).show();
                     }
