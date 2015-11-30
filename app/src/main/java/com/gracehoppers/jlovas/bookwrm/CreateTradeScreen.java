@@ -230,8 +230,11 @@ public class CreateTradeScreen extends Activity {
                         TradeRequest request = new TradeRequest();
                         request.makeTradeRequest(me, friend.getUsername(), newTrade);
 
+
+
+                        //If there is connection, make request. Else, notify user.
                         if(connection.checkConnection(CreateTradeScreen.this)) {
-                            //check if you have any tR
+                            //
                             Thread thread = new AddTRThread(request);
                             thread.start();
 
@@ -241,11 +244,15 @@ public class CreateTradeScreen extends Activity {
                             Toast.makeText(getApplicationContext(), "Trade submitted!", Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            request.setNeedUpdate(true);
+                            Toast.makeText(getApplicationContext(), "No connection. Trade will be saved & \n " +
+                                                                    "pushed when connection is restored.", Toast.LENGTH_SHORT).show();
+                            me.getQueue().add(request);
+                            me.setNeedTRupdate(true);
                         }
 
+                        //Save the account and the tradeRequest in a gson file
                         mySaveLoad.saveInFile(getApplicationContext(), me);
-                        mySaveLoad.saveTrade(getApplicationContext(),request);
+                        mySaveLoad.saveTrade(getApplicationContext(), request);
 
                         //Toast.makeText(getApplicationContext(), "Breakpoint, newTrade added to History", Toast.LENGTH_SHORT).show();
                         finish();

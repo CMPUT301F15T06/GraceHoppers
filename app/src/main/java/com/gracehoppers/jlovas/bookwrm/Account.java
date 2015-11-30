@@ -28,6 +28,16 @@ public class Account implements Serializable {
     private Friends friends; //create friend list
     private boolean needUpdate;
 
+    public boolean getNeedTRupdate() {
+        return needTRupdate;
+    }
+
+    public void setNeedTRupdate(boolean needTRupdate) {
+        this.needTRupdate = needTRupdate;
+    }
+
+    private boolean needTRupdate;
+    private  static ArrayList<TradeRequest> queue;
 
 
     public TradeHistory getTradeHistory() {
@@ -38,7 +48,12 @@ public class Account implements Serializable {
         this.tradeHistory = tradeHistory;
     }
 
-
+    public ArrayList<TradeRequest> getQueue() {
+        if (queue == null) {
+            queue = new ArrayList<TradeRequest>();
+        }
+        return queue;
+    }
 
     /**
      * Constructor for Account creates an empty Inventory and empty Friends
@@ -48,6 +63,8 @@ public class Account implements Serializable {
         friends = new Friends();
         tradeHistory = new TradeHistory();
         needUpdate=false;
+        needTRupdate = false;
+        queue = new ArrayList<TradeRequest>();
 
 
     }
