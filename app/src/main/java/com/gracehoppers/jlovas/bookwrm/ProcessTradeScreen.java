@@ -80,38 +80,7 @@ public class ProcessTradeScreen extends Activity {
 
         Thread thread = new FindTRThread(account.getUsername());
         thread.start();
-/*
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ProcessTradeScreen.this, HomeScreen.class);
-                startActivity(intent);
 
-            }
-        });*/
-
-        /*
-        setUp();
-        tradeHistory= owner.getTradeHistory();
-        try {
-            trade= tradeHistory.getTradeByIndex(0);
-        } catch (NegativeNumberException e) {
-            Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
-        } catch (TooLongException e) {
-            Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
-        }
-        borrower =trade.getBorrower();
-
-        bName.setText("Borrower Name:\n" + borrower.getUsername());
-        oBook.setText("Owner Book:\n"+trade.getOwnerBook().getTitle());
-
-        String bookTitles ="";
-
-        for(Book b: trade.getBorrowerBook()){
-            bookTitles= bookTitles + b.getTitle() +"\n";
-        }
-        bBook.setText("Borrower Books:\n" + bookTitles );
-*/
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,15 +106,15 @@ public class ProcessTradeScreen extends Activity {
 
                         comments = input.getText().toString();
 
-                        Thread thread = new AcceptThread(account.getUsername(), comments ,true);
+                        Thread thread = new AcceptThread(account.getUsername(), comments, true);
                         thread.start();
+                        send_email();
+
                     }
                 });
 
                 dialog.create();
                 dialog.show();
-
-
 
 
 
@@ -275,12 +244,42 @@ public class ProcessTradeScreen extends Activity {
         }
     }
 
+    public void send_email(){
+
+        String email = trade.getBorrower().getEmail();
+        String email1 = trade.getOwner().getEmail();
+
+        String subject = "Trade accepted by owner!";
+        String content = "Trade information: \nBorrower Books :\n";
+        for (Book b: trade.getBorrowerBook()){
+            content= content+ b.getTitle()+"\n";
+        }
+        content= content+"Owner Book:\n"+ trade.getOwnerBook().getTitle();
+
+        content= content+"\nComments:\n"+comments;
+
+        Intent sendEmail= new Intent(Intent.ACTION_SEND, Uri.parse("mailTo"));
+        sendEmail.setType("text/plain");
+        //send recipent,content to email app
+        sendEmail.putExtra(Intent.EXTRA_EMAIL, new String[] {email,email1});
+        sendEmail.putExtra(Intent.EXTRA_SUBJECT, subject);
+        sendEmail.putExtra(Intent.EXTRA_TEXT, content);
+
+        try{
+            startActivity(sendEmail);
+
+        }catch (android.content.ActivityNotFoundException ex){
+            //if no supported app
+            Toast.makeText(ProcessTradeScreen.this, "No email client found", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
 
     }
-
+/*
     public void email(){
         try {
 
@@ -295,7 +294,7 @@ public class ProcessTradeScreen extends Activity {
         }
 
     }
-/*
+
     public void setUp() {
         owner = new Account();
         borrower = new Account();
@@ -331,30 +330,7 @@ public class ProcessTradeScreen extends Activity {
     }
 
     /*
-    public void send_email(){
-        String email = trade.getBorrower().getEmail();
-        String subject = "Trade accepted by owner!";
-        String content = "Trade information: \nBorrower Books :\n";
-        for (Book b: trade.getBorrowerBook()){
-            content= content+ b.getTitle()+"\n";
-        }
-        content= content+"Owner Book\n"+ trade.getOwnerBook().getTitle();
 
-        Intent sendEmail= new Intent(Intent.ACTION_SEND, Uri.parse("mailTo"));
-        sendEmail.setType("text/plain");
-        //send recipent,content to email app
-        sendEmail.putExtra(Intent.EXTRA_EMAIL, new String[] {email});
-        sendEmail.putExtra(Intent.EXTRA_SUBJECT, subject);
-        sendEmail.putExtra(Intent.EXTRA_TEXT, content);
-
-        try{
-            startActivity(sendEmail);
-
-        }catch (android.content.ActivityNotFoundException ex){
-            //if no supported app
-            Toast.makeText(ProcessTradeScreen.this, "No email client found", Toast.LENGTH_SHORT).show();
-        }
-    }
     */
 
     @Override
