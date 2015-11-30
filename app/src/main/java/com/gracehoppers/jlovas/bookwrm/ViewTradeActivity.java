@@ -99,7 +99,7 @@ public class ViewTradeActivity extends ActionBarActivity {
             pos = getIntent().getIntExtra("listPosition", 0);
 
             account = saveload.loadFromFile(ViewTradeActivity.this);
-            Toast.makeText(getApplicationContext(), "Displaying item " + pos, Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getApplicationContext(), "Displaying item " + pos, Toast.LENGTH_SHORT).show();
 
             try {
                 trade = account.getTradeHistory().getTradeByIndex(pos);
@@ -127,7 +127,7 @@ public class ViewTradeActivity extends ActionBarActivity {
             ownerUsername.setText("Owner:  "+ trade.getOwner().getUsername());
             ownerBook.setText("Owner Book:  "+ trade.getOwnerBook().getTitle());
 
-            Toast.makeText(getApplicationContext(),trade.getOwnerComment(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(),trade.getOwnerComment(), Toast.LENGTH_SHORT).show();
 
             comments.setText(trade.getOwnerComment());
             

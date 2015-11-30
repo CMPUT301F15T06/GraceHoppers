@@ -245,7 +245,7 @@ public class AddBookScreen extends ActionBarActivity {
                         myBook.getPhotos().setHasImages(true);
                     }
 
-                    Toast.makeText(getApplicationContext(), "hasImages= " + myBook.getPhotos().getHasImages(), Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getApplicationContext(), "hasImages= " + myBook.getPhotos().getHasImages(), Toast.LENGTH_LONG).show();
 
                     me.getInventory().addBook(myBook);
                     books.add(myBook); //For UI testing
