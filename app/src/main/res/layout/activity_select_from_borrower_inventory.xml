@@ -9,7 +9,7 @@
 
     <ListView
         android:layout_width="wrap_content"
-        android:background="#FFFFFF"
+        android:background="#fcffce"
         android:layout_height="wrap_content"
         android:id="@+id/borrower_Inventory_id"
         android:layout_alignParentStart="true"

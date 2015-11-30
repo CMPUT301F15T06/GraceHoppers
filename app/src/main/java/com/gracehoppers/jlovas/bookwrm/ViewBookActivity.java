@@ -477,7 +477,7 @@ public class ViewBookActivity extends ActionBarActivity {
             //the item is a friend's - do not want to offer edit and delete
 
             posBook = getIntent().getIntExtra("uninum", 0);
-           // Toast.makeText(getApplicationContext(), "pos: "+posBook, Toast.LENGTH_SHORT).show();
+           Log.e("viewbook's uninum:",posBook+"");
 
             if(pD.getEnabled()){
                 bookImage.setLongClickable(false);
@@ -595,6 +595,13 @@ public class ViewBookActivity extends ActionBarActivity {
 
         Thread yourthread = new UpdateAThread(account); //update the server to delete this book
         yourthread.start();
+
+        /*
+        try {
+            yourthread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
 
         Toast.makeText(getApplicationContext(),"Book deleted",Toast.LENGTH_SHORT).show();
 
