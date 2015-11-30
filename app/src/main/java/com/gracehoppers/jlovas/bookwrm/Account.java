@@ -48,8 +48,6 @@ public class Account implements Serializable {
         friends = new Friends();
         tradeHistory = new TradeHistory();
         needUpdate=false;
-
-
     }
 
 

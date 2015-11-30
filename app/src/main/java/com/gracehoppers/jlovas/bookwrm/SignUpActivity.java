@@ -85,7 +85,7 @@ public class SignUpActivity extends ActionBarActivity {
                 //upon button press, try to create a new account based on whats in the textviews
                 ConnectionCheck connection = new ConnectionCheck();
 
-                if (connection.checkConnection(SignUpActivity.this) == true) {
+                //if (connection.checkConnection(SignUpActivity.this) == true) {
                     try {
                         Account account = new Account();
                         account.setUsername(username.getText().toString());
@@ -146,12 +146,12 @@ public class SignUpActivity extends ActionBarActivity {
                         Toast.makeText(getApplicationContext(), "A field is too long",
                                 Toast.LENGTH_SHORT).show();
                     }
-                }
+               // }
 
-                else{
-                    Toast.makeText(getApplicationContext(), "No Network Connection, Please try again later",
-                            Toast.LENGTH_SHORT).show();
-                }
+                //else{
+                //    Toast.makeText(getApplicationContext(), "No Network Connection, Please try again later",
+                       //     Toast.LENGTH_SHORT).show();
+                //}
                 }
 
 

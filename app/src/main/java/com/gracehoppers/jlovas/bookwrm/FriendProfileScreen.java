@@ -35,6 +35,7 @@ public class FriendProfileScreen extends ActionBarActivity {
     TextView email;
     TextView city;
     Account account;
+    Account friend;
     //Account myFriend;
     String myFriend;
     AccountManager accountmanager;
@@ -87,6 +88,30 @@ public class FriendProfileScreen extends ActionBarActivity {
             }
         }
         else{
+            try {
+                myFriend = account.getFriends().getFriendByIndex(position);
+
+                friend=saveLoad.loadFriendFromFile(getApplicationContext());
+
+                if(friend.getUsername()==myFriend) {
+                    name.setText(myFriend);
+                    email.setText(friend.getEmail());
+                    city.setText(friend.getCity());
+
+                    //populate the friend's inventory list with their stuff
+                    adapter = new BookListAdapter(getApplicationContext(), R.layout.friend_inventory_list, friend.getInventory().getPublic(result.getInventory()));
+                    friendInventoryList.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "You never viewed this friend before", Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (NegativeNumberException e) {
+                Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
+            } catch (TooLongException e) {
+                Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
+            }
 
         }
         name =(TextView) findViewById(R.id.fname);
@@ -136,31 +161,36 @@ public class FriendProfileScreen extends ActionBarActivity {
             public void onClick(View view) {
                 //clicking this button will unfriend the person
 
-                if(!(result==null)) {
-                    account.getFriends().unFriend(myFriend);
-                    Toast.makeText(getApplicationContext(), "Unfriended " + result.getUsername(), Toast.LENGTH_SHORT).show();
-                    saveLoad.saveInFile(getApplicationContext(), account); //saves this locally
+                if(connection.checkConnection(FriendProfileScreen.this)) {
+                    if (!(result == null)) {
+                        account.getFriends().unFriend(myFriend);
+                        Toast.makeText(getApplicationContext(), "Unfriended " + result.getUsername(), Toast.LENGTH_SHORT).show();
+                        saveLoad.saveInFile(getApplicationContext(), account); //saves this locally
 
-                    result.getFriends().unFriend(account.getUsername()); //unfriends you on their side
-                    //now update this on the server on both ends:
+                        result.getFriends().unFriend(account.getUsername()); //unfriends you on their side
+                        //now update this on the server on both ends:
 
-                    Thread yourthread = new UpdateAThread(account);
-                    yourthread.start();
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        Thread yourthread = new UpdateAThread(account);
+                        yourthread.start();
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        Thread friendthread = new UpdateAThread(result);
+                        friendthread.start();
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        finish();
                     }
-
-                    Thread friendthread = new UpdateAThread(result);
-                    friendthread.start();
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    finish();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "No connection, please try again later", Toast.LENGTH_SHORT).show();
                 }
             }
         });

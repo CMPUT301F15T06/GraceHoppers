@@ -249,15 +249,18 @@ public class HomeScreen extends Activity {
                 //thread.start();
                 //end line of test code --------------------------------
 
-                if(friendRequests.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.greenenvelope).getConstantState())){
-                    //http://stackoverflow.com/questions/9125229/comparing-two-drawables-in-android, user Mejonzhan, 2015-19-11
-                    //if the envelope is green
-                    Intent FRintent = new Intent(HomeScreen.this, ViewFRActivity.class);
-                    startActivity(FRintent);
+                if(connectionCheck.checkConnection(HomeScreen.this)) {
+                    if (friendRequests.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.greenenvelope).getConstantState())) {
+                        //http://stackoverflow.com/questions/9125229/comparing-two-drawables-in-android, user Mejonzhan, 2015-19-11
+                        //if the envelope is green
+                        Intent FRintent = new Intent(HomeScreen.this, ViewFRActivity.class);
+                        startActivity(FRintent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "No current friend requests", Toast.LENGTH_SHORT).show();
+                    }
                 }
-
                 else{
-                    Toast.makeText(getApplicationContext(), "No current friend requests", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "No connection, please try again later", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -271,17 +274,20 @@ public class HomeScreen extends Activity {
             public void onClick(View v) {
 
                 Log.e("died in", "traderequests image view clicked");
+                if(connectionCheck.checkConnection(HomeScreen.this)) {
 
-                if(tradeRequests.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.greenenvelope).getConstantState())){
-                    //http://stackoverflow.com/questions/9125229/comparing-two-drawables-in-android, user Mejonzhan, 2015-19-11
-                    //if the envelope is green
-                   // Toast.makeText(getApplicationContext(), "Breakpoint", Toast.LENGTH_SHORT).show();
-                    Intent tradeIntent = new Intent(HomeScreen.this, ViewTradeRequest.class);
-                    startActivity(tradeIntent);
+                    if (tradeRequests.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.greenenvelope).getConstantState())) {
+                        //http://stackoverflow.com/questions/9125229/comparing-two-drawables-in-android, user Mejonzhan, 2015-19-11
+                        //if the envelope is green
+                        // Toast.makeText(getApplicationContext(), "Breakpoint", Toast.LENGTH_SHORT).show();
+                        Intent tradeIntent = new Intent(HomeScreen.this, ViewTradeRequest.class);
+                        startActivity(tradeIntent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "No current trade requests", Toast.LENGTH_SHORT).show();
+                    }
                 }
-
                 else{
-                    Toast.makeText(getApplicationContext(), "No current trade requests", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "No connection, please try again later", Toast.LENGTH_SHORT).show();
                 }
 
 

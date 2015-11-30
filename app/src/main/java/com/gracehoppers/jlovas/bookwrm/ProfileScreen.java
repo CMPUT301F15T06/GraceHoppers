@@ -174,7 +174,13 @@ public class ProfileScreen extends ActionBarActivity {
             }
         }
         else{
+            account=saveload.loadFromFile(ProfileScreen.this);
+            name.setText(account.getUsername());
+            email.setText(account.getEmail());
+            city.setText(account.getCity());
+
             Toast.makeText(getApplicationContext(), "No connection" , Toast.LENGTH_SHORT).show();
+
         }
 
     }

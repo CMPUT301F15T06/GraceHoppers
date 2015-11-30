@@ -26,7 +26,7 @@ public class MainActivity extends ActionBarActivity {
     SaveLoad saveLoad;
     Account result;
 
-    //ConnectionCheck connection;
+    final ConnectionCheck connection=new ConnectionCheck();
 
     //for UI testing:-------------------------------------------
     public Button getSignUpButton(){
@@ -61,7 +61,6 @@ public class MainActivity extends ActionBarActivity {
             logInButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ConnectionCheck connection=new ConnectionCheck();
 
                     //TODO: put the new account into the Gson or whatever we store it with so we can pull it out on further screens!
                     if(connection.checkConnection(MainActivity.this)==true) {
@@ -91,8 +90,14 @@ public class MainActivity extends ActionBarActivity {
             signUpButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent sIntent = new Intent(MainActivity.this, SignUpActivity.class);
-                    startActivity(sIntent);
+                    if(connection.checkConnection(MainActivity.this)) {
+                        Intent sIntent = new Intent(MainActivity.this, SignUpActivity.class);
+                        startActivity(sIntent);
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "No Network Connection, Please try again later",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 
