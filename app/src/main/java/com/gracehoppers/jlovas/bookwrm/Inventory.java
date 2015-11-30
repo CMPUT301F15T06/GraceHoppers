@@ -1,5 +1,7 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -112,7 +114,7 @@ public class Inventory implements Serializable {
      * @return Book
      */
     public Book getBookByUniqueNumber(int uninum){
-
+Log.e("uninum:",uninum+"");
         try {
             for (int i = 0; i < this.getSize(); i++) {
                 if (this.getBookByIndex(i).getUniquenum().getNumber() == uninum) {

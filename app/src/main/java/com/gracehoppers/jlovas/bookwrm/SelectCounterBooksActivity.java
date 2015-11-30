@@ -30,6 +30,7 @@ public class SelectCounterBooksActivity extends ActionBarActivity {
 
     SaveLoad saveLoad;
     int pos;
+    int realpos;
 
 
     @Override
@@ -54,8 +55,9 @@ public class SelectCounterBooksActivity extends ActionBarActivity {
         counterList = (ListView) findViewById(R.id.selectCounterList);
 
 
+
         //set listView to borrower's inventory
-        bookList= trade.getBorrower().getInventory().getInventory();
+        bookList= trade.getBorrower().getInventory().getPublic(trade.getBorrower().getInventory()); //gets public books
         adapter = new BookListAdapter(this, R.layout.book_inventory_list,bookList);
         counterList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -64,16 +66,18 @@ public class SelectCounterBooksActivity extends ActionBarActivity {
         counterList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int posi, long id) {
                 //Book aBook = bookList.get(pos);
                 //.getBorrowerBook().add(aBook);
 
                 Intent intent = new Intent(SelectCounterBooksActivity.this, CounterTradeScreen.class);
 
-                Book aBook = bookList.get(pos);
-                pos=trade.getBorrower().getInventory().getRealPosition(aBook.getUniquenum().getNumber());
+               // Book aBook = bookList.get(pos);
+                //pos=trade.getBorrower().getInventory().getRealPosition(aBook.getUniquenum().getNumber());
+                Book aBook=trade.getBorrower().getInventory().getPublic(trade.getBorrower().getInventory()).get(posi);
+                realpos=trade.getBorrower().getInventory().getRealPosition(aBook.getUniquenum().getNumber());
 
-                intent.putExtra("BookPosition", pos);
+                intent.putExtra("BookPosition", realpos);
                 startActivity(intent);
                 finish();
             }

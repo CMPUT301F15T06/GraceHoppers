@@ -13,7 +13,7 @@
         android:id="@+id/FRlistView"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/FRtextview"
-        android:background="#FFFFFF"
+        android:background="#fcffce"
         android:layout_marginTop="10dp" />
 
     <TextView

@@ -119,14 +119,30 @@ public class HomeScreen extends Activity {
             }
         }
 
-        /*if(connectionCheck.checkConnection(HomeScreen.this) && tradeRequest.getNeedUpdate()){
-            Thread thread = new AddTRThread(tradeRequest);
-            thread.start();
+        ///*
+        Log.e("connection check:","just before ");
 
+        if(connectionCheck.checkConnection(HomeScreen.this) && account.getNeedUpdate()){
+
+            Log.e("size of queue:",String.valueOf( account.getQueue().size()));
+
+            //There could be multiple requests waiting to be pushed
+            for (TradeRequest request : account.getQueue()){
+                Log.e("inside for loop :","true ");
+
+                Thread thread = new AddTRThread(request);
+                thread.start();
+                //Once the trade has been pushed, remove it from queue
+                Log.e("returned from thread :","true ");
+
+                account.getQueue().remove(request);
+            }
+
+            //Only set the need Update false until the whole list has been pushed
             //newTrade = new Trade();
-            tradeRequest.setNeedUpdate(false);
+            account.setNeedTRupdate(false);
         }
-*/
+        //*/
 
         inventoryList = (ListView)findViewById(R.id.inventory1);
 
@@ -586,6 +602,8 @@ public class HomeScreen extends Activity {
 
             try {
                 manager.addTradeRequest(request);
+                Log.e("done adding trade:", "true ");
+
             } catch (Exception e){
                 Log.e("Exception", "Caught exception adding");
             }

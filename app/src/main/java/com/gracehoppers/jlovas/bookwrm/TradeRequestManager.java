@@ -30,6 +30,9 @@ import java.util.ArrayList;
  */
 public class TradeRequestManager {
 
+
+
+    private static ArrayList<TradeRequest> queue = null;
     private static final String URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t06/traderequests/";
     private static final String SEARCHURL = "http://cmput301.softwareprocess.es:8080/cmput301f15t06/traderequests/_search";
     private static final String TAG = "TradeRequests";
@@ -40,6 +43,7 @@ public class TradeRequestManager {
     public TradeRequestManager() {
         gson = new Gson();
     }
+
 
     /**
      * stores a traderequest on the server

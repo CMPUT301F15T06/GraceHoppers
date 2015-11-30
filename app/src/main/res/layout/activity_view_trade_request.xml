@@ -7,6 +7,7 @@
     android:background="@drawable/gradient"
     tools:context="com.gracehoppers.jlovas.bookwrm.ViewTradeRequest">
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,9 +20,9 @@
 
     <ListView
         android:layout_width="wrap_content"
-        android:background="#FFFFFF"
         android:layout_height="wrap_content"
         android:id="@+id/TRlistView"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView6" />
+        android:layout_below="@+id/textView6"
+        android:background="#fcffce" />
 </RelativeLayout>

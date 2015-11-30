@@ -252,24 +252,29 @@ public class FriendProfileScreen extends ActionBarActivity {
                             friendInventoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
                                 public void onItemClick(AdapterView<?> parent, View view, int position2, long id) {
 
-                                    try {
-                                        Book book = result.getInventory().getBookByIndex(position2);
-                                        //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
-                                    } catch (NegativeNumberException e) {
-                                        //these will only trip if its a bug on our end, not user's fault
-                                        Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
-                                    } catch (TooLongException e) {
-                                        //these will only trip if its a bug on our end, not user's fault
-                                        Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
-                                    }
 
-                                    Intent intent = new Intent(FriendProfileScreen.this, ViewBookActivity.class);
-                                    //intent.putExtra("listPosition", position2);
-                                    intent.putExtra("uninum",result.getInventory().getPublic(result.getInventory()).get(position2).getUniquenum().getNumber()); //pass the unique number to identify the book
-                                    //Toast.makeText(getApplicationContext(), ""+result.getInventory().getPublic(result.getInventory()).get(position2).getUniquenum().getNumber(), Toast.LENGTH_SHORT).show();
-                                    //intent.putExtra("position2", position);
-                                    intent.putExtra("flag", "friendItem");
-                                    startActivity(intent);
+                                    //try {
+                                        Book book = result.getInventory().getPublic(result.getInventory()).get(position2);
+                                        Log.e("position2",position2+"");
+
+                                        Intent intent = new Intent(FriendProfileScreen.this, ViewBookActivity.class);
+                                        //intent.putExtra("listPosition", position2);
+                                        intent.putExtra("uninum",book.getUniquenum().getNumber()); //pass the unique number to identify the book
+                                        //Toast.makeText(getApplicationContext(), ""+result.getInventory().getPublic(result.getInventory()).get(position2).getUniquenum().getNumber(), Toast.LENGTH_SHORT).show();
+                                        //intent.putExtra("position2", position);
+                                        intent.putExtra("flag", "friendItem");
+                                        startActivity(intent);
+
+                                        //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
+                                   // } catch (NegativeNumberException e) {
+                                        //these will only trip if its a bug on our end, not user's fault
+                                    //    Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
+                                   // } catch (TooLongException e) {
+                                        //these will only trip if its a bug on our end, not user's fault
+                                    //    Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
+                                   // }
+
+
                                 }
                             });
 
