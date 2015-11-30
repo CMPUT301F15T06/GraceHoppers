@@ -11,19 +11,23 @@ import java.util.List;
  * Created by hongwang on 15/11/5.
  */
 public class SelectCounterBooksTest extends ActivityInstrumentationTestCase2 {
+    
+    int pos;
+
+    /*
+    this test include user cases : select counterBooks and edit
+     */
 
     public SelectCounterBooksTest(){
         super(SelectCounterBooksActivity.class);
 
     }
 
-    public void testSelected(){
-
-    }
-
-    public void testReturn(){
+    public void testSelectCorrectBook(){
         SelectCounterBooksActivity activity = (SelectCounterBooksActivity) getActivity();
 
+        pos = activity.realpos;
+        
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor receiverActivityMonitor =
                 getInstrumentation().addMonitor(CounterTradeScreen.class.getName(),
@@ -39,6 +43,8 @@ public class SelectCounterBooksTest extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
+        //assert return to right page
+        
         CounterTradeScreen receiverActivity = (CounterTradeScreen)
                 receiverActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", receiverActivity);
@@ -48,6 +54,11 @@ public class SelectCounterBooksTest extends ActivityInstrumentationTestCase2 {
                 CounterTradeScreen.class, receiverActivity.getClass());
 
         getInstrumentation().removeMonitor(receiverActivityMonitor);
+        
+        
+        //assert user can select from borrower's inventory
+        //and assert it is the correct book that user chooses
+        assertEquals(receiverActivity.counterTrade.getBorrowerBook().get(pos).getTitle(), activity.bookList.get(pos).getTitle());
 
         receiverActivity.finish();
 
