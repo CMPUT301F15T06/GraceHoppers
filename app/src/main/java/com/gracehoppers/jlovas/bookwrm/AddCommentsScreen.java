@@ -60,8 +60,6 @@ public class AddCommentsScreen extends ActionBarActivity {
 
         else { //this activity is being accessed from the add book activity
 
-
-
             okCommentsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

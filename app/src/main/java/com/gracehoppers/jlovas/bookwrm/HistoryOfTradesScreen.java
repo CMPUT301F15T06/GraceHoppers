@@ -119,7 +119,7 @@ public class HistoryOfTradesScreen extends ActionBarActivity {
                 //Intent intent = new Intent(HistoryOfTradesScreen.this, CounterTradeScreen.class);
                 intent.putExtra("listPosition", position);
                 intent.putExtra("flag", "HistoryOfTradesScreen");
-                Toast.makeText(getApplicationContext(), "CLicked on item " + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "CLicked on item " + position, Toast.LENGTH_SHORT).show();
 
                 startActivity(intent);
             }

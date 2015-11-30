@@ -43,24 +43,33 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="Accept"
             android:id="@+id/accept"
             android:layout_marginTop="20dp"/>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="decline"
             android:id="@+id/decline"
             android:layout_toRightOf="@+id/accept"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="150dp"
+            android:layout_marginLeft="20dp"
+            />
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:id="@+id/processBack"
+            android:layout_toRightOf="@+id/decline"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
             />
 
     </RelativeLayout>
-
 
 
 </LinearLayout>

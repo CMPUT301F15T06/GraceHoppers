@@ -11,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,7 @@ public class ProcessTradeScreen extends ActionBarActivity {
     private Account account2 = new Account();
     Button accept;
     Button decline;
+    Button back;
     public AlertDialog.Builder dialog;
     public AlertDialog.Builder dialog1;
     TextView bName;
@@ -47,7 +50,7 @@ public class ProcessTradeScreen extends ActionBarActivity {
     TradeRequest tradeRequest;//= new TradeRequest();
     int position;
     AccountManager accountManager = new AccountManager();
-
+    String comments="";
 
     //public static String tradeId = "Trade ID";
     //private ProcessTradeManager processTradeManager;
@@ -64,16 +67,27 @@ public class ProcessTradeScreen extends ActionBarActivity {
         oBook = (TextView)findViewById(R.id.oBook);
         accept =(Button)findViewById(R.id.accept);
         decline = (Button)findViewById(R.id.decline);
+        back = (Button)findViewById(R.id.processBack);
 
         position = getIntent().getIntExtra("position", 0);
 
         saveLoad = new SaveLoad();
         account = saveLoad.loadFromFile(getApplicationContext());
 
+
         //Toast.makeText(getApplicationContext(), Toast.LENGTH_SHORT).show();
 
         Thread thread = new FindTRThread(account.getUsername());
         thread.start();
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProcessTradeScreen.this, HomeScreen.class);
+                startActivity(intent);
+
+            }
+        });
 
         /*
         setUp();
@@ -104,28 +118,38 @@ public class ProcessTradeScreen extends ActionBarActivity {
                 //trade.setAccepted(Boolean.TRUE);
 
                 dialog = new AlertDialog.Builder(ProcessTradeScreen.this);
+                final EditText input = new EditText(ProcessTradeScreen.this);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT);
+                input.setLayoutParams(lp);
+                dialog.setView(input);
 
-                dialog.setMessage("Continue the trade by sending email to borrower?");
+                dialog.setMessage("Add comments for trade");
+
+                //dialog,setContentView();
 
                 //continue to send email
-                dialog.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                dialog.setNegativeButton("Submit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //send_email();
                         //email();
-                        Toast toast = Toast.makeText(ProcessTradeScreen.this, "successfully send email", Toast.LENGTH_LONG);
+                        comments = input.getText().toString();
+
+                        Toast toast = Toast.makeText(ProcessTradeScreen.this, comments, Toast.LENGTH_LONG);
                         toast.show();
                     }
                 });
 
-                dialog.setPositiveButton("No", null);
 
                 dialog.create();
                 dialog.show();
 
-
-                Thread thread = new AcceptThread(account.getUsername());
+                Thread thread = new AcceptThread(account.getUsername(),comments,true);
                 thread.start();
+
+
 
                 //pop a dialog to promote owner to continue trade by sending email
 /*
@@ -138,23 +162,22 @@ public class ProcessTradeScreen extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 trade.setDeclined(Boolean.TRUE);
-
-
-
+                comments="";
+                Thread thread = new AcceptThread(account.getUsername(),comments,false);
+                thread.start();
+                /*
                 //pop a dialog to promote owner to continue trade by sending email
                 dialog1 = new AlertDialog.Builder(ProcessTradeScreen.this);
-                dialog1.setMessage("Create a counter trade?");
+                dialog1.setMessage("Add comments for how to continue on with the trade.");
 
                 //continue to counterTrade
-                dialog1.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                dialog1.setNegativeButton("Submit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent turnCounter = new Intent(ProcessTradeScreen.this, CounterTradeScreen.class);
-                        startActivity(turnCounter);
+                        //Intent turnCounter = new Intent(ProcessTradeScreen.this, CounterTradeScreen.class);
+                        //startActivity(turnCounter);
                     }
                 });
-
-                dialog1.setPositiveButton("No", null);
 
                 dialog1.create();
                 dialog1.show();
@@ -165,6 +188,7 @@ public class ProcessTradeScreen extends ActionBarActivity {
                 //turnCounter.putExtra("declineOwnerBook",trade.getOwnerBook().getTitle());
                 //turnCounter.putExtra("declineBorrower",trade.getOwnerBook().getTitle());
                 startActivity(turnCounter);
+                */
 
             }
         });
@@ -193,15 +217,11 @@ public class ProcessTradeScreen extends ActionBarActivity {
             tradeRequest = traderequests.get(position);
 
             trade = tradeRequest.getTrade();
-            //trade.setAccepted(Boolean.FALSE);
+            //trade.setAccepted(Boolean.TRUE);
 
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    //Toast.makeText(getApplicationContext(),"trade"+tradeRequest.getTrade().getBorrower().getUsername(), Toast.LENGTH_SHORT).show();
-                    //Toast.makeText(getApplicationContext(),"trade"+trade.getOwner().getUsername(), Toast.LENGTH_SHORT).show();
-                    //Toast.makeText(getApplicationContext(),"trade"+trade.getBorrower().getUsername(), Toast.LENGTH_SHORT).show();
-
                     bName.setText("Borrower Name:\n" + trade.getBorrower().getUsername());
 
                     oBook.setText("Owner Book:\n"+trade.getOwnerBook().getTitle());
@@ -216,12 +236,16 @@ public class ProcessTradeScreen extends ActionBarActivity {
             });
         }
     }
-/*
+
     class AcceptThread extends Thread { //look for friend requests between x and y
         private String user1;
+        private String coms;
+        private Boolean bool;
 
-        public AcceptThread(String u1) {
+        public AcceptThread(String u1,String com,Boolean b) {
             this.user1 = u1;
+            this.coms = com;
+            this.bool=b;
         }
 
         @Override
@@ -235,68 +259,41 @@ public class ProcessTradeScreen extends ActionBarActivity {
 
             tradeRequest = traderequests.get(position);
             trade = tradeRequest.getTrade();
-            trade.setAccepted(Boolean.TRUE);
 
-            tradeRequest.acceptTradeRequest(trade.getBorrower(), trade.getOwner(), trade);
-
-        }
-    }
-*/
-
-    class AcceptThread extends Thread { //look for friend requests between x and y
-        private String user1;
-
-        public AcceptThread(String u1) {
-            this.user1 = u1;
-        }
-
-        @Override
-        public void run() {
-
-            try {
-                traderequests = trmanager.findTradeRequests(user1);
-            } catch (IOException e) {
-                Toast.makeText(getApplicationContext(), "caught an exception :C", Toast.LENGTH_SHORT).show();
+            if(bool){
+                trade.setAccepted(Boolean.TRUE);
+                trade.setOwnerComment(coms);
+            }else{
+                trade.setDeclined(Boolean.TRUE);
             }
 
-            tradeRequest = traderequests.get(position);
-            trade = tradeRequest.getTrade();
-            trade.setAccepted(Boolean.TRUE);
-
-            //
             account1 = accountManager.getAccount(trade.getOwner().getUsername());
             account2 = accountManager.getAccount(trade.getBorrower().getUsername());
+            //tradeRequest.acceptTradeRequest(trade.getBorrower(), trade.getOwner(), trade);
 
-            tradeRequest.acceptTradeRequest(trade.getBorrower(), trade.getOwner(), trade);
-            /*
             tradeHistory = account1.getTradeHistory();
             tradeHistory.addTrade(trade);
+
             account1.setTradeHistory(tradeHistory);
+            accountManager.updateAccount(account1);
 
             tradeHistory = account2.getTradeHistory();
             tradeHistory.addTrade(trade);
+
             account2.setTradeHistory(tradeHistory);
-            */
-            accountManager.updateAccount(account1);
             accountManager.updateAccount(account2);
+            //
 
-            try{
-                trade1 = account1.getTradeHistory().getTradeByIndex(5);
-            }catch(NegativeNumberException e){
-
-            }catch(TooLongException te){
-
-            }
 
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(ProcessTradeScreen.this, "borrower: " + trade.getBorrower().getUsername(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProcessTradeScreen.this, "trade has been processed", Toast.LENGTH_SHORT).show();
                 }
             });
 
-            //trmanager.deleteTR(tradeRequest);
-            //saveLoad.saveInFile(getApplicationContext(), account);
+            trmanager.deleteTR(tradeRequest);
+            saveLoad.saveInFile(getApplicationContext(), account);
 
         }
     }
