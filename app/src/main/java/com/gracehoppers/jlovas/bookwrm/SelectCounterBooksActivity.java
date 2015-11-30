@@ -24,7 +24,7 @@ public class SelectCounterBooksActivity extends ActionBarActivity {
     ListView counterList;
     private Trade trade = new Trade();
     private ArrayAdapter<Book> adapter;
-    private ArrayList<Book> bookList=new ArrayList<Book>();
+    public ArrayList<Book> bookList=new ArrayList<Book>();
 
     private Account account = new Account();
 

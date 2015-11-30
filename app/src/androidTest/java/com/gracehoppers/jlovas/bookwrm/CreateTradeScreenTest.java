@@ -12,6 +12,13 @@ import java.util.ArrayList;
  */
 public class CreateTradeScreenTest extends ActivityInstrumentationTestCase2 {
 
+    /*
+       this test is for use case:
+       1. create a trade
+       2. add, select and sumbit
+
+     */
+
     public Account owner = new Account();
     public Account borrower = new Account();
     public Book book1 = new Book();

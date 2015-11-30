@@ -6,4 +6,5 @@ package com.gracehoppers.jlovas.bookwrm;
  * Created by jlovas on 11/30/15.
  */
 public class UseCase4 {
+
 }
