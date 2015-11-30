@@ -26,6 +26,7 @@ public class TopTraderActivity extends Activity {
     private UsernameManager usernameManager;
     private UserNameHolder userNameHolder;
     private Accounts allAccounts = new Accounts();
+    private ConnectionCheck connectionCheck=new ConnectionCheck();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +35,13 @@ public class TopTraderActivity extends Activity {
 
         topTraders = (TextView) findViewById(R.id.topTraders);
 
-        usernameThread uThread= new usernameThread();
-        uThread.start();
-
+        if(connectionCheck.checkConnection(TopTraderActivity.this)) {
+            usernameThread uThread = new usernameThread();
+            uThread.start();
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "No connection, please try again later", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
