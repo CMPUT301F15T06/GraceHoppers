@@ -65,12 +65,12 @@ public class CreateTradeScreen extends Activity {
         newTrade.setOwner(friend);
         newTrade.setBorrower(me);
 
-        pos = getIntent().getIntExtra("aPosition", (int) Double.POSITIVE_INFINITY);
-        pos2 = getIntent().getIntExtra("bPosition", (int) Double.POSITIVE_INFINITY);
+        pos2 = getIntent().getIntExtra("aPosition", (int) Double.POSITIVE_INFINITY);
+        pos = getIntent().getIntExtra("bPosition", (int) Double.POSITIVE_INFINITY);
         //Toast.makeText(getApplicationContext(), "aposition: "+pos+"friend: "+friend.getUsername(), Toast.LENGTH_SHORT).show();
 
         try {
-            Book thisBook = friend.getInventory().getBookByIndex(pos);
+            Book thisBook = me.getInventory().getBookByIndex(pos);
 
             boolean exist = false;
 
@@ -99,7 +99,7 @@ public class CreateTradeScreen extends Activity {
         }
 
         try {
-                newTrade.setOwnerBook(me.getInventory().getBookByIndex(pos2));
+                newTrade.setOwnerBook(friend.getInventory().getBookByIndex(pos2));
         } catch (NegativeNumberException e) {
             e.printStackTrace();
         } catch (TooLongException e) {
@@ -196,7 +196,7 @@ public class CreateTradeScreen extends Activity {
             borrowerAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, SelectFromBorrowerInventoryActivity.class);
+                    Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, SelectFromOwnerInventoryActivity.class);
                   //  if(getIntent().getStringExtra("flag").equals("search")){ //prevents the app from crashing from no flag extra
                   //      borrowerAddIntent.putExtra("flag", "search");
                   //  } else borrowerAddIntent.putExtra("flag","friend");
@@ -209,7 +209,7 @@ public class CreateTradeScreen extends Activity {
             ownerSelect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, SelectFromOwnerInventoryActivity.class);
+                    Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, SelectFromBorrowerInventoryActivity.class);
                    // if(getIntent().getStringExtra("flag").equals("search")){ //prevents the app from crashing from no flag extra
                    //     borrowerAddIntent.putExtra("flag","search");
                    // } else borrowerAddIntent.putExtra("flag","friend");
