@@ -4,6 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/gradient"
     tools:context="com.gracehoppers.jlovas.bookwrm.CreateTradeScreen">
 
     <TextView
@@ -12,6 +13,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Select one or more books from your friend&apos;s inventory:"
         android:id="@+id/textView"
+        android:textColor="#000000"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
@@ -29,7 +31,8 @@
         android:text="add"
         android:id="@+id/borrowerAdd"
         android:layout_below="@+id/borrowerInventory"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:background="@drawable/yellow_gradient"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,6 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Select"
+        android:background="@drawable/yellow_gradient"
         android:id="@+id/selectFromFriend"
         android:layout_above="@+id/submitButton"
         android:layout_alignParentStart="true" />
@@ -52,6 +56,7 @@
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:text="Submit"
+        android:background="@drawable/yellow_gradient"
         android:id="@+id/submitButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
@@ -60,6 +65,7 @@
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:text="Cancel"
+        android:background="@drawable/yellow_gradient"
         android:id="@+id/cancelTradeButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />

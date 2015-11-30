@@ -572,7 +572,7 @@ public class PhotoActivity extends ActionBarActivity {
                 //setting options to squash this beast down
                 BitmapFactory.Options options = new BitmapFactory.Options();
 
-                options.inSampleSize = 8; //test value, needs powers of 2
+                options.inSampleSize = 8;
 
 
                 Bitmap original = BitmapFactory.decodeFile(imageurl, options);
@@ -582,9 +582,6 @@ public class PhotoActivity extends ActionBarActivity {
                 myPhotos.addPhoto(bytes.toByteArray());
 
                 Bitmap changed = BitmapFactory.decodeStream(new ByteArrayInputStream(bytes.toByteArray()));
-
-                Toast.makeText(getApplicationContext(), "Bytes before is: " + imageBitmap.getByteCount() +
-                     " Bytes of the image after is: " + changed.getByteCount(), Toast.LENGTH_SHORT).show();
 
                 Bitmap scaled = scaler.scaleToFitWidth(changed, 500);
 

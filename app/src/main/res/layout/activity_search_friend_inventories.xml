@@ -43,7 +43,7 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/searchtitletextview"
         android:layout_above="@+id/queryText"
-        android:background="#ffffff"/>
+        android:background="#fcffce"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"

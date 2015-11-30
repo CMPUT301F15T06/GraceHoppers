@@ -82,15 +82,9 @@ public class HomeScreen extends Activity {
         Bundle Username=i.getExtras();
         username=Username.getString("username");
 
-        //took out the test books that used to be here
-
         addBookButton= (Button)findViewById(R.id.addBookButton);
 
-
         account = saveload.loadFromFile(getApplicationContext());
-
-
-
 
         inventoryList = (ListView)findViewById(R.id.inventory1);
 
@@ -98,9 +92,6 @@ public class HomeScreen extends Activity {
         adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory());
         inventoryList.setAdapter(adapter);
         //------------------------------------------
-
-        //test code
-        //Toast.makeText(getApplicationContext(), "Friends has " + account.getFriends().getSize() + " people in it!", Toast.LENGTH_SHORT).show();
 
 
         addBookButton.setOnClickListener(new View.OnClickListener() {

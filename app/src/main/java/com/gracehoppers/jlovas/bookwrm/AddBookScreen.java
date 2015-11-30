@@ -81,6 +81,8 @@ public class AddBookScreen extends ActionBarActivity {
     public TextView getComments() {return comments;}
 
     public CheckBox getPrivateCheckBox() {return privateCheckBox;}
+
+    public ImageView getPhotoButton(){ return thePhoto;}
     //-------------------------------------------------------
 
 
@@ -335,7 +337,6 @@ public class AddBookScreen extends ActionBarActivity {
                 }
             }else{
                 //hit the back button
-                Toast.makeText(getApplicationContext(), "Clearing photos because you hit back", Toast.LENGTH_SHORT).show();
                 myPhotos =mySaveLoad.loadPhotos(getApplicationContext());
                 myPhotos.getPhotos().clear();
                 mySaveLoad.savePhotos(getApplicationContext(), myPhotos);

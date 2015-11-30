@@ -4,12 +4,14 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/gradient"
     tools:context="com.gracehoppers.jlovas.bookwrm.ProfileScreen">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="MyProfile"
+        android:textColor="#000000"
         android:textSize="40dp"
         android:layout_marginLeft="80dp"
         android:layout_marginTop="30dp"/>
@@ -20,6 +22,7 @@
         android:text="UserName:"
         android:layout_marginTop="120dp"
         android:textSize="20dp"
+        android:textColor="#000000"
         android:id="@+id/textname"/>
 
     <TextView
@@ -28,7 +31,7 @@
         android:layout_toRightOf="@id/textname"
         android:layout_marginTop="120dp"
         android:textSize="20dp"
-        android:text="name"
+        android:text=""
         android:id="@+id/originalname"/>
 
     <TextView
@@ -37,6 +40,7 @@
         android:text="Email:"
         android:layout_marginTop="170dp"
         android:textSize="20dp"
+        android:textColor="#000000"
         android:id="@+id/textemail"/>
 
     <TextView
@@ -45,6 +49,7 @@
         android:text="City:"
         android:layout_marginTop="225dp"
         android:textSize="20dp"
+        android:textColor="#000000"
         android:id="@+id/textcity"/>
 
     <EditText
@@ -58,7 +63,7 @@
     <TextView
         android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:text = "city"
+        android:text = ""
         android:textSize="20dp"
         android:layout_toRightOf="@id/textcity"
         android:layout_marginTop="225dp"
@@ -75,7 +80,7 @@
     <TextView
         android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:text="email"
+        android:text=""
         android:textSize="20dp"
         android:layout_toRightOf="@id/textemail"
         android:layout_marginTop="170dp"
@@ -88,12 +93,14 @@
         android:text = "Click to edit"
         android:layout_marginTop="340dp"
         android:textSize="18dp"
+        android:background="@drawable/yellow_gradient"
         android:layout_marginLeft="90dp"
         android:id="@+id/editprofile"
         />
 
     <Button
         android:layout_width="wrap_content"
+        android:background="@drawable/yellow_gradient"
         android:layout_height="wrap_content"
         android:text = "confirm edit"
         android:layout_marginTop="340dp"
