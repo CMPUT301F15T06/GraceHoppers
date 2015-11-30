@@ -146,6 +146,12 @@ public class ViewTradeActivity extends ActionBarActivity {
                     startActivity(intent);
                 }
             });
+            complete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    complete();
+                }
+            });
 
     }
 
