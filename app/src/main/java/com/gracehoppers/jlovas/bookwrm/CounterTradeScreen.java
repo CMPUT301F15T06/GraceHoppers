@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class CounterTradeScreen extends Activity{
 
     Trade oldTrade = new Trade();
-    private static Trade counterTrade = new Trade();
+    public static Trade counterTrade = new Trade();
     private ArrayAdapter<Book> adapter;
     private ArrayAdapter<Book> adapter1;
     //private ListView bInventory;

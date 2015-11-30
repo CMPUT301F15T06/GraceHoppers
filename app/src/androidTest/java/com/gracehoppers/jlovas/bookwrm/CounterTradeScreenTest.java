@@ -23,7 +23,6 @@ public class CounterTradeScreenTest extends ActivityInstrumentationTestCase2{
     this test includes user case for:
     1. create couterTrade
     2. initialize counterTrade with ownerBook from former trade
-    3. sele
      */
 
     public CounterTradeScreenTest(){
@@ -59,6 +58,7 @@ public class CounterTradeScreenTest extends ActivityInstrumentationTestCase2{
         trade = owner.getTradeHistory().getTradeByIndex(position);
 
         assertEquals(trade.getOwnerBook().getTitle(), ownerText.getText().toString());
+        assertEquals(activity.counterTrade.getOwnerBook().getTitle(), trade.getOwnerBook().getTitle());
 
     }
 

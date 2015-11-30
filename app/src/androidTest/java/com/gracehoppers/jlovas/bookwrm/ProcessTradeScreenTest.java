@@ -7,7 +7,9 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -21,16 +23,17 @@ public class ProcessTradeScreenTest extends ActivityInstrumentationTestCase2 {
     public Book book2 = new Book();
     public ArrayList<Book> bBooks = new ArrayList<Book>();
     public Trade trade = new Trade();
+    public Trade trade1 = new Trade();
+    public Trade trade2 = new Trade();
     public TradeHistory tradeHistory = new TradeHistory();
+    SaveLoad saveLoad = new SaveLoad();
+    int pos= 0;
+    private TradeRequests traderequests =new TradeRequests();
+    private TradeRequestManager trmanager = new TradeRequestManager();
+    private TradeRequest tradeRequest = new TradeRequest();
 
     /*this test includes user case for:
-     1. acce
-
-
-
-
-
-pt a trade and decline a trade;
+     1. accept a trade and decline a trade;
      2. email both parties
      */
 
@@ -56,14 +59,26 @@ pt a trade and decline a trade;
         trade.setOwnerBook(book1);
     }
 
-    public void testAccept() throws Exception {
+
+
+    //test "trade is accepted in server"
+    public void testAcceptWithServer() throws Exception {
         ProcessTradeScreen activity = (ProcessTradeScreen) getActivity();
         final Button accept = activity.accept;
-        //ensure the trade is not accepted before
         setUp();
 
+        owner = saveLoad.loadFromFile(activity.getApplicationContext());
+
+        pos = activity.position;
+
+        traderequests = trmanager.findTradeRequests(owner.getUsername());
+        tradeRequest = traderequests.get(pos);
+
+        trade = tradeRequest.getTrade();
+        trade.setAccepted(false);
+
         activity.trade = trade;
-        activity.account = owner;
+
         assertFalse(activity.trade.getAccepted());
 
         //Set up ActivityMonitor
@@ -79,9 +94,111 @@ pt a trade and decline a trade;
         getInstrumentation().waitForIdleSync();
 
         assertTrue(activity.trade.getAccepted());
-        //assertNotNull("acceptDialog is null", receiverActivity.dialog);
 
-        //remove Monitor
+        getInstrumentation().removeMonitor(receiverActivityMonitor);
+
+    }
+
+    //test "trade is declined in server"
+    public void testDeclineWithServer() throws Exception {
+        ProcessTradeScreen activity = (ProcessTradeScreen) getActivity();
+        final Button decline = activity.decline;
+        setUp();
+
+        owner = saveLoad.loadFromFile(activity.getApplicationContext());
+
+        pos = activity.position;
+
+        traderequests = trmanager.findTradeRequests(owner.getUsername());
+        tradeRequest = traderequests.get(pos);
+
+        trade = tradeRequest.getTrade();
+        trade.setDeclined(false);
+
+        activity.trade = trade;
+
+        assertFalse(activity.trade.getDeclined());
+
+        //Set up ActivityMonitor
+        Instrumentation.ActivityMonitor receiverActivityMonitor = getInstrumentation().addMonitor(CounterTradeScreen.class.getName(), null, false);
+
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                decline.performClick();
+
+            }
+        });
+
+        getInstrumentation().waitForIdleSync();
+
+        assertTrue(activity.trade.getDeclined());
+
+        getInstrumentation().removeMonitor(receiverActivityMonitor);
+
+    }
+
+    public void testDeclineWithoutServer() throws Exception {
+
+        ProcessTradeScreen activity = (ProcessTradeScreen) getActivity();
+        final Button decline = activity.decline;
+
+        trade2 = new Trade();
+
+        trade2.setDeclined(false);
+        activity.trade = trade2;
+
+        //ensure the trade is not declined before
+        assertFalse(activity.trade.getDeclined());
+
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor receiverActivityMonitor =
+                getInstrumentation().addMonitor(CounterTradeScreen.class.getName(),
+                        null, false);
+
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                decline.performClick();
+            }
+        });
+
+        getInstrumentation().waitForIdleSync();
+
+        //ensure the trade declines after click decline
+        assertTrue(activity.trade.getDeclined());
+
+        getInstrumentation().removeMonitor(receiverActivityMonitor);
+
+    }
+
+    public void testAcceptWithoutServer() throws Exception {
+
+        ProcessTradeScreen activity = (ProcessTradeScreen) getActivity();
+        final Button accept = activity.accept;
+
+        trade1 = new Trade();
+
+        trade1.setAccepted(false);
+        activity.trade = trade1;
+
+        //ensure the trade is not declined before
+        assertFalse(activity.trade.getAccepted());
+
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor receiverActivityMonitor =
+                getInstrumentation().addMonitor(CounterTradeScreen.class.getName(),
+                        null, false);
+
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                accept.performClick();
+            }
+        });
+
+        getInstrumentation().waitForIdleSync();
+
+        //ensure the trade declines after click decline
+        assertTrue(activity.trade.getAccepted());
+
         getInstrumentation().removeMonitor(receiverActivityMonitor);
 
     }
@@ -112,56 +229,17 @@ pt a trade and decline a trade;
         //remove Monitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);
 
-    }}
-/*
-    public void testDecline() throws Exception {
-        setUp();
-        ProcessTradeScreen activity = (ProcessTradeScreen) getActivity();
-        final Button decline = activity.decline;
-
-        activity.trade = trade;
-        activity.account = owner;
-
-        //ensure the trade is not declined before
-        assertFalse(activity.trade.getDeclined());
-
-        // Set up an ActivityMonitor
-        Instrumentation.ActivityMonitor receiverActivityMonitor =
-                getInstrumentation().addMonitor(CounterTradeScreen.class.getName(),
-                        null, false);
-
-        activity.runOnUiThread(new Runnable() {
-            public void run() {
-                decline.performClick();
-            }
-        });
-
-        getInstrumentation().waitForIdleSync();
-
-        //ensure the trade declines after click decline
-        assertTrue(activity.trade.getDeclined());
-
     }
+
 }
 
 
-        //assertNotNull("declineDialog is null", receiverActivity.dialog1);
-/*
-        // Validate that ReceiverActivity is started
-        CounterTradeScreen receiverActivity = (CounterTradeScreen)
-                receiverActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("ReceiverActivity is null", receiverActivity);
-        assertEquals("Monitor for ReceiverActivity has not been called",
-                1, receiverActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type",
-                CounterTradeScreen.class, receiverActivity.getClass());
-
-        // Remove the ActivityMonitor
-        getInstrumentation().removeMonitor(receiverActivityMonitor);
-        receiverActivity.finish();   */
+    //since we do not need to test for UI , below are unnecessary
 
 
-//email function can't implement before loading account information
+
+
+
     /*
     public void testViewBorrowerName() {
         //ensure the text shows name of borrower
@@ -176,9 +254,6 @@ pt a trade and decline a trade;
         }
         activity.trade= new Trade();
         activity.trade.setBorrower(borrower);
-
-        Thread thread = new FindTRThread(account.getUsername());
-        thread.start();
 
         assertEquals("Borrower Name:\n" + "GOGO", activity.bName.getText().toString());
     }
