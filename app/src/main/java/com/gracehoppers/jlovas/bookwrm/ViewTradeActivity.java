@@ -1,13 +1,19 @@
 package com.gracehoppers.jlovas.bookwrm;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+
+import static junit.framework.Assert.assertTrue;
 
 /**
  * Activity for viewing a trade's borrower and Owner  basic information (username),
@@ -33,7 +39,8 @@ public class ViewTradeActivity extends ActionBarActivity {
     private SaveLoad saveload = new SaveLoad();
     Account account;
 
-    Button completeButton;
+    Button counter;
+    Button complete;
 
     private TextView borrowerUsername;
     private TextView borrowerBook;
@@ -42,6 +49,7 @@ public class ViewTradeActivity extends ActionBarActivity {
     private TextView ownerBook;
 
     private TextView comments;
+    private TextView status;
 
     private Trade trade;
 
@@ -52,7 +60,8 @@ public class ViewTradeActivity extends ActionBarActivity {
         setContentView(R.layout.activity_view_trade);
         //Toast.makeText(getApplicationContext(), "Breakpoint", Toast.LENGTH_SHORT).show();
 
-        completeButton = (Button) findViewById(R.id.completeButton);
+        counter = (Button) findViewById(R.id.counter);
+        complete = (Button) findViewById(R.id.completeButton);
 
         borrowerUsername = (TextView) findViewById(R.id.borrowerUsername);
         borrowerBook = (TextView)  findViewById(R.id.borrowerBook);
@@ -62,7 +71,30 @@ public class ViewTradeActivity extends ActionBarActivity {
 
         comments = (TextView) findViewById(R.id.comments);
 
-        if (getIntent().getStringExtra("flag").equals("HistoryOfTrades")){
+        status = (TextView)findViewById(R.id.status);
+
+        account = saveload.loadFriendFromFile(getApplicationContext());
+        //For testing purposes. DELETE AFTER
+        //Create a test trade and add it to the list
+        Account B = new Account();
+        try{
+            B.setUsername("B");
+            B.setEmail("xyz@gmail.com");
+            B.setCity("YEG");
+        } catch (NoSpacesException e){
+
+        } catch (TooLongException e){
+
+        } catch (IllegalEmailException e ) {
+
+        }
+
+
+        Log.e("HistoryOfTrades size: ", String.valueOf(account.getTradeHistory().getSize()));
+
+
+        //if (getIntent().getStringExtra("flag").equals("HistoryOfTrades")){
+
             pos = getIntent().getIntExtra("listPosition", 0);
 
             account = saveload.loadFromFile(ViewTradeActivity.this);
@@ -76,26 +108,47 @@ public class ViewTradeActivity extends ActionBarActivity {
                 Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
             }
 
-            //Display the trade information through the TextViews
-            borrowerUsername.setText(trade.getBorrower().getUsername());
-            borrowerBook.setText(trade.getBorrowerBook().toString());
+            //If the trade is already completed, make the complete Button invisible
+            if (trade.getCompletion().equals("COMPLETE")){
+                complete.setVisibility(View.INVISIBLE);
+            }
 
-            ownerUsername.setText(trade.getOwner().getUsername());
-            ownerBook.setText(trade.getOwnerBook().getTitle());
+            //Display the trade information through the TextViews
+            borrowerUsername.setText("Borrower:  "+ trade.getBorrower().getUsername());
+            String bookTitles ="";
+
+            for(Book b: trade.getBorrowerBook()){
+                bookTitles= bookTitles + b.getTitle() +"\n";
+            }
+
+            borrowerBook.setText("Borrower Books:  " + bookTitles);
+
+            ownerUsername.setText("Owner:  "+ trade.getOwner().getUsername());
+            ownerBook.setText("Owner Book:  "+ trade.getOwnerBook().getTitle());
+
+            Toast.makeText(getApplicationContext(),trade.getOwnerComment(), Toast.LENGTH_SHORT).show();
 
             comments.setText(trade.getOwnerComment());
 
-            completeButton.setOnClickListener(new View.OnClickListener() {
+            counter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    complete();
+                    Intent intent = new Intent(ViewTradeActivity.this, CounterTradeScreen.class);
+                    intent.putExtra("listPosition", pos);
+                    startActivity(intent);
                 }
             });
 
-        } else {
-            Toast.makeText(getApplicationContext(), "Else taken", Toast.LENGTH_SHORT).show();
+            if(trade.getAccepted() ){
+                status.setText("Status: Accepted");
+            }else if(trade.getDeclined()){
+                status.setText("Status: Declined");
+            }
 
-        }
+        //} else {
+        //    Toast.makeText(getApplicationContext(), "Else taken", Toast.LENGTH_SHORT).show();
+
+       // }
 
     }
 
@@ -122,7 +175,10 @@ public class ViewTradeActivity extends ActionBarActivity {
     }
 
     public void complete(){
+        //mark the trade as complete
         trade.setCompletion(TradeCompletion.COMPLETE);
+        //make the button invisible
+        complete.setVisibility(View.INVISIBLE);
         Toast.makeText(getApplicationContext(), "Trade marked as COMPLETE.", Toast.LENGTH_SHORT).show();
     }
 }

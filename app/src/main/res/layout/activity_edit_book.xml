@@ -7,7 +7,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.gracehoppers.jlovas.bookwrm.AddBookScreen">
+    tools:context="com.gracehoppers.jlovas.bookwrm.AddBookScreen"
+    android:background="#955d2f">
 
     <TextView
         android:layout_width="wrap_content"
@@ -16,6 +17,7 @@
         android:text="Edit Book"
         android:id="@+id/titleEditBookText"
         android:textStyle="bold"
+        android:textColor="#FFFFFF"
         android:textSize="30sp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
@@ -26,12 +28,13 @@
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
-        android:stretchColumns="0">
+        android:stretchColumns="0"
+        android:id="@+id/tableLayout3"
+        android:background="#c7a35b">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFA0D0D8">
+            android:layout_height="wrap_content">
 
             <EditText
                 android:layout_width="wrap_content"
@@ -49,8 +52,7 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFA0D0D8">
+            android:layout_height="wrap_content">
 
             <EditText
                 android:layout_width="wrap_content"
@@ -74,7 +76,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
-        android:background="#FFD8D8D8"
         android:stretchColumns="0,1,2"
         android:id="@+id/quantityTable">
 
@@ -82,7 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dip"
-            android:background="#FFA0D0D8">
+            android:background="#c7a35b">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -101,9 +102,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dip"
-            android:background="#FFA0D0D8">
+            android:background="#c7a35b">
 
             <Button
+                android:background="@drawable/yellow_gradient"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:text="-"
@@ -120,6 +122,7 @@
 
 
             <Button
+                android:background="@drawable/yellow_gradient"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:text="+"
@@ -137,16 +140,14 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="270dp"
-        android:background="#FFA0D0D8"
+        android:background="#c7a35b"
 
         >
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dip"
-
-            android:background="#FFA0D0D8">
+            android:padding="5dip">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -166,8 +167,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dip"
-            android:layout_marginLeft="120dp"
-            android:background="#FFA0D0D8">
+            android:layout_marginLeft="120dp">
 
             <RatingBar
                 android:layout_width="wrap_content"
@@ -188,13 +188,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="350dp"
-        android:id="@+id/tableLayout">
+        android:id="@+id/tableLayout"
+        android:background="#c7a35b">
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dip"
-            android:background="#FFA0D0D8">
+            android:padding="5dip">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -213,7 +213,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dip"
-            android:background="#FFA0D0D8"
             android:stretchColumns="0,1">
 
             <Spinner
@@ -249,6 +248,7 @@
         android:text="Private Listing"
         android:id="@+id/privateListingCheckbox"
         android:checked="false"
+        android:textColor="#FFFFFF"
         android:layout_alignBaseline="@+id/EditBookButton"
         android:layout_alignParentStart="true" />
 
@@ -267,11 +267,25 @@
         android:clickable="true" />
 
     <Button
+        android:background="@drawable/yellow_gradient"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:text="Ok"
         android:id="@+id/EditBookButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="+"
+        android:textSize="32dp"
+        android:textColor="#009900"
+        android:id="@+id/plusTitleText"
+        android:layout_marginBottom="25dp"
+        android:layout_marginRight="35dp"
+        android:layout_alignBottom="@+id/tableLayout3"
+        android:layout_alignEnd="@+id/bookImage" />
 
 </RelativeLayout>

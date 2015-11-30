@@ -22,12 +22,14 @@ import java.util.ArrayList;
 public class SelectCounterBooksActivity extends ActionBarActivity {
 
     ListView counterList;
-    private Trade counterTrade = new Trade();
+    private Trade trade = new Trade();
     private ArrayAdapter<Book> adapter;
     private ArrayList<Book> bookList=new ArrayList<Book>();
 
-    private Account account1 = new Account();
-    private Account account2 = new Account();
+    private Account account = new Account();
+
+    SaveLoad saveLoad;
+    int pos;
 
 
     @Override
@@ -35,12 +37,25 @@ public class SelectCounterBooksActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_counter_books);
 
-        setUp();
+        saveLoad = new SaveLoad();
+        account = saveLoad.loadFromFile(getApplicationContext());
+        pos = getIntent().getIntExtra("listPosition", 0);
+
+        try{
+            trade = account.getTradeHistory().getTradeByIndex(pos);
+        }catch(NegativeNumberException e){
+
+        }catch(TooLongException te){
+            Toast.makeText(getApplicationContext(), "Too long", Toast.LENGTH_SHORT).show();
+        }
+
+        //setUp();
 
         counterList = (ListView) findViewById(R.id.selectCounterList);
 
+
         //set listView to borrower's inventory
-        bookList= counterTrade.getBorrower().getInventory().getInventory();
+        bookList= trade.getBorrower().getInventory().getInventory();
         adapter = new BookListAdapter(this, R.layout.book_inventory_list,bookList);
         counterList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -50,19 +65,24 @@ public class SelectCounterBooksActivity extends ActionBarActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-                Book aBook = bookList.get(pos);
-                counterTrade.getBorrowerBook().add(aBook);
+                //Book aBook = bookList.get(pos);
+                //.getBorrowerBook().add(aBook);
 
                 Intent intent = new Intent(SelectCounterBooksActivity.this, CounterTradeScreen.class);
-                intent.putExtra("BookName",aBook.getTitle());
+
+                Book aBook = bookList.get(pos);
+                pos=trade.getBorrower().getInventory().getRealPosition(aBook.getUniquenum().getNumber());
+
+                intent.putExtra("BookPosition", pos);
                 startActivity(intent);
+                finish();
             }
         });
 
     }
 
 
-
+/*
     public void setUp(){
         try{
             account1.setCity("Lulala");
@@ -98,7 +118,7 @@ public class SelectCounterBooksActivity extends ActionBarActivity {
         tradeHistory.addTrade(counterTrade);
         account1.setTradeHistory(tradeHistory);
     }
-
+*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

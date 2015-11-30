@@ -396,7 +396,7 @@ public class HomeScreen extends Activity {
         inventoryList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-        Toast.makeText(getApplicationContext(), "Inventory:  " + account.getInventory().getSize() , Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Inventory:  " + account.getInventory().getSize() , Toast.LENGTH_SHORT).show();
 
         if(connectionCheck.checkConnection(HomeScreen.this)) {
             //check if you have any FR

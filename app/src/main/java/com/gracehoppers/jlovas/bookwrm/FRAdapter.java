@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 /**
  * an adapter for friend requests with the sender's name shown
- * Created by nlovas on 11/19/15.
+ * @author nlovas on 11/19/15.
  */
 public class FRAdapter extends ArrayAdapter<FriendRequest> {
 

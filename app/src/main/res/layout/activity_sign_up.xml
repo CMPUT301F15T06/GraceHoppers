@@ -4,7 +4,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.gracehoppers.jlovas.bookwrm.SignUpActivity">
+    tools:context="com.gracehoppers.jlovas.bookwrm.SignUpActivity"
+    android:background="#955d2f">
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
-        android:background="#FFA0D0D8">
+        android:background="#c7a35b">
 
         <EditText
             android:layout_width="wrap_content"
@@ -50,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
-            android:background="#FFA0D0D8">
+            android:background="#c7a35b">
 
 
             <EditText
@@ -72,7 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
-            android:background="#FFA0D0D8">
+            android:background="#c7a35b">
 
             <EditText
                 android:layout_width="wrap_content"
@@ -98,6 +99,7 @@
         android:width="150dp"
         android:layout_marginBottom="70dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/yellow_gradient" />
 
 </RelativeLayout>

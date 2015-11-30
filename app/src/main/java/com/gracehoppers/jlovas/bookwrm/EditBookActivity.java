@@ -56,6 +56,7 @@ public class EditBookActivity extends ActionBarActivity {
     Account tempAccount;
     int pos;
     Photos editPhotos;
+    TextView plusTitleText;
 
     // for UI testing-------------------------------------------
     public EditText getBookTitle(){return bookTitle;}
@@ -94,6 +95,7 @@ public class EditBookActivity extends ActionBarActivity {
         bookPhoto= (ImageView)findViewById(R.id.bookImage);
         privateCheckBox= (CheckBox)findViewById(R.id.privateListingCheckbox);
         okButton= (Button)findViewById(R.id.EditBookButton);
+        plusTitleText = (TextView)findViewById(R.id.plusTitleText);
     //--------------------------------------------------------------
 
         //obtain book info from the intent (if photos cant be passed by intent, replace all of these with gson)
@@ -112,11 +114,21 @@ public class EditBookActivity extends ActionBarActivity {
         bookTitle.setText(title);
         bookAuthor.setText(author);
         bookQuantity.setText(quantity + "");
-        //Toast.makeText(getApplicationContext(), quality + "", Toast.LENGTH_SHORT).show();
+
         bookRating.setIsIndicator(true);
         bookRating.setRating((float) quality);
         bookRating.setIsIndicator(false);
 
+        //update symbol based on images
+        try {
+            if (tempAccount.getInventory().getBookByIndex(pos).getPhotos().getPhotos().size() > 0) {
+                plusTitleText.setText("✔");
+            }
+        }catch(NegativeNumberException e){
+
+        }catch (TooLongException e){
+
+        }
 
         bookPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -328,15 +340,11 @@ public class EditBookActivity extends ActionBarActivity {
             }
         });
 
-
-
-
-
     }
 
     /**
      * This method will run when a user has clicked to edit comments (see method above) and returns
-     * the results to the parent function on result.
+     * the results to the parent function on result. Also used when editing pictures
      *
      * @param requestCode the code to tell which is returning
      * @param resultCode checks that the result is ok
@@ -354,6 +362,9 @@ public class EditBookActivity extends ActionBarActivity {
             //returning from photoactivity
 
                 editPhotos = saveload.loadPhotos(getApplicationContext());
+                if(!editPhotos.getHasImages()){
+                    plusTitleText.setText("+");
+                }
                 Toast.makeText(getApplicationContext(), "Returning from editting photos!", Toast.LENGTH_SHORT).show();
 
         }else{

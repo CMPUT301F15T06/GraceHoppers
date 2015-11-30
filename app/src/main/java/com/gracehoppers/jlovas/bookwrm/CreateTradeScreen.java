@@ -41,7 +41,7 @@ public class CreateTradeScreen extends Activity {
     private Account friend;
     private ArrayAdapter<Book> adapter;
     private ArrayAdapter<Book> adapterO;
-    private ArrayList<Book> selectedBorrowerBooks;
+    private ArrayList<Book> selectedBorrowerBooks  = new ArrayList<Book>();
     private ArrayList<Book> selectedOwnerBook = new ArrayList<Book>();
     private static Trade newTrade = new Trade();
     private SaveLoad mySaveLoad;
@@ -56,17 +56,42 @@ public class CreateTradeScreen extends Activity {
     protected void onStart(){
         super.onStart();
 
-        mySaveLoad = new SaveLoad();
-        me = mySaveLoad.loadFromFile(getApplicationContext());
-        friend = mySaveLoad.loadFriendFromFile(getApplicationContext());
+        //mySaveLoad = new SaveLoad();
+        //me = mySaveLoad.loadFromFile(getApplicationContext());
+        //friend = mySaveLoad.loadFriendFromFile(getApplicationContext());
 
         //Toast.makeText(getApplicationContext(), "My inventory has " + me.getInventory().getSize() + " items in it!", Toast.LENGTH_SHORT).show();
 
-        pos = getIntent().getIntExtra("aPosition", (int) Double.POSITIVE_INFINITY);
-        pos2 = getIntent().getIntExtra("bPosition", (int) Double.POSITIVE_INFINITY);
+        newTrade.setOwner(friend);
+        newTrade.setBorrower(me);
+
+        pos2 = getIntent().getIntExtra("aPosition", (int) Double.POSITIVE_INFINITY);
+        pos = getIntent().getIntExtra("bPosition", (int) Double.POSITIVE_INFINITY);
+        //Toast.makeText(getApplicationContext(), "aposition: "+pos+"friend: "+friend.getUsername(), Toast.LENGTH_SHORT).show();
 
         try {
-            newTrade.getBorrowerBook().add(friend.getInventory().getBookByIndex(pos));
+            Book thisBook = me.getInventory().getBookByIndex(pos);
+
+            boolean exist = false;
+
+            int i = 0;
+            String all = "";
+            while(i < newTrade.getBorrowerBook().size()){
+                if (thisBook.getTitle().toString().equals(newTrade.getBorrowerBook().get(i).getTitle())){
+                    exist = true;
+                }
+                i++;
+            }
+
+            if (exist) {
+                Toast.makeText(CreateTradeScreen.this,"Already added this book",Toast.LENGTH_SHORT).show();
+            }
+
+            if (!exist) {
+                newTrade.getBorrowerBook().add(thisBook);
+            }
+
+
         } catch (NegativeNumberException e) {
             e.printStackTrace();
         } catch (TooLongException e) {
@@ -74,13 +99,12 @@ public class CreateTradeScreen extends Activity {
         }
 
         try {
-            newTrade.setOwnerBook(me.getInventory().getBookByIndex(pos2));
+                newTrade.setOwnerBook(friend.getInventory().getBookByIndex(pos2));
         } catch (NegativeNumberException e) {
             e.printStackTrace();
         } catch (TooLongException e) {
             e.printStackTrace();
         }
-
 
         selectedBorrowerBooks = newTrade.getBorrowerBook();
         borrowerInventoryListView = (ListView)findViewById(R.id.borrowerInventory);
@@ -89,7 +113,7 @@ public class CreateTradeScreen extends Activity {
         adapter.notifyDataSetChanged();
 
         if (selectedOwnerBook.isEmpty()){
-            if (newTrade.getOwnerBook().getTitle() != null) {
+            if (newTrade.getOwnerBook().getTitle() != "Untitled") {
                 selectedOwnerBook.add((newTrade.getOwnerBook()));
             }
         }else {
@@ -109,101 +133,135 @@ public class CreateTradeScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_trade_screen);
 
-        newTrade.setCompletion(TradeCompletion.CURRENT);
-        selectedBorrowerBooks = newTrade.getBorrowerBook();
-        borrowerInventoryListView = (ListView)findViewById(R.id.borrowerInventory);
-        adapter = new BookListAdapter(this,R.layout.friend_list, selectedBorrowerBooks);
-        borrowerInventoryListView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        //please note: onCreate is called before onStart, so I moved all of the data receivers here to avoid nullpointer exceptions -Nicole
+
+        mySaveLoad = new SaveLoad();
+        me = mySaveLoad.loadFromFile(getApplicationContext());
+        friend = mySaveLoad.loadFriendFromFile(getApplicationContext());
 
 
-        if (selectedOwnerBook.isEmpty()){
-            if (newTrade.getOwnerBook().getTitle() != null) {
-                selectedOwnerBook.add((newTrade.getOwnerBook()));
+
+            newTrade.setCompletion(TradeCompletion.CURRENT);
+            selectedBorrowerBooks = newTrade.getBorrowerBook();
+            borrowerInventoryListView = (ListView) findViewById(R.id.borrowerInventory);
+            adapter = new BookListAdapter(this, R.layout.friend_list, selectedBorrowerBooks);
+            borrowerInventoryListView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+
+
+            if (selectedOwnerBook.isEmpty()) {
+                if (newTrade.getOwnerBook().getTitle() != "Untitled") {
+                    selectedOwnerBook.add((newTrade.getOwnerBook()));
+                }
+            } else {
+                selectedOwnerBook.set(0, newTrade.getOwnerBook());
             }
-        }else {
-            selectedOwnerBook.set(0, newTrade.getOwnerBook());
-        }
-        ownerBookListView = (ListView)findViewById(R.id.ownerInventory);
-        adapterO = new BookListAdapter(this,R.layout.book_inventory_list, selectedOwnerBook);
-        ownerBookListView.setAdapter(adapterO);
-        adapterO.notifyDataSetChanged();
-
-        borrowerInventoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Book book = selectedBorrowerBooks.get(position);
-
-                //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
-                AlertDialog alertDialog = new AlertDialog.Builder(CreateTradeScreen.this).create();
-                alertDialog.setMessage("");
-                alertDialog.setCanceledOnTouchOutside(false);
-
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                alertDialog.show();
-
-            }
-        });
+            ownerBookListView = (ListView) findViewById(R.id.ownerInventory);
+            adapterO = new BookListAdapter(this, R.layout.book_inventory_list, selectedOwnerBook);
+            ownerBookListView.setAdapter(adapterO);
+            adapterO.notifyDataSetChanged();
 
 
-        borrowerAdd = (Button)findViewById(R.id.borrowerAdd);
-        borrowerAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, SelectFromBorrowerInventoryActivity.class);
-                startActivity(borrowerAddIntent);
-                finish();
-            }
-        });
+            borrowerInventoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //referenced from CMPUT 301 lab
+                public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                    Book book = selectedBorrowerBooks.get(position);
 
-        ownerSelect = (Button)findViewById(R.id.selectFromFriend);
-        ownerSelect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, SelectFromOwnerInventoryActivity.class);
-                startActivity(borrowerAddIntent);
-                finish();
+                    //Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CreateTradeScreen.this);
+                    builder.setTitle("");
+                    builder.setItems(new CharSequence[]
+                                    {"Delete", "Cancel"},
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // The 'which' argument contains the index position
+                                    // of the selected item
+                                    switch (which) {
+                                        case 0:
+                                            selectedBorrowerBooks.remove(position);
+                                            ownerBookListView.setAdapter(adapterO);
+                                            adapter.notifyDataSetChanged();
+                                        case 1:
+                                            dialog.cancel();
 
-            }
-        });
+                                    }
+                                }
+                            });
+                    builder.create().show();
 
-        submitTrade =  (Button)findViewById(R.id.submitButton);
-        submitTrade.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Add trade to TradeHistory, and then clear the newTrade variable
-                //Once submit is clicked, it'll start a trade request
+                }
+            });
 
-                TradeRequest request = new TradeRequest();
-                request.makeTradeRequest(me, friend.getUsername(), newTrade);
-                //check if you have any tR
-                Thread thread = new AddTRThread(request);
-                thread.start();
 
-                newTrade = new Trade();
-                mySaveLoad.saveInFile(getApplicationContext(), me);
-                //Toast.makeText(getApplicationContext(), "Breakpoint, newTrade added to History", Toast.LENGTH_SHORT).show();
+            borrowerAdd = (Button) findViewById(R.id.borrowerAdd);
+            borrowerAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, SelectFromOwnerInventoryActivity.class);
+                  //  if(getIntent().getStringExtra("flag").equals("search")){ //prevents the app from crashing from no flag extra
+                  //      borrowerAddIntent.putExtra("flag", "search");
+                  //  } else borrowerAddIntent.putExtra("flag","friend");
+                    startActivity(borrowerAddIntent);
+                    finish();
+                }
+            });
 
-                //Toast to show that the trade has been created
-                Toast.makeText(getApplicationContext(), "Trade submitted!", Toast.LENGTH_SHORT).show();
-                finish();
+            ownerSelect = (Button) findViewById(R.id.selectFromFriend);
+            ownerSelect.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, SelectFromBorrowerInventoryActivity.class);
+                   // if(getIntent().getStringExtra("flag").equals("search")){ //prevents the app from crashing from no flag extra
+                   //     borrowerAddIntent.putExtra("flag","search");
+                   // } else borrowerAddIntent.putExtra("flag","friend");
+                    startActivity(borrowerAddIntent);
+                    finish();
 
-            }
-        });
+                }
+            });
 
-        cancelTrade = (Button)findViewById(R.id.cancelTradeButton);
-        cancelTrade.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                newTrade = new Trade();
-                finish();
-            }
-        });
+            submitTrade = (Button) findViewById(R.id.submitButton);
+            submitTrade.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //Add trade to TradeHistory, and then clear the newTrade variable
+                    //Once submit is clicked, it'll start a trade request
+                    if (!newTrade.getOwnerBook().getTitle().equals("Untitled")) {
+                        TradeRequest request = new TradeRequest();
+                        request.makeTradeRequest(me, friend.getUsername(), newTrade);
+                        //check if you have any tR
+                        Thread thread = new AddTRThread(request);
+                        thread.start();
+
+                        newTrade = new Trade();
+                        mySaveLoad.saveInFile(getApplicationContext(), me);
+                        //Toast.makeText(getApplicationContext(), "Breakpoint, newTrade added to History", Toast.LENGTH_SHORT).show();
+
+                        //Toast to show that the trade has been created
+                        Toast.makeText(getApplicationContext(), "Trade submitted!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }else{
+                        Toast.makeText(CreateTradeScreen.this,"Must Choose one from Owner's Inventory",Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
+
+            cancelTrade = (Button) findViewById(R.id.cancelTradeButton);
+            cancelTrade.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    newTrade = new Trade();
+                    finish();
+                }
+            });
+
+        //if(getIntent().getStringExtra("flag").equals("search")){
+            //user has navigated here from the search activity
+       //     Toast.makeText(getApplicationContext(), friend.getUsername()+"", Toast.LENGTH_SHORT).show();
+
+
+
+       // }
 
     }
 

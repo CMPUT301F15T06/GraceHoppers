@@ -18,6 +18,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 /**
@@ -50,6 +52,7 @@ public class AddBookScreen extends ActionBarActivity {
     RatingBar stars;
     TextView comments;
     CheckBox privateCheckBox;
+    TextView plusTitleText;
 
     //For UI testing -----------------------------------------
     private ArrayList<Book> books = new ArrayList<Book>();
@@ -102,6 +105,7 @@ public class AddBookScreen extends ActionBarActivity {
         comments = (TextView)findViewById(R.id.descriptionText);
         privateCheckBox = (CheckBox)findViewById(R.id.privateListingCheckbox);
         thePhoto = (ImageView)findViewById(R.id.bookImage);
+        plusTitleText = (TextView)findViewById(R.id.plusTitleText);
         stars.setNumStars(5);
         final ConnectionCheck connection=new ConnectionCheck();
 
@@ -338,6 +342,9 @@ public class AddBookScreen extends ActionBarActivity {
             if(resultCode == -1) {
                 //load photos into this book's Photos object
                 myPhotos = mySaveLoad.loadPhotos(getApplicationContext());
+                if(myPhotos.getHasImages()){
+                    plusTitleText.setText("✔");
+                }
             }else{
                 //hit the back button
                 Toast.makeText(getApplicationContext(), "Clearing photos because you hit back", Toast.LENGTH_SHORT).show();

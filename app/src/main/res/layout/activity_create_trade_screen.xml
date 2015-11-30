@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Select one or more books from your friend&apos;s inventory:"
+        android:text="Select from borrower's inventory"
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Select one book from your own inventory:"
+        android:text="Select from owner's inventory:"
         android:id="@+id/textView2"
         android:layout_below="@+id/borrowerAdd"
         android:layout_alignParentStart="true" />

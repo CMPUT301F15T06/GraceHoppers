@@ -3,7 +3,10 @@ package com.gracehoppers.jlovas.bookwrm;
 import android.app.Application;
 
 /**
- * Created by jlovas on 11/27/15.
+ * PhotoDownloads is a global boolean variable to check whether photo downloads
+ * are enabled or disabled.
+ *
+ * @author jlovas
  */
 public class PhotoDownloads extends Application {
 

@@ -5,7 +5,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 /**
- * Created by dzhang4 on 11/18/15.
+ * ConnectionCheck checks for connection to the internet throughout the app.
+ *
+ * @author dzhang4 on 11/18/15.
  */
 public class ConnectionCheck {
     private boolean connectionStatus;

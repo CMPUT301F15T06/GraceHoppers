@@ -43,14 +43,14 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="Accept"
             android:id="@+id/accept"
             android:layout_marginTop="20dp"/>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="decline"
             android:id="@+id/decline"
@@ -59,8 +59,9 @@
             android:layout_marginLeft="150dp"
             />
 
-    </RelativeLayout>
 
+
+    </RelativeLayout>
 
 
 </LinearLayout>

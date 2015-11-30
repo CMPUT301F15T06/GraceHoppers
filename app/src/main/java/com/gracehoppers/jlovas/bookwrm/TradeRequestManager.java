@@ -52,8 +52,11 @@ public class TradeRequestManager {
         try {
             Log.e("TR sender: ", traderequest.getSender());
             Log.e("TR receiver: ", traderequest.getReceiver());
+            Log.e("TR owner: ", traderequest.getTrade().getOwner().getUsername());
+            Log.e("TR borrower: ", traderequest.getTrade().getBorrower().getUsername());
             Log.e("TR ownerBook: ", traderequest.getOwnerBook());
             Log.e("TR borrowerBook: ", traderequest.getBorrowerBook());
+
 
             HttpPost addRequest = new HttpPost(URL + traderequest.getSender() + "-"+traderequest.getReceiver()
                                                 + "-"+traderequest.getOwnerBook() + "-"+traderequest.getBorrowerBook());

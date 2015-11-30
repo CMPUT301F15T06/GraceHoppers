@@ -11,6 +11,9 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 /**
+ * OptionsActivity is for setting the photo downloads as enabled/disabled.
+ * The help guide for the app can also be found here.
+ *
  * @author jlovas
  */
 public class OptionsActivity extends ActionBarActivity {

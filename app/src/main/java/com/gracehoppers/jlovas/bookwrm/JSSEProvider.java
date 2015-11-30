@@ -1,7 +1,9 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 /**
- * Created by hong8 on 11/25/15.
+ * Used to sending emails to users about trades.
+ *
+ * @author hong8 on 11/25/15.
  */
 import java.security.AccessController;
 import java.security.Provider;

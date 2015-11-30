@@ -1,6 +1,7 @@
 package com.gracehoppers.jlovas.bookwrm;
 
 /**
+ * Searches the hits
  *
  * @author Linda Zhang
  */
