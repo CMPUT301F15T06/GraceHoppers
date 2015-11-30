@@ -269,7 +269,7 @@ public class ProcessTradeScreen extends Activity {
                 }
             });
 
-            //trmanager.deleteTR(tradeRequest);
+            trmanager.deleteTR(tradeRequest);
             saveLoad.saveInFile(getApplicationContext(), account);
 
         }
