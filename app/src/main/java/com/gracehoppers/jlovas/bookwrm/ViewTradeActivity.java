@@ -129,6 +129,13 @@ public class ViewTradeActivity extends ActionBarActivity {
             Toast.makeText(getApplicationContext(),trade.getOwnerComment(), Toast.LENGTH_SHORT).show();
 
             comments.setText(trade.getOwnerComment());
+            
+            if(trade.getAccepted() ){
+                status.setText("Status: Accepted");
+                counter.setVisibility(View.INVISIBLE);
+            }else if(trade.getDeclined()){
+                status.setText("Status: Declined");
+            }
 
             counter.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -138,17 +145,6 @@ public class ViewTradeActivity extends ActionBarActivity {
                     startActivity(intent);
                 }
             });
-
-            if(trade.getAccepted() ){
-                status.setText("Status: Accepted");
-            }else if(trade.getDeclined()){
-                status.setText("Status: Declined");
-            }
-
-        //} else {
-        //    Toast.makeText(getApplicationContext(), "Else taken", Toast.LENGTH_SHORT).show();
-
-       // }
 
     }
 
