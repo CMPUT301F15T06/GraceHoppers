@@ -59,6 +59,8 @@
     <string name="title_activity_view_trade">ViewTradeActivity</string>
     <string name="title_activity_search_friend_inventories">SearchFriendInventories</string>
     <string name="title_activity_top_trader">TopTraderActivity</string>
+    <string name="title_activity_tut_picture">TutPictureActivity</string>
+    <string name="title_activity_tut">TutActivity</string>
 
 >>>>>>> 9461699170c3cd88908cb318285b880412ff8ad8
 
