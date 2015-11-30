@@ -21,10 +21,16 @@ public class ProcessTradeScreenTest extends ActivityInstrumentationTestCase2 {
     public Book book2 = new Book();
     public ArrayList<Book> bBooks = new ArrayList<Book>();
     public Trade trade = new Trade();
-    public TradeHistory tradeHistory= new TradeHistory();
+    public TradeHistory tradeHistory = new TradeHistory();
 
     /*this test includes user case for:
-     1. accept a trade and decline a trade;
+     1. acce
+
+
+
+
+
+pt a trade and decline a trade;
      2. email both parties
      */
 
@@ -32,7 +38,7 @@ public class ProcessTradeScreenTest extends ActivityInstrumentationTestCase2 {
         super(ProcessTradeScreen.class);
     }
 
-    protected void setUp() throws Exception{
+    protected void setUp() throws Exception {
         super.setUp();
 
         setActivityInitialTouchMode(true);
@@ -49,7 +55,7 @@ public class ProcessTradeScreenTest extends ActivityInstrumentationTestCase2 {
         trade.setBorrowerBook(bBooks);
         trade.setOwnerBook(book1);
     }
-/*
+
     public void testAccept() throws Exception {
         ProcessTradeScreen activity = (ProcessTradeScreen) getActivity();
         final Button accept = activity.accept;
@@ -80,7 +86,7 @@ public class ProcessTradeScreenTest extends ActivityInstrumentationTestCase2 {
 
     }
 
-    public void testSendEmail() throws Exception{
+    public void testSendEmail() throws Exception {
         ProcessTradeScreen activity = (ProcessTradeScreen) getActivity();
         final Button accept = activity.accept;
         setUp();
@@ -106,8 +112,8 @@ public class ProcessTradeScreenTest extends ActivityInstrumentationTestCase2 {
         //remove Monitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);
 
-    }
-
+    }}
+/*
     public void testDecline() throws Exception {
         setUp();
         ProcessTradeScreen activity = (ProcessTradeScreen) getActivity();
@@ -136,7 +142,7 @@ public class ProcessTradeScreenTest extends ActivityInstrumentationTestCase2 {
         assertTrue(activity.trade.getDeclined());
 
     }
-
+}
 
 
         //assertNotNull("declineDialog is null", receiverActivity.dialog1);
@@ -153,9 +159,9 @@ public class ProcessTradeScreenTest extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);
         receiverActivity.finish();   */
-    }
 
-    //email function can't implement before loading account information
+
+//email function can't implement before loading account information
     /*
     public void testViewBorrowerName() {
         //ensure the text shows name of borrower

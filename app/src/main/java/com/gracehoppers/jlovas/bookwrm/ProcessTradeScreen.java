@@ -44,7 +44,7 @@ public class ProcessTradeScreen extends Activity {
     TextView bBook;
     TextView oBook;
 
-    private Account account;
+    public Account account;
     SaveLoad saveLoad;
     TradeRequests traderequests;// = new TradeRequests();
     TradeRequestManager trmanager;// = new TradeRequestManager();
@@ -52,6 +52,7 @@ public class ProcessTradeScreen extends Activity {
     int position;
     AccountManager accountManager = new AccountManager();
     String comments="";
+    Boolean sent = false;
 
     //public static String tradeId = "Trade ID";
     //private ProcessTradeManager processTradeManager;
@@ -68,7 +69,7 @@ public class ProcessTradeScreen extends Activity {
         oBook = (TextView)findViewById(R.id.oBook);
         accept =(Button)findViewById(R.id.accept);
         decline = (Button)findViewById(R.id.decline);
-       // back = (Button)findViewById(R.id.processBack);
+        // back = (Button)findViewById(R.id.processBack);
 
         position = getIntent().getIntExtra("position", 0);
 
@@ -85,7 +86,7 @@ public class ProcessTradeScreen extends Activity {
             @Override
             public void onClick(View v) {
                 //set status of trade to accepted
-                //trade.setAccepted(Boolean.TRUE);
+                trade.setAccepted(Boolean.TRUE);
 
                 dialog = new AlertDialog.Builder(ProcessTradeScreen.this);
                 final EditText input = new EditText(ProcessTradeScreen.this);
@@ -116,6 +117,7 @@ public class ProcessTradeScreen extends Activity {
                 dialog.create();
                 dialog.show();
 
+                sent=true;
 
 
             }
