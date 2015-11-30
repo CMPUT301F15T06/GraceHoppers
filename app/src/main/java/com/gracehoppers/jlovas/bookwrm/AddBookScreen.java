@@ -363,43 +363,5 @@ public class AddBookScreen extends ActionBarActivity {
 
     }
 
-    //for testing purposes, remove afterwards: ----------------------------------------------------------------
- /*   class SearchThread extends Thread { //for getting the account
-        private String search;
-        public SearchThread(String search) {
-            this.search = search;
-        }
-        @Override
-        public void run() {
-            result = new Account();
-            AccountManager accountManager = new AccountManager();
-            result = (accountManager.getAccount(search));
-            try {
-                if (result != null) {
-                    Log.e("found!", "found the account");
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    runOnUiThread(CheckTheBook);
-                } else {
-                }
-            } catch (RuntimeException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    private Runnable CheckTheBook = new Runnable() {
-        @Override
-        public void run() {
-            try {
-                Book test = result.getInventory().getBookByIndex(0);
-                Toast.makeText(getApplicationContext(), test.getDescription(), Toast.LENGTH_SHORT).show();
-            }catch(TooLongException e){
-            }catch(NegativeNumberException e){
-            }
-        }
-    };*/
-//-------------------------------------------------------------------------------------------------------------------------------------------------
+
 }

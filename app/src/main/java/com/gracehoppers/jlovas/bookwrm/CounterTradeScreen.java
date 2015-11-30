@@ -167,7 +167,7 @@ public class CounterTradeScreen extends Activity{
 
     }
     //temporary function until fully functioning
-    public void setUp(){
+  /*  public void setUp(){
         try{
             account1.setCity("Lulala");
             account1.setUsername("hahaha");
@@ -191,7 +191,7 @@ public class CounterTradeScreen extends Activity{
         TradeHistory tradeHistory = new TradeHistory();
         tradeHistory.addTrade(oldTrade);
         account1.setTradeHistory(tradeHistory);
-    }
+    } */
 
     public void onBackPressed(){
         super.onBackPressed();

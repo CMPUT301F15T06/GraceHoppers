@@ -33,6 +33,7 @@ import java.util.ArrayList;
  *     <li>View a book in their inventory, if any </li>
  *     <li>Look up friends </li>
  *     <li>View their trade history</li>
+ *     <li>Search friend inventories</li>
  * </ul>
  * Currently the options to trade and countertrade are on the homescreen and will be moved for part 5
  * @see Account, Inventory

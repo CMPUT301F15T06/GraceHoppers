@@ -24,27 +24,9 @@ public class Account implements Serializable {
     private String city;
     private String email;
     private TradeHistory tradeHistory= new TradeHistory(); // create trade history
-    private Inventory inventory;//=new Inventory();
+    private Inventory inventory;
     private Friends friends; //create friend list
-   // private static final long serialVersionUID = 2021577107874183656L;
 
-
-
-   // private byte[] friendlistBytes;
-
-  /*  public void setFriends(Friends friends) {
-        this.friends = friends;
-    }
-
-    public byte[] getFriendlistBytes() {
-        return friendlistBytes;
-    }
-
-    public void setFriendlistBytes(byte[] friendlistBytes) {
-        this.friendlistBytes = friendlistBytes;
-    }
-
-*/
 
     public TradeHistory getTradeHistory() {
         return tradeHistory;
@@ -55,42 +37,6 @@ public class Account implements Serializable {
     }
 
 
-    //****For DemoAccount use, delete after server works********************************************
-    //for storing a list of existing accounts
-
-   // private ArrayList<Account> totalAccounts = new ArrayList<Account>();
-
-   // public ArrayList<Account> getAccounts(){
-    //    return totalAccounts;
-   // }
-
-    /*  public boolean isInAccounts(String username){
-        for(int i=0; i < totalAccounts.size(); i++){
-            if(totalAccounts.get(i).getUsername().equals(username)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Account searchAccountsByUsername(String username) throws DoesNotExistException, BlankFieldException, AlreadyAddedException{
-        //need to protect string inputs
-
-        if(username.equals("")) throw new BlankFieldException();
-        if(totalAccounts.size() ==0) throw new DoesNotExistException();
-        if(totalAccounts.size() ==1) return totalAccounts.get(0);
-        else {
-            for (int i = 0; i < totalAccounts.size(); i++) {
-                if(totalAccounts.get(i).getUsername().equals(username)) return totalAccounts.get(i);
-            }
-        }
-        //did not find it
-        throw new DoesNotExistException();
-
-        return totalAccounts.get(0);
-    }*/
-
-    //**********************************************************************************************
 
     /**
      * Constructor for Account creates an empty Inventory and empty Friends
@@ -99,9 +45,6 @@ public class Account implements Serializable {
         inventory = new Inventory();
         friends = new Friends();
         tradeHistory = new TradeHistory();
-        //checks to see if the account already exists, cant do this without the database
-
-        //If(searchDatabase(Username)==true){throw new AlreadyExistsException;}
 
     }
 
