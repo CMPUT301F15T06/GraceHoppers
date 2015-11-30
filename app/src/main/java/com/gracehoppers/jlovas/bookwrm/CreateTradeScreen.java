@@ -51,6 +51,7 @@ public class CreateTradeScreen extends Activity {
     Button cancelTrade;
     private int pos;
     private int pos2;
+    ConnectionCheck connection;
 
     @Override
     protected void onStart(){
@@ -65,12 +66,12 @@ public class CreateTradeScreen extends Activity {
         newTrade.setOwner(friend);
         newTrade.setBorrower(me);
 
-        pos = getIntent().getIntExtra("aPosition", (int) Double.POSITIVE_INFINITY);
-        pos2 = getIntent().getIntExtra("bPosition", (int) Double.POSITIVE_INFINITY);
+        pos2 = getIntent().getIntExtra("aPosition", (int) Double.POSITIVE_INFINITY);
+        pos = getIntent().getIntExtra("bPosition", (int) Double.POSITIVE_INFINITY);
         //Toast.makeText(getApplicationContext(), "aposition: "+pos+"friend: "+friend.getUsername(), Toast.LENGTH_SHORT).show();
 
         try {
-            Book thisBook = friend.getInventory().getBookByIndex(pos);
+            Book thisBook = me.getInventory().getBookByIndex(pos);
 
             boolean exist = false;
 
@@ -99,7 +100,7 @@ public class CreateTradeScreen extends Activity {
         }
 
         try {
-                newTrade.setOwnerBook(me.getInventory().getBookByIndex(pos2));
+                newTrade.setOwnerBook(friend.getInventory().getBookByIndex(pos2));
         } catch (NegativeNumberException e) {
             e.printStackTrace();
         } catch (TooLongException e) {
@@ -196,7 +197,7 @@ public class CreateTradeScreen extends Activity {
             borrowerAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, SelectFromBorrowerInventoryActivity.class);
+                    Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, SelectFromOwnerInventoryActivity.class);
                   //  if(getIntent().getStringExtra("flag").equals("search")){ //prevents the app from crashing from no flag extra
                   //      borrowerAddIntent.putExtra("flag", "search");
                   //  } else borrowerAddIntent.putExtra("flag","friend");
@@ -209,7 +210,7 @@ public class CreateTradeScreen extends Activity {
             ownerSelect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, SelectFromOwnerInventoryActivity.class);
+                    Intent borrowerAddIntent = new Intent(CreateTradeScreen.this, SelectFromBorrowerInventoryActivity.class);
                    // if(getIntent().getStringExtra("flag").equals("search")){ //prevents the app from crashing from no flag extra
                    //     borrowerAddIntent.putExtra("flag","search");
                    // } else borrowerAddIntent.putExtra("flag","friend");
@@ -225,20 +226,34 @@ public class CreateTradeScreen extends Activity {
                 public void onClick(View view) {
                     //Add trade to TradeHistory, and then clear the newTrade variable
                     //Once submit is clicked, it'll start a trade request
+                    if (!newTrade.getOwnerBook().getTitle().equals("Untitled")) {
+                        TradeRequest request = new TradeRequest();
+                        request.makeTradeRequest(me, friend.getUsername(), newTrade);
 
-                    TradeRequest request = new TradeRequest();
-                    request.makeTradeRequest(me, friend.getUsername(), newTrade);
-                    //check if you have any tR
-                    Thread thread = new AddTRThread(request);
-                    thread.start();
+                        if(connection.checkConnection(CreateTradeScreen.this)) {
+                            //check if you have any tR
+                            Thread thread = new AddTRThread(request);
+                            thread.start();
 
-                    newTrade = new Trade();
-                    mySaveLoad.saveInFile(getApplicationContext(), me);
-                    //Toast.makeText(getApplicationContext(), "Breakpoint, newTrade added to History", Toast.LENGTH_SHORT).show();
+                            newTrade = new Trade();
 
-                    //Toast to show that the trade has been created
-                    Toast.makeText(getApplicationContext(), "Trade submitted!", Toast.LENGTH_SHORT).show();
-                    finish();
+                            //Toast to show that the trade has been created
+                            Toast.makeText(getApplicationContext(), "Trade submitted!", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            request.setNeedUpdate(true);
+                        }
+
+                        mySaveLoad.saveInFile(getApplicationContext(), me);
+                        mySaveLoad.saveTrade(getApplicationContext(),request);
+
+                        //Toast.makeText(getApplicationContext(), "Breakpoint, newTrade added to History", Toast.LENGTH_SHORT).show();
+                        finish();
+
+
+                    }else{
+                        Toast.makeText(CreateTradeScreen.this,"Must Choose one from Owner's Inventory",Toast.LENGTH_SHORT).show();
+                    }
 
                 }
             });

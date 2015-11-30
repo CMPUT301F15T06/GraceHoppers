@@ -44,6 +44,7 @@ public class FriendProfileScreen extends ActionBarActivity {
     int position;
     private ArrayAdapter<Book> adapter;
     ListView friendInventoryList;
+    ConnectionCheck connection;
 
 
     //UI test stuff ---------------------------------------------------------------
@@ -71,19 +72,23 @@ public class FriendProfileScreen extends ActionBarActivity {
 
         Log.e("Position", "Position is: "+ position);
 
-        try {
-            myFriend = account.getFriends().getFriendByIndex(position);
+        if(connection.checkConnection(FriendProfileScreen.this)) {
+            try {
+                myFriend = account.getFriends().getFriendByIndex(position);
 
-            Thread viewprofilethread = new SearchThread(account.getUsername(), myFriend);
-            viewprofilethread.start();
-        }catch(NegativeNumberException e){
-            Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
-        }catch(TooLongException e) {
-            Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
-        }catch(AlreadyAddedException e){
+                Thread viewprofilethread = new SearchThread(account.getUsername(), myFriend);
+                viewprofilethread.start();
+            } catch (NegativeNumberException e) {
+                Toast.makeText(getApplicationContext(), "Negative index number", Toast.LENGTH_SHORT).show();
+            } catch (TooLongException e) {
+                Toast.makeText(getApplicationContext(), "Index is longer than inventory size", Toast.LENGTH_SHORT).show();
+            } catch (AlreadyAddedException e) {
+
+            }
+        }
+        else{
 
         }
-
         name =(TextView) findViewById(R.id.fname);
         email =(TextView) findViewById(R.id.femail);
         city = (TextView) findViewById(R.id.fcity);

@@ -42,6 +42,7 @@ public class ProfileScreen extends ActionBarActivity {
     AccountManager accountManager;
     ArrayList<View> editList;
     ArrayList<View> originalList;
+    ConnectionCheck connection;
 
     /**
      * This is the activity for the mean functionality of answering a question. This
@@ -160,15 +161,20 @@ public class ProfileScreen extends ActionBarActivity {
         originalList = new ArrayList<View>((Arrays.asList(city,email,edit)));
         //set_visible(originalList);
 
-        accountManager=new AccountManager();
-        Intent intent=getIntent();
-        if(intent !=null) {
-            Bundle extras=intent.getExtras();
-            if(extras!=null) {
-                String username=extras.getString("Username");
-                Thread thread=new getThread(username);
-                thread.start();
+        if(connection.checkConnection(ProfileScreen.this)) {
+            accountManager = new AccountManager();
+            Intent intent = getIntent();
+            if (intent != null) {
+                Bundle extras = intent.getExtras();
+                if (extras != null) {
+                    String username = extras.getString("Username");
+                    Thread thread = new getThread(username);
+                    thread.start();
+                }
             }
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "No connection" , Toast.LENGTH_SHORT).show();
         }
 
     }

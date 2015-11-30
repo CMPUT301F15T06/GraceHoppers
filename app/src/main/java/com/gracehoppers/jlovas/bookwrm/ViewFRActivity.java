@@ -64,69 +64,6 @@ public class ViewFRActivity extends ActionBarActivity {
         thread.start();
 
 
-        //test code -------------------------------------------
-        // try {
-        // Account result1 = new Account();
-        //  result1.setUsername("johnEgbert");
-        //  result1.setCity("sburb");
-        //  result1.setEmail("gt@homestuck.com");
-        //  account.getFriends().addFriend(result1);
-
-          /*  Account result2 = new Account();
-            result2.setUsername("jadeHarley");
-            result2.setCity("sbfurb");
-            result2.setEmail("gt@hffomestuck.com");
-            //result.getFriends().addFriend(account);
-
-            account.getFriends().unFriend(result2.getUsername());*/
-
-
-        //BytesUtil bytesutil = new BytesUtil(); //put this into updateaccount after testing
-        //  byte[] bytes;
-        //   bytes=bytesutil.toByteArray(account.getFriends()); //friends is a byte array
-
-
-        //Account test;
-        //test = (Account)bytesutil.toObject(bytes); //turns it back into an account object
-        //   Friends test = (Friends)bytesutil.toObject(bytes);
-
-        //  Toast.makeText(getApplicationContext(), "test:" + test.getFriendByIndex(0).getUsername(), Toast.LENGTH_SHORT).show();
-        // Toast.makeText(getApplicationContext(), "test:" + test.getFriendByIndex(1).getUsername(), Toast.LENGTH_SHORT).show();
-
-
-        // Log.e("before threads","work plz");
-        // Thread uthread = new UpdateAThread(account); //FOR UPDATING THE ACCOUNT
-        //uthread.start();
-        //  Log.e("first thread done", "yes");
-
-        //testing: lets get the account back and see if the friendslist is accurate
-        // Thread yourthread = new SearchThread(account.getUsername());           FOR GETTING THE ACCOUNT
-        // yourthread.start();
-        //grabs your updated account and stores it inside result Account
-
-/*
-        }catch(AlreadyAddedException e){
-            e.printStackTrace();
-        }
-    catch(NoSpacesException e){
-            e.printStackTrace();
-        }catch(TooLongException e){
-            e.printStackTrace();
-        }catch(IllegalEmailException e){
-            e.printStackTrace();
-        }catch(IOException e){
-            Toast.makeText(getApplicationContext(), "IO exception", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();*/
-        //}catch(ClassNotFoundException e){
-        // Toast.makeText(getApplicationContext(), "Class not found", Toast.LENGTH_SHORT).show();
-        // e.printStackTrace();
-        //}
-        //Thread u2thread = new UpdateAThread(result);
-        // u2thread.start();
-        // Log.e("second thread done","yes");
-
-        //-------------------------------------------------------
-
 
     }
 
@@ -195,26 +132,7 @@ public class ViewFRActivity extends ActionBarActivity {
                 runOnUiThread(UpdateFRAdapter);
                 Log.e("false!!", "no FR for you");
             }
-/*
-            try { //get rid of this part later/change it
-                if(result != null) {
-                    //a friendrequest exists
-                    HomeScreen.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(), "found a friend request", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
 
-                else {
-                    //add account
-                    Thread thread=new AddThread(search);
-                    thread.start();
-                }
-
-            }catch(RuntimeException e) {e.printStackTrace();}
-        */
         }
 
     }
@@ -268,6 +186,7 @@ public class ViewFRActivity extends ActionBarActivity {
             public void onClick(DialogInterface dialog, int id) {
                 Thread friendthread = new SearchThread(sender);
                 friendthread.start();
+                Toast.makeText(getApplicationContext(), "Friend Request Accepted", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
 
             }
@@ -281,7 +200,7 @@ public class ViewFRActivity extends ActionBarActivity {
                     }
 
                 });
-        //AlertDialog SingleInfo=singleInfo.create();
+
         SingleInfo = singleInfo.create();
         SingleInfo.show();
     }
@@ -335,26 +254,10 @@ public class ViewFRActivity extends ActionBarActivity {
     private Runnable AddFriends = new Runnable() {
         @Override
         public void run() {
-            //test code --------------------------------------
 
-/*
-try {
-    BytesUtil bytesutil = new BytesUtil();
-    Friends tempfriends = (Friends)bytesutil.toObject(result.getFriendlistBytes());
-    Toast.makeText(getApplicationContext(), tempfriends.getFriendByIndex(0).getUsername(), Toast.LENGTH_SHORT).show();
-    result.setFriends(tempfriends);
-    Toast.makeText(getApplicationContext(), result.getUsername(), Toast.LENGTH_SHORT).show();
-    Toast.makeText(getApplicationContext(), result.getFriends().getFriendByIndex(0).getUsername(), Toast.LENGTH_SHORT).show();
-}catch (ClassNotFoundException e){
-    e.printStackTrace();
-}catch(IOException e){
-    e.printStackTrace();
-}*/
 
-            //end test code ---------------------------------
-
-            Toast.makeText(getApplicationContext(), "Friend Request Accepted", Toast.LENGTH_SHORT).show();
             try { //add to eachother's friend lists
+
                 result.getFriends().addFriend(account);
                 account.getFriends().addFriend(result);
                 //put this account into your friend list
@@ -381,6 +284,7 @@ try {
 
                 Thread thread = new DeleteFRThread(result.getUsername(), account.getUsername());
                 thread.start();
+                thread.join(); //wait for this to finish before checking for FR again!
             //update server for you
             //update the server for them
 
@@ -392,6 +296,8 @@ try {
 
             }catch(AlreadyAddedException e){
                 Toast.makeText(getApplicationContext(), "Exception", Toast.LENGTH_SHORT).show();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
             saveload.saveInFile(getApplicationContext(), account);
             //Toast.makeText(getApplicationContext(),"Friends has "+ account.getFriends().getSize()+ " people in it!", Toast.LENGTH_SHORT).show();

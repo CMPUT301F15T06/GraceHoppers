@@ -109,6 +109,7 @@ public class AddBookScreen extends ActionBarActivity {
         thePhoto = (ImageView)findViewById(R.id.bookImage);
         plusTitleText = (TextView)findViewById(R.id.plusTitleText);
         stars.setNumStars(5);
+        final ConnectionCheck connection=new ConnectionCheck();
 
 
 
@@ -223,9 +224,6 @@ public class AddBookScreen extends ActionBarActivity {
                     myBook.setAuthor(authorText.getText().toString());
                     myBook.setQuantity(quantityText.getText().toString());
 
-                    ung = new UniqueNumberGenerator();
-                    uninum = ung.getUniqueNumber(); //!!!!!   this requires a connection. ung has a thread within its class!
-                    myBook.setUniquenum(uninum);
 
                     //OPTIONAL THINGS
                     //rating doesn't seem to be optional in the UI but it is... will come back to fix that later if I can
@@ -253,22 +251,36 @@ public class AddBookScreen extends ActionBarActivity {
                     books.add(myBook); //For UI testing
 
                     //save into Gson and end the activity
-                    mySaveLoad.saveInFile(getApplicationContext(), me);
+                    //mySaveLoad.saveInFile(getApplicationContext(), me);
 
-                    Thread yourthread = new UpdateAThread(me); //update the server to have this book
-                    yourthread.start();
+                    if(connection.checkConnection(AddBookScreen.this)) {
+                        ung = new UniqueNumberGenerator();
+                        uninum = ung.getUniqueNumber(); //!!!!!   this requires a connection. ung has a thread within its class!
+                        myBook.setUniquenum(uninum);
 
-                    try { //remove this after
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        mySaveLoad.saveInFile(getApplicationContext(), me);
+                        Thread yourthread = new UpdateAThread(me); //update the server to have this book
+                        yourthread.start();
+
+                        try { //remove this after
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        //   Thread testthread = new SearchThread(me.getUsername()); //for testing purposes
+                        //  testthread.start();
+
+                        Toast.makeText(getApplicationContext(), "Successfully added book to inventory", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
+                    else{
+                        me.setNeedUpdate(true);
+                        mySaveLoad.saveInFile(getApplicationContext(), me);
+                        Toast.makeText(getApplicationContext(), "Book Cached, will add book when connection is restored", Toast.LENGTH_SHORT).show();
+                        //finish();
 
-                    //   Thread testthread = new SearchThread(me.getUsername()); //for testing purposes
-                    //  testthread.start();
-
-                    Toast.makeText(getApplicationContext(), "Successfully added book to inventory", Toast.LENGTH_SHORT).show();
-                    finish();
+                    }
                 }catch(IllegalArgumentException e){
                     //titleText.setText("NO TITLE"); //test to see what we can do
                     Toast.makeText(getApplicationContext(), "Fields cannot be blank", Toast.LENGTH_SHORT).show();
@@ -364,43 +376,5 @@ public class AddBookScreen extends ActionBarActivity {
 
     }
 
-    //for testing purposes, remove afterwards: ----------------------------------------------------------------
- /*   class SearchThread extends Thread { //for getting the account
-        private String search;
-        public SearchThread(String search) {
-            this.search = search;
-        }
-        @Override
-        public void run() {
-            result = new Account();
-            AccountManager accountManager = new AccountManager();
-            result = (accountManager.getAccount(search));
-            try {
-                if (result != null) {
-                    Log.e("found!", "found the account");
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    runOnUiThread(CheckTheBook);
-                } else {
-                }
-            } catch (RuntimeException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    private Runnable CheckTheBook = new Runnable() {
-        @Override
-        public void run() {
-            try {
-                Book test = result.getInventory().getBookByIndex(0);
-                Toast.makeText(getApplicationContext(), test.getDescription(), Toast.LENGTH_SHORT).show();
-            }catch(TooLongException e){
-            }catch(NegativeNumberException e){
-            }
-        }
-    };*/
-//-------------------------------------------------------------------------------------------------------------------------------------------------
+
 }
