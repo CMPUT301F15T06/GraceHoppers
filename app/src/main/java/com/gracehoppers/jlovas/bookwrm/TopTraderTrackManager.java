@@ -3,7 +3,9 @@ package com.gracehoppers.jlovas.bookwrm;
 import java.util.ArrayList;
 
 /**
- * Created by chen1 on 11/27/15.
+ * This class helps to manage the top traders by whoever has the most trades.
+ *
+ * @author chen1 on 11/27/15.
  */
 public class TopTraderTrackManager {
 

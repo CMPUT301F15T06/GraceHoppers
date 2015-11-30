@@ -19,6 +19,7 @@ import android.widget.Toast;
 public class OptionsActivity extends ActionBarActivity {
     CheckBox checkBox;
     Button tutorialButton;
+    Button topTraderButton;
     PhotoDownloads pD;
 
     @Override
@@ -28,6 +29,7 @@ public class OptionsActivity extends ActionBarActivity {
 
         checkBox = (CheckBox)findViewById(R.id.pDcheckbox);
         tutorialButton = (Button)findViewById(R.id.tutButton);
+        topTraderButton = (Button)findViewById(R.id.topTradersButton);
 
         pD = (PhotoDownloads)getApplicationContext();
 
@@ -59,6 +61,14 @@ public class OptionsActivity extends ActionBarActivity {
                     pD.setEnabled(true);
                     Toast.makeText(getApplicationContext(), "Photo downloads are now enabled", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        topTraderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(OptionsActivity.this, TopTraderActivity.class);
+                startActivity(intent);
             }
         });
 

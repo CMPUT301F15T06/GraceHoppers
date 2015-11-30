@@ -12,10 +12,10 @@
         android:layout_height="90dp"
         android:text="How to Add a Book"
         android:id="@+id/howToBookButton"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="75dp"
-        android:background="@drawable/yellow_gradient" />
+        android:layout_marginTop="95dp"
+        android:background="@drawable/yellow_gradient"
+        android:layout_below="@+id/tutTitleText"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="fill_parent"
@@ -23,18 +23,9 @@
         android:text="How to Add a Friend"
         android:id="@+id/howToFriendButton"
         android:background="@drawable/yellow_gradient"
-        android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="90dp"
-        android:text="How to start a Trade"
-        android:id="@+id/howToTradeButton"
-        android:background="@drawable/yellow_gradient"
-        android:layout_below="@+id/howToFriendButton"
+        android:layout_below="@+id/howToBookButton"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="58dp" />
+        android:layout_marginTop="117dp" />
 
     <TextView
         android:layout_width="wrap_content"
