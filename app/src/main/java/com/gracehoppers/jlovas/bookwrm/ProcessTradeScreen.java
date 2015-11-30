@@ -78,8 +78,8 @@ public class ProcessTradeScreen extends Activity {
 
         //Toast.makeText(getApplicationContext(), Toast.LENGTH_SHORT).show();
 
-        //Thread thread = new FindTRThread(account.getUsername());
-        //thread.start();
+        Thread thread = new FindTRThread(account.getUsername());
+        thread.start();
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -93,7 +93,7 @@ public class ViewTradeActivity extends ActionBarActivity {
         Log.e("HistoryOfTrades size: ", String.valueOf(account.getTradeHistory().getSize()));
 
 
-        if (getIntent().getStringExtra("flag").equals("HistoryOfTrades")){
+        //if (getIntent().getStringExtra("flag").equals("HistoryOfTrades")){
 
             pos = getIntent().getIntExtra("listPosition", 0);
 
@@ -143,10 +143,10 @@ public class ViewTradeActivity extends ActionBarActivity {
                 status.setText("Status: Declined");
             }
 
-        } else {
-            Toast.makeText(getApplicationContext(), "Else taken", Toast.LENGTH_SHORT).show();
+        //} else {
+        //    Toast.makeText(getApplicationContext(), "Else taken", Toast.LENGTH_SHORT).show();
 
-        }
+       // }
 
     }
 

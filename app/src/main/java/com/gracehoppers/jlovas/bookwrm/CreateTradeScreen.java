@@ -225,20 +225,23 @@ public class CreateTradeScreen extends Activity {
                 public void onClick(View view) {
                     //Add trade to TradeHistory, and then clear the newTrade variable
                     //Once submit is clicked, it'll start a trade request
+                    if (!newTrade.getOwnerBook().getTitle().equals("Untitled")) {
+                        TradeRequest request = new TradeRequest();
+                        request.makeTradeRequest(me, friend.getUsername(), newTrade);
+                        //check if you have any tR
+                        Thread thread = new AddTRThread(request);
+                        thread.start();
 
-                    TradeRequest request = new TradeRequest();
-                    request.makeTradeRequest(me, friend.getUsername(), newTrade);
-                    //check if you have any tR
-                    Thread thread = new AddTRThread(request);
-                    thread.start();
+                        newTrade = new Trade();
+                        mySaveLoad.saveInFile(getApplicationContext(), me);
+                        //Toast.makeText(getApplicationContext(), "Breakpoint, newTrade added to History", Toast.LENGTH_SHORT).show();
 
-                    newTrade = new Trade();
-                    mySaveLoad.saveInFile(getApplicationContext(), me);
-                    //Toast.makeText(getApplicationContext(), "Breakpoint, newTrade added to History", Toast.LENGTH_SHORT).show();
-
-                    //Toast to show that the trade has been created
-                    Toast.makeText(getApplicationContext(), "Trade submitted!", Toast.LENGTH_SHORT).show();
-                    finish();
+                        //Toast to show that the trade has been created
+                        Toast.makeText(getApplicationContext(), "Trade submitted!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }else{
+                        Toast.makeText(CreateTradeScreen.this,"Must Choose one from Owner's Inventory",Toast.LENGTH_SHORT).show();
+                    }
 
                 }
             });
