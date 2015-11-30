@@ -26,6 +26,7 @@ public class Account implements Serializable {
     private TradeHistory tradeHistory; // create trade history
     private Inventory inventory;
     private Friends friends; //create friend list
+    private boolean needUpdate;
    // private static final long serialVersionUID = 2021577107874183656L;
 
 
@@ -99,6 +100,7 @@ public class Account implements Serializable {
         inventory = new Inventory();
         friends = new Friends();
         tradeHistory = new TradeHistory();
+        needUpdate=false;
         //checks to see if the account already exists, cant do this without the database
 
         //If(searchDatabase(Username)==true){throw new AlreadyExistsException;}
@@ -186,4 +188,7 @@ public class Account implements Serializable {
     public void setInventory(Inventory anInventory){
         inventory = anInventory;
     }
+
+    public void setNeedUpdate(boolean update) {needUpdate=update;}
+    public boolean getNeedUpdate() {return needUpdate;}
 }

@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -54,6 +55,7 @@ public class HomeScreen extends Activity {
     Button options;
     ImageView friendRequests;
     PhotoDownloads pD;
+    final ConnectionCheck connectionCheck=new ConnectionCheck();
 
     FriendRequestManager frmanager;
 
@@ -91,12 +93,53 @@ public class HomeScreen extends Activity {
 
 
 
+        //check connection
+        if(connectionCheck.checkConnection(HomeScreen.this) && account.getNeedUpdate()) {
+            UniqueNumber uninum;
+            UniqueNumberGenerator ung;
+
+            try {
+                Inventory inventory = account.getInventory();
+                Book myBook = inventory.getBookByIndex((inventory.getSize()) - 1);
+
+                //update account
+                ung = new UniqueNumberGenerator();
+                uninum = ung.getUniqueNumber(); //!!!!!   this requires a connection. ung has a thread within its class!
+                myBook.setUniquenum(uninum);
+
+                Thread yourthread = new UpdateAThread(account); //update the server to have this book
+                yourthread.start();
+
+                account.setNeedUpdate(false);
+            }catch(NegativeNumberException e){
+
+            }catch(TooLongException e){
+
+            }
+
+
+        }
+
 
         inventoryList = (ListView)findViewById(R.id.inventory1);
 
         //----for UI--------------------------------
-        adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory());
+        //adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory());
+        //inventoryList.setAdapter(adapter);
+        ArrayList<Book> inventory=account.getInventory().getInventory();
+        ArrayList<Book> inventoryCopy=new ArrayList<>();
+        if(account.getNeedUpdate()){
+            int size=inventory.size();
+            for(int j=0;j<size-1;j++){
+                inventoryCopy.add(inventory.get(j));
+            }
+            adapter = new BookListAdapter(this,R.layout.book_inventory_list, inventoryCopy);
+        }
+        else {
+            adapter = new BookListAdapter(this, R.layout.book_inventory_list, inventory);
+        }
         inventoryList.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
         //------------------------------------------
 
         //test code
@@ -259,12 +302,49 @@ public class HomeScreen extends Activity {
     protected void onStart(){
         super.onStart();
         Toast.makeText(getApplicationContext(), "Enabled is: " + pD.getEnabled(), Toast.LENGTH_SHORT).show();
+
+        if(connectionCheck.checkConnection(HomeScreen.this) && account.getNeedUpdate()) {
+            UniqueNumber uninum;
+            UniqueNumberGenerator ung;
+
+            try {
+                Inventory inventory = account.getInventory();
+                //Book myBook = inventory.getBookByIndex((inventory.getSize()) - 1);
+                Book myBook = inventory.getBookByIndex((inventory.getSize()) - 1);
+
+                //update account
+                ung = new UniqueNumberGenerator();
+                uninum = ung.getUniqueNumber(); //!!!!!   this requires a connection. ung has a thread within its class!
+                myBook.setUniquenum(uninum);
+
+                Thread yourthread = new UpdateAThread(account); //update the server to have this book
+                yourthread.start();
+
+                account.setNeedUpdate(false);
+            }catch(NegativeNumberException e){
+
+            }catch(TooLongException e){
+
+            }
+
+
+        }
         //inventory = account.getInventory().getInventory();
         //saveload.saveInFile(getApplicationContext(),account);
-        adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory());
+        ArrayList<Book> inventory=account.getInventory().getInventory();
+        ArrayList<Book> inventoryCopy=new ArrayList<>();
+        if(account.getNeedUpdate()){
+            int size=inventory.size();
+            for(int i=0;i<size-1;i++){
+                inventoryCopy.add(inventory.get(i));
+            }
+            adapter = new BookListAdapter(this,R.layout.book_inventory_list, inventoryCopy);
+        }
+        else {
+            adapter = new BookListAdapter(this, R.layout.book_inventory_list, inventory);
+        }
         inventoryList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-
 
     }
 
@@ -273,20 +353,63 @@ public class HomeScreen extends Activity {
     protected void onResume(){
         super.onResume();
         account = saveload.loadFromFile(getApplicationContext());
-        //inventory = account.getInventory().getInventory();
-        adapter = new BookListAdapter(this,R.layout.book_inventory_list, account.getInventory().getInventory());
+
+        if(connectionCheck.checkConnection(HomeScreen.this) && account.getNeedUpdate()) {
+            UniqueNumber uninum;
+            UniqueNumberGenerator ung;
+
+            try {
+                Inventory inventory = account.getInventory();
+                Book myBook = inventory.getBookByIndex((inventory.getSize()) - 1);
+
+                //update account
+                ung = new UniqueNumberGenerator();
+                uninum = ung.getUniqueNumber(); //!!!!!   this requires a connection. ung has a thread within its class!
+                myBook.setUniquenum(uninum);
+                
+
+                Thread yourthread = new UpdateAThread(account); //update the server to have this book
+                yourthread.start();
+
+                account.setNeedUpdate(false);
+            }catch(NegativeNumberException e){
+
+            }catch(TooLongException e){
+
+            }
+
+
+        }
+
+        ArrayList<Book> inventory=account.getInventory().getInventory();
+        ArrayList<Book> inventoryCopy=new ArrayList<>();
+        if(account.getNeedUpdate()){
+            int size=inventory.size();
+            for(int i=0;i<size-1;i++){
+                inventoryCopy.add(inventory.get(i));
+            }
+            adapter = new BookListAdapter(this,R.layout.book_inventory_list, inventoryCopy);
+        }
+        else {
+            adapter = new BookListAdapter(this, R.layout.book_inventory_list, inventory);
+        }
         inventoryList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
         Toast.makeText(getApplicationContext(), "Inventory:  " + account.getInventory().getSize() , Toast.LENGTH_SHORT).show();
 
-        //check if you have any FR
-        Thread thread = new FindFRThread(account.getUsername());
-        thread.start();
+        if(connectionCheck.checkConnection(HomeScreen.this)) {
+            //check if you have any FR
+            Thread thread = new FindFRThread(account.getUsername());
+            thread.start();
 
-        //check if you have any TR
-        Thread thread2 = new FindTRThread(account.getUsername());
-        thread2.start();
+            //check if you have any TR
+            Thread thread2 = new FindTRThread(account.getUsername());
+            thread2.start();
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "No connection" , Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -373,6 +496,23 @@ public class HomeScreen extends Activity {
     //---------------------------------------------------------------------------------------------------
 
 
+    class UpdateAThread extends Thread { //for updating account on the server
+        private Account account;
+
+        public UpdateAThread(Account account) {
+            this.account = account;
+        }
+
+        @Override
+        public void run() {
+
+            AccountManager accountManager = new AccountManager();
+            accountManager.updateAccount(account);
+            account.setNeedUpdate(false);
+
+        }
+
+    }
 
     class FindTRThread extends Thread { //find any unanswered TR's for this user
         private String user1;
