@@ -11,31 +11,58 @@ import java.util.ArrayList;
  * Created by hongwang on 15/11/5.
  */
 public class CounterTradeScreenTest extends ActivityInstrumentationTestCase2{
+    Account owner = new Account();
+    Book aBook = new Book();
+    Trade newTrade = new Trade();
+    Trade trade = new Trade();
+    SaveLoad saveLoad = new SaveLoad();
+    TradeHistory tradeHistory =new TradeHistory();
+    int position=0;
+
+    /*
+    this test includes user case for:
+    1. create couterTrade
+    2. initialize counterTrade with ownerBook from former trade
+    3. sele
+     */
 
     public CounterTradeScreenTest(){
         super(CounterTradeScreen.class);
     }
 
-    public void testInitializeOwnerBook(){
-        CounterTradeScreen activity = (CounterTradeScreen) getActivity();
-        TextView ownerText = activity.ownerText;
+    protected void setUp()throws Exception{
+        super.setUp();
 
-        //ensure the textView shows OwnerBook's Title
-        Account owner = new Account();
+        try {
+            owner.setUsername("owner");
+        } catch (TooLongException te) {
+        } catch (NoSpacesException ne) {
+        }
 
-        Book aBook = new Book();
-        aBook.setTitle("goodBook");
-
-        Trade newTrade = new Trade();
+        aBook.setTitle("GoodBook");
         newTrade.setOwner(owner);
         newTrade.setOwnerBook(aBook);
-
-        activity.oldTrade = newTrade;
-        assertEquals("goodBook", ownerText.getText().toString());
+        tradeHistory.addTrade(newTrade);
+        owner.setTradeHistory(tradeHistory);
 
     }
 
-    public void testAddButton(){
+    public void testInitializeOwnerBook() throws Exception{
+        final CounterTradeScreen activity = (CounterTradeScreen) getActivity();
+        TextView ownerText = activity.ownerText;
+        setUp();
+
+        owner = saveLoad.loadFromFile(activity.getApplicationContext());
+
+        position = activity.pos;
+
+        trade = owner.getTradeHistory().getTradeByIndex(position);
+
+        assertEquals(trade.getOwnerBook().getTitle(), ownerText.getText().toString());
+
+    }
+
+    public void testSelectFromBorrower(){
         CounterTradeScreen activity = (CounterTradeScreen) getActivity();
         final Button add = activity.add;
 
