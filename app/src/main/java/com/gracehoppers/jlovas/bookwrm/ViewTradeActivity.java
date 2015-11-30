@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -98,7 +99,7 @@ public class ViewTradeActivity extends ActionBarActivity {
             pos = getIntent().getIntExtra("listPosition", 0);
 
             account = saveload.loadFromFile(ViewTradeActivity.this);
-            Toast.makeText(getApplicationContext(), "Displaying item " + pos, Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getApplicationContext(), "Displaying item " + pos, Toast.LENGTH_SHORT).show();
 
             try {
                 trade = account.getTradeHistory().getTradeByIndex(pos);
@@ -126,7 +127,7 @@ public class ViewTradeActivity extends ActionBarActivity {
             ownerUsername.setText("Owner:  "+ trade.getOwner().getUsername());
             ownerBook.setText("Owner Book:  "+ trade.getOwnerBook().getTitle());
 
-            Toast.makeText(getApplicationContext(),trade.getOwnerComment(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(),trade.getOwnerComment(), Toast.LENGTH_SHORT).show();
 
             comments.setText(trade.getOwnerComment());
             
@@ -143,6 +144,12 @@ public class ViewTradeActivity extends ActionBarActivity {
                     Intent intent = new Intent(ViewTradeActivity.this, CounterTradeScreen.class);
                     intent.putExtra("listPosition", pos);
                     startActivity(intent);
+                }
+            });
+            complete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    complete();
                 }
             });
 

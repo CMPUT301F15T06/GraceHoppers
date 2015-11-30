@@ -52,6 +52,8 @@ public class CreateTradeScreen extends Activity {
     private int pos;
     private int pos2;
     ConnectionCheck connection;
+    Boolean submission = false;
+    Boolean cancellation = false;
 
     @Override
     protected void onStart(){
@@ -224,14 +226,18 @@ public class CreateTradeScreen extends Activity {
             submitTrade.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    submission = true;
                     //Add trade to TradeHistory, and then clear the newTrade variable
                     //Once submit is clicked, it'll start a trade request
                     if (!newTrade.getOwnerBook().getTitle().equals("Untitled")) {
                         TradeRequest request = new TradeRequest();
                         request.makeTradeRequest(me, friend.getUsername(), newTrade);
 
+
+
+                        //If there is connection, make request. Else, notify user.
                         if(connection.checkConnection(CreateTradeScreen.this)) {
-                            //check if you have any tR
+                            //
                             Thread thread = new AddTRThread(request);
                             thread.start();
 
@@ -241,11 +247,15 @@ public class CreateTradeScreen extends Activity {
                             Toast.makeText(getApplicationContext(), "Trade submitted!", Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            request.setNeedUpdate(true);
+                            Toast.makeText(getApplicationContext(), "No connection. Trade will be saved & \n " +
+                                                                    "pushed when connection is restored.", Toast.LENGTH_SHORT).show();
+                            me.getQueue().add(request);
+                            me.setNeedTRupdate(true);
                         }
 
+                        //Save the account and the tradeRequest in a gson file
                         mySaveLoad.saveInFile(getApplicationContext(), me);
-                        mySaveLoad.saveTrade(getApplicationContext(),request);
+                        mySaveLoad.saveTrade(getApplicationContext(), request);
 
                         //Toast.makeText(getApplicationContext(), "Breakpoint, newTrade added to History", Toast.LENGTH_SHORT).show();
                         finish();
@@ -262,6 +272,7 @@ public class CreateTradeScreen extends Activity {
             cancelTrade.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    cancellation = true;
                     newTrade = new Trade();
                     finish();
                 }

@@ -44,14 +44,15 @@ public class ProcessTradeScreen extends Activity {
     TextView bBook;
     TextView oBook;
 
-    private Account account;
+    public Account account;
     SaveLoad saveLoad;
     TradeRequests traderequests;// = new TradeRequests();
     TradeRequestManager trmanager;// = new TradeRequestManager();
     TradeRequest tradeRequest;//= new TradeRequest();
     int position;
     AccountManager accountManager = new AccountManager();
-    String comments="";
+    String comments = "";
+    Boolean sent = false;
 
     //public static String tradeId = "Trade ID";
     //private ProcessTradeManager processTradeManager;
@@ -63,12 +64,12 @@ public class ProcessTradeScreen extends Activity {
 
         //SET UP THE FALGS && GET THE TRADE FROM TRADEREQUESTS
 
-        bName = (TextView)findViewById(R.id.bName);
-        bBook = (TextView)findViewById(R.id.bBook);
-        oBook = (TextView)findViewById(R.id.oBook);
-        accept =(Button)findViewById(R.id.accept);
-        decline = (Button)findViewById(R.id.decline);
-       // back = (Button)findViewById(R.id.processBack);
+        bName = (TextView) findViewById(R.id.bName);
+        bBook = (TextView) findViewById(R.id.bBook);
+        oBook = (TextView) findViewById(R.id.oBook);
+        accept = (Button) findViewById(R.id.accept);
+        decline = (Button) findViewById(R.id.decline);
+        // back = (Button)findViewById(R.id.processBack);
 
         position = getIntent().getIntExtra("position", 0);
 
@@ -85,7 +86,7 @@ public class ProcessTradeScreen extends Activity {
             @Override
             public void onClick(View v) {
                 //set status of trade to accepted
-                //trade.setAccepted(Boolean.TRUE);
+                trade.setAccepted(Boolean.TRUE);
 
                 dialog = new AlertDialog.Builder(ProcessTradeScreen.this);
                 final EditText input = new EditText(ProcessTradeScreen.this);
@@ -116,6 +117,7 @@ public class ProcessTradeScreen extends Activity {
                 dialog.create();
                 dialog.show();
 
+                sent = true;
 
 
             }
@@ -125,8 +127,8 @@ public class ProcessTradeScreen extends Activity {
             @Override
             public void onClick(View v) {
                 trade.setDeclined(Boolean.TRUE);
-                comments="";
-                Thread thread = new AcceptThread(account.getUsername(),comments,false);
+                comments = "";
+                Thread thread = new AcceptThread(account.getUsername(), comments, false);
                 thread.start();
 
 
@@ -147,7 +149,7 @@ public class ProcessTradeScreen extends Activity {
         public void run() {
             traderequests = new TradeRequests();
             trmanager = new TradeRequestManager();
-            tradeRequest= new TradeRequest();
+            tradeRequest = new TradeRequest();
             trade = new Trade();
             try {
                 traderequests = trmanager.findTradeRequests(user1);
@@ -164,12 +166,12 @@ public class ProcessTradeScreen extends Activity {
                 public void run() {
                     bName.setText("Borrower Name:\n" + trade.getBorrower().getUsername());
 
-                    oBook.setText("Owner Book:\n"+trade.getOwnerBook().getTitle());
+                    oBook.setText("Owner Book:\n" + trade.getOwnerBook().getTitle());
 
-                    String bookTitles ="";
+                    String bookTitles = "";
 
-                    for(Book b: trade.getBorrowerBook()){
-                        bookTitles= bookTitles + b.getTitle() +"\n";
+                    for (Book b : trade.getBorrowerBook()) {
+                        bookTitles = bookTitles + b.getTitle() + "\n";
                     }
                     bBook.setText("Borrower Books:\n" + bookTitles);
                 }
@@ -182,10 +184,10 @@ public class ProcessTradeScreen extends Activity {
         private String coms;
         private Boolean bool;
 
-        public AcceptThread(String u1,String com,Boolean b) {
+        public AcceptThread(String u1, String com, Boolean b) {
             this.user1 = u1;
             this.coms = com;
-            this.bool=b;
+            this.bool = b;
         }
 
         @Override
@@ -200,7 +202,7 @@ public class ProcessTradeScreen extends Activity {
             tradeRequest = traderequests.get(position);
             trade = tradeRequest.getTrade();
 
-            if(bool){
+            if (bool) {
                 trade.setAccepted(Boolean.TRUE);
                 trade.setOwnerComment(coms);
             } else {
@@ -244,31 +246,31 @@ public class ProcessTradeScreen extends Activity {
         }
     }
 
-    public void send_email(){
+    public void send_email() {
 
         String email = trade.getBorrower().getEmail();
         String email1 = trade.getOwner().getEmail();
 
         String subject = "Trade accepted by owner!";
         String content = "Trade information: \nBorrower Books :\n";
-        for (Book b: trade.getBorrowerBook()){
-            content= content+ b.getTitle()+"\n";
+        for (Book b : trade.getBorrowerBook()) {
+            content = content + b.getTitle() + "\n";
         }
-        content= content+"Owner Book:\n"+ trade.getOwnerBook().getTitle();
+        content = content + "Owner Book:\n" + trade.getOwnerBook().getTitle();
 
-        content= content+"\nComments:\n"+comments;
+        content = content + "\nComments:\n" + comments;
 
-        Intent sendEmail= new Intent(Intent.ACTION_SEND, Uri.parse("mailTo"));
+        Intent sendEmail = new Intent(Intent.ACTION_SEND, Uri.parse("mailTo"));
         sendEmail.setType("text/plain");
         //send recipent,content to email app
-        sendEmail.putExtra(Intent.EXTRA_EMAIL, new String[] {email,email1});
+        sendEmail.putExtra(Intent.EXTRA_EMAIL, new String[]{email, email1});
         sendEmail.putExtra(Intent.EXTRA_SUBJECT, subject);
         sendEmail.putExtra(Intent.EXTRA_TEXT, content);
 
-        try{
+        try {
             startActivity(sendEmail);
 
-        }catch (android.content.ActivityNotFoundException ex){
+        } catch (android.content.ActivityNotFoundException ex) {
             //if no supported app
             Toast.makeText(ProcessTradeScreen.this, "No email client found", Toast.LENGTH_SHORT).show();
         }
@@ -279,59 +281,7 @@ public class ProcessTradeScreen extends Activity {
         super.onStart();
 
     }
-/*
-    public void email(){
-        try {
 
-            GMailSender sender = new GMailSender("naichaer05@gmail.com", "wxwh0505");
-
-            sender.sendMail("This is Subject",
-                    "This is Body",
-                    "naichaer05@gmail.com",
-                    "hong8@ualberta.ca");
-        } catch (Exception e) {
-            Log.e("SendMail", e.getMessage(), e);
-        }
-
-    }
-
-    public void setUp() {
-        owner = new Account();
-        borrower = new Account();
-        try{
-            owner.setUsername("Why");
-            borrower.setUsername("GOGO");
-        }catch(TooLongException te){
-        }catch (NoSpacesException ne){
-        }
-
-        Book aBook = new Book();
-        aBook.setTitle("goodBook");
-
-        Book book1 = new Book();
-        book1.setTitle("book1");
-        Book book2 = new Book();
-        book2.setTitle("book2");
-        ArrayList<Book> bBooks = new ArrayList<Book>();
-        bBooks.add(book1);
-        bBooks.add(book2);
-
-
-        Trade newTrade = new Trade();
-        newTrade.setBorrower(borrower);
-        newTrade.setOwner(owner);
-        newTrade.setOwnerBook(aBook);
-        newTrade.setBorrowerBook(bBooks);
-
-        tradeHistory.addTrade(newTrade);
-        owner.setTradeHistory(tradeHistory);
-
-
-    }
-
-    /*
-
-    */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -355,5 +305,5 @@ public class ProcessTradeScreen extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-
 }
+
