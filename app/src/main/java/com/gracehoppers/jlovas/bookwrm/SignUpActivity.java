@@ -91,7 +91,7 @@ public class SignUpActivity extends ActionBarActivity {
                         account.setUsername(username.getText().toString());
                         account.setEmail(email.getText().toString());
                         account.setCity(city.getText().toString());
-                        //saveload.saveInFile(SignUpActivity.this, account); //moving this line down for demoAccount for now
+                        saveload.saveInFile(SignUpActivity.this, account); //moving this line down for demoAccount for now
 
 
                         accounts.add(account); //for UI testing
