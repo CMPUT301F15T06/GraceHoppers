@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -227,11 +228,16 @@ public class SignUpActivity extends ActionBarActivity {
 
                 else {
                     //add account
-                    Thread thread=new AddThread(search);
+
+                    Thread thread = new AddThread(search);
                     thread.start();
+
+                    thread.join();
+
                 }
 
             }catch(RuntimeException e) {e.printStackTrace();}
+            catch(InterruptedException e){            }
         }
 
     }
