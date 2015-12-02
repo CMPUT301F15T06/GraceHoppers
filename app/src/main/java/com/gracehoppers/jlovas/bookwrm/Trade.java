@@ -37,7 +37,7 @@ public class Trade {
 
     public void setCompletion(TradeCompletion completion) {this.completion = completion;}
 
-    public String getCompletion(){return this.completion.toString();}
+    public TradeCompletion getCompletion(){return this.completion;}
 
     public void setAccepted(Boolean accepted) {
         this.accepted = accepted;

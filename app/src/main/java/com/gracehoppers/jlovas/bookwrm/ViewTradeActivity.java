@@ -110,7 +110,7 @@ public class ViewTradeActivity extends ActionBarActivity {
             }
 
             //If the trade is already completed, make the complete Button invisible
-            if (trade.getCompletion().equals("COMPLETE")){
+            if (trade.getCompletion().equals(TradeCompletion.COMPLETE)){
                 complete.setVisibility(View.INVISIBLE);
             }
 
@@ -183,5 +183,9 @@ public class ViewTradeActivity extends ActionBarActivity {
         //make the button invisible
         complete.setVisibility(View.INVISIBLE);
         Toast.makeText(getApplicationContext(), "Trade marked as COMPLETE.", Toast.LENGTH_SHORT).show();
+        //Save the change in the account.
+        saveload.saveInFile(getApplicationContext(), account);
     }
 }
+
+
